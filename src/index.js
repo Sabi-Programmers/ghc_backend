@@ -5,8 +5,14 @@ import { xss } from "express-xss-sanitizer";
 import helmet from "helmet";
 import cors from "cors";
 
-const app = express();
 dotenv.config();
+const app = express();
+
+// Setup Veiw Engine
+app.set("view engine", "ejs");
+
+// Set the views directory (where EJS templates are located)
+app.set("views", "src/views");
 
 app.use(morgan("dev"));
 app.use(
@@ -16,9 +22,16 @@ app.use(
 );
 app.use(xss());
 app.use(helmet());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("public"));
+// app.use((req, res, next) => {
+//   res.locals.path = req.path;
+//   next();
+// });
 
 app.get("/", (req, res) => {
-  res.send("Welcome to Grand Health Care API");
+  res.render("index");
 });
 
 const port = "8080";
