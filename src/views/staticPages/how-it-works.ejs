@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+
+  <body>
+    <%- include('./layout/nav') %>
+    <main id="main">
+      <!-- ======= Breadcrumbs ======= -->
+      <section class="breadcrumbs">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>How it works</h2>
+            <ol>
+              <li><a href="index.html">Home</a></li>
+              <li>How it works</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+      <!-- End Breadcrumbs -->
+
+      <!-- ======= On Focus Section ======= -->
+      <!-- On Focus Section -->
+      <section id="onfocus" class="onfocus">
+        <div class="container-fluid p-0" data-aos="fade-up">
+          <div class="row g-0">
+            <!-- <div class="col-12 video-play position-relative">
+              <a
+                href="https://www.youtube.com/watch?v=LXb3EKWsInQ"
+                class="glightbox play-btn"
+              ></a>
+            </div> -->
+            <div class="col-12">
+              <div
+                class="content d-flex flex-column justify-content-center h-100 animated fadeInUp"
+              >
+                <h3>REGISTRATION, PURCHASING AND ORDER PROCESSING</h3>
+
+                <ul class="animated fadeInLeft">
+                  <li>
+                    <i class="bi bi-check-circle"></i>Register your user
+                    details, bank details and and register. Login and fund your
+                    Ewallet by making payment to the account number generated
+                    for you under E-wallet, then purchase your packages. Always
+                    pay to the generated account number to fund your E-wallet
+                    instantly.
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle"></i>You should purchase
+                    bronze, gold and diamond package at once so that you don't
+                    loose your downlines that purchase packages you do not
+                    purchase and also don't loose incentives. Also, only people
+                    who purchase all packages(bronze, gold, diamond) have access
+                    to claim any incentive the company offers.
+                  </li>
+                  <li>
+                    <i class="bi bi-check-circle"></i>Process your order with
+                    WhatsApp support(i.e how our products you bought will get to
+                    you) and get delivery of your herbal product. This is
+                    because Grand Health Cycle delivers your herbal product
+                    order(e.g ginger, moringa e.t.c package) to you when you
+                    purchase any package for any cycle, so immediately you
+                    purchase any package or cycle, contact whatsapp support to
+                    process your order and collect your package.
+                  </li>
+                </ul>
+                <div class="on-focus-btn-box">
+                  <button type="button" class="btn btn-primary">
+                    Read More
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Packages Section -->
+      <section id="packages" class="packages">
+        <div class="container packages-container" data-aos="fade-up">
+          <div
+            id="carouselExampleAutoplaying"
+            class="carousel slide"
+            data-ride="carousel"
+          >
+            <div class="carousel-inner nav">
+              <div class="carousel-item active">
+                <div class="row justify-content-center">
+                  <div class="col-md-6">
+                    <div class="nav-link bronze package-card">
+                      <i class="bi bi-box-seam color-indigo"></i>
+                      <h4>Bronze</h4>
+                      <span>N4,000</span>
+                      <p>Register only 9 people</p>
+                      <button
+                        class="package-card-btn btn btn-primary active m-0"
+                        id="home-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#home"
+                        type="button"
+                        role="tab"
+                        aria-controls="home"
+                        aria-selected="true"
+                      >
+                        Compensation Plan
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End package 1 -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-md-6">
+                    <div class="nav-link package-card gold">
+                      <i class="bi bi-box-seam color-indigo"></i>
+                      <h4>Gold</h4>
+                      <span>N9,000</span>
+                      <p>Register only 9 people</p>
+                      <button
+                        class="package-card-btn btn btn-primary m-0"
+                        id="profile-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#profile"
+                        type="button"
+                        role="tab"
+                        aria-controls="profile"
+                        aria-selected="false"
+                      >
+                        Compensation Plan
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End package 2 -->
+              <div class="carousel-item">
+                <div class="row justify-content-center">
+                  <div class="col-md-6">
+                    <div class="nav-link package-card diamond">
+                      <i class="bi bi-box-seam color-indigo"></i>
+                      <h4>Diamond</h4>
+                      <span>N36,000</span>
+                      <p>Register only 9 people</p>
+                      <button
+                        class="package-card-btn btn btn-primary m-0"
+                        id="contact-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#contact"
+                        type="button"
+                        role="tab"
+                        aria-controls="contact"
+                        aria-selected="false"
+                      >
+                        Compensation Plan
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End package 3 -->
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-target="#carouselExampleAutoplaying"
+              data-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-target="#carouselExampleAutoplaying"
+              data-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </section>
+      <!-- End packages Section -->
+
+      <section id="features" class="features">
+        <div class="container aos-init aos-animate" data-aos="fade-up">
+          <ul class="nav nav-tabs gap-1">
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link active"
+                id="home-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#home"
+                type="button"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+              >
+                Bronze
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#profile"
+                type="button"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
+              >
+                Gold
+              </button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button
+                class="nav-link"
+                id="contact-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#contact"
+                type="button"
+                role="tab"
+                aria-controls="contact"
+                aria-selected="false"
+              >
+                Diamond
+              </button>
+            </li>
+          </ul>
+          <div class="tab-content pt-4" id="myTabContent">
+            <div
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab"
+            >
+              <div class="row gy-4">
+                <div
+                  class="col-lg-8 order-2 order-lg-1 aos-init aos-animate"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
+                  <h3>BRONZE PACKAGE COMPENSATION</h3>
+                  <p class="fst-italic">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </p>
+                  <ul class="d-flex flex-column gap-3">
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Purchase this package with #4000 naira only.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get product worth same #4000.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Login and get #3,000 Naira bronze package welcome bonus
+                      after purchasing your bronze package.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Register 9 people for your given activated cycle, your
+                      ability to register new members ends after completing 9
+                      team per cycle.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #1,400 Naira per every referral you get until 9
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #2,000 completion bonus after completing your cycle 9
+                      team members
+                    </li>
+
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #2,000 Naira testimony bonus after creating and
+                      uploading testimony video of your cycle withdrawal prove
+                      on facebook, youtube and tiktok, and sending us the link.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Keep purchasing next cycle after completing one. You make
+                      9 registration per cycle, and completing cycle 2 means
+                      having at least 18 team members
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Become a cycle leader at cycle 5 and get opportunity to
+                      earn 6 levels deep leader bonus from your downlines
+                      generations repurchasing packages under you.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #600 Naira from your first generation downline i.e
+                      people you directly register.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #500 Naira from your second generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #400 Naira from your third generation downlines.
+                    </li>
+
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #300 Naira from your fourth generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #200 Naira from your fifth generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #100 Naira from your sixth generation downlines.
+                    </li>
+                  </ul>
+                  <p>
+                    Ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum
+                  </p>
+                </div>
+                <!-- <div
+                  class="col-lg-4 order-1 order-lg-2 text-center aos-init aos-animate"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
+                  <img
+                    src="./assets/img/features.svg"
+                    alt=""
+                    class="img-fluid"
+                  />
+                </div> -->
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="profile"
+              role="tabpanel"
+              aria-labelledby="profile-tab"
+            >
+              <div class="row gy-4">
+                <div
+                  class="col-lg-8 order-2 order-lg-1 aos-init aos-animate"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
+                  <h3>Gold PACKAGE COMPENSATION</h3>
+                  <p class="fst-italic">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </p>
+                  <ul class="d-flex flex-column gap-3">
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Purchase this package with #12,000 naira only
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get products worth same #12,000.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Login and get #9,000 Naira gold package welcome bonus
+                      after purchasing your gold package.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Register 9 people for your given activated cycle, your
+                      ability to register new.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #4,200 Naira per every referral you get until 9.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #6,000 completion bonus after completing your cycle 9
+                      team members
+                    </li>
+
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #6,000 Naira testimony bonus after creating and
+                      uploading testimony video of your cycle withdrawal prove
+                      on facebook, youtube and tiktok, and sending us the
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Purchase from your dashboard, another #12,000 Naira gold
+                      cycle package that will qualify you to register another 9
+                      team members for cycle 2, you can also purchase multiple
+                      packages at once by adding more than 1Quantity which will
+                      give you the opportunity to register more than 9people
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Less, any additional member you try to register after
+                      reaching 9 team withoutrepurchasing will not count to you
+                      or becomes unclaimed reward
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Keep purchasing next cycle after completing one. You make
+                      9 registration per cycle, and completing cycle 2 means
+                      having at least 18 team members.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Become a cycle leader at cycle 5 and get opportunity to
+                      earn 6 levels deep leader bonus from your downlines
+                      generations repurchasing packages under you.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      ✓Become a cycle leader at cycle 5 and get opportunity to
+                      earn 6 levels deep leader bonus from your downlines
+                      generations repurchasing packages under you.
+                    </li>
+
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #1,800 Naira from your first generation downline i.e
+                      people you directly register.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #1,500 Naira from your second generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #900 Naira from your fourth generation downlines..
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #600 Naira from your fifth generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #300 Naira from your sixth generation downlines.
+                    </li>
+                  </ul>
+                  <p>
+                    Ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum
+                  </p>
+                </div>
+                <!-- <div
+                  class="col-lg-4 order-1 order-lg-2 text-center aos-init aos-animate"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
+                  <img
+                    src="./assets/img/features.svg"
+                    alt=""
+                    class="img-fluid"
+                  />
+                </div> -->
+              </div>
+            </div>
+            <div
+              class="tab-pane fade"
+              id="contact"
+              role="tabpanel"
+              aria-labelledby="contact-tab"
+            >
+              <div class="row gy-4">
+                <div
+                  class="col-lg-8 order-2 order-lg-1 aos-init aos-animate"
+                  data-aos="fade-up"
+                  data-aos-delay="100"
+                >
+                  <h3>DIAMOND PACKAGE COMPENSATION</h3>
+                  <p class="fst-italic">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua.
+                  </p>
+                  <ul class="d-flex flex-column gap-3">
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Purchase this package with #36,000 naira only.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get products worth same #36,000.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Login and get #27,000 Naira diamond package welcome bonus
+                      after purchasing your diamond package.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Register 9 people for your given activated cycle, your
+                      ability to register new members ends after completing 9
+                      team per cycle.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #12,600 Naira per every referral you get until 9.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #18,000 completion bonus after completing your cycle 9
+                      team members.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #18,000 Naira testimony bonus after creating and
+                      uploading testimony video of your cycle withdrawal prove
+                      on Facebook, YouTube, and TikTok, and sending us the link.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Purchase from your dashboard, another #36,000 naira
+                      diamond cycle package that will qualify you to register
+                      another 9 team members for cycle 2, you can also purchase
+                      multiple packages at once by adding more than 1 Quantity
+                      which will give you the opportunity to register more than
+                      9 people. Less, any additional member you try to register
+                      after reaching 9 team without repurchasing will not count
+                      to you or becomes unclaimed reward.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Keep purchasing the next cycle after completing one. You
+                      make 9 registrations per cycle, and completing cycle 2
+                      means having at least 18 team members.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Become a cycle leader at cycle 5 and get an opportunity to
+                      earn 6 levels deep leader bonus from your downlines
+                      generations repurchasing packages under you.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #5,400 Naira from your first generation downline i.e.,
+                      people you directly register.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #4,500 Naira from your second generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #3,600 Naira from your third generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #2,700 Naira from your fourth generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #1,800 Naira from your fifth generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get #900 Naira from your sixth generation downlines.
+                    </li>
+                  </ul>
+
+                  <p>
+                    Ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum
+                  </p>
+                </div>
+                <!-- <div
+                  class="col-lg-4 order-1 order-lg-2 text-center aos-init aos-animate"
+                  data-aos="fade-up"
+                  data-aos-delay="200"
+                >
+                  <img
+                    src="./assets/img/features.svg"
+                    alt=""
+                    class="img-fluid"
+                  />
+                </div> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="p-0">
+        <div class="container">
+          <h3>REFERRAL INCENTIVES</h3>
+          <!-- Default Table -->
+          <div class="table-responsive mt-4">
+            <table class="table table-bordered incentives-table table-hover">
+              <thead>
+                <tr class="table-dark">
+                  <th scope="col">Referrals</th>
+                  <th scope="col">500</th>
+                  <th scope="col">2,000</th>
+                  <th scope="col">5,000</th>
+                  <th scope="col">10,000</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-light">
+                  <th scope="row">Bronze</th>
+                  <td>Sound System Reward</td>
+                  <td>Brand New Phone Reward</td>
+                  <td>Brand New Laptop, Trip around Nigeria Reward</td>
+                  <td></td>
+                </tr>
+                <tr class="table-warning">
+                  <th scope="row">Gold</th>
+                  <td>Home Theater Reward</td>
+                  <td>
+                    Brand New Phone, Trip around Nigeria, Cash Travel Allowance
+                  </td>
+                  <td>
+                    Laptop or iPhone, Trip to an African Country, Cash Travel
+                    Allowance
+                  </td>
+                  <td>
+                    Plot of Land Investment in your name, Smart TV, Trip to an
+                    African Country, Cash Travel Allowance
+                  </td>
+                </tr>
+                <tr class="table-info">
+                  <th scope="row">Diamond</th>
+                  <td>Brand New Phone, Sound System, Trip around Nigeria</td>
+                  <td>
+                    Laptop or iPhone, Smart TV, Trip to an African Country, Cash
+                    Travel Allowance
+                  </td>
+                  <td>
+                    2 Plots of Land Investment in your name, a Power Bike, Trip
+                    to an African Country, Cash Travel Allowance
+                  </td>
+                  <td>
+                    3 Plots of Land Investment in your name, a Brand New Car,
+                    Lavish Trip to an African Country, Cash Travel Allowance
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- End Default Table Example -->
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <!-- ======= Footer ======= -->
+    <%- include('./layout/footer') %>
+    <!-- End Footer -->
+
+    <%- include('./partials/scripts') %>
+  </body>
+</html>

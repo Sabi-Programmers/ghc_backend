@@ -4,6 +4,7 @@ import morgan from "morgan";
 import { xss } from "express-xss-sanitizer";
 import helmet from "helmet";
 import cors from "cors";
+import router from "./routes/index.js";
 
 dotenv.config();
 const app = express();
@@ -30,9 +31,11 @@ app.use(express.static("public"));
 //   next();
 // });
 
-app.get("/", (req, res) => {
-  res.render("index");
-});
+app.use(router);
+
+// app.get("/", (req, res) => {
+//   res.render("index");
+// });
 
 const port = "8080";
 app.listen(port, () => {
