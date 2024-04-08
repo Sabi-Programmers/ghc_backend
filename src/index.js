@@ -37,7 +37,7 @@ app.use(router);
 //   res.render("index");
 // });
 
-const port = "8080";
+const port = process.env.PORT;
 app.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
 });
