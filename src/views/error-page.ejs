@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title><%= title %> - Grand Health Cycle</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="./assets/img/logo_01.png" rel="icon" />
+    <link href="./assets/img/logo_01.png" rel="apple-touch-icon" />
+
+    <link rel="stylesheet" href="./assets/css/error-page.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="header"><%= statusCode %> ERROR</h1>
+      <div class="instructions">
+        <h2><%= message %></h2>
+        <p>In the meantime, you can:</p>
+      </div>
+    </div>
+  </body>
+</html>

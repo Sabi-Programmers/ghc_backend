@@ -5,6 +5,8 @@ import { xss } from "express-xss-sanitizer";
 import helmet from "helmet";
 import cors from "cors";
 import router from "./routes/index.js";
+import notFound from "./errors/notFound.js";
+import errorHandler from "./errors/errorHandler.js";
 
 dotenv.config();
 const app = express();
@@ -32,6 +34,9 @@ app.use(express.static("public"));
 // });
 
 app.use(router);
+
+app.use(errorHandler);
+app.use(notFound);
 
 // app.get("/", (req, res) => {
 //   res.render("index");

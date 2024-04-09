@@ -1,9 +1,9 @@
 import express from "express";
+import { createUser, getSponsor } from "../controllers/auth.js";
 const authRouter = express.Router();
 
-authRouter.get("/register", (req, res) => {
-  res.render("auth/register", { title: "Create an account" });
-});
+authRouter.get("/register", getSponsor);
+authRouter.post("/register", createUser);
 authRouter.get("/login", (req, res) => {
   res.render("auth/login", { title: "Login" });
 });
