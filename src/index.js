@@ -4,9 +4,12 @@ import morgan from "morgan";
 import { xss } from "express-xss-sanitizer";
 import helmet from "helmet";
 import cors from "cors";
+import passport from "passport";
+import session from "express-session";
 import router from "./routes/index.js";
 import notFound from "./errors/notFound.js";
 import errorHandler from "./errors/errorHandler.js";
+import "./services/passportLocal.js";
 
 dotenv.config();
 const app = express();
@@ -27,6 +30,16 @@ app.use(xss());
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: "your_secret_key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static("public"));
 // app.use((req, res, next) => {
 //   res.locals.path = req.path;

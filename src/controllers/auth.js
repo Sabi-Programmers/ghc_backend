@@ -43,7 +43,7 @@ const createUser = asyncWrapper(async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = await database.user.create({
+  await database.user.create({
     data: {
       username: username.toLowerCase(),
       password: hashedPassword,
