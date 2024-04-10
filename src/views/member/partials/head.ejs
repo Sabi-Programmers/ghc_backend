@@ -1,0 +1,217 @@
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+  <title><%= title %> - Grand Health Cycle</title>
+  <meta content="" name="description" />
+  <meta content="" name="keywords" />
+
+  <!-- Favicons -->
+  <link href="../assets/img/logo_01.png" rel="icon" />
+  <link href="../assets/img/logo_01.png" rel="apple-touch-icon" />
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.gstatic.com" rel="preconnect" />
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet"
+  />
+
+  <!-- Vendor CSS Files -->
+  <link
+    href="../assets/vendor/bootstrap/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <link
+    href="../assets/vendor/bootstrap-icons/bootstrap-icons.css"
+    rel="stylesheet"
+  />
+  <link
+    href="../assets/vendor/boxicons/css/boxicons.min.css"
+    rel="stylesheet"
+  />
+  <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+  <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+  <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+  <link href="../assets/vendor/simple-datatables/style.css" rel="stylesheet" />
+
+  <!-- Template Main CSS File -->
+  <link href="../assets/css/dashboard.css" rel="stylesheet" />
+
+  <style>
+    .price-list .value {
+      flex: none;
+    }
+
+    #current-cycle-team-count {
+      width: 100%;
+      height: 10px;
+      position: relative;
+      overflow: hidden;
+      border-radius: 50px;
+    }
+    #current-cycle-team-count em {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #current-cycle-team-count span {
+      /* background: #cd7f32; */
+      width: 100%;
+      border-left: 1px solid #ffffff;
+      text-align: center;
+      font-size: 8px;
+      font-weight: 900;
+    }
+
+    .bronze #current-cycle-team-count span:nth-child(-n + 8) {
+      background: #cd7f32;
+    }
+    .gold #current-cycle-team-count span:nth-child(-n + 2) {
+      background: #ffd700;
+    }
+    .diamond #current-cycle-team-count span:nth-child(-n + 4) {
+      background: #5eb6ff;
+    }
+
+    /* .card .list-group-item:first-child {
+        color: #804a00;
+      }
+      .card .list-group-item:nth-child(2) {
+        color: #ffd700;
+      }
+      .card .list-group-item:nth-child(3) {
+        color: #5eb6ff;
+      } */
+
+    .progress-container {
+      width: 60px;
+      height: 60px;
+      position: relative;
+      text-align: center;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: conic-gradient(
+        #3498db 0%,
+        #3498db calc(0 * 11.11%),
+        #b4b4b4 calc(0 * 11.11%) 100%
+      );
+      background-size: 100% 100%;
+      background-position: center;
+      transition: all 1s ease-in-out;
+    }
+
+    #bronze-progress-bar {
+      background: conic-gradient(
+        #34db58 0%,
+        #34db58 calc(var(--percent) * 11.11%),
+        #b4b4b4 calc(var(--percent) * 11.11%) 100%
+      );
+    }
+    #gold-progress-bar {
+      background: conic-gradient(
+        #3734db 0%,
+        #3734db calc(var(--percent) * 11.11%),
+        #b4b4b4 calc(var(--percent) * 11.11%) 100%
+      );
+    }
+    #diamond-progress-bar {
+      background: conic-gradient(
+        #eb5712 0%,
+        #eb5712 calc(var(--percent) * 11.11%),
+        #b4b4b4 calc(var(--percent) * 11.11%) 100%
+      );
+    }
+
+    .progress-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 10px;
+      font-weight: bold;
+      width: 90%;
+      height: 90%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fff;
+      border-radius: 50%;
+    }
+    .progress-container + p {
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    .more-info {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8em;
+      height: 32px;
+      color: #fff;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+      cursor: pointer;
+      gap: 10px;
+      transition: all 0.5s ease-in-out;
+    }
+    .more-info:hover {
+      gap: 25px;
+    }
+    .sales-card .more-info {
+      background: #4153f1d0;
+    }
+    .customers-card .more-info {
+      background: #ff771dbd;
+    }
+    .revenue-card .more-info {
+      background: #2eca6abb;
+    }
+
+    @media (min-width: 320px) {
+    }
+    @media (min-width: 576px) {
+      .progress-container {
+        width: 100px;
+        height: 100px;
+      }
+      .progress-container + p {
+        font-size: 16px;
+      }
+    }
+
+    @media (min-width: 768px) {
+    }
+
+    @media (min-width: 992px) {
+      /* .dash-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+        .dash-grid > :nth-child(5) {
+          grid-column-start: 3;
+          grid-row-start: 1;
+        }
+        .dash-grid > :nth-child(3) {
+          grid-column: span 1;
+          grid-row: span 2;
+        } */
+      /* .dash-grid > :nth-child(4) {
+          grid-column-start: 3;
+          grid-row-start: 1;
+        } */
+    }
+
+    @media (min-width: 1200px) {
+    }
+
+    @media (min-width: 1400px) {
+    }
+  </style>
+</head>
