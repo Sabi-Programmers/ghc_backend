@@ -1,12 +1,12 @@
 import { StatusCodes } from "http-status-codes";
 
-import CustomErrorApi from "./CustomError.js";
+import CustomError from "./CustomError.js";
 
 const errorHandler = (err, req, res, next) => {
   console.log(err);
-  if (err instanceof CustomErrorApi) {
+  if (err instanceof CustomError) {
     return res.render("error-page", {
-      title: "Error",
+      title: err.title,
       statusCode: err.statusCode,
       message: err.message,
     });

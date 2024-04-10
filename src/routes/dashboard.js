@@ -1,14 +1,8 @@
 import express from "express";
+import { isAuthenticated } from "../middlewares/auth.js";
 const dashboardRouter = express.Router();
 
-const middlewares = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  return res.redirect("/auth/login");
-};
-
-dashboardRouter.get("", middlewares, (req, res) => {
+dashboardRouter.get("", isAuthenticated, (req, res) => {
   const user = req.user;
   const data = {
     user,

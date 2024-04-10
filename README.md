@@ -8,6 +8,4 @@
 
 ### Add Authorization Middleware and Role based authentication
 
-### Add Logout Functionality
-
 ### Use UserService

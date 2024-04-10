@@ -1,5 +1,6 @@
 import { body, validationResult } from "express-validator";
 import { StatusCodes } from "http-status-codes";
+import CustomError from "../errors/CustomError";
 
 const validateCreateUserAuth = [
   body("sponsorUsername").exists().withMessage("sponspor username is required"),
@@ -93,12 +94,11 @@ const validateAuth = (req, res, next) => {
   const errors = validationResult(req);
   console.log(errors);
   if (!errors.isEmpty()) {
-    return res.render("error-page", {
-      title: "Invalid Request",
-      statusCode: StatusCodes.BAD_REQUEST,
-      message:
-        "You are seeing this page because of you made an invalid request",
-    });
+    throw new CustomError(
+      "You are seeing this page because of you made an invalid request",
+      StatusCodes.BAD_REQUEST,
+      "Invalid Request"
+    );
   }
   return next();
 };
