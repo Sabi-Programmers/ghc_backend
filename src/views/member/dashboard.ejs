@@ -1,0 +1,1634 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Dashboard - Grand Health Cycle</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="../assets/img/logo_01.png" rel="icon" />
+    <link href="../assets/img/logo_01.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link
+      href="../assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="../assets/vendor/boxicons/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link href="../assets/vendor/quill/quill.snow.css" rel="stylesheet" />
+    <link href="../assets/vendor/quill/quill.bubble.css" rel="stylesheet" />
+    <link href="../assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link
+      href="../assets/vendor/simple-datatables/style.css"
+      rel="stylesheet"
+    />
+
+    <!-- Template Main CSS File -->
+    <link href="../assets/css/dashboard.css" rel="stylesheet" />
+
+    <style>
+      .price-list .value {
+        flex: none;
+      }
+
+      #current-cycle-team-count {
+        width: 100%;
+        height: 10px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50px;
+      }
+      #current-cycle-team-count em {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      #current-cycle-team-count span {
+        /* background: #cd7f32; */
+        width: 100%;
+        border-left: 1px solid #ffffff;
+        text-align: center;
+        font-size: 8px;
+        font-weight: 900;
+      }
+
+      .bronze #current-cycle-team-count span:nth-child(-n + 8) {
+        background: #cd7f32;
+      }
+      .gold #current-cycle-team-count span:nth-child(-n + 2) {
+        background: #ffd700;
+      }
+      .diamond #current-cycle-team-count span:nth-child(-n + 4) {
+        background: #5eb6ff;
+      }
+
+      /* .card .list-group-item:first-child {
+        color: #804a00;
+      }
+      .card .list-group-item:nth-child(2) {
+        color: #ffd700;
+      }
+      .card .list-group-item:nth-child(3) {
+        color: #5eb6ff;
+      } */
+
+      .progress-container {
+        width: 60px;
+        height: 60px;
+        position: relative;
+        text-align: center;
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: conic-gradient(
+          #3498db 0%,
+          #3498db calc(0 * 11.11%),
+          #b4b4b4 calc(0 * 11.11%) 100%
+        );
+        background-size: 100% 100%;
+        background-position: center;
+        transition: all 1s ease-in-out;
+      }
+
+      #bronze-progress-bar {
+        background: conic-gradient(
+          #34db58 0%,
+          #34db58 calc(var(--percent) * 11.11%),
+          #b4b4b4 calc(var(--percent) * 11.11%) 100%
+        );
+      }
+      #gold-progress-bar {
+        background: conic-gradient(
+          #3734db 0%,
+          #3734db calc(var(--percent) * 11.11%),
+          #b4b4b4 calc(var(--percent) * 11.11%) 100%
+        );
+      }
+      #diamond-progress-bar {
+        background: conic-gradient(
+          #eb5712 0%,
+          #eb5712 calc(var(--percent) * 11.11%),
+          #b4b4b4 calc(var(--percent) * 11.11%) 100%
+        );
+      }
+
+      .progress-text {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 10px;
+        font-weight: bold;
+        width: 90%;
+        height: 90%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #fff;
+        border-radius: 50%;
+      }
+      .progress-container + p {
+        font-size: 14px;
+        font-style: italic;
+      }
+
+      .more-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8em;
+        height: 32px;
+        color: #fff;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        cursor: pointer;
+        gap: 10px;
+        transition: all 0.5s ease-in-out;
+      }
+      .more-info:hover {
+        gap: 25px;
+      }
+      .sales-card .more-info {
+        background: #4153f1d0;
+      }
+      .customers-card .more-info {
+        background: #ff771dbd;
+      }
+      .revenue-card .more-info {
+        background: #2eca6abb;
+      }
+
+      @media (min-width: 320px) {
+      }
+      @media (min-width: 576px) {
+        .progress-container {
+          width: 100px;
+          height: 100px;
+        }
+        .progress-container + p {
+          font-size: 16px;
+        }
+      }
+
+      @media (min-width: 768px) {
+      }
+
+      @media (min-width: 992px) {
+        /* .dash-grid {
+          grid-template-columns: 1fr 1fr 1fr;
+        }
+        .dash-grid > :nth-child(5) {
+          grid-column-start: 3;
+          grid-row-start: 1;
+        }
+        .dash-grid > :nth-child(3) {
+          grid-column: span 1;
+          grid-row: span 2;
+        } */
+        /* .dash-grid > :nth-child(4) {
+          grid-column-start: 3;
+          grid-row-start: 1;
+        } */
+      }
+
+      @media (min-width: 1200px) {
+      }
+
+      @media (min-width: 1400px) {
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- ======= Header ======= -->
+    <header id="header" class="header fixed-top d-flex align-items-center">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="./dashbroad.html" class="logo d-flex align-items-center">
+          <img src="../assets/img/ghc_logo.png" alt="GHC Logo" />
+          <span class="d-none d-lg-block">GHC</span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+      </div>
+      <!-- End Logo -->
+
+      <div class="search-bar">
+        <form
+          class="search-form d-flex align-items-center"
+          method="POST"
+          action="#"
+        >
+          <input
+            type="text"
+            name="query"
+            placeholder="Search"
+            title="Enter search keyword"
+          />
+          <button type="submit" title="Search">
+            <i class="bi bi-search"></i>
+          </button>
+        </form>
+      </div>
+      <!-- End Search Bar -->
+
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+          <li class="nav-item d-block d-lg-none">
+            <a class="nav-link nav-icon search-bar-toggle" href="#">
+              <i class="bi bi-search"></i>
+            </a>
+          </li>
+          <!-- End Search Icon-->
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-bell"></i>
+              <span class="badge bg-primary badge-number">4</span> </a
+            ><!-- End Notification Icon -->
+
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
+            >
+              <li class="dropdown-header">
+                You have 4 new notifications
+                <a href="#"
+                  ><span class="badge rounded-pill bg-primary p-2 ms-2"
+                    >View all</span
+                  ></a
+                >
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li class="notification-item">
+                <i class="bi bi-exclamation-circle text-warning"></i>
+                <div>
+                  <h4>Lorem Ipsum</h4>
+                  <p>Quae dolorem earum veritatis oditseno</p>
+                  <p>30 min. ago</p>
+                </div>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li class="notification-item">
+                <i class="bi bi-x-circle text-danger"></i>
+                <div>
+                  <h4>Atque rerum nesciunt</h4>
+                  <p>Quae dolorem earum veritatis oditseno</p>
+                  <p>1 hr. ago</p>
+                </div>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li class="notification-item">
+                <i class="bi bi-check-circle text-success"></i>
+                <div>
+                  <h4>Sit rerum fuga</h4>
+                  <p>Quae dolorem earum veritatis oditseno</p>
+                  <p>2 hrs. ago</p>
+                </div>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li class="notification-item">
+                <i class="bi bi-info-circle text-primary"></i>
+                <div>
+                  <h4>Dicta reprehenderit</h4>
+                  <p>Quae dolorem earum veritatis oditseno</p>
+                  <p>4 hrs. ago</p>
+                </div>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+              <li class="dropdown-footer">
+                <a href="#">Show all notifications</a>
+              </li>
+            </ul>
+            <!-- End Notification Dropdown Items -->
+          </li>
+          <!-- End Notification Nav -->
+
+          <li class="nav-item dropdown">
+            <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+              <i class="bi bi-chat-left-text"></i>
+              <span class="badge bg-success badge-number">3</span> </a
+            ><!-- End Messages Icon -->
+
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages"
+            >
+              <li class="dropdown-header">
+                You have 3 new messages
+                <a href="#"
+                  ><span class="badge rounded-pill bg-primary p-2 ms-2"
+                    >View all</span
+                  ></a
+                >
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li class="message-item">
+                <a href="#">
+                  <img
+                    src="
+../assets/img/messages-1.jpg"
+                    alt=""
+                    class="rounded-circle"
+                  />
+                  <div>
+                    <h4>Maria Hudson</h4>
+                    <p>
+                      Velit asperiores et ducimus soluta repudiandae labore
+                      officia est ut...
+                    </p>
+                    <p>4 hrs. ago</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li class="message-item">
+                <a href="#">
+                  <img
+                    src="
+../assets/img/messages-2.jpg"
+                    alt=""
+                    class="rounded-circle"
+                  />
+                  <div>
+                    <h4>Anna Nelson</h4>
+                    <p>
+                      Velit asperiores et ducimus soluta repudiandae labore
+                      officia est ut...
+                    </p>
+                    <p>6 hrs. ago</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li class="message-item">
+                <a href="#">
+                  <img
+                    src="
+../assets/img/messages-3.jpg"
+                    alt=""
+                    class="rounded-circle"
+                  />
+                  <div>
+                    <h4>David Muldon</h4>
+                    <p>
+                      Velit asperiores et ducimus soluta repudiandae labore
+                      officia est ut...
+                    </p>
+                    <p>8 hrs. ago</p>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li class="dropdown-footer">
+                <a href="#">Show all messages</a>
+              </li>
+            </ul>
+            <!-- End Messages Dropdown Items -->
+          </li>
+          <!-- End Messages Nav -->
+
+          <li class="nav-item dropdown pe-3">
+            <a
+              class="nav-link nav-profile d-flex align-items-center pe-0"
+              href="#"
+              data-bs-toggle="dropdown"
+            >
+              <img
+                src="
+../assets/img/profile-img.jpg"
+                alt="Profile"
+                class="rounded-circle"
+              />
+              <span class="d-none d-md-block dropdown-toggle ps-2"
+                >K. Anderson</span
+              > </a
+            ><!-- End Profile Iamge Icon -->
+
+            <ul
+              class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile"
+            >
+              <li class="dropdown-header">
+                <h6>Kevin Anderson</h6>
+                <span>Web Designer</span>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="./profile/user-profile.html"
+                >
+                  <i class="bi bi-person"></i>
+                  <span>My Profile</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="./profile/account-setting.html"
+                >
+                  <i class="bi bi-gear"></i>
+                  <span>Account Settings</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <a
+                  class="dropdown-item d-flex align-items-center"
+                  href="pages-faq.html"
+                >
+                  <i class="bi bi-question-circle"></i>
+                  <span>Need Help?</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider" />
+              </li>
+
+              <li>
+                <button
+                  type="button"
+                  class="dropdown-item d-flex align-items-center"
+                  data-bs-toggle="modal"
+                  data-bs-target="#basicModal"
+                >
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </button>
+              </li>
+            </ul>
+            <!-- End Profile Dropdown Items -->
+          </li>
+          <!-- End Profile Nav -->
+        </ul>
+      </nav>
+      <!-- End Icons Navigation -->
+    </header>
+    <!-- End Header -->
+
+    <!-- ==== Log out Modal ==== -->
+    <div class="modal fade" id="basicModal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Log out</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">Are you sure you want to log out?</div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-danger">Log out</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Log out Modal  -->
+
+    <!-- ======= Sidebar ======= -->
+    <aside id="sidebar" class="sidebar">
+      <ul class="sidebar-nav" id="sidebar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="./dashbroad.html">
+            <i class="bi bi-grid"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <!-- End Dashboard Nav -->
+
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            data-bs-target="#tables-nav"
+            data-bs-toggle="collapse"
+            href="#"
+          >
+            <i class="bx bx-wallet-alt"></i><span>Withdrawal Wallets</span
+            ><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            id="tables-nav"
+            class="nav-content collapse"
+            data-bs-parent="#sidebar-nav"
+          >
+            <li>
+              <a href="./withdrawal-wallet/bonus-wallet.html">
+                <i class="bi bi-circle"></i><span>Bonus wallet </span>
+              </a>
+            </li>
+            <li>
+              <a href="./withdrawal-wallet/leader-cycle-wallet.html">
+                <i class="bi bi-circle"></i><span>Leaders cycle wallet</span>
+              </a>
+            </li>
+            <li>
+              <a href="./withdrawal-wallet/shop-sales-income.html">
+                <i class="bi bi-circle"></i><span>Shop sales income</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- End Wallets Nav -->
+
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            href="./e-wallet-withdrawal/request-withdrawal.html"
+          >
+            <i class="bx bx-money-withdraw"></i>
+            <span>E-Wallet Withdrawal</span>
+          </a>
+        </li>
+        <!-- End E-wallet Withdrawal Page Nav -->
+        <li class="nav-item">
+          <a
+            class="nav-link collapsed"
+            data-bs-target="#my-network-nav"
+            data-bs-toggle="collapse"
+            href="#"
+          >
+            <i class="bx bx-group"></i>
+            <span>My Network</span><i class="bi bi-chevron-down ms-auto"></i>
+          </a>
+          <ul
+            id="my-network-nav"
+            class="nav-content collapse"
+            data-bs-parent="#sidebar-nav"
+          >
+            <li>
+              <a href="./my-network/my-referers.html">
+                <i class="bi bi-circle"></i><span>My Referrers </span>
+              </a>
+            </li>
+            <li>
+              <a href="./my-network/referrer-tree.html">
+                <i class="bi bi-circle"></i><span>Referrer Tree</span>
+              </a>
+            </li>
+            <li>
+              <a href="./my-network/team-generation.html">
+                <i class="bi bi-circle"></i><span>Team Generation</span>
+              </a>
+            </li>
+            <li>
+              <a href="./my-network/team-performance.html">
+                <i class="bi bi-circle"></i><span>Team Performance</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <!-- End Wallets Nav -->
+        <!-- End My Network Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-faq.html">
+            <i class="bx bx-store-alt"></i>
+            <span>Shop Marketing</span>
+          </a>
+        </li>
+        <!-- End Shop Marketing Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="./product-delivery.html">
+            <i class="bx bx-list-check"></i>
+            <span>Product Delivery</span>
+          </a>
+        </li>
+        <!-- End Product Delivery Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="pages-register.html">
+            <i class="bx bxs-landmark"></i>
+            <span>Marketing</span>
+          </a>
+        </li>
+        <!-- End Marketing Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="./testimony/add-testimony.html">
+            <i class="bx bx-notepad"></i>
+            <span>Testimony</span>
+          </a>
+        </li>
+        <!-- End Testimony Page Nav -->
+
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="./business-promo-contest.html">
+            <i class="bx bx-money"></i>
+            <span>Business Promotion Contest</span>
+          </a>
+        </li>
+        <!-- End Business Promotion Contest Page Nav -->
+      </ul>
+    </aside>
+    <!-- End Sidebar-->
+
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./dashbroad.html">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+
+      <section class="section dashboard">
+        <div class="row">
+          <!-- A3 Card -->
+          <div class="col-md-6">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title pb-0 mb-1">
+                  E-Wallet <span>| Total</span>
+                </h5>
+                <div
+                  class="w-100 d-flex flex-column gap-3 flex-md-row justify-content-md-between"
+                >
+                  <div class="d-flex align-items-center">
+                    <div
+                      class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                    >
+                      <i class="bx bx-wallet"></i>
+                    </div>
+                    <div class="ps-3 text-truncate">
+                      <h6 class="text-truncate">
+                        &#8358; <span>3,264,000.00</span>
+                      </h6>
+                      <span class="text-success small pt-1 fw-bold">8%</span>
+                      <span class="text-muted small pt-2 ps-1">increase</span>
+                    </div>
+                  </div>
+                  <div
+                    class="align-items-center d-flex gap-2 mt-0 flex-column flex-sm-row flex-md-column text-truncate"
+                  >
+                    <a
+                      href="./fund-wallet.html"
+                      class="btn btn-success w-100 text-truncate"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Fund Wallet"
+                    >
+                      Fund Wallet
+                    </a>
+                    <a
+                      href="#"
+                      class="btn btn-outline-success w-100 text-truncate"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                      title="Buy a package"
+                    >
+                      Buy Packages
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End A3 Card -->
+
+          <!-- A4 Card -->
+          <div class="col-md-6">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">
+                  Withdrawal Wallet <span>| Total</span>
+                </h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bx bx-money-withdraw"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate">
+                      &#8358; <span> 3,264,000.00 </span>
+                    </h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span>
+                    <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="w-100 text-center more-info"
+                data-bs-toggle="modal"
+                data-bs-target="#withdrawal-wallet-details"
+              >
+                <span>More info</span>
+                <i class="bx bxs-right-arrow-circle fs-5"></i>
+              </div>
+
+              <div
+                class="modal fade"
+                id="withdrawal-wallet-details"
+                tabindex="-1"
+                aria-labelledby="withdrawal-wallet-details-label"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        All withdrawal wallets
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <ul class="modal-body">
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Bronze
+                        </h5>
+                        <span class="text-end value">
+                          &#8358; 3,000,000.00
+                        </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Gold
+                        </h5>
+                        <span class="text-end value"> &#8358; 4,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Diamond"
+                        >
+                          Diamond
+                        </h5>
+                        <span class="text-end value"> &#8358; 1,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Leader cylce"
+                        >
+                          Leader cylce
+                        </h5>
+                        <span class="text-end value">
+                          &#8358; 3,000,000.00
+                        </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Sales income"
+                        >
+                          Sales income
+                        </h5>
+                        <span class="text-end value">
+                          &#8358; 3,000,000.00
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End A4 Card -->
+          <!-- A11 Card -->
+          <div class="col-md-6">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Total Referers <span>| Total</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 class="text-truncate">55</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="w-100 text-center more-info"
+                data-bs-toggle="modal"
+                data-bs-target="#total-referers-details"
+              >
+                <span>More info</span>
+                <i class="bx bxs-right-arrow-circle fs-5"></i>
+              </div>
+
+              <div
+                class="modal fade"
+                id="total-referers-details"
+                tabindex="-1"
+                aria-labelledby="withdrawal-wallet-details-label"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5">All Referers</h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <ul class="modal-body">
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Bronze
+                        </h5>
+                        <span class="text-end value"> 30 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Gold"
+                        >
+                          Gold
+                        </h5>
+                        <span class="text-end value">4 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Diamond"
+                        >
+                          Diamond
+                        </h5>
+                        <span class="text-end value"> 21 </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End A11 Card -->
+          <!-- A7 Card -->
+          <div class="col-md-6">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Referral Income <span>| Total</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 class="text-truncate">
+                      &#8358; <span> 243,000.00 </span>
+                    </h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span>
+                    <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="w-100 text-center more-info"
+                data-bs-toggle="modal"
+                data-bs-target="#referrer-income-details"
+              >
+                <span>More info</span>
+                <i class="bx bxs-right-arrow-circle fs-5"></i>
+              </div>
+
+              <div
+                class="modal fade"
+                id="referrer-income-details"
+                tabindex="-1"
+                aria-labelledby="referrer-income-details-label"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        All Referral Income
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <ul class="modal-body">
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Bronze
+                        </h5>
+                        <span class="text-end value"> &#8358; 3,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Gold
+                        </h5>
+                        <span class="text-end value"> &#8358; 40,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Diamond"
+                        >
+                          Diamond
+                        </h5>
+                        <span class="text-end value"> &#8358; 200,000.00 </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End A7 Card -->
+
+          <!-- A12 Card -->
+          <div class="col-md-6">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">Current Working Cycle</h5>
+                <ul class="d-flex w-100 justify-content-between p-0">
+                  <li
+                    class="list-group-item border-0 d-flex flex-column align-items-center"
+                  >
+                    <h5 class="fs-6">Bronze</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar" id="bronze-progress-bar"></div>
+                      <div class="progress-text">4 Of 9</div>
+                    </div>
+                    <p>
+                      cycle
+                      <span>6</span>
+                    </p>
+                  </li>
+                  <li
+                    class="list-group-item border-0 d-flex flex-column align-items-center"
+                  >
+                    <h5 class="fs-6">Gold</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar" id="gold-progress-bar"></div>
+                      <div class="progress-text">8 Of 9</div>
+                    </div>
+                    <p>
+                      cycle
+                      <span>2</span>
+                    </p>
+                  </li>
+                  <li
+                    class="list-group-item border-0 d-flex flex-column align-items-center"
+                  >
+                    <h5 class="fs-6">Diamond</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar" id="diamond-progress-bar"></div>
+                      <div class="progress-text bg-warnin">2 Of 9</div>
+                    </div>
+                    <p>
+                      cycle
+                      <span>3</span>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End A12 Card -->
+          <!-- A13Card -->
+          <div class="col-md-6">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">NEXT PURCHASE CYCLE</h5>
+                <ul class="d-flex w-100 justify-content-between p-0">
+                  <li
+                    class="list-group-item border-0 d-flex flex-column align-items-center"
+                  >
+                    <h5 class="fs-6">Bronze</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                      <div class="progress-text">0 Of 9</div>
+                    </div>
+                    <p>
+                      cycle
+                      <span>7</span>
+                    </p>
+                  </li>
+                  <li
+                    class="list-group-item border-0 d-flex flex-column align-items-center"
+                  >
+                    <h5 class="fs-6">Gold</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                      <div class="progress-text">0 Of 9</div>
+                    </div>
+                    <p>
+                      cycle
+                      <span>3</span>
+                    </p>
+                  </li>
+                  <li
+                    class="list-group-item border-0 d-flex flex-column align-items-center"
+                  >
+                    <h5 class="fs-6">Diamond</h5>
+                    <div class="progress-container">
+                      <div class="progress-bar"></div>
+                      <div class="progress-text bg-warnin">0 Of 9</div>
+                    </div>
+                    <p>
+                      cycle
+                      <span>4</span>
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <!-- End A13 Card -->
+          <!-- A6 Card -->
+          <div class="col-md-6">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">SALES INCOME <span>| Total</span></h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-cart"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 class="text-truncate">
+                      &#8358; <span> 340,000.00 </span>
+                    </h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span>
+                    <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+              <div class="w-100 text-center more-info">
+                <span>More info</span>
+                <i class="bx bxs-right-arrow-circle fs-5"></i>
+              </div>
+            </div>
+          </div>
+          <!-- End A6 Card -->
+          <!-- A5 Card -->
+          <div class="col-md-6">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">
+                  Leaders cycle bonus <span>| Total</span>
+                </h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bx bx-crown"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 class="text-truncate">
+                      &#8358; <span> 94,000.00 </span>
+                    </h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span>
+                    <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="w-100 text-center more-info"
+                data-bs-toggle="modal"
+                data-bs-target="#Leader-cycle-bonus-details"
+              >
+                <span>More info</span>
+                <i class="bx bxs-right-arrow-circle fs-5"></i>
+              </div>
+
+              <div
+                class="modal fade"
+                id="Leader-cycle-bonus-details"
+                tabindex="-1"
+                aria-labelledby="Leader-cycle-bonus-details-label"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        All Leader cycle bonus
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <ul class="modal-body">
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Bronze
+                        </h5>
+                        <span class="text-end value">
+                          &#8358; 3,000,000.00
+                        </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Gold
+                        </h5>
+                        <span class="text-end value"> &#8358; 4,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Diamond"
+                        >
+                          Diamond
+                        </h5>
+                        <span class="text-end value"> &#8358; 1,000.00 </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End A5 Card -->
+
+          <!-- A8 Card -->
+          <div class="col-md-6">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">
+                  Cycle Welcome Bonus <span>| Total</span>
+                </h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 class="text-truncate">
+                      &#8358; <span> 27,000.00 </span>
+                    </h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span>
+                    <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="w-100 text-center more-info"
+                data-bs-toggle="modal"
+                data-bs-target="#cycle-welcome-bonus-details"
+              >
+                <span>More info</span>
+                <i class="bx bxs-right-arrow-circle fs-5"></i>
+              </div>
+
+              <div
+                class="modal fade"
+                id="cycle-welcome-bonus-details"
+                tabindex="-1"
+                aria-labelledby="cycle-welcome-bonus-details-label"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        All cycle welcome bonus
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <ul class="modal-body">
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Bronze
+                        </h5>
+                        <span class="text-end value"> &#8358; 3,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Gold
+                        </h5>
+                        <span class="text-end value"> &#8358; 4,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Diamond"
+                        >
+                          Diamond
+                        </h5>
+                        <span class="text-end value"> &#8358; 20,000.00 </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End A8 Card -->
+
+          <!-- A10 Card -->
+          <div class="col-md-6">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">
+                  Completion Bonus <span>| Total</span>
+                </h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bx bx-money"></i>
+                  </div>
+                  <div class="ps-3">
+                    <h6 class="text-truncate">
+                      &#8358; <span> 360,000.00 </span>
+                    </h6>
+                    <span class="text-success small pt-1 fw-bold">8%</span>
+                    <span class="text-muted small pt-2 ps-1">increase</span>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="w-100 text-center more-info"
+                data-bs-toggle="modal"
+                data-bs-target="#completion-bonus-details"
+              >
+                <span>More info</span>
+                <i class="bx bxs-right-arrow-circle fs-5"></i>
+              </div>
+
+              <div
+                class="modal fade"
+                id="completion-bonus-details"
+                tabindex="-1"
+                aria-labelledby="completion-bonus-details-label"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">
+                        All Completion Bonus
+                      </h1>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <ul class="modal-body">
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Bronze
+                        </h5>
+                        <span class="text-end value"> &#8358; 300,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Bronze"
+                        >
+                          Gold
+                        </h5>
+                        <span class="text-end value"> &#8358; 75,000.00 </span>
+                      </li>
+                      <li
+                        class="list-group-item d-flex justify-content-between px-0 border-0"
+                      >
+                        <h5
+                          class="text-truncate"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="top"
+                          title="Diamond"
+                        >
+                          Diamond
+                        </h5>
+                        <span class="text-end value"> &#8358; 210,000.00 </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End A10 Card -->
+          <!-- A9 card -->
+          <div class="col-md-6">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">TESTIMONY BONUS</h5>
+                <div class="overflow-x-auto">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Package</th>
+                        <th scope="col">Amount(&#8358;)</th>
+                        <th scope="col">Count</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="table-danger">
+                        <th scope="row">Bronze</th>
+                        <td>30,000</td>
+                        <td>8</td>
+                      </tr>
+                      <tr class="table-warning">
+                        <th scope="row">Gold</th>
+                        <td>40,000</td>
+                        <td>2</td>
+                      </tr>
+                      <tr class="table-info">
+                        <th scope="row">Diamond</th>
+                        <td>2,000</td>
+                        <td>4</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End A9 card -->
+          <!-- A14 card -->
+          <div class="col-md-6">
+            <div class="card info-card customers-card">
+              <div class="card-body">
+                <h5 class="card-title">UNCLAIMED REWARDS</h5>
+                <div class="overflow-x-auto">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Package</th>
+                        <th scope="col">Amount(&#8358;)</th>
+                        <th scope="col">Count</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="table-danger">
+                        <th scope="row">Bronze</th>
+                        <td>30,000</td>
+                        <td>8</td>
+                      </tr>
+                      <tr class="table-warning">
+                        <th scope="row">Gold</th>
+                        <td>40,000</td>
+                        <td>2</td>
+                      </tr>
+                      <tr class="table-info">
+                        <th scope="row">Diamond</th>
+                        <td>2,000</td>
+                        <td>4</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End A14 card -->
+
+          <!-- End Main columns -->
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer">
+      <div class="copyright">
+        &copy; Copyright <strong><span>Grand Health Cycle</span></strong
+        >. All Rights Reserved
+      </div>
+    </footer>
+    <!-- End Footer -->
+
+    <a
+      href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
+
+    <!-- Vendor JS Files -->
+    <script src="../assets/vendor/apexcharts/apexcharts.min.js"></script>
+    <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/vendor/chart.js/chart.umd.js"></script>
+    <script src="../assets/vendor/echarts/echarts.min.js"></script>
+    <script src="../assets/vendor/quill/quill.min.js"></script>
+    <script src="../assets/vendor/simple-datatables/simple-datatables.js"></script>
+    <script src="../assets/vendor/tinymce/tinymce.min.js"></script>
+    <script src="../assets/vendor/php-email-form/validate.js"></script>
+
+    <!-- Template Main JS File -->
+    <script src="../assets/js/main-dashboard.js"></script>
+    <script>
+      const bronzeProgressBar = document.getElementById("bronze-progress-bar");
+      bronzeProgressBar.style.setProperty("--percent", 4);
+      const goldProgressBar = document.getElementById("gold-progress-bar");
+      goldProgressBar.style.setProperty("--percent", 8);
+      const diamondProgressBar = document.getElementById(
+        "diamond-progress-bar"
+      );
+      diamondProgressBar.style.setProperty("--percent", 2);
+    </script>
+  </body>
+</html>

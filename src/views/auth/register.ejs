@@ -45,21 +45,26 @@
                     <form
                       action="/auth/register"
                       class="col-12"
-                      id="enter-sponsor-id"
+                      novalidate
+                      id="auth-form"
                     >
+                      <input type="hidden" />
                       <p class="text-center small">
                         Enter your Sponsor Details
                       </p>
-                      <label for="sponsor-id" class="form-label"
-                        >Sponsor username</label
-                      >
-                      <input
-                        type="text"
-                        name="sponsorId"
-                        class="form-control"
-                        id="sponsor-id"
-                        required
-                      />
+                      <div class="form-group">
+                        <label for="sponsor-id" class="form-label"
+                          >Sponsor username</label
+                        >
+                        <input
+                          type="text"
+                          name="sponsorId"
+                          class="form-control"
+                          id="sponsor-id"
+                          required
+                          minlength="4"
+                        />
+                      </div>
                       <div class="mt-3 d-flex justify-content-between p-2">
                         <a href="#" class="btn btn-link">Skip</a>
                         <button
@@ -78,12 +83,21 @@
                       method="POST"
                       action="/auth/register"
                       class=""
-                      id="enter-user-detail"
+                      id="auth-form"
+                      novalidate
                     >
                       <div class="col-12">
                         <p class="text-center small">
                           Enter your personal details to create account
                         </p>
+                      </div>
+                      <input
+                        type="text"
+                        name="sponsorUsername"
+                        value="<%= sponsorUsername %>"
+                        class="d-none"
+                      />
+                      <div class="form-group">
                         <label for="yourName" class="form-label">Name</label>
                         <input
                           type="text"
@@ -92,17 +106,9 @@
                           id="yourName"
                           required
                         />
-                        <div class="invalid-feedback">
-                          Please, enter your name!
-                        </div>
                       </div>
-                      <input
-                        type="text"
-                        name="sponsorUsername"
-                        value="<%= sponsorUsername %>"
-                        class="d-none"
-                      />
-                      <div class="col-12">
+
+                      <div class="col-12 form-group">
                         <label for="yourUsername" class="form-label"
                           >Username</label
                         >
@@ -113,13 +119,14 @@
                             class="form-control"
                             id="yourUsername"
                             required
+                            minlength="4"
                           />
                           <div class="invalid-feedback">
                             Please choose a username.
                           </div>
                         </div>
                       </div>
-                      <div class="col-12">
+                      <div class="col-12 form-group">
                         <label for="gender" class="form-label">Gender</label>
                         <select
                           class="form-select"
@@ -133,7 +140,7 @@
                         </select>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-12 form-group">
                         <label for="yourEmail" class="form-label">Email</label>
                         <input
                           type="email"
@@ -147,7 +154,7 @@
                         </div>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-12 form-group">
                         <label for="country" class="form-label">Country</label
                         ><!--<span
                           style="color: red !important; display: inline; float: none;">*</span> -->
@@ -502,7 +509,7 @@
                         </select>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-12 form-group">
                         <label for="city" class="form-label">City</label>
                         <input
                           type="text"
@@ -511,14 +518,11 @@
                           id="city"
                           required
                         />
-                        <div class="invalid-feedback">
-                          Please enter your city!
-                        </div>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-12 form-group">
                         <label for="phonenumber" class="form-label"
-                          >Phonenumber</label
+                          >Phone</label
                         >
                         <input
                           type="text"
@@ -527,12 +531,9 @@
                           id="phonenumber"
                           required
                         />
-                        <div class="invalid-feedback">
-                          Please enter your phone number!
-                        </div>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-12 form-group">
                         <label for="yourPassword" class="form-label"
                           >Password</label
                         >
@@ -542,13 +543,11 @@
                           class="form-control"
                           id="yourPassword"
                           required
+                          minlength="6"
                         />
-                        <div class="invalid-feedback">
-                          Please enter your password!
-                        </div>
                       </div>
 
-                      <div class="col-12">
+                      <div class="col-12 form-group">
                         <label for="confirmPassword" class="form-label"
                           >Confirm Password</label
                         >
@@ -558,14 +557,12 @@
                           class="form-control"
                           id="confirmPassword"
                           required
+                          minlength="6"
                         />
-                        <div class="invalid-feedback">
-                          Password does not match!
-                        </div>
                       </div>
 
                       <div class="mt-3 d-flex justify-content-between p-2">
-                        <a href="#" class="btn btn-link">Back</a>
+                        <a href="/auth/register" class="btn btn-link">Back</a>
                         <button
                           type="submit"
                           class="btn btn-primary m-0"
@@ -656,7 +653,7 @@
                     <div class="col-12">
                       <p class="small text-center mb-0">
                         Already have an account?
-                        <a href="./login.html" class="btn btn-link px-0"
+                        <a href="/auth/login" class="btn btn-link px-0"
                           >Log in</a
                         >
                       </p>
@@ -670,22 +667,7 @@
       </section>
     </main>
     <!-- End #main -->
-    <script>
-      // const submitSponsorId = document.getElementById("submit-sponsor-id");
-      // const enterSponsorId = document.getElementById("enter-sponsor-id");
-      // const submitUserDetail = document.getElementById("submit-user-detail");
-      // const enterUserDetail = document.getElementById("enter-user-detail");
-      // const enterBankDetail = document.getElementById("enter-bank-detail");
 
-      // submitSponsorId.addEventListener("click", () => {
-      //   enterSponsorId.classList.toggle("d-none");
-      //   enterUserDetail.classList.toggle("d-none");
-      // });
-      // submitUserDetail.addEventListener("click", () => {
-      //   enterBankDetail.classList.toggle("d-none");
-      //   enterUserDetail.classList.toggle("d-none");
-      // });
-    </script>
     <%- include('partials/scripts') %>
   </body>
 </html>

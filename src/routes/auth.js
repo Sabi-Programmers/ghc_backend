@@ -1,6 +1,10 @@
 import express from "express";
 import passport from "passport";
 import { createUser, getSponsor } from "../controllers/auth.js";
+import {
+  validateAuth,
+  validateLoginAuth,
+} from "../validators/authValidators.js";
 const authRouter = express.Router();
 
 const middlewares = (req, res, next) => {
@@ -17,6 +21,8 @@ authRouter.get("/login", middlewares, (req, res) => {
 });
 authRouter.post(
   "/login",
+  validateLoginAuth,
+  validateAuth,
   passport.authenticate("local", {
     successRedirect: "/dashboard",
     failureRedirect: "/auth/login",
