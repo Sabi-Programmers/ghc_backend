@@ -2,6 +2,7 @@ import { body, validationResult } from "express-validator";
 import { StatusCodes } from "http-status-codes";
 
 const validateCreateUserAuth = [
+  body("sponsorUsername").exists().withMessage("sponspor username is required"),
   body("fullName").exists().withMessage("name is required"),
 
   body("username")
@@ -90,6 +91,7 @@ const validateLoginAuth = [
 
 const validateAuth = (req, res, next) => {
   const errors = validationResult(req);
+  console.log(errors);
   if (!errors.isEmpty()) {
     return res.render("error-page", {
       title: "Invalid Request",
@@ -101,4 +103,4 @@ const validateAuth = (req, res, next) => {
   return next();
 };
 
-export { validateLoginAuth, validateAuth };
+export { validateLoginAuth, validateCreateUserAuth, validateAuth };

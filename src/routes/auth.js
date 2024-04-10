@@ -3,6 +3,7 @@ import passport from "passport";
 import { createUser, getSponsor } from "../controllers/auth.js";
 import {
   validateAuth,
+  validateCreateUserAuth,
   validateLoginAuth,
 } from "../validators/authValidators.js";
 const authRouter = express.Router();
@@ -15,7 +16,7 @@ const middlewares = (req, res, next) => {
 };
 
 authRouter.get("/register", middlewares, getSponsor);
-authRouter.post("/register", createUser);
+authRouter.post("/register", validateCreateUserAuth, validateAuth, createUser);
 authRouter.get("/login", middlewares, (req, res) => {
   res.render("auth/login", { title: "Login" });
 });
