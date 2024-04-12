@@ -1,34 +1,36 @@
 import bcrypt from "bcryptjs";
 import database from "../libs/prisma.js";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
+import { generateVitualBankDetails } from "../services/virtualBank.js";
 
 const getSponsor = asyncWrapper(async (req, res) => {
   const { sponsorId } = req.query;
 
   //   console.log(req.body);
   let sponsorUsername = null;
+  let error = null;
   if (sponsorId) {
-    const sponsor = await database.user.findFirst({
-      where: { username: sponsorId.toLowerCase() },
-    });
-    if (sponsor) {
-      sponsorUsername = sponsor.username;
+    if (sponsorId === "GHC") {
+      sponsorUsername = sponsorId;
+    } else {
+      const sponsor = await database.user.findFirst({
+        where: { username: sponsorId.toLowerCase() },
+      });
+      if (sponsor) {
+        sponsorUsername = sponsor.username;
+      } else {
+        error = "Could not sponsor";
+      }
     }
   }
 
   res.render("auth/register", {
     title: "Create an account",
     sponsorUsername,
+    error,
   });
-  // const user = await database.user.create({
-  //     data: {
-  //         username: username.toLowerCase(),
-  //         password: hashedPassword,
-  //     },
-  // });
-  //   res.redirect("/auth/register");
 });
-const createUser = asyncWrapper(async (req, res) => {
+const createUser = asyncWrapper(async (req, res, next) => {
   const {
     username,
     password,
@@ -43,7 +45,7 @@ const createUser = asyncWrapper(async (req, res) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  await database.user.create({
+  const user = await database.user.create({
     data: {
       username: username.toLowerCase(),
       password: hashedPassword,
@@ -54,26 +56,29 @@ const createUser = asyncWrapper(async (req, res) => {
       sponsorUsername,
       fullName,
       gender,
-      unclaimedRewards: { create: {} },
-      withdrawalWallet: { create: {} },
-      leaderCycleBonus: { create: {} },
-      salesIncomeBonus: { create: {} },
-      referrerIncome: { create: {} },
-      cycleWelcomeBonus: { create: {} },
-      testimonyBonus: { create: {} },
-      completionBonus: { create: {} },
-    },
-    include: {
-      unclaimedRewards: true,
-      withdrawalWallet: true,
-      leaderCycleBonus: true,
-      salesIncomeBonus: true,
-      referrerIncome: true,
-      cycleWelcomeBonus: true,
-      testimonyBonus: true,
-      completionBonus: true,
     },
   });
+
+  const virtualBankDetails = await generateVitualBankDetails(
+    user.fullName,
+    next
+  );
+
+  if (virtualBankDetails === null) {
+    res.redirect("/auth/login");
+  }
+
+  const { virtualBankName, accountName, accountNumber } = virtualBankDetails;
+
+  await database.ewallet.create({
+    data: {
+      userId: user.id,
+      virtualBankName,
+      accountName,
+      accountNumber,
+    },
+  });
+
   res.redirect("/auth/login");
 });
 

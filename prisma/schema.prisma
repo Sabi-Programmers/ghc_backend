@@ -27,7 +27,7 @@ model User {
   email             String             @unique
   country           String
   city              String
-  sponsorUsername   String
+  sponsorUsername   String             @default("GHC")
   phone             String             @unique
   password          String
   gender            Genders
