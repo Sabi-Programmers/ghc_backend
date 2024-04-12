@@ -354,4 +354,16 @@
       }).observe(mainContainer);
     }, 200);
   }
+
+  // Progress Bar
+  // const bronzeProgressBar = document.getElementById("bronze-progress-bar");
+  // bronzeProgressBar.style.setProperty("--percent", 4);
+  // const goldProgressBar = document.getElementById("gold-progress-bar");
+  // goldProgressBar.style.setProperty("--percent", 8);
+  // const diamondProgressBar = document.getElementById("diamond-progress-bar");
+  // diamondProgressBar.style.setProperty("--percent", 2);
+  document.querySelectorAll(".progress-bars").forEach((progressBar) => {
+    const percent = progressBar.dataset.percent;
+    progressBar.style.setProperty("--percent", `${percent}`);
+  });
 })();

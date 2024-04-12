@@ -33,10 +33,14 @@ model User {
   gender            Genders
   role              UserRole           @default(MEMBER)
   isBlocked         Boolean            @default(false)
+  hasFunded         Boolean            @default(false)
   displayPhoto      String?
+  bankName          String?
+  accountNumber     Int?               @unique
+  accountName       String?
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
-  bankDetails       BankDetails?
+  eWallet           Ewallet?
   leaderCycleBonus  LeaderCycleBonus?
   withdrawalWallet  WithdrawalWallet?
   salesIncomeBonus  SalesIncomeBonus?
@@ -47,103 +51,90 @@ model User {
   unclaimedRewards  UnclaimedRewards?
 }
 
-model BankDetails {
-  id            Int      @id @default(autoincrement())
-  bankName      String
-  accountNumber Int      @unique
-  accountName   String
-  userId        Int      @unique
-  User          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+model Ewallet {
+  id              Int    @id @default(autoincrement())
+  virtualBankName String
+  accountNumber   Int    @unique
+  accountName     String
+  balance         Float  @default(0.00)
+  userId          Int    @unique
+  User            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model LeaderCycleBonus {
-  id        Int      @id @default(autoincrement())
-  bronze    Float    @default(0.00)
-  gold      Float    @default(0.00)
-  diamond   Float    @default(0.00)
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id      Int   @id @default(autoincrement())
+  bronze  Float @default(0.00)
+  gold    Float @default(0.00)
+  diamond Float @default(0.00)
+  userId  Int   @unique
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model WithdrawalWallet {
-  id        Int      @id @default(autoincrement())
-  bronze    Float    @default(0.00)
-  gold      Float    @default(0.00)
-  diamond   Float    @default(0.00)
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId    Int      @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          Int   @id @default(autoincrement())
+  bronze      Float @default(0.00)
+  gold        Float @default(0.00)
+  diamond     Float @default(0.00)
+  leaderCycle Float @default(0.00)
+  salesIncome Float @default(0.00)
+  userId      Int   @unique
+  user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model SalesIncomeBonus {
-  id        Int      @id @default(autoincrement())
-  amount    Float    @default(0.00)
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id     Int   @id @default(autoincrement())
+  amount Float @default(0.00)
+  userId Int   @unique
+  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model ReferrerIncome {
-  id        Int      @id @default(autoincrement())
-  bronze    Float    @default(0.00)
-  gold      Float    @default(0.00)
-  diamond   Float    @default(0.00)
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id      Int   @id @default(autoincrement())
+  bronze  Float @default(0.00)
+  gold    Float @default(0.00)
+  diamond Float @default(0.00)
+  userId  Int   @unique
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model CycleWelcomeBonus {
-  id        Int      @id @default(autoincrement())
-  bronze    Float    @default(0.00)
-  gold      Float    @default(0.00)
-  diamond   Float    @default(0.00)
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id      Int   @id @default(autoincrement())
+  bronze  Float @default(0.00)
+  gold    Float @default(0.00)
+  diamond Float @default(0.00)
+  userId  Int   @unique
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model TestimonyBonus {
-  id        Int      @id @default(autoincrement())
-  bronze    Float    @default(0.00)
-  gold      Float    @default(0.00)
-  diamond   Float    @default(0.00)
-  count     Int      @default(0)
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int   @id @default(autoincrement())
+  bronze       Float @default(0.00)
+  gold         Float @default(0.00)
+  diamond      Float @default(0.00)
+  bronzeCount  Int   @default(0)
+  goldCount    Int   @default(0)
+  diamondCount Int   @default(0)
+  userId       Int   @unique
+  user         User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model CompletionBonus {
-  id        Int      @id @default(autoincrement())
-  bronze    Float    @default(0.00)
-  gold      Float    @default(0.00)
-  diamond   Float    @default(0.00)
-  userId    Int      @unique
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id      Int   @id @default(autoincrement())
+  bronze  Float @default(0.00)
+  gold    Float @default(0.00)
+  diamond Float @default(0.00)
+  userId  Int   @unique
+  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UnclaimedRewards {
-  id               Int      @id @default(autoincrement())
-  bronze           Float    @default(0.00)
-  bronzeLostCount  Int      @default(0)
-  gold             Float    @default(0.00)
-  goldLostCount    Int      @default(0)
-  diamond          Float    @default(0.00)
-  diamondLostCount Int      @default(0)
-  userId           Int      @unique
-  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  id               Int   @id @default(autoincrement())
+  bronze           Float @default(0.00)
+  bronzeLostCount  Int   @default(0)
+  gold             Float @default(0.00)
+  goldLostCount    Int   @default(0)
+  diamond          Float @default(0.00)
+  diamondLostCount Int   @default(0)
+  userId           Int   @unique
+  user             User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
