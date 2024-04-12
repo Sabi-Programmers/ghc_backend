@@ -6,6 +6,6 @@
 
 ### Form Error handling (client)
 
-### Add Authorization Middleware and Role based authentication
-
 ### Use UserService
+
+### create wallets tables (funding, withdrawal, e-wallets.....)

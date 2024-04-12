@@ -1,6 +1,6 @@
 import { body, validationResult } from "express-validator";
 import { StatusCodes } from "http-status-codes";
-import CustomError from "../errors/CustomError";
+import CustomError from "../errors/CustomError.js";
 
 const validateCreateUserAuth = [
   body("sponsorUsername").exists().withMessage("sponspor username is required"),

@@ -21,19 +21,129 @@ enum UserRole {
 }
 
 model User {
-  id              String   @id @default(uuid())
-  username        String   @unique
-  fullName        String
-  email           String   @unique
-  country         String
-  city            String
-  sponsorUsername String
-  phone           String
-  password        String
-  gender          Genders
-  role            UserRole @default(MEMBER)
-  isBlocked       Boolean  @default(false)
-  displayPhoto    String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                String             @id @default(uuid())
+  username          String             @unique
+  fullName          String
+  email             String             @unique
+  country           String
+  city              String
+  sponsorUsername   String
+  phone             String
+  password          String
+  gender            Genders
+  role              UserRole           @default(MEMBER)
+  isBlocked         Boolean            @default(false)
+  displayPhoto      String?
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
+  bankDetails       BankDetails?
+  withdrawalWallet  WithdrawalWallet?
+  leaderCycleBonus  LeaderCycleBonus?
+  salesIncomeBonus  SalesIncomeBonus?
+  referrerIncome    ReferrerIncome?
+  cycleWelcomeBonus CycleWelcomeBonus?
+  testimonyBonus    TestimonyBonus?
+  completionBonus   CompletionBonus?
+  unclaimedRewards  UnclaimedRewards?
+}
+
+model BankDetails {
+  id            String   @id @default(uuid())
+  bankName      String
+  accountNumber String
+  accountName   String
+  userId        String   @unique
+  User          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model WithdrawalWallet {
+  id        String   @id @default(uuid())
+  bronze    Float
+  gold      Float
+  diamond   Float
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model LeaderCycleBonus {
+  id        String   @id @default(uuid())
+  bronze    Float
+  gold      Float
+  diamond   Float
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SalesIncomeBonus {
+  id        String   @id @default(uuid())
+  amount    Float
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ReferrerIncome {
+  id        String   @id @default(uuid())
+  bronze    Float
+  gold      Float
+  diamond   Float
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CycleWelcomeBonus {
+  id        String   @id @default(uuid())
+  bronze    Float
+  gold      Float
+  diamond   Float
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TestimonyBonus {
+  id        String   @id @default(uuid())
+  bronze    Float
+  gold      Float
+  diamond   Float
+  count     Int
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model CompletionBonus {
+  id        String   @id @default(uuid())
+  bronze    Float
+  gold      Float
+  diamond   Float
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model UnclaimedRewards {
+  id               String   @id @default(uuid())
+  bronze           Float
+  bronzeLostCount  Int
+  gold             Float
+  goldLostCount    Int
+  diamond          Float
+  diamondLostCount Int
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id])
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }
