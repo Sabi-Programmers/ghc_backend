@@ -28,7 +28,8 @@
                     </div>
                     <div class="ps-3 text-truncate">
                       <h6 class="text-truncate">
-                        &#8358; <span><%- data.eWallet ? 30.00 : 0.00 %></span>
+                        &#8358;
+                        <span><%- data.user.eWallet ? 30.00 : 0.00 %></span>
                       </h6>
                       <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                       <span class="text-muted small pt-2 ps-1">increase</span> -->
@@ -38,7 +39,7 @@
                     class="align-items-center d-flex gap-2 mt-0 flex-column flex-sm-row flex-md-column text-truncate"
                   >
                     <a
-                      href="./fund-wallet.html"
+                      href="/e-wallet"
                       class="btn btn-success w-100 text-truncate"
                       data-bs-toggle="tooltip"
                       data-bs-placement="top"
@@ -63,7 +64,7 @@
           </div>
           <!-- End A3 Card -->
 
-          <% if (data.hasFunded) { %>
+          <% if (data.user.hasFunded) { %>
 
           <!-- A4 Card -->
           <div class="col-md-6">
@@ -81,10 +82,11 @@
                   </div>
                   <div class="ps-3 text-truncate">
                     <h6 class="text-truncate">
-                      $ <%- data.withdrawalWallet.salesIncome +
-                      data.withdrawalWallet.gold + data.withdrawalWallet.diamond
-                      + data.withdrawalWallet.bronze +
-                      data.withdrawalWallet.leaderCycle %>
+                      $ <%- data.user.withdrawalWallet.salesIncome +
+                      data.user.withdrawalWallet.gold +
+                      data.user.withdrawalWallet.diamond +
+                      data.user.withdrawalWallet.bronze +
+                      data.user.withdrawalWallet.leaderCycle %>
                     </h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
@@ -134,7 +136,7 @@
                           Bronze
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.withdrawalWallet.bronze %>
+                          $ <%- data.user.withdrawalWallet.bronze %>
                         </span>
                       </li>
                       <li
@@ -149,7 +151,7 @@
                           Gold
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.withdrawalWallet.gold %>
+                          $ <%- data.user.withdrawalWallet.gold %>
                         </span>
                       </li>
                       <li
@@ -164,7 +166,7 @@
                           Diamond
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.withdrawalWallet.diamond %>
+                          $ <%- data.user.withdrawalWallet.diamond %>
                         </span>
                       </li>
                       <li
@@ -179,7 +181,7 @@
                           Leader cylce
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.withdrawalWallet.leaderCycle %>
+                          $ <%- data.user.withdrawalWallet.leaderCycle %>
                         </span>
                       </li>
                       <li
@@ -194,7 +196,7 @@
                           Sales income
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.withdrawalWallet.salesIncome %>
+                          $ <%- data.user.withdrawalWallet.salesIncome %>
                         </span>
                       </li>
                     </ul>
@@ -519,7 +521,7 @@
                   </div>
                   <div class="ps-3">
                     <h6 class="text-truncate">
-                      $ <%- data.salesIncomeBonus.amount %>
+                      $ <%- data.user.salesIncomeBonus.amount %>
                     </h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
@@ -549,9 +551,9 @@
                   </div>
                   <div class="ps-3">
                     <h6 class="text-truncate">
-                      $ <%- data.leaderCycleBonus.diamond +
-                      data.leaderCycleBonus.gold + data.leaderCycleBonus.bronze
-                      %>
+                      $ <%- data.user.leaderCycleBonus.diamond +
+                      data.user.leaderCycleBonus.gold +
+                      data.user.leaderCycleBonus.bronze %>
                     </h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
@@ -601,7 +603,7 @@
                           Bronze
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.leaderCycleBonus.bronze %>
+                          $ <%- data.user.leaderCycleBonus.bronze %>
                         </span>
                       </li>
                       <li
@@ -616,7 +618,7 @@
                           Gold
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.leaderCycleBonus.gold %></span
+                          $ <%- data.user.leaderCycleBonus.gold %></span
                         >
                       </li>
                       <li
@@ -631,7 +633,7 @@
                           Diamond
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.leaderCycleBonus.diamond %>
+                          $ <%- data.user.leaderCycleBonus.diamond %>
                         </span>
                       </li>
                     </ul>
@@ -658,9 +660,9 @@
                   </div>
                   <div class="ps-3">
                     <h6 class="text-truncate">
-                      $ <%- data.cycleWelcomeBonus.diamond +
-                      data.cycleWelcomeBonus.gold +
-                      data.cycleWelcomeBonus.bronze %>
+                      $ <%- data.user.cycleWelcomeBonus.diamond +
+                      data.user.cycleWelcomeBonus.gold +
+                      data.user.cycleWelcomeBonus.bronze %>
                     </h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
@@ -709,7 +711,7 @@
                           Bronze
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.cycleWelcomeBonus.bronze %>
+                          $ <%- data.user.cycleWelcomeBonus.bronze %>
                         </span>
                       </li>
                       <li
@@ -724,7 +726,7 @@
                           Gold
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.cycleWelcomeBonus.gold %>
+                          $ <%- data.user.cycleWelcomeBonus.gold %>
                         </span>
                       </li>
                       <li
@@ -739,7 +741,7 @@
                           Diamond
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.cycleWelcomeBonus.diamond %>
+                          $ <%- data.user.cycleWelcomeBonus.diamond %>
                         </span>
                       </li>
                     </ul>
@@ -766,9 +768,9 @@
                   </div>
                   <div class="ps-3">
                     <h6 class="text-truncate">
-                      $ <%- data.completionBonus.bronze +
-                      data.completionBonus.gold + data.completionBonus.diamond
-                      %>
+                      $ <%- data.user.completionBonus.bronze +
+                      data.user.completionBonus.gold +
+                      data.user.completionBonus.diamond %>
                     </h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
@@ -818,7 +820,7 @@
                           Bronze
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.completionBonus.bronze %>
+                          $ <%- data.user.completionBonus.bronze %>
                         </span>
                       </li>
                       <li
@@ -833,7 +835,7 @@
                           Gold
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.completionBonus.gold %>
+                          $ <%- data.user.completionBonus.gold %>
                         </span>
                       </li>
                       <li
@@ -848,7 +850,7 @@
                           Diamond
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.completionBonus.diamond %>
+                          $ <%- data.user.completionBonus.diamond %>
                         </span>
                       </li>
                     </ul>
@@ -912,18 +914,22 @@
                     <tbody>
                       <tr class="table-danger">
                         <th scope="row">Bronze</th>
-                        <td><%- data.unclaimedRewards.bronze %></td>
-                        <td><%- data.unclaimedRewards.bronzeLostCount %></td>
+                        <td><%- data.user.unclaimedRewards.bronze %></td>
+                        <td>
+                          <%- data.user.unclaimedRewards.bronzeLostCount %>
+                        </td>
                       </tr>
                       <tr class="table-warning">
                         <th scope="row">Gold</th>
-                        <td><%- data.unclaimedRewards.gold %></td>
-                        <td><%- data.unclaimedRewards.goldLostCount %></td>
+                        <td><%- data.user.unclaimedRewards.gold %></td>
+                        <td><%- data.user.unclaimedRewards.goldLostCount %></td>
                       </tr>
                       <tr class="table-info">
                         <th scope="row">Diamond</th>
-                        <td><%- data.unclaimedRewards.diamond %></td>
-                        <td><%- data.unclaimedRewards.diamondLostCount %></td>
+                        <td><%- data.user.unclaimedRewards.diamond %></td>
+                        <td>
+                          <%- data.user.unclaimedRewards.diamondLostCount %>
+                        </td>
                       </tr>
                     </tbody>
                   </table>

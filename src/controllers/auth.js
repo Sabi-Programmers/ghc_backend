@@ -2,6 +2,7 @@ import bcrypt from "bcryptjs";
 import database from "../libs/prisma.js";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
 import { generateVitualBankDetails } from "../services/virtualBank.js";
+import { createEWallet } from "../services/eWalletServices.js";
 
 const getSponsor = asyncWrapper(async (req, res) => {
   const { sponsorId } = req.query;
@@ -59,25 +60,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
     },
   });
 
-  const virtualBankDetails = await generateVitualBankDetails(
-    user.fullName,
-    next
-  );
-
-  if (virtualBankDetails === null) {
-    res.redirect("/auth/login");
-  }
-
-  const { virtualBankName, accountName, accountNumber } = virtualBankDetails;
-
-  await database.ewallet.create({
-    data: {
-      userId: user.id,
-      virtualBankName,
-      accountName,
-      accountNumber,
-    },
-  });
+  await createEWallet(user);
 
   res.redirect("/auth/login");
 });

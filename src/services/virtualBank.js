@@ -4,12 +4,13 @@ function generateRandomNumber() {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-const generateVitualBankDetails = async (name) => {
+const generateVitualBankDetails = async (user) => {
   try {
     return new Promise((resolve, reject) => {
       const randomAccNumber = generateRandomNumber();
+
       const bankdetails = {
-        accountName: name,
+        accountName: user.fullName,
         accountNumber: randomAccNumber,
         virtualBankName: "GHC Demo Bank",
       };
