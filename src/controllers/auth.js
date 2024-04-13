@@ -60,7 +60,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
     },
   });
 
-  await createEWallet(user);
+  await createEWallet(user, next);
 
   res.redirect("/auth/login");
 });

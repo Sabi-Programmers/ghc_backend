@@ -22,7 +22,8 @@ const createEWallet = async (user) => {
 
     return eWallet;
   } catch (error) {
-    return;
+    console.log(error);
+    return null;
   }
 };
 

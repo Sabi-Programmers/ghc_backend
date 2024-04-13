@@ -15,14 +15,15 @@ const getEWallet = asyncWrapper(async (req, res) => {
   });
   if (!existingEWallet) {
     const newEWallet = await createEWallet(req.user);
-    console.log("E-wallet Contoller: " + newEWallet);
     if (newEWallet) {
       data.eWallet = newEWallet;
     }
   } else {
     data.eWallet = existingEWallet;
   }
+
   console.log(data.eWallet);
+
   res.render("member/e-wallet", { title: "E-Wallet", data });
 });
 
