@@ -18,7 +18,7 @@ authRouter.post(
   createUser
 );
 authRouter.get("/login", isUnauthenticated, (req, res) => {
-  res.render("auth/login", { title: "Login" });
+  res.render("auth/login", { title: "Login", data: { error: null } });
 });
 authRouter.post(
   "/login",
@@ -28,6 +28,7 @@ authRouter.post(
   passport.authenticate("local", {
     successRedirect: "/dashboard",
     failureRedirect: "/auth/login",
+    failureFlash: true, // Enable flash messages for authentication failures
   })
 );
 authRouter.post("/logout", (req, res, next) => {

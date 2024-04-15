@@ -5,18 +5,30 @@ import database from "../libs/prisma.js";
 
 // Passport local strategy for authentication
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
-    const user = await database.user.findFirst({
-      where: { username: username.toLowerCase() },
-    });
-    if (!user) {
-      return done(null, false, { message: "Incorrect username." });
+  new LocalStrategy(
+    {
+      usernameField: "username",
+      passwordField: "password",
+    },
+    async (username, password, done) => {
+      const user = await database.user.findFirst({
+        where: {
+          OR: [{ username: username }, { email: username }],
+        },
+      });
+      if (!user) {
+        return done(null, false, {
+          message: "Username or Email does't match Password",
+        });
+      }
+      if (!bcrypt.compareSync(password, user.password)) {
+        return done(null, false, {
+          message: "Username or Email does't match Password",
+        });
+      }
+      return done(null, user);
     }
-    if (!bcrypt.compareSync(password, user.password)) {
-      return done(null, false, { message: "Incorrect password." });
-    }
-    return done(null, user);
-  })
+  )
 );
 
 // Serialize and deserialize user

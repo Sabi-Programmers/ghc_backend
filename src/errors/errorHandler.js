@@ -1,9 +1,8 @@
 import { StatusCodes } from "http-status-codes";
-
 import CustomError from "./CustomError.js";
 
 const errorHandler = (err, req, res, next) => {
-  console.log(err);
+  console.log("From Error Handler: " + err);
   if (err instanceof CustomError) {
     return res.render("error-page", {
       title: err.title,
@@ -11,15 +10,6 @@ const errorHandler = (err, req, res, next) => {
       message: err.message,
     });
   }
-  // if (Object.prototype.hasOwnProperty.call(err, 'meta')) {
-  //     return response(
-  //         res,
-  //         StatusCodes.BAD_REQUEST,
-  //         'Bad Request',
-  //         null,
-  //         err.meta,
-  //     );
-  // }
 
   return res.render("error-page", {
     title: "Internal Server Error",

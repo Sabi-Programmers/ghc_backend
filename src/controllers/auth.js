@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import database from "../libs/prisma.js";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
@@ -20,15 +21,14 @@ const getSponsor = asyncWrapper(async (req, res) => {
       if (sponsor) {
         sponsorUsername = sponsor.username;
       } else {
-        error = "Could not sponsor";
+        error = "Could not find Sponsor";
       }
     }
   }
 
   res.render("auth/register", {
     title: "Create an account",
-    sponsorUsername,
-    error,
+    data: { sponsorUsername, error },
   });
 });
 const createUser = asyncWrapper(async (req, res, next) => {
@@ -44,25 +44,47 @@ const createUser = asyncWrapper(async (req, res, next) => {
     gender,
   } = req.body;
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
 
-  const user = await database.user.create({
-    data: {
-      username: username.toLowerCase(),
-      password: hashedPassword,
-      phone,
-      email: email.toLowerCase(),
-      city,
-      country,
-      sponsorUsername,
-      fullName,
-      gender,
-    },
-  });
+    const user = await database.user.create({
+      data: {
+        username: username.toLowerCase(),
+        password: hashedPassword,
+        phone,
+        email: email.toLowerCase(),
+        city,
+        country,
+        sponsorUsername,
+        fullName,
+        gender,
+      },
+    });
 
-  await createEWallet(user, next);
+    await createEWallet(user, next);
+    res.redirect("/auth/login");
+  } catch (err) {
+    let error = null;
 
-  res.redirect("/auth/login");
+    if (err instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (err.code === "P2002") {
+        if (err.meta.target.includes("username")) {
+          error = "Username already exists";
+        } else if (err.meta.target.includes("email")) {
+          error = "Email already exists";
+        } else if (err.meta.target.includes("phone")) {
+          error = "Phone Number already exists";
+        } else {
+          error = err.meta.target;
+        }
+      }
+    }
+    return res.render("auth/register", {
+      title: "Create an account",
+      data: { sponsorUsername, error },
+    });
+  }
 });
 
 export { createUser, getSponsor };

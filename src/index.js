@@ -6,6 +6,7 @@ import helmet from "helmet";
 import cors from "cors";
 import passport from "passport";
 import session from "express-session";
+import connectFlash from "connect-flash";
 import router from "./routes/index.js";
 import notFound from "./errors/notFound.js";
 import errorHandler from "./errors/errorHandler.js";
@@ -39,6 +40,13 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+// Connect Flash
+app.use(connectFlash());
+app.use((req, res, next) => {
+  res.locals.messages = req.flash();
+  next();
+});
 
 app.use(express.static("public"));
 // app.use((req, res, next) => {
