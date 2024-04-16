@@ -64,7 +64,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
     await createEWallet(user, next);
     res.redirect("/auth/login");
   } catch (err) {
-    let error = null;
+    let error = "something went wrong";
 
     if (err instanceof Prisma.PrismaClientKnownRequestError) {
       // The .code property can be accessed in a type-safe manner
@@ -80,6 +80,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
         }
       }
     }
+
     return res.render("auth/register", {
       title: "Create an account",
       data: { sponsorUsername, error },

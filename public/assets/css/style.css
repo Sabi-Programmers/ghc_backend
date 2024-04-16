@@ -39,11 +39,13 @@ ul {
   font-style: italic;
 }
 
-.has-success .form-control {
+.has-success .form-control,
+.has-success .form-select {
   border: 1px solid #168b3f;
 }
 
-.has-danger .form-control {
+.has-danger .form-control,
+.has-danger .form-select {
   border: 1px solid #dc1d34;
 }
 
