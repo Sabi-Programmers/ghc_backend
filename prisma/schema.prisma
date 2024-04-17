@@ -36,7 +36,7 @@ model User {
   hasFunded         Boolean            @default(false)
   displayPhoto      String?
   bankName          String?
-  accountNumber     Int?               @unique
+  accountNumber     BigInt?            @unique
   accountName       String?
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
@@ -54,7 +54,7 @@ model User {
 model Ewallet {
   id              Int    @id @default(autoincrement())
   virtualBankName String
-  accountNumber   Int
+  accountNumber   BigInt
   accountName     String
   balance         Float  @default(0.00)
   userId          Int    @unique
