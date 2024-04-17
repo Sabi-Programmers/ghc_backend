@@ -9,6 +9,44 @@
       <%- include('layout/breadcrumb') %>
 
       <section class="section dashboard">
+        <% if (data.user.hasFunded) { %>
+
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="refer-link-container">
+              <span>Your referral link:</span>
+              <p class="refer-link d-flex align-items-center gap-2">
+                https://ghc-backend-u8bz.onrender.com?ref=<%= data.user.username
+                %>
+                <span
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  title="Copy to Clipboard"
+                  class="copy-button btn btn-light"
+                  ><i class="bx bx-copy"></i
+                ></span>
+              </p>
+            </div>
+          </div>
+          <div class="col-12">
+            <div
+              class="jumbotron jumbotron-fluid bg-primary py-4 text-white dash-banner"
+            >
+              <div class="container">
+                <div class="row">
+                  <div class="col-8">
+                    <p class="lead fs-6">
+                      How to make 50,000 to 500,000 Naira weekly with
+                      Grandhealthcycle.
+                    </p>
+                    <a href="#" class="btn btn-link text-white">Click Here</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <% } %>
         <div class="row">
           <!-- A3 Card -->
           <div class="col-md-6">

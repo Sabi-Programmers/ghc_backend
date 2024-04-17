@@ -1221,3 +1221,11 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+/* --------- */
+.dash-banner {
+  background-image: url("../img/cash.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: right;
+}
