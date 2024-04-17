@@ -13,7 +13,10 @@ passport.use(
     async (username, password, done) => {
       const user = await database.user.findFirst({
         where: {
-          OR: [{ username: username }, { email: username }],
+          OR: [
+            { username: username.toLowerCase() },
+            { email: username.toLowerCase() },
+          ],
         },
       });
       if (!user) {

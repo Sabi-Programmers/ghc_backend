@@ -29,7 +29,10 @@
                     <div class="ps-3 text-truncate">
                       <h6 class="text-truncate">
                         &#8358;
-                        <span><%- data.user.eWallet ? 30.00 : 0.00 %></span>
+                        <span
+                          ><%- data.user.eWallet ? data.user.eWallet.balance :
+                          0.00 %></span
+                        >
                       </h6>
                       <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                       <span class="text-muted small pt-2 ps-1">increase</span> -->

@@ -49,9 +49,12 @@
                   ></span>
                 </div>
                 <div class="text-center text-md-start">
-                  <p class="fs-1">$ 0 <span></span></p>
+                  <p class="fs-1">
+                    $
+                    <span><%= (data.eWallet.balance / 1150).toFixed(2) %></span>
+                  </p>
                 </div>
-                <h6>1 USD ($) = 1200 NGN (&#8358;)</h6>
+                <h6>1 USD ($) = 1150 NGN (&#8358;)</h6>
               </div>
             </div>
             <% } else { %>
