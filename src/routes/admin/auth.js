@@ -21,7 +21,7 @@ authRouter.post(
   validateLoginAuth,
   validateAuth,
   passport.authenticate("admin-local", {
-    successRedirect: "admin/dashboard",
+    successRedirect: "/admin/dashboard",
     failureRedirect: "/admin/login",
     failureFlash: true, // Enable flash messages for authentication failures
   })

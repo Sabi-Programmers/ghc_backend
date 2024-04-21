@@ -77,11 +77,11 @@ passport.deserializeUser(async ({ id, role }, done) => {
     });
     done(null, user);
   } else if (role === "ADMIN") {
-    const admin = await database.admin.findFirst({
+    const user = await database.admin.findFirst({
       where: { id },
     });
 
-    done(null, admin);
+    done(null, user);
   } else {
     done({ message: "No entity found" }, null);
   }

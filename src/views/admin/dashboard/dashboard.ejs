@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+
+  <body>
+    <%- include('layout/navbar') %> <%- include('partials/logout') %> <%-
+    include('layout/sidebar') %>
+
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Admin Dashboard</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./dashbroad.html">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+
+      <section class="section admin-dash dashboard">
+        <div class="row">
+          <!-- Today Joining Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Today's Joinings</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">5,756</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Today Joining Card -->
+          <!-- month Joining Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">This Month's Joinings</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">195,056</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End month Joining Card -->
+          <!-- Year Joining Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">This Year's Joinings</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">3,705,062</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Year Joining Card -->
+          <!-- Total Member Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Total Members</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">30,050,981</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Total Member Card -->
+          <!-- Total Bronze Member Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Total Bronze Members</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">10,100,981</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Total Bronze Member Card -->
+          <!-- Total Gold Member Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Total Gold Members</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">7,810,001</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Total Gold Member Card -->
+          <!-- Total Diamond Member Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Total Diamond Members</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-people"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">12,010,300</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Total Gold Member Card -->
+          <!-- Bronze withdrawal request Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Bronze Withdrawal Request</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">
+                      $ <span> 3,000.00 </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Bronze withdrawal request Card -->
+          <!-- Gold withdrawal request Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Gold Withdrawal Request</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">
+                      $ <span> 1,400.00 </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Gold withdrawal request Card -->
+          <!-- Diamond withdrawal request Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Diamond Withdrawal Request</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ <span>400.00 </span></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Diamond withdrawal request Card -->
+          <!-- Sales Income withdrawal request Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Sales Income Withdrawal Request</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ <span>4100.00 </span></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Sales Income withdrawal request Card -->
+          <!--Leader bonus  withdrawal request Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Leader bonus Withdrawal Request</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ <span>4100.00 </span></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Leader bonus withdrawal request Card -->
+          <!-- Testimony bonus request Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Testimony bonus Request</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ <span>1200.00 </span></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Testimony bonus request Card -->
+          <!-- Bronze Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Bronze Payout</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ <span>1200.00 </span></h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Bronze Card -->
+          <!-- Gold Payout Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Gold Payout</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">
+                      $ <span>22,200.00 </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Gold payout Card -->
+          <!-- Diamond Payout Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Diamond Payout</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">
+                      $ <span>22,200.00 </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Diamond payout Card -->
+          <!-- Leader Cycle Payout Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Leaders Cycle Payout</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">
+                      $ <span>60,200.00 </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Leaders cycle payout Card -->
+          <!-- Sales Income Payout Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Sales Income Payout</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">
+                      $ <span>20,770.00 </span>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Sales income payout Card -->
+          <!-- Bronze Cycle Leaders Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Bronze Cycle Leaders</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">515,000</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Bronze Cycle Leaders Card -->
+          <!-- Gold Cycle Leaders Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Gold Cycle Leaders</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">515,000</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Gold Cycle Leaders Card -->
+          <!-- Diamond Cycle Leaders Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Diamond Cycle Leaders</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">15,000</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Diamond Cycle Leaders Card -->
+          <!-- Digital Product Sales Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Digital Product Sales</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Digital Product Sales Card -->
+          <!-- Physical Product Sales Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Physical Product Sales</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Physical Product Sales Card -->
+          <!-- Today order Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card sales-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">Today's Order</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End Today order Card -->
+          <!-- This Month Order Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">This Month Order</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End This Month Order Card -->
+          <!-- All Time Order Card -->
+          <div class="col-sm-6 col-lg-4 col-xxl-3">
+            <div class="card info-card revenue-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title">All Time Order</h5>
+
+                <div class="d-flex align-items-center">
+                  <div
+                    class="card-icon rounded-circle d-flex align-items-center justify-content-center"
+                  >
+                    <i class="bi bi-currency-dollar"></i>
+                  </div>
+                  <div class="ps-3 text-truncate">
+                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                  </div>
+                </div>
+              </div>
+
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <!-- End All Time Order Card -->
+
+          <!-- End Main columns -->
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('layout/footer') %> <%- include('partials/scripts') %>
+  </body>
+</html>
