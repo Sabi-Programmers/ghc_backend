@@ -2,6 +2,10 @@ import express from "express";
 const staticPagesRouter = express.Router();
 
 staticPagesRouter.get("", (req, res) => {
+  if (req.query.ref) {
+    return res.redirect("/auth/register?sponsorId=" + req.query.ref);
+  }
+
   res.render("staticPages/home", { title: "Home" });
 });
 staticPagesRouter.get("/about", (req, res) => {

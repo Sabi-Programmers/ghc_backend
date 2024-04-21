@@ -28,32 +28,42 @@ const getEWallet = asyncWrapper(async (req, res) => {
 const fundWallet = asyncWrapper(async (req, res) => {
   const amount = Number(req.query.amount);
 
-  await database.user.update({
-    where: { id: req.user.id },
-    data: {
-      hasFunded: true,
-      eWallet: { update: { balance: { increment: amount } } },
-      withdrawalWallet: { create: {} },
-      unclaimedRewards: { create: {} },
-      completionBonus: { create: {} },
-      referrerIncome: { create: {} },
-      testimonyBonus: { create: {} },
-      salesIncomeBonus: { create: {} },
-      leaderCycleBonus: { create: {} },
-      cycleWelcomeBonus: { create: {} },
-    },
-    include: {
-      eWallet: true,
-      withdrawalWallet: true,
-      unclaimedRewards: true,
-      completionBonus: true,
-      cycleWelcomeBonus: true,
-      referrerIncome: true,
-      leaderCycleBonus: true,
-      testimonyBonus: true,
-      salesIncomeBonus: true,
-    },
-  });
+  if (req.user.hasFunded) {
+    await database.ewallet.update({
+      where: { id: req.user.id },
+      data: {
+        balance: { increment: amount },
+      },
+    });
+  } else {
+    await database.user.update({
+      where: { id: req.user.id },
+      data: {
+        hasFunded: true,
+        eWallet: { update: { balance: { increment: amount } } },
+        withdrawalWallet: { create: {} },
+        unclaimedRewards: { create: {} },
+        completionBonus: { create: {} },
+        referrerIncome: { create: {} },
+        testimonyBonus: { create: {} },
+        salesIncomeBonus: { create: {} },
+        leaderCycleBonus: { create: {} },
+        cycleWelcomeBonus: { create: {} },
+      },
+      include: {
+        eWallet: true,
+        withdrawalWallet: true,
+        unclaimedRewards: true,
+        completionBonus: true,
+        cycleWelcomeBonus: true,
+        referrerIncome: true,
+        leaderCycleBonus: true,
+        testimonyBonus: true,
+        salesIncomeBonus: true,
+      },
+    });
+  }
+
   res.redirect("/e-wallet");
 });
 

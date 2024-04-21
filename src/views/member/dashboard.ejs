@@ -11,36 +11,45 @@
       <section class="section dashboard">
         <% if (data.user.hasFunded) { %>
 
-        <div class="row mb-4">
-          <div class="col-12">
-            <div class="refer-link-container">
-              <span>Your referral link:</span>
-              <p class="refer-link d-flex align-items-center gap-2">
-                https://ghc-backend-u8bz.onrender.com?ref=<%= data.user.username
-                %>
-                <span
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
-                  title="Copy to Clipboard"
-                  class="copy-button btn btn-light"
-                  ><i class="bx bx-copy"></i
-                ></span>
+        <div class="d-md-flex mb-2 gap-4">
+          <div class="w-100 card info-card sales-card overflow-hidden">
+            <h3
+              class="card-title fs-6 border-bottom px-4 more-info justify-content-start rounded-bottom-0"
+            >
+              Your Winning Strategy
+            </h3>
+            <div class="card-body">
+              <p class="card-text">
+                How to make 50,000 to 500,000 Naira weekly with
+                Grandhealthcycle.
               </p>
+              <a
+                href="#"
+                class="btn text-white"
+                style="background-color: #4153f1d0"
+                >Click Here</a
+              >
             </div>
           </div>
-          <div class="col-12">
-            <div
-              class="jumbotron jumbotron-fluid bg-primary py-4 text-white dash-banner"
+
+          <div class="w-100 card overflow-hidden revenue-card">
+            <h3
+              class="card-title fs-6 border-bottom px-4 more-info justify-content-start rounded-bottom-0"
             >
-              <div class="container">
-                <div class="row">
-                  <div class="col-8">
-                    <p class="lead fs-6">
-                      How to make 50,000 to 500,000 Naira weekly with
-                      Grandhealthcycle.
-                    </p>
-                    <a href="#" class="btn btn-link text-white">Click Here</a>
+              Your Unique Referral Link:
+            </h3>
+            <div class="card-body">
+              <div class="refer-link-container">
+                <div class="input-group">
+                  <div class="form-control refer-link">
+                    https://ghc-backend-u8bz.onrender.com?ref=<%=
+                    data.user.username %>
                   </div>
+                  <span
+                    class="copy-button input-group-text btn text-white"
+                    style="background-color: #2eca6abb"
+                    ><i class="bx bx-copy"></i> Copy</span
+                  >
                 </div>
               </div>
             </div>
@@ -66,10 +75,10 @@
                     </div>
                     <div class="ps-3 text-truncate">
                       <h6 class="text-truncate">
-                        &#8358;
+                        $
                         <span
-                          ><%- data.user.eWallet ? data.user.eWallet.balance :
-                          0.00 %></span
+                          ><%- data.user.eWallet ? (data.user.eWallet.balance /
+                          1000).toFixed(2) : 0.00 %></span
                         >
                       </h6>
                       <!-- <span class="text-success small pt-1 fw-bold">8%</span>
