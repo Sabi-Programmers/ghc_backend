@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -18,6 +18,15 @@ enum Genders {
 enum UserRole {
   ADMIN
   MEMBER
+}
+
+model Admin {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  email        String   @unique
+  password     String
+  isSuperAdmin Boolean  @default(false)
+  role         UserRole @default(ADMIN)
 }
 
 model User {

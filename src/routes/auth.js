@@ -25,7 +25,7 @@ authRouter.post(
   isUnauthenticated,
   validateLoginAuth,
   validateAuth,
-  passport.authenticate("local", {
+  passport.authenticate("member-local", {
     successRedirect: "/dashboard",
     failureRedirect: "/auth/login",
     failureFlash: true, // Enable flash messages for authentication failures
