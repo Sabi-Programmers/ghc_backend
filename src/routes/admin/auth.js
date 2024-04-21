@@ -29,4 +29,13 @@ authRouter.post(
 
 authRouter.post("/register", isUnauthenticated, createAdmin);
 
+authRouter.post("/logout", (req, res, next) => {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/admin/login");
+  });
+});
+
 export default authRouter;

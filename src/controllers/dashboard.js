@@ -1,12 +1,12 @@
 import asyncWrapper from "../middlewares/asyncWrapper.js";
-import { getUserDashboardDetails } from "../services/userServices.js";
+import userServices from "../services/userServices.js";
 
 const getDashbord = asyncWrapper(async (req, res) => {
   let data = {
     user: null,
   };
   if (req.user.hasFunded) {
-    data.user = await getUserDashboardDetails(req.user.id);
+    data.user = await userServices.getUserDashboardDetails(req.user.id);
   } else {
     data.user = req.user;
   }

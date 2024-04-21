@@ -7,16 +7,7 @@
     include('layout/sidebar') %>
 
     <main id="main" class="main">
-      <div class="pagetitle">
-        <h1>Admin Dashboard</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="./dashbroad.html">Home</a></li>
-            <li class="breadcrumb-item active">Dashboard</li>
-          </ol>
-        </nav>
-      </div>
-      <!-- End Page Title -->
+      <%- include('layout/breadcrumb') %>
 
       <section class="section admin-dash dashboard">
         <div class="row">
@@ -33,7 +24,9 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">5,756</h6>
+                    <h6 class="text-truncate fs-4">
+                      <%= data.joinedToday.toLocaleString() %>
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -55,7 +48,9 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">195,056</h6>
+                    <h6 class="text-truncate fs-4">
+                      <%= data.joinedThisMonth.toLocaleString() %>
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -77,7 +72,9 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">3,705,062</h6>
+                    <h6 class="text-truncate fs-4">
+                      <%= data.joinedThisYear.toLocaleString() %>
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -99,7 +96,9 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">30,050,981</h6>
+                    <h6 class="text-truncate fs-4">
+                      <%= data.totalMembers.toLocaleString() %>
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -121,7 +120,7 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">10,100,981</h6>
+                    <h6 class="text-truncate fs-4">0</h6>
                   </div>
                 </div>
               </div>
@@ -143,7 +142,7 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">7,810,001</h6>
+                    <h6 class="text-truncate fs-4">0</h6>
                   </div>
                 </div>
               </div>
@@ -165,7 +164,7 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">12,010,300</h6>
+                    <h6 class="text-truncate fs-4">0</h6>
                   </div>
                 </div>
               </div>
@@ -187,9 +186,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">
-                      $ <span> 3,000.00 </span>
-                    </h6>
+                    <h6 class="text-truncate fs-4">$ <span> 0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -211,9 +208,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">
-                      $ <span> 1,400.00 </span>
-                    </h6>
+                    <h6 class="text-truncate fs-4">$ <span> 0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -235,7 +230,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ <span>400.00 </span></h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -257,7 +252,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ <span>4100.00 </span></h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -279,7 +274,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ <span>4100.00 </span></h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -301,7 +296,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ <span>1200.00 </span></h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -323,7 +318,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ <span>1200.00 </span></h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -345,9 +340,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">
-                      $ <span>22,200.00 </span>
-                    </h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -369,9 +362,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">
-                      $ <span>22,200.00 </span>
-                    </h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -393,9 +384,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">
-                      $ <span>60,200.00 </span>
-                    </h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -417,9 +406,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">
-                      $ <span>20,770.00 </span>
-                    </h6>
+                    <h6 class="text-truncate fs-4">$ <span>0.00 </span></h6>
                   </div>
                 </div>
               </div>
@@ -441,7 +428,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">515,000</h6>
+                    <h6 class="text-truncate fs-4">0</h6>
                   </div>
                 </div>
               </div>
@@ -463,7 +450,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">515,000</h6>
+                    <h6 class="text-truncate fs-4">0</h6>
                   </div>
                 </div>
               </div>
@@ -485,7 +472,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">15,000</h6>
+                    <h6 class="text-truncate fs-4">0</h6>
                   </div>
                 </div>
               </div>
@@ -507,7 +494,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                    <h6 class="text-truncate fs-4">$ 0</h6>
                   </div>
                 </div>
               </div>
@@ -529,7 +516,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                    <h6 class="text-truncate fs-4">$ 0.00</h6>
                   </div>
                 </div>
               </div>
@@ -551,7 +538,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                    <h6 class="text-truncate fs-4">$ 0.00</h6>
                   </div>
                 </div>
               </div>
@@ -573,7 +560,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                    <h6 class="text-truncate fs-4">$ 0.00</h6>
                   </div>
                 </div>
               </div>
@@ -595,7 +582,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3 text-truncate">
-                    <h6 class="text-truncate fs-4">$ 15,000</h6>
+                    <h6 class="text-truncate fs-4">$ 0.00</h6>
                   </div>
                 </div>
               </div>
