@@ -18,7 +18,9 @@ const createAdmin = asyncWrapper(async (req, res, next) => {
       },
     });
 
-    res.redirect("/admin/login");
+    console.log("hashedPassword", hashedPassword);
+
+    return res.redirect("/admin/login");
   } catch (err) {
     console.log(err);
     let error = "something went wrong";
