@@ -18,7 +18,7 @@ staticPagesRouter.get("/contact", (req, res) => {
   res.render("staticPages/contact", { title: "Contact Us" });
 });
 staticPagesRouter.get("/faq", (req, res) => {
-  res.render("staticPages/faq", { title: "Contact Us" });
+  res.render("staticPages/faq", { title: "FAQ" });
 });
 staticPagesRouter.get("/testimonials", (req, res) => {
   res.render("staticPages/testimonials", { title: "Testimonials" });
