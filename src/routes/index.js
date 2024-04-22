@@ -10,6 +10,7 @@ router.use("/", staticPagesRouter);
 router.use("/auth", authRouter);
 router.use("/dashboard", dashboardRouter);
 router.use("/e-wallet", eWalletRouter);
+
 router.use("/admin", adminRouter);
 
 export default router;

@@ -48,7 +48,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static("public"));
+app.use("/static", express.static("public"));
 // app.use((req, res, next) => {
 //   res.locals.path = req.path;
 //   next();

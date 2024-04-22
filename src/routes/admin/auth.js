@@ -9,7 +9,7 @@ import {
 const authRouter = express.Router();
 
 authRouter.get("/login", isUnauthenticated, (req, res) => {
-  res.render("admin/auth/login", {
+  res.render("auth/admin-login", {
     title: "Admin Login",
     data: { error: null },
   });

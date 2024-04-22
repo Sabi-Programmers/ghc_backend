@@ -11,7 +11,7 @@ const getAdminDashboard = asyncWrapper(async (req, res) => {
   data.joinedThisMonth = await userServices.getAllUsersJoinedThisMonth();
   data.joinedThisYear = await userServices.getAllUsersJoinedThisYear();
 
-  res.render("admin/dashboard/dashboard", {
+  res.render("admin/dashboard", {
     title: "Admin Dashboard",
     data,
   });
