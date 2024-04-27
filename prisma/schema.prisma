@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgres"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -58,6 +58,7 @@ model User {
   testimonyBonus    TestimonyBonus?
   completionBonus   CompletionBonus?
   unclaimedRewards  UnclaimedRewards?
+  packages          Packages[]
 }
 
 model Ewallet {
@@ -146,4 +147,25 @@ model UnclaimedRewards {
   diamondLostCount Int   @default(0)
   userId           Int   @unique
   user             User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum PackageType {
+  DIAMOND
+  GOLD
+  BRONZE
+}
+
+model Packages {
+  id      Int         @id @default(autoincrement())
+  package PackageType
+  cycle   Json
+  userId  Int         @unique
+  User    User        @relation(fields: [userId], references: [id])
+}
+
+model PackagesPrice {
+  id      Int   @id @default(autoincrement())
+  bronze  Float
+  gold    Float
+  diamond Float
 }
