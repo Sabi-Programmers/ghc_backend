@@ -39,7 +39,7 @@ const pool = createPool({
   host: "127.0.0.1", // Replace with your MySQL host
   user: "root", // Replace with your MySQL username
   password: "", // Replace with your MySQL password
-  database: "ghc", // Replace with your MySQL database name
+  database: "mvc_db", // Replace with your MySQL database name
 });
 
 const MySQLStore = mySqlSession(session);

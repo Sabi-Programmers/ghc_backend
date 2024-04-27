@@ -58,7 +58,8 @@ model User {
   testimonyBonus    TestimonyBonus?
   completionBonus   CompletionBonus?
   unclaimedRewards  UnclaimedRewards?
-  packages          Packages[]
+  packages          Package[]
+  packageOrders     PackageOrder[]
 }
 
 model Ewallet {
@@ -155,17 +156,32 @@ enum PackageType {
   BRONZE
 }
 
-model Packages {
-  id      Int         @id @default(autoincrement())
-  package PackageType
-  cycle   Json
-  userId  Int         @unique
-  User    User        @relation(fields: [userId], references: [id])
+model Package {
+  id           Int           @id @default(autoincrement())
+  package      PackageType
+  cycle        Json?
+  userId       Int
+  User         User          @relation(fields: [userId], references: [id])
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  packageOrder PackageOrder?
 }
 
-model PackagesPrice {
-  id      Int   @id @default(autoincrement())
-  bronze  Float
-  gold    Float
-  diamond Float
+model PackagePrice {
+  id        Int      @id @default(autoincrement())
+  bronze    Float
+  gold      Float
+  diamond   Float
+  usdRate   Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PackageOrder {
+  id        Int     @id @default(autoincrement())
+  status    Boolean @default(false)
+  packageId Int     @unique
+  package   Package @relation(fields: [packageId], references: [id])
+  userId    Int
+  User      User    @relation(fields: [userId], references: [id])
 }
