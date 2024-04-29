@@ -37,6 +37,7 @@ model User {
   country           String
   city              String
   sponsorUsername   String             @default("GHC")
+  sponsorId         Int                @default(0)
   phone             String             @unique
   password          String
   gender            Genders
@@ -60,6 +61,7 @@ model User {
   unclaimedRewards  UnclaimedRewards?
   packages          Package[]
   packageOrders     PackageOrder[]
+  referrals         Referral[]
 }
 
 model Ewallet {
@@ -157,14 +159,15 @@ enum PackageType {
 }
 
 model Package {
-  id           Int           @id @default(autoincrement())
-  package      PackageType
-  cycle        Json?
-  userId       Int
-  User         User          @relation(fields: [userId], references: [id])
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
-  packageOrder PackageOrder?
+  id               Int           @id @default(autoincrement())
+  package          PackageType
+  packageDownlines Json?
+  availableSlot    Int           @default(9)
+  userId           Int
+  User             User          @relation(fields: [userId], references: [id])
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  packageOrder     PackageOrder?
 }
 
 model PackagePrice {
@@ -178,10 +181,22 @@ model PackagePrice {
 }
 
 model PackageOrder {
-  id        Int     @id @default(autoincrement())
-  status    Boolean @default(false)
-  packageId Int     @unique
-  package   Package @relation(fields: [packageId], references: [id])
+  id        Int      @id @default(autoincrement())
+  status    Boolean  @default(false)
+  packageId Int      @unique
+  package   Package  @relation(fields: [packageId], references: [id])
   userId    Int
-  User      User    @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Referral {
+  id        Int         @id @default(autoincrement())
+  package   PackageType
+  genealogy Json?
+  userId    Int
+  User      User        @relation(fields: [userId], references: [id])
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
