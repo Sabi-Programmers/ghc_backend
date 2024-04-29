@@ -370,16 +370,18 @@
   const copyButton = document.querySelector(".copy-button");
   const referLink = document.querySelector(".refer-link");
 
-  copyButton.addEventListener("click", () => {
-    navigator.clipboard
-      .writeText(referLink.textContent)
-      .then(() => {
-        console.log("Link copied to clipboard!");
-        // You can also display a success message to the user here
-      })
-      .catch((err) => {
-        console.error("Failed to copy link:", err);
-        // You can display an error message to the user here
-      });
-  });
+  if (copyButton) {
+    copyButton.addEventListener("click", () => {
+      navigator.clipboard
+        .writeText(referLink.textContent)
+        .then(() => {
+          console.log("Link copied to clipboard!");
+          // You can also display a success message to the user here
+        })
+        .catch((err) => {
+          console.error("Failed to copy link:", err);
+          // You can display an error message to the user here
+        });
+    });
+  }
 })();

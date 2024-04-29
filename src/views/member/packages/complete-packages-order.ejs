@@ -15,52 +15,7 @@
               <div class="card-header">
                 <h5 class="card-title p-0">Complete Package Order</h5>
               </div>
-              <div class="card-body p-0">
-                <% for( let i = 0; i < data.packages.length; i++ ) { %>
-
-                <div class="package-order-item border-bottom">
-                  <div class="flex-shrink-0">
-                    <img
-                      src="<%= `static/assets/img/${data.packages[i].name}.png` %>"
-                      alt="package image"
-                      class="w-100 h-100 rounded-4 border"
-                    />
-                  </div>
-                  <div class="d-flex justify-content-between w-100 ps-2 pe-1">
-                    <div class="d-flex flex-column">
-                      <span class="fw-medium text-capitalize"
-                        ><%= data.packages[i].name %></span
-                      >
-                      <span class="fs-5 fw-bold mb-auto"
-                        >$ <%= data.packages[i].price %></span
-                      >
-                      <span class="fw-light fst-italic">3 cycles</span>
-                    </div>
-                    <div
-                      class="d-flex flex-column align-items-center justify-content-between"
-                    >
-                      <div class="btn btn-outline-danger">
-                        <i class="bx bxs-trash-alt"></i>
-                      </div>
-                      <div class="d-flex align-items-center gap-1">
-                        <span class="package-quantity-plus text-success"
-                          ><i class="bx bx-plus-circle"></i
-                        ></span>
-                        <input
-                          type="number"
-                          class="form-control"
-                          id="package-quantity"
-                          value="1"
-                        />
-                        <span class="package-quantity-minus text-danger"
-                          ><i class="bx bx-minus-circle"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <% } %>
-              </div>
+              <div class="card-body package-order-wrapper p-0"></div>
             </div>
           </div>
           <div class="col-md-4">
@@ -72,18 +27,33 @@
                     class="list-group-item bg-primary-subtle border-dark d-flex justify-content-between"
                   >
                     <span class="fw-semibold"> E-wallet Balance</span>
-                    <span class="fw-bold">$800</span>
+                    <span
+                      class="fw-bold"
+                      data-balance="<%= (data.ewallet.balance /
+                    data.prices.usdRate) %>"
+                      id="e-wallet-balance"
+                      >$ <%= (data.ewallet.balance /
+                      data.prices.usdRate).toFixed(2) %></span
+                    >
                   </li>
                   <li
                     class="list-group-item bg-primary-subtle border-dark d-flex justify-content-between"
                   >
                     <span class="fw-semibold"> Total </span>
-                    <span class="fw-bold">$800</span>
+                    <span class="fw-bold" id="total"></span>
                   </li>
                   <li
-                    class="list-group-item bg-primary-subtle border-dark d-flex justify-content-center"
+                    class="list-group-item bg-primary-subtle border-dark d-flex align-items-center flex-column"
                   >
-                    <button class="btn btn-primary">Submit Order</button>
+                    <button id="submit-package-order" class="btn btn-primary">
+                      Submit Order
+                    </button>
+
+                    <span
+                      id="package-order-error"
+                      class="fst-italic small text-danger"
+                    >
+                    </span>
                   </li>
                 </ul>
               </div>

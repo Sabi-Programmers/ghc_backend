@@ -189,28 +189,23 @@ const getPackages = asyncWrapper(async (req, res) => {
     user: req.user,
   };
 
+  data.prices = await database.packagePrice.findUnique({ where: { id: 1 } });
+
   res.render("member/packages/buy-packages", { title: "Pick A Package", data });
 });
-const setPackagesOrder = asyncWrapper(async (req, res) => {
+const completePackageOrder = asyncWrapper(async (req, res) => {
   let data = {
     user: req.user,
   };
-  const { packages } = req.body;
 
-  const prices = await database.packagePrice.findUnique({ where: { id: 1 } });
-
-  if (!packages) {
-    return res.redirect("/packages");
-  } else if (typeof packages === "string") {
-    data.packages = [{ name: packages, price: prices[packages] }];
-  } else {
-    data.packages = packages.map((pkg) => ({ name: pkg, price: prices[pkg] }));
-  }
-
+  data.ewallet = await database.ewallet.findFirst({
+    where: { userId: req.user.id },
+  });
+  data.prices = await database.packagePrice.findUnique({ where: { id: 1 } });
   res.render("member/packages/complete-packages-order", {
     title: "Complete Package Order",
     data,
   });
 });
 
-export { buyPackages, getPackages, setPackagesOrder };
+export { buyPackages, getPackages, completePackageOrder };

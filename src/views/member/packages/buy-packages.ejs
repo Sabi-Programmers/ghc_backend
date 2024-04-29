@@ -14,7 +14,7 @@
             <h5 class="card-title p-0">Pick Your Packages</h5>
           </div>
           <div class="card-body">
-            <form action="" method="POST">
+            <form id="select-package-form">
               <div class="row row-gap-5 py-4 justify-content-center">
                 <div class="col-6 col-md-4 col-lg-3">
                   <div class="card package-card">
@@ -28,13 +28,14 @@
                     <div class="card-body">
                       <h5 class="card-title text-truncate">Bronze</h5>
 
-                      <h4 class="text-truncate">&#8358; 30,000</h4>
+                      <h4 class="text-truncate">$ <%= data.prices.bronze %></h4>
                       <input
                         type="checkbox"
                         name="packages"
                         id="bronze"
                         value="bronze"
                         class="visually-hidden"
+                        data-price="<%= data.prices.bronze %>"
                       />
                       <label for="bronze" class="btn w-100 m-0"> </label>
                     </div>
@@ -44,7 +45,7 @@
                   <div class="card package-card">
                     <div class="overflow-hidden package-card-img-wrapper w-100">
                       <img
-                        src="static/assets/img/gold.jpg"
+                        src="static/assets/img/gold.png"
                         class="card-img-top w-100 h-100 package-card-img object-fit-cover"
                         alt="product"
                       />
@@ -52,13 +53,14 @@
                     <div class="card-body">
                       <h5 class="card-title text-truncate">Gold</h5>
 
-                      <h4 class="text-truncate">&#8358; 30,000</h4>
+                      <h4 class="text-truncate">$<%= data.prices.gold %></h4>
                       <input
                         type="checkbox"
                         name="packages"
                         id="gold"
                         value="gold"
                         class="visually-hidden"
+                        data-price="<%= data.prices.gold %>"
                       />
                       <label for="gold" class="btn w-100 m-0"> </label>
                     </div>
@@ -68,7 +70,7 @@
                   <div class="card package-card">
                     <div class="overflow-hidden package-card-img-wrapper w-100">
                       <img
-                        src="static/assets/img/diamond.jpg"
+                        src="static/assets/img/diamond.png"
                         class="card-img-top w-100 h-100 package-card-img object-fit-cover"
                         alt="product"
                       />
@@ -76,13 +78,14 @@
                     <div class="card-body">
                       <h5 class="card-title text-truncate">Diamond</h5>
 
-                      <h4 class="text-truncate">&#8358; 30,000</h4>
+                      <h4 class="text-truncate">$<%= data.prices.diamond %></h4>
                       <input
                         type="checkbox"
                         name="packages"
                         id="diamond"
                         value="diamond"
                         class="visually-hidden"
+                        data-price="<%= data.prices.diamond %>"
                       />
                       <label for="diamond" class="btn w-100 m-0"> </label>
                     </div>
