@@ -1,8 +1,14 @@
 import express from "express";
 import { isAuthenticated } from "../middlewares/auth.js";
-import { buyPackages } from "../controllers/packages.js";
+import {
+  buyPackages,
+  getPackages,
+  setPackagesOrder,
+} from "../controllers/packages.js";
 const packagesRouter = express.Router();
 
-packagesRouter.post("/", isAuthenticated, buyPackages);
+packagesRouter.get("/", isAuthenticated, getPackages);
+packagesRouter.post("/", isAuthenticated, setPackagesOrder);
+packagesRouter.post("/buy", isAuthenticated, buyPackages);
 
 export default packagesRouter;

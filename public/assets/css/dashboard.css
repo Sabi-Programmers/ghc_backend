@@ -1229,3 +1229,65 @@ h6 {
   background-repeat: no-repeat;
   background-position: right;
 }
+
+.package-card {
+  border: 1px solid #ff771d;
+}
+
+.package-card label::after {
+  content: "Select";
+}
+.package-card label,
+.package-btn {
+  background-color: #ff771d;
+  border-color: #ff771d;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+.package-card label:hover,
+.package-btn:hover {
+  background-color: #ff771db6;
+  border-color: #ff771d;
+  color: white;
+}
+.package-card input:checked + label {
+  background-color: white;
+  color: #ff771d;
+}
+.package-card input:checked + label::after {
+  content: "Selected";
+}
+
+.package-card-img-wrapper {
+  width: 100%;
+  aspect-ratio: 125/110;
+}
+
+.package-order-item {
+  display: flex;
+  height: 120px;
+  padding: 10px 4px;
+}
+.package-order-item > div:first-child {
+  height: 100%;
+}
+
+#package-quantity {
+  width: 5ch;
+  padding: 0px;
+  height: 30px;
+  text-align: center;
+  appearance: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

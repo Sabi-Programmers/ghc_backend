@@ -10,7 +10,6 @@ const getDashbord = asyncWrapper(async (req, res) => {
   } else {
     data.user = req.user;
   }
-  console.log(data);
 
   res.render("member/dashboard", { title: "Dashboard", data });
 });

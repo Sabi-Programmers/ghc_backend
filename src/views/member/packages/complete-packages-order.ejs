@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+      <section class="section dashboard">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title p-0">Complete Package Order</h5>
+              </div>
+              <div class="card-body p-0">
+                <% for( let i = 0; i < data.packages.length; i++ ) { %>
+
+                <div class="package-order-item border-bottom">
+                  <div class="flex-shrink-0">
+                    <img
+                      src="<%= `static/assets/img/${data.packages[i].name}.png` %>"
+                      alt="package image"
+                      class="w-100 h-100 rounded-4 border"
+                    />
+                  </div>
+                  <div class="d-flex justify-content-between w-100 ps-2 pe-1">
+                    <div class="d-flex flex-column">
+                      <span class="fw-medium text-capitalize"
+                        ><%= data.packages[i].name %></span
+                      >
+                      <span class="fs-5 fw-bold mb-auto"
+                        >$ <%= data.packages[i].price %></span
+                      >
+                      <span class="fw-light fst-italic">3 cycles</span>
+                    </div>
+                    <div
+                      class="d-flex flex-column align-items-center justify-content-between"
+                    >
+                      <div class="btn btn-outline-danger">
+                        <i class="bx bxs-trash-alt"></i>
+                      </div>
+                      <div class="d-flex align-items-center gap-1">
+                        <span class="package-quantity-plus text-success"
+                          ><i class="bx bx-plus-circle"></i
+                        ></span>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="package-quantity"
+                          value="1"
+                        />
+                        <span class="package-quantity-minus text-danger"
+                          ><i class="bx bx-minus-circle"></i
+                        ></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-primary-subtle mb-3">
+              <div class="card-body">
+                <h5 class="card-title text-center">Summary</h5>
+                <ul class="list-group list-group-flush bg-info">
+                  <li
+                    class="list-group-item bg-primary-subtle border-dark d-flex justify-content-between"
+                  >
+                    <span class="fw-semibold"> E-wallet Balance</span>
+                    <span class="fw-bold">$800</span>
+                  </li>
+                  <li
+                    class="list-group-item bg-primary-subtle border-dark d-flex justify-content-between"
+                  >
+                    <span class="fw-semibold"> Total </span>
+                    <span class="fw-bold">$800</span>
+                  </li>
+                  <li
+                    class="list-group-item bg-primary-subtle border-dark d-flex justify-content-center"
+                  >
+                    <button class="btn btn-primary">Submit Order</button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>
