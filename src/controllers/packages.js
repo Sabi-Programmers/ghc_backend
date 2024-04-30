@@ -90,12 +90,33 @@ const buyPackages = asyncWrapper(async (req, res) => {
     return res.status(201).json({ message: "Referral Table already exist" });
   }
 
-  const genealogy = {};
+  const checkIfGHCIsSposnor = new Promise((resolve, reject) => {
+    if (sponsorUsername === "GHC") {
+      const promises = Object.keys(packages).map(async (packageType) => {
+        await database.referral.create({
+          data: {
+            userId,
+            genealogy: { 1: "GHC" },
+            package: packageType.toLocaleUpperCase(),
+          },
+        });
+      });
 
-  // check if GHC is sposnor
-  if (sponsorUsername === "GHC") {
-    genealogy["1st"] = "GHC";
+      Promise.all(promises)
+        .then(() => {
+          resolve(true);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    } else {
+      resolve(false);
+    }
+  });
 
+  const checkIfGHCIsSposnorResult = await checkIfGHCIsSposnor;
+
+  if (checkIfGHCIsSposnorResult) {
     return res.status(201).json({ message: "Done Here cause GHC is sponsor" });
   }
 

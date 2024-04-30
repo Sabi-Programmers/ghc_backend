@@ -1291,3 +1291,8 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+#pleaseWaitDialog .progress-bar {
+  width: 0%;
+  transition: 0.3s linear;
+}

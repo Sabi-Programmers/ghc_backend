@@ -61,6 +61,48 @@
           </div>
         </div>
       </section>
+
+      <!-- <div
+        class="modal show"
+        id="pleaseWaitDialog"
+        data-backdrop="static"
+        data-keyboard="false"
+      >
+        <div class="modal-header">
+          <h1>Processing...</h1>
+        </div>
+        <div class="modal-body">
+          <div class="progress progress-striped active">
+            <div class="bar" style="width: 100%"></div>
+          </div>
+        </div>
+      </div> -->
+      <div
+        class="modal fade"
+        id="pleaseWaitDialog"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-hidden="true"
+        style="background-color: #00000027"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">
+                <span class="glyphicon glyphicon-time"> </span>Please Wait
+              </h5>
+            </div>
+            <div class="modal-body py-5">
+              <div class="progress">
+                <div
+                  class="progress-bar progress-bar-info progress-bar-striped active progress-bar-animated"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
     <!-- End #main -->
     <%- include('../layout/footer') %> <%- include('../partials/scripts') %>

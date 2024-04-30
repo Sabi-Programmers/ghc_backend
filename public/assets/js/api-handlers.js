@@ -3,6 +3,10 @@ window.onload = function () {
   const currentRoute = window.location.pathname;
   console.log("Current route:", currentRoute);
 
+  /**
+   * News form
+   */
+
   const options = {
     placeholder: "Compose an epic...",
     theme: "snow",
@@ -18,6 +22,10 @@ window.onload = function () {
       console.log(newsHtml);
     });
   }
+
+  /**
+   * =====================================
+   */
 
   /**
    *  Select Package Handlers
@@ -53,7 +61,8 @@ window.onload = function () {
    * Package Order Handlers
    */
   if (currentRoute === "/packages/complete-order") {
-    const packages = JSON.parse(localStorage.getItem("selected-packages"));
+    const packages =
+      JSON.parse(localStorage.getItem("selected-packages")) || [];
 
     const getEwallet =
       document.getElementById("e-wallet-balance").dataset.balance;
@@ -71,7 +80,6 @@ window.onload = function () {
     const packageOrderError = document.querySelector("#package-order-error");
 
     const renderPackageOrderItems = () => {
-      console.log(packages);
       total = 0;
       packageOrderWrapper.innerHTML = packages.map((pkgOrder, i) => {
         total = pkgOrder.subTotal + total;
@@ -184,6 +192,13 @@ window.onload = function () {
 
     submitPackageOrderButton.addEventListener("click", () => {
       const data = {};
+      const modal = document.getElementById("pleaseWaitDialog");
+      const progressBar = modal.querySelector(".progress-bar");
+
+      modal.classList.add("show");
+      modal.style.display = "block";
+
+      progressBar.style.width = "25%";
 
       packages.forEach((pkg) => {
         data[pkg.name] = pkg.quantity;
@@ -194,11 +209,19 @@ window.onload = function () {
           const res = await fetch("/packages", {
             method: "POST",
             body: JSON.stringify(data),
+            headers: { "Content-Type": "application/json" },
           });
-          console.log("waitin.......");
-          const resData = await res.json();
-
-          console.log(resData);
+          progressBar.style.width = "50%";
+          if (!res.ok) {
+            console.log("error");
+            return;
+          }
+          await res.json();
+          localStorage.removeItem("selected-packages");
+          progressBar.style.width = "100%";
+          setTimeout(() => {
+            window.location.href = "packages/success";
+          }, 1000);
         } catch (error) {
           console.log(error);
         }
