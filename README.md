@@ -2,6 +2,6 @@
 
 # TODO:
 
-### Fix Fund Wallet added #40000
+## Steps
 
-### Use Exchange Rate Api instead of manual
+### Step 1 to 6 Good

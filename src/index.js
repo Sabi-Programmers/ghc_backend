@@ -21,7 +21,7 @@ app.set("view engine", "ejs");
 // Set the views directory (where EJS templates are located)
 app.set("views", "src/views");
 
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 app.use(
   cors({
     origin: "*",

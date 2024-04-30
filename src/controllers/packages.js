@@ -1,47 +1,44 @@
 import database from "../libs/prisma.js";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
+import {
+  getEwallet,
+  getEwalletBalanceUSD,
+  updateEwalletBalanceUSD,
+} from "../services/eWalletServices.js";
+import { getPackagesPrice } from "../services/packagePrices.js";
+import { convertToNGN } from "../utils/index.js";
+import { getTotalPackageOrderedPrice } from "../utils/packages.js";
 
 const buyPackages = asyncWrapper(async (req, res) => {
   const { id: userId, sponsorUsername, sponsorId, username } = req.user;
-  //first get the packages price from the db
-  const prices = await database.packagePrice.findUnique({ where: { id: 1 } });
-
-  // then get the balance from the users ewallet account
-  const balanceNGN = await database.ewallet.findFirst({
-    where: { userId },
-    select: { balance: true },
-  });
-
-  if (!balanceNGN) {
-    return res.status(500).json({ ewallet: "Not Found" });
-  }
-
-  const balance = balanceNGN.balance / prices.usdRate;
-
-  // get packages from the request body
   const packages = req.body;
 
+  /**
+   * General Logic for all user types
+   */
+
+  //first get the packages price from the db
+  const prices = await getPackagesPrice();
+  console.log(prices, "Step 1");
+
+  // then get the balance from the users ewallet account
+  const balance = await getEwalletBalanceUSD(userId, prices.usdRate);
+  console.log(balance, "Step 2");
+
   // Calculate total price for all packages
-  let total = 0;
-  Object.entries(packages).forEach(([pkg, unit]) => {
-    const price = prices[pkg.toLowerCase()];
-    if (price !== undefined) {
-      total += price * unit;
-      total = Number(total.toFixed(2));
-    }
-  });
-
+  const total = getTotalPackageOrderedPrice(packages, prices);
+  console.log(total, "step 3");
   if (total > balance) {
-    return res.status(500).json({ message: "Insufficient balance" });
+    return res
+      .status(400)
+      .json({ success: false, message: "Insufficient balance" });
   }
-  let newBalance = (balance - total) * prices.usdRate;
-  newBalance = Number(newBalance.toFixed(2));
 
-  //   update the balance
-  await database.ewallet.update({
-    where: { userId },
-    data: { balance: newBalance },
-  });
+  const sum = balance - total;
+  const newBalance = convertToNGN(sum, prices.usdRate);
+  const newE = await updateEwalletBalanceUSD(userId, newBalance);
+
+  console.log(newE, "step 4");
 
   // Create Packages in the database
   const packageArray = Object.entries(packages).flatMap(
@@ -66,6 +63,12 @@ const buyPackages = asyncWrapper(async (req, res) => {
       packages: true,
       packageOrders: true,
     },
+  });
+
+  console.log(newPackages, "Step 5 & 6");
+
+  return res.status(200).json({
+    message: "Here are the stop",
   });
 
   // Check if Referral records already exist for the user and packages
@@ -208,7 +211,7 @@ const getPackages = asyncWrapper(async (req, res) => {
     user: req.user,
   };
 
-  data.prices = await database.packagePrice.findUnique({ where: { id: 1 } });
+  data.prices = await getPackagesPrice();
 
   res.render("member/packages/buy-packages", { title: "Pick A Package", data });
 });
@@ -217,10 +220,9 @@ const completePackageOrder = asyncWrapper(async (req, res) => {
     user: req.user,
   };
 
-  data.ewallet = await database.ewallet.findFirst({
-    where: { userId: req.user.id },
-  });
-  data.prices = await database.packagePrice.findUnique({ where: { id: 1 } });
+  data.ewallet = await getEwallet(req.user.id);
+  data.prices = await getPackagesPrice();
+
   res.render("member/packages/complete-packages-order", {
     title: "Complete Package Order",
     data,

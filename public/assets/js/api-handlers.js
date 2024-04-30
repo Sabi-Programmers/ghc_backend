@@ -220,7 +220,7 @@ window.onload = function () {
           localStorage.removeItem("selected-packages");
           progressBar.style.width = "100%";
           setTimeout(() => {
-            window.location.href = "packages/success";
+            window.location.href = "/dashboard/success";
           }, 1000);
         } catch (error) {
           console.log(error);
