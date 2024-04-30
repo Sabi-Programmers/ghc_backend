@@ -14,4 +14,11 @@ const getDashbord = asyncWrapper(async (req, res) => {
   res.render("member/dashboard", { title: "Dashboard", data });
 });
 
-export { getDashbord };
+const getSuccessPage = asyncWrapper(async (req, res) => {
+  let data = {
+    user: req.user,
+  };
+  return res.render("member/success", { title: "Success", data });
+});
+
+export { getDashbord, getSuccessPage };

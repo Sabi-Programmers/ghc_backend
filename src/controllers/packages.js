@@ -198,10 +198,8 @@ const buyPackages = asyncWrapper(async (req, res) => {
   );
 
   res.json({
-    existingReferrals,
-    nonExistingReferrals,
-    genealogy,
-    sponsorPackages,
+    success: true,
+    message: "Successfully created Purchased Your packages",
   });
 });
 

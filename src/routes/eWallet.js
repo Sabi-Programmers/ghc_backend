@@ -4,6 +4,6 @@ import { fundWallet, getEWallet } from "../controllers/eWallet.js";
 const eWalletRouter = express.Router();
 
 eWalletRouter.get("", isAuthenticated, getEWallet);
-eWalletRouter.get("/fund-wallet", isAuthenticated, fundWallet);
+eWalletRouter.get("/fund-wallet", fundWallet);
 
 export default eWalletRouter;

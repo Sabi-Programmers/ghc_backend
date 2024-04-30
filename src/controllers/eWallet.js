@@ -27,17 +27,18 @@ const getEWallet = asyncWrapper(async (req, res) => {
 
 const fundWallet = asyncWrapper(async (req, res) => {
   const amount = Number(req.query.amount);
+  const id = Number(req.query.id);
 
-  if (req.user.hasFunded) {
+  if (req.user && req.user.hasFunded) {
     await database.ewallet.update({
-      where: { id: req.user.id },
+      where: { userId: id },
       data: {
         balance: { increment: amount },
       },
     });
   } else {
     await database.user.update({
-      where: { id: req.user.id },
+      where: { id },
       data: {
         hasFunded: true,
         eWallet: { update: { balance: { increment: amount } } },
