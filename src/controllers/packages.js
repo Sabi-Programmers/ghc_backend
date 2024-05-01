@@ -15,6 +15,7 @@ import {
   createReferralsNoUpline,
   getExistingReferrals,
 } from "../services/referralServices.js";
+import { updateUplineUnclaimedBonus } from "../services/unclaimedBonus.js";
 import { convertToNGN } from "../utils/index.js";
 import { getTotalPackageOrderedPrice } from "../utils/packages.js";
 
@@ -105,18 +106,19 @@ const buyPackages = asyncWrapper(async (req, res) => {
    * Loop through the packages and
    */
 
-  const uplineWithoutPackages = async (userId, pkg, sponsorId) => {
+  const uplineWithoutPackages = async (userId, pkg, sponsorId, prices) => {
     // Create user package refferal table with GHC
     await createReferralUplineNoPackage(userId, pkg);
+    // Add refferal bonus to upline unclaimed bouns with the package
+    await updateUplineUnclaimedBonus(sponsorId, pkg, prices);
   };
-  // Add refferal bonus to upline unclaimed bouns with the package
 
   const uplinePackagesHandler = async () => {
     return new Promise(async (resolve, reject) => {
       await Promise.all(
         Object.entries(uplinePackages).map(async ([pkg, value]) => {
           if (value === null) {
-            await uplineWithoutPackages(userId, pkg);
+            await uplineWithoutPackages(userId, pkg, sponsorId, prices);
           }
         })
       );
