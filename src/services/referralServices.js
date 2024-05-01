@@ -34,5 +34,18 @@ const createReferralsNoUpline = async (userId, packages, sponsorUsername) => {
     }
   });
 };
+const createReferralUplineNoPackage = async (userId, pkg) => {
+  return await database.referral.create({
+    data: {
+      userId,
+      genealogy: { 1: "GHC" },
+      package: pkg.toLocaleUpperCase(),
+    },
+  });
+};
 
-export { getExistingReferrals, createReferralsNoUpline };
+export {
+  getExistingReferrals,
+  createReferralsNoUpline,
+  createReferralUplineNoPackage,
+};

@@ -28,4 +28,25 @@ const createPackages = async (packages, userId) => {
   });
 };
 
-export { createPackages };
+const getUplinePackages = async (packages, sponsorId) => {
+  const result = {};
+
+  await Promise.all(
+    packages.map(async (pkg) => {
+      result[pkg] = await database.package.findFirst({
+        where: {
+          userId: sponsorId,
+          package: pkg.toUpperCase(),
+          availableSlot: { gt: 0 },
+        },
+        orderBy: {
+          createdAt: "asc",
+        },
+      });
+    })
+  );
+
+  return result;
+};
+
+export { createPackages, getUplinePackages };

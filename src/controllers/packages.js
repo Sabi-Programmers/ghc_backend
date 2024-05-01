@@ -6,8 +6,12 @@ import {
   updateEwalletBalanceUSD,
 } from "../services/eWalletServices.js";
 import { getPackagesPrice } from "../services/packagePrices.js";
-import { createPackages } from "../services/packageServices.js";
 import {
+  createPackages,
+  getUplinePackages,
+} from "../services/packageServices.js";
+import {
+  createReferralUplineNoPackage,
   createReferralsNoUpline,
   getExistingReferrals,
 } from "../services/referralServices.js";
@@ -53,6 +57,8 @@ const buyPackages = asyncWrapper(async (req, res) => {
         (referral) => referral.package === packageType.toUpperCase()
       )
   );
+
+  // User is not purchasing any new packages end here
   if (newPurchasedPackages.length === 0) {
     return res
       .status(201)
@@ -66,7 +72,6 @@ const buyPackages = asyncWrapper(async (req, res) => {
   /**
    *  if no upline create referrals data for user
    */
-
   const noUpline = await createReferralsNoUpline(
     userId,
     newPurchasedPackages,
@@ -79,15 +84,50 @@ const buyPackages = asyncWrapper(async (req, res) => {
       .json({ success: true, message: "Package Purchased Successfully" });
   }
   /**
-   *  ==================================
+   *  ============================================
    */
 
   /**
    * Map through newPurchasedPackage and check if user has upline
    * without the package or available packages slot
+   * and return the available packages
    */
 
+  const uplinePackages = await getUplinePackages(
+    newPurchasedPackages,
+    sponsorId
+  );
+  console.log(uplinePackages);
+
+  /**
+   * When upline does not have the package or available packages slot
+   *
+   * Loop through the packages and
+   */
+
+  const uplineWithoutPackages = async (userId, pkg, sponsorId) => {
+    // Create user package refferal table with GHC
+    await createReferralUplineNoPackage(userId, pkg);
+  };
+  // Add refferal bonus to upline unclaimed bouns with the package
+
+  const uplinePackagesHandler = async () => {
+    return new Promise(async (resolve, reject) => {
+      await Promise.all(
+        Object.entries(uplinePackages).map(async ([pkg, value]) => {
+          if (value === null) {
+            await uplineWithoutPackages(userId, pkg);
+          }
+        })
+      );
+      resolve(true);
+    });
+  };
+
+  await uplinePackagesHandler();
+
   return res.status(200).json({
+    success: true,
     message: "Here are the stop",
   });
 
