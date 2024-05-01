@@ -164,7 +164,7 @@ model Package {
   packageDownlines Json?
   availableSlot    Int           @default(9)
   userId           Int
-  User             User          @relation(fields: [userId], references: [id])
+  User             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
   packageOrder     PackageOrder?
@@ -187,9 +187,9 @@ model PackageOrder {
   id        Int      @id @default(autoincrement())
   status    Boolean  @default(false)
   packageId Int      @unique
-  package   Package  @relation(fields: [packageId], references: [id])
+  package   Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
   userId    Int
-  User      User     @relation(fields: [userId], references: [id])
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -199,7 +199,7 @@ model Referral {
   package   PackageType
   genealogy Json?
   userId    Int
-  User      User        @relation(fields: [userId], references: [id])
+  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 }
