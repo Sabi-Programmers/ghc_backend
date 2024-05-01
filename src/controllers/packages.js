@@ -6,6 +6,7 @@ import {
   updateEwalletBalanceUSD,
 } from "../services/eWalletServices.js";
 import { getPackagesPrice } from "../services/packagePrices.js";
+import { createPackages } from "../services/packageServices.js";
 import { convertToNGN } from "../utils/index.js";
 import { getTotalPackageOrderedPrice } from "../utils/packages.js";
 
@@ -19,15 +20,13 @@ const buyPackages = asyncWrapper(async (req, res) => {
 
   //first get the packages price from the db
   const prices = await getPackagesPrice();
-  console.log(prices, "Step 1");
 
   // then get the balance from the users ewallet account
   const balance = await getEwalletBalanceUSD(userId, prices.usdRate);
-  console.log(balance, "Step 2");
 
   // Calculate total price for all packages
   const total = getTotalPackageOrderedPrice(packages, prices);
-  console.log(total, "step 3");
+
   if (total > balance) {
     return res
       .status(400)
@@ -36,36 +35,9 @@ const buyPackages = asyncWrapper(async (req, res) => {
 
   const sum = balance - total;
   const newBalance = convertToNGN(sum, prices.usdRate);
-  const newE = await updateEwalletBalanceUSD(userId, newBalance);
+  await updateEwalletBalanceUSD(userId, newBalance);
 
-  console.log(newE, "step 4");
-
-  // Create Packages in the database
-  const packageArray = Object.entries(packages).flatMap(
-    ([packageType, count]) =>
-      Array.from({ length: count }, () => ({
-        package: packageType.toUpperCase(),
-        packageOrder: {
-          create: { userId },
-        },
-        packageDownlines: [],
-      }))
-  );
-
-  const newPackages = await database.user.update({
-    where: { id: userId },
-    data: {
-      packages: {
-        create: packageArray,
-      },
-    },
-    include: {
-      packages: true,
-      packageOrders: true,
-    },
-  });
-
-  console.log(newPackages, "Step 5 & 6");
+  await createPackages(packages, userId);
 
   return res.status(200).json({
     message: "Here are the stop",
