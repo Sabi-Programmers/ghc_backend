@@ -44,8 +44,21 @@ const createReferralUplineNoPackage = async (userId, pkg) => {
   });
 };
 
+const addReferralIncome = async (sponsorId, pkg, prices) => {
+  const packageBonus = prices[`${pkg}RefBonus`];
+  const data = {};
+
+  data[pkg] = { increment: packageBonus };
+
+  return await database.referrerIncome.update({
+    where: { userId: sponsorId },
+    data,
+  });
+};
+
 export {
   getExistingReferrals,
   createReferralsNoUpline,
   createReferralUplineNoPackage,
+  addReferralIncome,
 };

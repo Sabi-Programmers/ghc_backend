@@ -11,6 +11,7 @@ import {
   getUplinePackages,
 } from "../services/packageServices.js";
 import {
+  addReferralIncome,
   createReferralUplineNoPackage,
   createReferralsNoUpline,
   getExistingReferrals,
@@ -101,7 +102,7 @@ const buyPackages = asyncWrapper(async (req, res) => {
   console.log(uplinePackages);
 
   /**
-   * When upline does not have the package or available packages slot
+   * When upline does not have the package and available packages slot
    *
    * Loop through the packages and
    */
@@ -113,12 +114,38 @@ const buyPackages = asyncWrapper(async (req, res) => {
     await updateUplineUnclaimedBonus(sponsorId, pkg, prices);
   };
 
-  const uplinePackagesHandler = async () => {
+  /**
+   * ==========================================
+   */
+
+  /**
+   * When upline has package and available packages slot
+   */
+  const uplineHasPackages = async (sponsorId, pkg, prices, value) => {
+    // ===== Upline ======= //
+    // add refferal bonus to upline refferal income
+    await addReferralIncome(sponsorId, pkg, prices);
+    // add to package cycle JSON array and decrease availableSlot
+
+    // get refferal genelogy
+
+    //  ===== User ======== //
+    // generate the genelogy for from upline genelogy
+    // create Refferal Table and Genelogy
+  };
+
+  /**
+   * ============================================
+   */
+
+  const packagesPurchasingHandler = async () => {
     return new Promise(async (resolve, reject) => {
       await Promise.all(
         Object.entries(uplinePackages).map(async ([pkg, value]) => {
           if (value === null) {
             await uplineWithoutPackages(userId, pkg, sponsorId, prices);
+          } else {
+            await uplineHasPackages(sponsorId, pkg, prices, value);
           }
         })
       );
@@ -126,7 +153,7 @@ const buyPackages = asyncWrapper(async (req, res) => {
     });
   };
 
-  await uplinePackagesHandler();
+  await packagesPurchasingHandler();
 
   return res.status(200).json({
     success: true,
