@@ -7,6 +7,10 @@ import {
 } from "../services/eWalletServices.js";
 import { getPackagesPrice } from "../services/packagePrices.js";
 import { createPackages } from "../services/packageServices.js";
+import {
+  createReferralsNoUpline,
+  getExistingReferrals,
+} from "../services/referralServices.js";
 import { convertToNGN } from "../utils/index.js";
 import { getTotalPackageOrderedPrice } from "../utils/packages.js";
 
@@ -15,7 +19,7 @@ const buyPackages = asyncWrapper(async (req, res) => {
   const packages = req.body;
 
   /**
-   * General Logic for all user types
+   * General Logic for all users types
    */
 
   //first get the packages price from the db
@@ -39,27 +43,53 @@ const buyPackages = asyncWrapper(async (req, res) => {
 
   await createPackages(packages, userId);
 
-  return res.status(200).json({
-    message: "Here are the stop",
-  });
+  const userExistingReferrals = await getExistingReferrals(userId, packages);
 
-  // Check if Referral records already exist for the user and packages
-  const existingReferrals = await database.referral.findMany({
-    where: {
-      userId,
-      OR: Object.keys(packages).map((packageName) => ({
-        package: packageName.toUpperCase(),
-      })),
-    },
-    select: { genealogy: true, package: true },
-  });
-
-  const nonExistingReferrals = Object.keys(packages).filter(
+  // map across userExistingRefferals to get which packages purchased does not exist in the Referrals Table
+  // to newly purchased packages
+  const newPurchasedPackages = Object.keys(packages).filter(
     (packageType) =>
-      !existingReferrals.some(
+      !userExistingReferrals.some(
         (referral) => referral.package === packageType.toUpperCase()
       )
   );
+  if (newPurchasedPackages.length === 0) {
+    return res
+      .status(201)
+      .json({ success: true, message: "Package Purchased Successfully" });
+  }
+
+  /**
+   * End basic logic
+   */
+
+  /**
+   *  if no upline create referrals data for user
+   */
+
+  const noUpline = await createReferralsNoUpline(
+    userId,
+    newPurchasedPackages,
+    sponsorUsername
+  );
+
+  if (noUpline) {
+    return res
+      .status(201)
+      .json({ success: true, message: "Package Purchased Successfully" });
+  }
+  /**
+   *  ==================================
+   */
+
+  /**
+   * Map through newPurchasedPackage and check if user has upline
+   * without the package or available packages slot
+   */
+
+  return res.status(200).json({
+    message: "Here are the stop",
+  });
 
   if (nonExistingReferrals.length === 0) {
     return res.status(201).json({ message: "Referral Table already exist" });
