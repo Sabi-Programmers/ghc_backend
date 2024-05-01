@@ -4,6 +4,7 @@ import CustomError from "../errors/CustomError.js";
 
 const validateCreateUserAuth = [
   body("sponsorUsername").exists().withMessage("sponspor username is required"),
+  body("sponsorId").exists().withMessage("sponspor Id is required"),
   body("fullName").exists().withMessage("name is required"),
 
   body("username")

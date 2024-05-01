@@ -2,7 +2,6 @@ import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import database from "../libs/prisma.js";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
-import { generateVitualBankDetails } from "../services/virtualBank.js";
 import { createEWallet } from "../services/eWalletServices.js";
 
 const getSponsor = asyncWrapper(async (req, res) => {
@@ -10,6 +9,7 @@ const getSponsor = asyncWrapper(async (req, res) => {
 
   //   console.log(req.body);
   let sponsorUsername = null;
+  let sponsorID = 0;
   let error = null;
   if (sponsorId) {
     if (sponsorId === "GHC") {
@@ -20,6 +20,7 @@ const getSponsor = asyncWrapper(async (req, res) => {
       });
       if (sponsor) {
         sponsorUsername = sponsor.username;
+        sponsorID = sponsor.id;
       } else {
         error = "Could not find Sponsor";
       }
@@ -28,7 +29,7 @@ const getSponsor = asyncWrapper(async (req, res) => {
 
   res.render("auth/register", {
     title: "Create an account",
-    data: { sponsorUsername, error },
+    data: { sponsorUsername, sponsorID, error },
   });
 });
 const createUser = asyncWrapper(async (req, res, next) => {
@@ -38,6 +39,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
     phone,
     fullName,
     sponsorUsername,
+    sponsorId,
     city,
     country,
     email,
@@ -56,6 +58,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
         city,
         country,
         sponsorUsername,
+        sponsorId: Number(sponsorId),
         fullName,
         gender,
       },
@@ -83,7 +86,7 @@ const createUser = asyncWrapper(async (req, res, next) => {
 
     return res.render("auth/register", {
       title: "Create an account",
-      data: { sponsorUsername, error },
+      data: { sponsorUsername, sponsorID: sponsorId, error },
     });
   }
 });
