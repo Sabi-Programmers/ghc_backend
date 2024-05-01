@@ -7,6 +7,7 @@ import {
 } from "../services/eWalletServices.js";
 import { getPackagesPrice } from "../services/packagePrices.js";
 import {
+  addUserToUplinePackages,
   createPackages,
   getUplinePackages,
 } from "../services/packageServices.js";
@@ -14,7 +15,9 @@ import {
   addReferralIncome,
   createReferralUplineNoPackage,
   createReferralsNoUpline,
+  createReferralsUplineWithGen,
   getExistingReferrals,
+  getUplineGenealogy,
 } from "../services/referralServices.js";
 import { updateUplineUnclaimedBonus } from "../services/unclaimedBonus.js";
 import { convertToNGN } from "../utils/index.js";
@@ -121,17 +124,37 @@ const buyPackages = asyncWrapper(async (req, res) => {
   /**
    * When upline has package and available packages slot
    */
-  const uplineHasPackages = async (sponsorId, pkg, prices, value) => {
+  const uplineHasPackages = async (
+    sponsorId,
+    pkg,
+    prices,
+    value,
+    username,
+    sponsorUsername,
+    userId
+  ) => {
     // ===== Upline ======= //
     // add refferal bonus to upline refferal income
     await addReferralIncome(sponsorId, pkg, prices);
     // add to package cycle JSON array and decrease availableSlot
-
+    await addUserToUplinePackages(sponsorId, username, value);
     // get refferal genelogy
+    const uplineGenealogy = await getUplineGenealogy(sponsorId, pkg);
+    console.log(uplineGenealogy);
 
     //  ===== User ======== //
     // generate the genelogy for from upline genelogy
+    const newGen = { 1: sponsorUsername };
+
+    Object.entries(uplineGenealogy.genealogy).map(([key, value]) => {
+      const generation = Number(key);
+      if (generation < 6) {
+        newGen[(generation + 1).toString()] = value;
+      }
+    });
+
     // create Refferal Table and Genelogy
+    await createReferralsUplineWithGen(userId, pkg, newGen);
   };
 
   /**
@@ -145,7 +168,15 @@ const buyPackages = asyncWrapper(async (req, res) => {
           if (value === null) {
             await uplineWithoutPackages(userId, pkg, sponsorId, prices);
           } else {
-            await uplineHasPackages(sponsorId, pkg, prices, value);
+            await uplineHasPackages(
+              sponsorId,
+              pkg,
+              prices,
+              value,
+              username,
+              sponsorUsername,
+              userId
+            );
           }
         })
       );

@@ -15,6 +15,13 @@ const getExistingReferrals = async (userId, packages) => {
   });
 };
 
+const getUplineGenealogy = async (sponsorId, pkg) => {
+  return await database.referral.findFirst({
+    where: { userId: sponsorId, package: pkg.toUpperCase() },
+    select: { genealogy: true },
+  });
+};
+
 const createReferralsNoUpline = async (userId, packages, sponsorUsername) => {
   const dataArray = packages.map((pkg) => ({
     userId,
@@ -44,6 +51,16 @@ const createReferralUplineNoPackage = async (userId, pkg) => {
   });
 };
 
+const createReferralsUplineWithGen = async (userId, pkg, genealogy) => {
+  return await database.referral.create({
+    data: {
+      package: pkg.toUpperCase(),
+      userId,
+      genealogy,
+    },
+  });
+};
+
 const addReferralIncome = async (sponsorId, pkg, prices) => {
   const packageBonus = prices[`${pkg}RefBonus`];
   const data = {};
@@ -58,7 +75,9 @@ const addReferralIncome = async (sponsorId, pkg, prices) => {
 
 export {
   getExistingReferrals,
+  getUplineGenealogy,
   createReferralsNoUpline,
   createReferralUplineNoPackage,
+  createReferralsUplineWithGen,
   addReferralIncome,
 };

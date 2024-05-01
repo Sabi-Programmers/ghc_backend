@@ -49,4 +49,14 @@ const getUplinePackages = async (packages, sponsorId) => {
   return result;
 };
 
-export { createPackages, getUplinePackages };
+const addUserToUplinePackages = async (sponsorId, username, pkgData) => {
+  return await database.package.update({
+    where: { userId: sponsorId, id: pkgData.id },
+    data: {
+      availableSlot: { decrement: 1 },
+      packageDownlines: [...pkgData.packageDownlines, username],
+    },
+  });
+};
+
+export { createPackages, getUplinePackages, addUserToUplinePackages };
