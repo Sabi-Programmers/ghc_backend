@@ -124,7 +124,7 @@
                     <div class="row">
                       <div class="col-lg-3 col-md-4 label">Bank Name</div>
                       <div class="col-lg-9 col-md-8">
-                        <%= data.user.BankName %>
+                        <%= data.user.bankName %>
                       </div>
                     </div>
                     <div class="row">
@@ -140,36 +140,13 @@
                     id="profile-edit"
                   >
                     <!-- Profile Edit Form -->
-                    <form>
-                      <div class="row mb-3">
-                        <label
-                          for="profileImage"
-                          class="col-md-4 col-lg-3 col-form-label"
-                          >Profile Image</label
-                        >
-                        <div class="col-md-8 col-lg-9">
-                          <img
-                            src="../../assets/img/profile-img.jpg"
-                            alt="Profile"
-                          />
-                          <div class="pt-2">
-                            <a
-                              href="#"
-                              class="btn btn-primary btn-sm"
-                              title="Upload new profile image"
-                              ><i class="bi bi-upload"></i
-                            ></a>
-                            <a
-                              href="#"
-                              class="btn btn-danger btn-sm"
-                              title="Remove my profile image"
-                              ><i class="bi bi-trash"></i
-                            ></a>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row mb-3">
+                    <form
+                      id="profile-form"
+                      novalidate
+                      method="POST"
+                      action="/profile"
+                    >
+                      <div class="row mb-3 form-group">
                         <label
                           for="fullName"
                           class="col-md-4 col-lg-3 col-form-label"
@@ -181,29 +158,13 @@
                             type="text"
                             class="form-control"
                             id="fullName"
-                            value="Kevin Anderson"
+                            value="<%= data.user.fullName %>"
+                            required
                           />
                         </div>
                       </div>
 
-                      <!-- <div class="row mb-3">
-                        <label
-                          for="about"
-                          class="col-md-4 col-lg-3 col-form-label"
-                          >About</label
-                        >
-                        <div class="col-md-8 col-lg-9">
-                          <textarea
-                            name="about"
-                            class="form-control"
-                            id="about"
-                            style="height: 100px"
-                          ></textarea
-                          >
-                        </div>
-                      </div> -->
-
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
                           for="username"
                           class="col-md-4 col-lg-3 col-form-label"
@@ -215,12 +176,13 @@
                             type="text"
                             class="form-control"
                             id="username"
-                            value="Lueil"
+                            value="<%= data.user.username %>"
+                            disabled
                           />
                         </div>
                       </div>
 
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
                           for="gender"
                           class="col-md-4 col-lg-3 col-form-label"
@@ -231,14 +193,25 @@
                             class="form-control"
                             name="gender"
                             id="gender"
+                            required
                           >
-                            <option value="male">Male</option>
-                            <option value="male">Female</option>
+                            <option
+                              value="female"
+                              selected='<%= data.user.gender === "" ? true : false %>'
+                            >
+                              Female
+                            </option>
+                            <option
+                              value="male"
+                              selected='<%= data.user.gender === "male" ? true : false %>'
+                            >
+                              Male
+                            </option>
                           </select>
                         </div>
                       </div>
 
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
                           for="Country"
                           class="col-md-4 col-lg-3 col-form-label"
@@ -250,12 +223,13 @@
                             type="text"
                             class="form-control"
                             id="Country"
-                            value="USA"
+                            value="<%=  data.user.country %>"
+                            required
                           />
                         </div>
                       </div>
 
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
                           for="City"
                           class="col-md-4 col-lg-3 col-form-label"
@@ -267,12 +241,13 @@
                             type="text"
                             class="form-control"
                             id="City"
-                            value="Lagos"
+                            value="<%= data.user.city %>"
+                            required
                           />
                         </div>
                       </div>
 
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
                           for="Phone"
                           class="col-md-4 col-lg-3 col-form-label"
@@ -284,12 +259,13 @@
                             type="text"
                             class="form-control"
                             id="Phone"
-                            value="(436) 486-3538 x29071"
+                            value="<%= data.user.phone %>"
+                            required
                           />
                         </div>
                       </div>
 
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
                           for="Email"
                           class="col-md-4 col-lg-3 col-form-label"
@@ -301,58 +277,59 @@
                             type="email"
                             class="form-control"
                             id="Email"
-                            value="k.anderson@example.com"
+                            value="<%= data.user.email %>"
+                            required
                           />
                         </div>
                       </div>
 
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
-                          for="Twitter"
+                          for="AccountName"
                           class="col-md-4 col-lg-3 col-form-label"
-                          >Account Number</label
+                          >Account Name</label
                         >
                         <div class="col-md-8 col-lg-9">
                           <input
-                            name="twitter"
+                            name="accountName"
                             type="text"
                             class="form-control"
-                            id="Twitter"
-                            value="Adebayo Kudi"
+                            id="AccountName"
+                            value="<%= data.user.accountName %>"
                           />
                         </div>
                       </div>
 
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
-                          for="Facebook"
+                          for="BankName"
                           class="col-md-4 col-lg-3 col-form-label"
                           >Bank Name</label
                         >
                         <div class="col-md-8 col-lg-9">
                           <input
-                            name="facebook"
+                            name="bankName"
                             type="text"
                             class="form-control"
-                            id="Facebook"
-                            value="GT Bank"
+                            id="BankName"
+                            value="<%= data.user.bankName %>"
                           />
                         </div>
                       </div>
 
-                      <div class="row mb-3">
+                      <div class="row mb-3 form-group">
                         <label
-                          for="Instagram"
+                          for="AccountNumber"
                           class="col-md-4 col-lg-3 col-form-label"
                           >Account Number</label
                         >
                         <div class="col-md-8 col-lg-9">
                           <input
-                            name="instagram"
+                            name="AccountNumber"
                             type="text"
                             class="form-control"
-                            id="Instagram"
-                            value="2005007001"
+                            id="AccountName"
+                            value="<%= data.user.accountNumber %>"
                           />
                         </div>
                       </div>

@@ -1296,3 +1296,22 @@ input[type="number"] {
   width: 0%;
   transition: 0.3s linear;
 }
+
+/* vaildator */
+
+.form-group .text-help {
+  color: #dc1d34;
+  font-size: 0.6875rem;
+  margin-top: 5px;
+  font-style: italic;
+}
+
+.has-success .form-control,
+.has-success .form-select {
+  border: 1px solid #168b3f;
+}
+
+.has-danger .form-control,
+.has-danger .form-select {
+  border: 1px solid #dc1d34;
+}
