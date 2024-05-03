@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section profile">
+        <div class="row">
+          <div class="col-xl-8">
+            <div class="card">
+              <div class="card-body pt-3">
+                <!-- Bordered Tabs -->
+                <ul class="nav nav-tabs nav-tabs-bordered">
+                  <li class="nav-item">
+                    <button
+                      class="nav-link active"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-change-password"
+                    >
+                      Change Password
+                    </button>
+                  </li>
+                </ul>
+                <div class="tab-content pt-2">
+                  <div
+                    class="tab-pane active show fade pt-3"
+                    id="profile-change-password"
+                  >
+                    <!-- Change Password Form -->
+                    <form
+                      novalidate
+                      method="POST"
+                      action="/profile/change-password"
+                      id="change-password-form"
+                    >
+                      <div class="row mb-3 form-group">
+                        <label
+                          for="OldPassword"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Current Password</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="oldPassword"
+                            type="password"
+                            class="form-control"
+                            id="OldPassword"
+                            required
+                            minlength="6"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 form-group">
+                        <label
+                          for="Password"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >New Password</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="password"
+                            type="password"
+                            class="form-control"
+                            id="Password"
+                            required
+                            minlength="6"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="row mb-3 form-group">
+                        <label
+                          for="ConfirmPassword"
+                          class="col-md-4 col-lg-3 col-form-label"
+                          >Re-enter New Password</label
+                        >
+                        <div class="col-md-8 col-lg-9">
+                          <input
+                            name="confirmPassword"
+                            type="password"
+                            class="form-control"
+                            id="ConfirmPassword"
+                            required
+                            minlength="6"
+                          />
+                        </div>
+                      </div>
+
+                      <div class="text-center">
+                        <button type="submit" class="btn btn-primary">
+                          Change Password
+                        </button>
+                      </div>
+                    </form>
+                    <!-- End Change Password Form -->
+                  </div>
+                </div>
+                <!-- End Bordered Tabs -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

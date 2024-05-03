@@ -22,9 +22,20 @@ const updateProfile = asyncWrapper(async (req, res) => {
   return res.redirect("/profile");
 });
 
+const getAccountSettings = asyncWrapper(async (req, res) => {
+  let data = {
+    user: req.user,
+  };
+  return res.render("member/profile/account-settings", {
+    title: "Account Settings",
+    data,
+  });
+});
+
 const changePassword = asyncWrapper(async (req, res) => {
   const { oldPassword, password } = req.body;
   await changeUserPassword(req.user.id, oldPassword, password);
+  return res.redirect("/profile/account-settings");
 });
 
-export { getProfile, updateProfile, changePassword };
+export { getProfile, updateProfile, changePassword, getAccountSettings };
