@@ -4,7 +4,7 @@ window.onload = function () {
   console.log("Current route:", currentRoute);
 
   /**
-   * News form
+   * News form with Quill text editor
    */
 
   const options = {
@@ -14,23 +14,64 @@ window.onload = function () {
 
   const newsEditor = document.getElementById("news-editor");
   const newsForm = document.getElementById("news-form");
+
   if (newsEditor && newsForm) {
     const quill = new Quill(newsEditor, options);
 
-    newsForm.addEventListener("submit", function (e) {
+    const newsTitleInput = document.getElementById("news-title-input");
+    const newsPhotoInput = document.getElementById("news-photo-input");
+    const newsFormSubmit = document.getElementById("news-form-submit-btn");
+
+    const validateFields = (photo, title, description) => {
+      if (photo.files.length === 0) {
+        alert("Please select a file to upload.");
+        return;
+      }
+
+      if (title.value.trim().length < 1) {
+        alert("Please enter a title");
+        return;
+      }
+      if (description.trim().length < 1) {
+        alert("Please enter a description");
+        return;
+      }
+    };
+
+    newsForm.addEventListener("submit", (e) => {
       e.preventDefault();
+      const newsText = quill.getText();
       const newsHtml = quill.getSemanticHTML();
-      console.log(newsHtml);
+      validateFields(newsPhotoInput, newsTitleInput, newsText);
+
+      const photo = newsPhotoInput.files[0];
+      const formData = new FormData();
+      formData.append("photo", photo);
+      formData.append("title", newsTitleInput.value);
+      formData.append("description", newsHtml);
+
+      const submitNews = async () => {
+        const res = await fetch("/admin/news/upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (!res.ok) {
+          alert("Error");
+          return;
+        }
+
+        const resData = await res.json();
+
+        if (resData) {
+          return (window.location.href = "/admin/news/" + resData.data.slug);
+        }
+        return false;
+      };
+      submitNews();
     });
   }
 
-  const newsDesc = document.querySelectorAll(".news-desc");
-  if (newsDesc) {
-    newsDesc.forEach((desc) => {
-      const data = desc.getAttribute("data-content");
-      desc.innerHTML = data;
-    });
-  }
+  // New Date
   const newsDates = document.querySelectorAll(".news-date");
   if (newsDates) {
     newsDates.forEach((dateEl) => {

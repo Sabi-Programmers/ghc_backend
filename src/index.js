@@ -7,6 +7,7 @@ import cors from "cors";
 import passport from "passport";
 import session from "express-session";
 import connectFlash from "connect-flash";
+import path from "path";
 import router from "./routes/index.js";
 import notFound from "./errors/notFound.js";
 import errorHandler from "./errors/errorHandler.js";
@@ -51,6 +52,10 @@ app.use((req, res, next) => {
 });
 
 app.use("/static", express.static("public"));
+app.use(
+  "/uploads",
+  express.static(path.join(new URL(".", import.meta.url).pathname, "uploads"))
+);
 
 app.use(router);
 

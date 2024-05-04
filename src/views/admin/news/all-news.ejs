@@ -33,7 +33,10 @@
                     <h5
                       class="d-flex align-items-center justify-content-between"
                     >
-                      <a href="#" class="link-body-emphasis">
+                      <a
+                        href="news/<%= data.news[i].slug %>"
+                        class="link-body-emphasis"
+                      >
                         <%= data.news[i].title %>
                       </a>
                       <% if (data.news[i].isPublished) { %>
@@ -51,10 +54,7 @@
                       </span>
                       <% } %>
                     </h5>
-                    <p
-                      class="news-desc"
-                      data-content="<%= data.news[i].description %>"
-                    ></p>
+                    <div class="news-desc"><%- data.news[i].description %></div>
                     <div>
                       <small
                         class="news-date"
@@ -63,6 +63,8 @@
                     </div>
                   </div>
                 </li>
+                <% } %> <% if (data.news.length === 0) { %>
+                <p class="text-center">NO NEWS FOUND!</p>
                 <% } %>
               </ul>
             </div>

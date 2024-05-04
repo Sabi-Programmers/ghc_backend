@@ -23,16 +23,28 @@
                       >Upload Picture File</label
                     >
                     <div class="col-sm-10">
-                      <input class="form-control" type="file" id="formFile" />
+                      <input
+                        class="form-control"
+                        type="file"
+                        id="news-photo-input"
+                        name="photo"
+                        accept="image/jpeg, image/png"
+                      />
                     </div>
                   </div>
 
                   <div class="row mb-3">
-                    <label for="inputText" class="col-sm-2 col-form-label"
+                    <label
+                      for="news-title-input"
+                      class="col-sm-2 col-form-label"
                       >Title</label
                     >
                     <div class="col-sm-10">
-                      <input type="text" class="form-control" />
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="news-title-input"
+                      />
                     </div>
                   </div>
 
@@ -47,7 +59,11 @@
 
                   <div class="row mb-3">
                     <div class="col-sm-10">
-                      <button type="submit" class="btn btn-primary">
+                      <button
+                        type="submit"
+                        id="news-form-submit-btn"
+                        class="btn btn-primary"
+                      >
                         Broadcast
                       </button>
                     </div>

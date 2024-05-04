@@ -209,6 +209,7 @@ model News {
   title       String
   description String
   photo       String
+  slug        String   @unique
   isPublished Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

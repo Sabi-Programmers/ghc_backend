@@ -1322,7 +1322,8 @@ input[type="number"] {
   /* max-height: 150px; */
   /* md md:max-w-[246px] */
 }
-.news-desc {
+.news-desc,
+.news-desc > * {
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
