@@ -1315,3 +1315,30 @@ input[type="number"] {
 .has-danger .form-select {
   border: 1px solid #dc1d34;
 }
+
+/* news list */
+.news-list-img {
+  width: 100%;
+  /* max-height: 150px; */
+  /* md md:max-w-[246px] */
+}
+.news-desc {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+.news-list-text a:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 576px) {
+  .news-list-img {
+    max-width: 150px;
+    max-height: 150px;
+  }
+  .news-list-text {
+    max-height: 150px;
+  }
+}

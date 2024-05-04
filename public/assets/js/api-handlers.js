@@ -11,15 +11,34 @@ window.onload = function () {
     placeholder: "Compose an epic...",
     theme: "snow",
   };
-  // const quill = new Quill("#news-editor", options);
 
+  const newsEditor = document.getElementById("news-editor");
   const newsForm = document.getElementById("news-form");
+  if (newsEditor && newsForm) {
+    const quill = new Quill(newsEditor, options);
 
-  if (newsForm) {
     newsForm.addEventListener("submit", function (e) {
       e.preventDefault();
       const newsHtml = quill.getSemanticHTML();
       console.log(newsHtml);
+    });
+  }
+
+  const newsDesc = document.querySelectorAll(".news-desc");
+  if (newsDesc) {
+    newsDesc.forEach((desc) => {
+      const data = desc.getAttribute("data-content");
+      desc.innerHTML = data;
+    });
+  }
+  const newsDates = document.querySelectorAll(".news-date");
+  if (newsDates) {
+    newsDates.forEach((dateEl) => {
+      const data = dateEl.getAttribute("data-content");
+
+      const date = new Date(data);
+
+      dateEl.innerHTML = date.toLocaleDateString();
     });
   }
 

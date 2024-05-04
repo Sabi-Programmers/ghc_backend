@@ -1,8 +1,10 @@
 import express from "express";
+import { isAuthenticated } from "../../middlewares/auth.js";
+import { getNews } from "../../controllers/admin/news.js";
 
 const newsRouter = express.Router();
 
-newsRouter.get("/upload", (req, res) => {
+newsRouter.get("/upload", isAuthenticated, (req, res) => {
   let data = {
     user: req.user,
   };
@@ -11,5 +13,7 @@ newsRouter.get("/upload", (req, res) => {
     data,
   });
 });
+
+newsRouter.get("/", isAuthenticated, getNews);
 
 export default newsRouter;

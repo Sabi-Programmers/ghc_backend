@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Recent News</h5>
+              <ul class="list-group list-group-flush">
+                <% for( let i = 0; i < data.news.length; i++ ) { %>
+
+                <li
+                  class="list-group-item d-flex flex-column flex-sm-row gap-4 py-sm-4"
+                >
+                  <div class="news-list-img">
+                    <img
+                      src="/static/assets/img/back-gd-img.jpg"
+                      class="w-100 h-100"
+                      alt="image"
+                    />
+                  </div>
+                  <div
+                    class="w-100 flex-column d-flex justify-content-between news-list-text"
+                  >
+                    <h5
+                      class="d-flex align-items-center justify-content-between"
+                    >
+                      <a href="#" class="link-body-emphasis">
+                        <%= data.news[i].title %>
+                      </a>
+                      <% if (data.news[i].isPublished) { %>
+                      <span
+                        class="badge rounded-pill opacity-75 fst-italic fw-light text-bg-success"
+                      >
+                        Published
+                      </span>
+                      <% } else { %>
+
+                      <span
+                        class="badge rounded-pill opacity-75 fst-italic fw-light text-bg-danger"
+                      >
+                        Unpublished
+                      </span>
+                      <% } %>
+                    </h5>
+                    <p
+                      class="news-desc"
+                      data-content="<%= data.news[i].description %>"
+                    ></p>
+                    <div>
+                      <small
+                        class="news-date"
+                        data-content="<%= data.news[i].updatedAt  %>"
+                      ></small>
+                    </div>
+                  </div>
+                </li>
+                <% } %>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                  <li
+                    class="page-item <%= !data.pagination.prevPage || data.pagination.currentPage === 1 ? 'disabled': '' %>"
+                  >
+                    <a
+                      class="page-link"
+                      href="?page=<%= data.pagination.prevPage || 1 %>"
+                      aria-label="Previous"
+                    >
+                      <span aria-hidden="true">&laquo;</span>
+                    </a>
+                  </li>
+                  <% for (let i = 1; i < data.pagination.totalPages + 1; i++)
+                  {%>
+                  <li
+                    class="page-item <%= i === data.pagination.currentPage ? 'active' : '' %>"
+                    aria-current="page"
+                  >
+                    <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                  </li>
+                  <% } %>
+
+                  <li class="page-item">
+                    <a
+                      class="page-link <%= !data.pagination.nextPage || data.pagination.currentPage === data.pagination.totalPages ? 'disabled': '' %>"
+                      href="?page=<%= data.pagination.nextPage || data.pagination.totalPages %>"
+                      aria-label="Next"
+                    >
+                      <span aria-hidden="true">&raquo;</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>
