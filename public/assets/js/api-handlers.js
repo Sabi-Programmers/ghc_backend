@@ -4,6 +4,34 @@ window.onload = function () {
   console.log("Current route:", currentRoute);
 
   /**
+   * Toast
+   */
+
+  const toastLive = document.getElementById("live-toast");
+  const toast = {};
+  if (toastLive) {
+    const toastColor = document.getElementById("toast-color");
+    const toastTitle = document.getElementById("toast-title");
+    const toastBody = document.getElementById("toast-body");
+    const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
+
+    const success = (message) => {
+      toastColor.classList.add("bg-success");
+      toastTitle.innerText = "Success!";
+      toastBody.innerText = message;
+      toastBootstrap.show();
+    };
+    const failed = (message) => {
+      toastColor.classList.add("bg-danger");
+      toastTitle.innerText = "Failed!";
+      toastBody.innerText = message;
+      toastBootstrap.show();
+    };
+    toast.success = success;
+    toast.failed = failed;
+  }
+
+  /**
    * News form with Quill text editor
    */
 
@@ -81,6 +109,47 @@ window.onload = function () {
 
       dateEl.innerHTML = date.toLocaleDateString();
     });
+  }
+
+  /**
+   * Delete a news
+   */
+
+  const deleteNewsBtn = document.getElementById("delete-news-btn");
+
+  if (deleteNewsBtn) {
+    const newsId = deleteNewsBtn.getAttribute("data-id");
+
+    const deleteNews = async () => {
+      deleteNewsBtn.setAttribute("disabled", true);
+      try {
+        const res = await fetch("/admin/news/" + newsId, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        if (!res.ok) {
+          toast.failed("Couldn't delete news");
+          deleteNewsBtn.setAttribute("disabled", false);
+          return;
+        }
+
+        const resData = await res.json();
+
+        if (resData.success) {
+          toast.success(resData.message);
+          setTimeout(() => {
+            window.location.href = "/admin/news";
+          }, 3000);
+        }
+        deleteNewsBtn.setAttribute("disabled", false);
+      } catch (error) {
+        toast.failed(error.message);
+        deleteNewsBtn.setAttribute("disabled", false);
+      }
+    };
+
+    deleteNewsBtn.addEventListener("click", deleteNews);
   }
 
   /**

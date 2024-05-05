@@ -52,10 +52,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/static", express.static("public"));
-app.use(
-  "/uploads",
-  express.static(path.join(new URL(".", import.meta.url).pathname, "uploads"))
-);
+app.use("/uploads", express.static("uploads"));
 
 app.use(router);
 

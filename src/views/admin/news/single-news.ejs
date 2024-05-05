@@ -11,7 +11,46 @@
 
       <section class="section dashboard">
         <div class="row">
-          <div><%- data.news.description %></div>
+          <div class="card offset-md-1 col-md-10 offset-lg-2 col-lg-8">
+            <div class="card-header p-0 pb-2">
+              <h4 class="card-title fs-2"><%- data.news.title %></h4>
+              <div class="d-flex gap-2">
+                <button class="btn btn-primary">Publish</button>
+                <a
+                  href="#"
+                  class="btn btn-outline-primary ms-auto"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-title="Edit News"
+                >
+                  <i class="bx bx-edit-alt"></i>
+                </a>
+
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  data-bs-toggle="tooltip"
+                  data-bs-placement="top"
+                  data-bs-title="Delete News"
+                  data-id="<%= data.news.id %>"
+                  id="delete-news-btn"
+                >
+                  <i class="bx bx-trash"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body p-0 py-4">
+              <div class="p-0 ratio-16x9">
+                <img
+                  src="/uploads/images/<%= data.news.photo %>"
+                  alt="News Photo"
+                  class="w-100 h-100"
+                />
+              </div>
+              <div class="my-2"></div>
+              <div class="ql-editor p-0"><%- data.news.description %></div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

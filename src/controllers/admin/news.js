@@ -1,10 +1,13 @@
+import { StatusCodes } from "http-status-codes";
 import asyncWrapper from "../../middlewares/asyncWrapper.js";
 import {
   addNews,
+  deleteSingleNews,
   getAllNews,
   getSinglenews,
 } from "../../services/newsServies.js";
 import { calculatePagination } from "../../utils/index.js";
+import response from "../../utils/response.js";
 
 const getNews = asyncWrapper(async (req, res) => {
   let data = {
@@ -52,4 +55,24 @@ const createNews = asyncWrapper(async (req, res) => {
   });
 });
 
-export { getNews, getANews, createNews };
+const deleteNews = asyncWrapper(async (req, res) => {
+  try {
+    const id = req.params.id;
+    await deleteSingleNews(Number(id));
+    return response.json(
+      res,
+      StatusCodes.OK,
+      true,
+      "News deleted successfully"
+    );
+  } catch (error) {
+    return response.json(
+      res,
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      true,
+      "Something went wrong!"
+    );
+  }
+});
+
+export { getNews, getANews, createNews, deleteNews };

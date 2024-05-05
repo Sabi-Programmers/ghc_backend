@@ -41,4 +41,7 @@ const addNews = async ({ title, description, photo }) => {
   });
 };
 
-export { getAllNews, getSinglenews, addNews };
+const deleteSingleNews = async (id) =>
+  await database.news.delete({ where: { id } });
+
+export { getAllNews, getSinglenews, addNews, deleteSingleNews };
