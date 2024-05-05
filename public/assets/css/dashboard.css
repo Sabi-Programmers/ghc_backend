@@ -1367,6 +1367,13 @@ input[type="number"] {
   -webkit-line-clamp: 3;
 }
 
+.news-desc * {
+  font-size: 1rem;
+  padding: 0;
+  margin: 0;
+  display: inline;
+}
+
 .news-list-text a:hover {
   text-decoration: underline;
 }
@@ -1379,4 +1386,16 @@ input[type="number"] {
   .news-list-text {
     max-height: 150px;
   }
+}
+
+.single-news-img {
+  max-height: 400px;
+  width: 100%;
+  background: #000;
+}
+.single-news-img > img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
 }

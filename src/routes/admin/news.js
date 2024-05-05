@@ -5,20 +5,13 @@ import {
   deleteNews,
   getANews,
   getNews,
+  getUploadNews,
 } from "../../controllers/admin/news.js";
 import { uploadImage } from "../../middlewares/upload.js";
 
 const newsRouter = express.Router();
 
-newsRouter.get("/upload", isAuthenticated, (req, res) => {
-  let data = {
-    user: req.user,
-  };
-  return res.render("admin/news/upload-news", {
-    title: "Upload News",
-    data,
-  });
-});
+newsRouter.get("/upload", isAuthenticated, getUploadNews);
 
 newsRouter.post("/upload", uploadImage.single("photo"), createNews);
 newsRouter.get("/", isAuthenticated, getNews);

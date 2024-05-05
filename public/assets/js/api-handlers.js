@@ -48,21 +48,54 @@ window.onload = function () {
 
     const newsTitleInput = document.getElementById("news-title-input");
     const newsPhotoInput = document.getElementById("news-photo-input");
-    const newsFormSubmit = document.getElementById("news-form-submit-btn");
+    const newsFormSubmitBtn = document.getElementById("news-form-submit-btn");
 
     const validateFields = (photo, title, description) => {
       if (photo.files.length === 0) {
         alert("Please select a file to upload.");
-        return;
+        return false;
       }
 
       if (title.value.trim().length < 1) {
         alert("Please enter a title");
-        return;
+        return false;
       }
       if (description.trim().length < 1) {
         alert("Please enter a description");
-        return;
+        return false;
+      }
+      return true;
+    };
+
+    const submitNews = async (formData) => {
+      newsFormSubmitBtn.setAttribute("disabled", true);
+      try {
+        const res = await fetch("/admin/news/upload", {
+          method: "POST",
+          body: formData,
+        });
+        if (!res.ok) {
+          toast.failed("Failed to upload news");
+          newsFormSubmitBtn.setAttribute("disabled", false);
+
+          return;
+        }
+
+        const resData = await res.json();
+
+        if (resData.success) {
+          toast.success(resData.message);
+          newsFormSubmitBtn.setAttribute("disabled", false);
+
+          setTimeout(() => {
+            window.location.href = "/admin/news/" + resData.data.slug;
+          }, 2000);
+          return;
+        }
+        return false;
+      } catch (error) {
+        toast.failed(error.message);
+        newsFormSubmitBtn.setAttribute("disabled", false);
       }
     };
 
@@ -70,32 +103,16 @@ window.onload = function () {
       e.preventDefault();
       const newsText = quill.getText();
       const newsHtml = quill.getSemanticHTML();
-      validateFields(newsPhotoInput, newsTitleInput, newsText);
+      const validate = validateFields(newsPhotoInput, newsTitleInput, newsText);
+      if (validate) {
+        const photo = newsPhotoInput.files[0];
+        const formData = new FormData();
+        formData.append("photo", photo);
+        formData.append("title", newsTitleInput.value);
+        formData.append("description", newsHtml);
 
-      const photo = newsPhotoInput.files[0];
-      const formData = new FormData();
-      formData.append("photo", photo);
-      formData.append("title", newsTitleInput.value);
-      formData.append("description", newsHtml);
-
-      const submitNews = async () => {
-        const res = await fetch("/admin/news/upload", {
-          method: "POST",
-          body: formData,
-        });
-        if (!res.ok) {
-          alert("Error");
-          return;
-        }
-
-        const resData = await res.json();
-
-        if (resData) {
-          return (window.location.href = "/admin/news/" + resData.data.slug);
-        }
-        return false;
-      };
-      submitNews();
+        submitNews(formData);
+      }
     });
   }
 
@@ -140,7 +157,7 @@ window.onload = function () {
           toast.success(resData.message);
           setTimeout(() => {
             window.location.href = "/admin/news";
-          }, 3000);
+          }, 2000);
         }
         deleteNewsBtn.setAttribute("disabled", false);
       } catch (error) {

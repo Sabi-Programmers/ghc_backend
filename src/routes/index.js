@@ -7,6 +7,7 @@ import adminRouter from "./admin/index.js";
 import packagesRouter from "./packages.js";
 import userRouter from "./user.js";
 import profileRouter from "./profile.js";
+import newsRouter from "./news.js";
 const router = express.Router();
 
 router.use("/", staticPagesRouter);
@@ -16,6 +17,7 @@ router.use("/e-wallet", eWalletRouter);
 router.use("/packages", packagesRouter);
 router.use("/user", userRouter);
 router.use("/profile", profileRouter);
+router.use("/news", newsRouter);
 
 router.use("/admin", adminRouter);
 
