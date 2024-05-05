@@ -1,5 +1,4 @@
 import express from "express";
-import { isAuthenticated } from "../../middlewares/auth.js";
 import {
   createNews,
   deleteNews,
@@ -11,11 +10,11 @@ import { uploadImage } from "../../middlewares/upload.js";
 
 const newsRouter = express.Router();
 
-newsRouter.get("/upload", isAuthenticated, getUploadNews);
+newsRouter.get("/upload", getUploadNews);
 
 newsRouter.post("/upload", uploadImage.single("photo"), createNews);
-newsRouter.get("/", isAuthenticated, getNews);
-newsRouter.get("/:slug", isAuthenticated, getANews);
-newsRouter.delete("/:id", isAuthenticated, deleteNews);
+newsRouter.get("/", getNews);
+newsRouter.get("/:slug", getANews);
+newsRouter.delete("/:id", deleteNews);
 
 export default newsRouter;

@@ -1,9 +1,8 @@
 import express from "express";
-import { isAuthenticated } from "../middlewares/auth.js";
 
 const userRouter = express.Router();
 
-userRouter.get("/:username", isAuthenticated, (req, res) => {
+userRouter.get("/:username", (req, res) => {
   res.send("USers");
 });
 

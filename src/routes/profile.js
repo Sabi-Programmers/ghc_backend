@@ -1,5 +1,4 @@
 import express from "express";
-import { isAuthenticated } from "../middlewares/auth.js";
 import {
   changePassword,
   getAccountSettings,
@@ -9,9 +8,9 @@ import {
 
 const profileRouter = express.Router();
 
-profileRouter.get("/", isAuthenticated, getProfile);
-profileRouter.post("/", isAuthenticated, updateProfile);
-profileRouter.get("/account-settings", isAuthenticated, getAccountSettings);
-profileRouter.post("/change-password", isAuthenticated, changePassword);
+profileRouter.get("/", getProfile);
+profileRouter.post("/", updateProfile);
+profileRouter.get("/account-settings", getAccountSettings);
+profileRouter.post("/change-password", changePassword);
 
 export default profileRouter;

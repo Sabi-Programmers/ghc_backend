@@ -8,16 +8,17 @@ import packagesRouter from "./packages.js";
 import userRouter from "./user.js";
 import profileRouter from "./profile.js";
 import newsRouter from "./news.js";
+import { isMember } from "../middlewares/auth.js";
 const router = express.Router();
 
 router.use("/", staticPagesRouter);
 router.use("/auth", authRouter);
-router.use("/dashboard", dashboardRouter);
-router.use("/e-wallet", eWalletRouter);
-router.use("/packages", packagesRouter);
-router.use("/user", userRouter);
-router.use("/profile", profileRouter);
-router.use("/news", newsRouter);
+router.use("/dashboard", isMember, dashboardRouter);
+router.use("/e-wallet", isMember, eWalletRouter);
+router.use("/packages", isMember, packagesRouter);
+router.use("/user", isMember, userRouter);
+router.use("/profile", isMember, profileRouter);
+router.use("/news", isMember, newsRouter);
 
 router.use("/admin", adminRouter);
 

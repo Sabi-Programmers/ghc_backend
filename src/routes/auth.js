@@ -6,23 +6,23 @@ import {
   validateCreateUserAuth,
   validateLoginAuth,
 } from "../validators/authValidators.js";
-import { isUnauthenticated } from "../middlewares/auth.js";
+import { isAuthenticated } from "../middlewares/auth.js";
 const authRouter = express.Router();
 
-authRouter.get("/register", isUnauthenticated, getSponsor);
+authRouter.get("/register", isAuthenticated, getSponsor);
 authRouter.post(
   "/register",
-  isUnauthenticated,
+  isAuthenticated,
   validateCreateUserAuth,
   validateAuth,
   createUser
 );
-authRouter.get("/login", isUnauthenticated, (req, res) => {
+authRouter.get("/login", isAuthenticated, (req, res) => {
   res.render("auth/login", { title: "Login", data: { error: null } });
 });
 authRouter.post(
   "/login",
-  isUnauthenticated,
+  isAuthenticated,
   validateLoginAuth,
   validateAuth,
   passport.authenticate("member-local", {

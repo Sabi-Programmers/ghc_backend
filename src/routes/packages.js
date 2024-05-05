@@ -1,5 +1,4 @@
 import express from "express";
-import { isAuthenticated } from "../middlewares/auth.js";
 import {
   buyPackages,
   getPackages,
@@ -7,8 +6,8 @@ import {
 } from "../controllers/packages.js";
 const packagesRouter = express.Router();
 
-packagesRouter.get("/", isAuthenticated, getPackages);
-packagesRouter.get("/complete-order", isAuthenticated, completePackageOrder);
-packagesRouter.post("/", isAuthenticated, buyPackages);
+packagesRouter.get("/", getPackages);
+packagesRouter.get("/complete-order", completePackageOrder);
+packagesRouter.post("/", buyPackages);
 
 export default packagesRouter;
