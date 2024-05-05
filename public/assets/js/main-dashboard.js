@@ -196,15 +196,14 @@
   });
 
   const copyButton = document.querySelector(".copy-button");
-  const referLink = document.querySelector(".refer-link");
+  const copyItem = document.querySelector(".copy-item");
 
-  if (copyButton) {
+  if (copyButton && copyItem) {
     copyButton.addEventListener("click", () => {
       navigator.clipboard
-        .writeText(referLink.textContent)
+        .writeText(copyItem.textContent)
         .then(() => {
-          console.log("Link copied to clipboard!");
-          // You can also display a success message to the user here
+          copyButton.setAttribute("title", "Copied to clipboard");
         })
         .catch((err) => {
           console.error("Failed to copy link:", err);

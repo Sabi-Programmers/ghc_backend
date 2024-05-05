@@ -20,8 +20,7 @@
             </h3>
             <div class="card-body">
               <p class="card-text">
-                How to make 50,000 to 500,000 Naira weekly with
-                Grandhealthcycle.
+                How to make $100 to $500 weekly with Grandhealthcycle.
               </p>
               <a
                 href="#"
@@ -41,12 +40,14 @@
             <div class="card-body">
               <div class="refer-link-container">
                 <div class="input-group">
-                  <div class="form-control refer-link">
+                  <div class="form-control refer-link copy-item">
                     https://ghc-backend-u8bz.onrender.com?ref=<%=
                     data.user.username %>
                   </div>
                   <span
                     class="copy-button input-group-text btn text-white"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
                     style="background-color: #2eca6abb"
                     ><i class="bx bx-copy"></i> Copy</span
                   >
@@ -81,8 +82,6 @@
                           1000).toFixed(2) : 0.00 %></span
                         >
                       </h6>
-                      <!-- <span class="text-success small pt-1 fw-bold">8%</span>
-                      <span class="text-muted small pt-2 ps-1">increase</span> -->
                     </div>
                   </div>
                   <div
@@ -97,6 +96,7 @@
                     >
                       Fund Wallet
                     </a>
+                    <% if (data.user.hasFunded) { %>
                     <a
                       href="/packages"
                       class="btn btn-outline-success w-100 text-truncate"
@@ -106,6 +106,8 @@
                     >
                       Buy Packages
                     </a>
+
+                    <% } %>
                   </div>
                 </div>
               </div>
@@ -114,7 +116,41 @@
           </div>
           <!-- End A3 Card -->
 
-          <% if (data.user.hasFunded) { %>
+          <% if (data.user.hasFunded == false) { %>
+          <div class="col-md-6">
+            <div class="card info-card customers-card pb-0">
+              <div class="card-body">
+                <h5 class="card-title pb-0 mb-1">
+                  <%= data.eWallet.virtualBankName %>
+                </h5>
+                <div class="w-100 d-flex flex-column gap-3">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="text-truncate">
+                      <h6 class="text-truncate copy-item">
+                        <%= data.eWallet.accountNumber %>
+                      </h6>
+                    </div>
+                    <div
+                      class="card-icon rounded-circle d-flex align-items-center justify-content-center copy-button btn"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                    >
+                      <i class="bx bx-copy"></i>
+                    </div>
+                  </div>
+                  <div class="text-truncate">
+                    <h6 class="text-truncate">
+                      <%= data.eWallet.accountName %>
+                    </h6>
+                  </div>
+                </div>
+              </div>
+              <div class="w-100 text-center more-info"></div>
+            </div>
+          </div>
+          <% } %> <% if (data.user.hasFunded) { %>
 
           <!-- A4 Card -->
           <div class="col-md-6">
