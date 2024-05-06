@@ -376,4 +376,53 @@ window.onload = function () {
       submitPackageOrder();
     });
   }
+
+  /**
+   * Withdrawal Wallet
+   */
+
+  // withdrawals wallet
+  const selectWallet = document.getElementById("withdrawWallet");
+
+  if (selectWallet) {
+    selectWallet.addEventListener("change", (e) => {
+      window.location.href = "/withdrawal?sw=" + e.target.value;
+    });
+
+    const withdrawAmount = document.getElementById("withdrawal-amount");
+    const withdrawAmountError = document.querySelector(
+      "#withdrawal-amount + span"
+    );
+    const threshold = document.getElementById("withdrawal-threshold");
+    const availableBalance = document.getElementById("available-balance");
+    const withdrawalBtn = document.getElementById("withdrawal-btn");
+
+    if (withdrawAmount && threshold && availableBalance) {
+      withdrawalBtn.setAttribute("disabled", true);
+
+      const th = Number(threshold.getAttribute("data-content"));
+      const av = Number(availableBalance.getAttribute("data-content"));
+
+      withdrawAmount.addEventListener("change", (e) => {
+        withdrawAmountError.classList.remove("d-none");
+        const amount = Number(e.target.value);
+        if (amount < av) {
+          withdrawAmountError.classList.add("d-none");
+        }
+        if (amount >= th && amount > av) {
+          withdrawalBtn.removeAttribute("disabled");
+        }
+      });
+    }
+    // submit form
+    const withdrawalRequestForm = document.getElementById(
+      "withdrawal-request-form"
+    );
+
+    withdrawalRequestForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      console.log(withdrawAmount.value);
+      toast.success(`Otp has been sent to E-Mail`);
+    });
+  }
 };

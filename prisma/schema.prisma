@@ -214,3 +214,44 @@ model News {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+enum WithdrawalRequestStatus {
+  APPROVED
+  DENIED
+  PENDING
+}
+
+enum WithdrawalRequestWallets {
+  DIAMOND
+  BRONZE
+  GOLD
+  LEADERCYCLE
+  SALESINCOME
+}
+
+model WithdrawalRequest {
+  id        Int                      @id @default(autoincrement())
+  amount    Int
+  status    WithdrawalRequestStatus  @default(PENDING)
+  wallets   WithdrawalRequestWallets
+  createdAt DateTime                 @default(now())
+  updatedAt DateTime                 @updatedAt
+}
+
+model Contants {
+  id                   Int      @id @default(1)
+  bronze               Float
+  gold                 Float
+  diamond              Float
+  bronzeRefBonus       Float
+  goldRefBonus         Float
+  diamondRefBonus      Float
+  bronzeThreshold      Float
+  goldThreshold        Float
+  diamondThreshold     Float
+  leaderCycleThreshold Float
+  salesIncomeThreshold Float
+  usdRate              Float
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+}

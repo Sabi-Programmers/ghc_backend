@@ -9,6 +9,7 @@ import userRouter from "./user.js";
 import profileRouter from "./profile.js";
 import newsRouter from "./news.js";
 import { isMember } from "../middlewares/auth.js";
+import withdrawalRouter from "./withdrawal.js";
 const router = express.Router();
 
 router.use("/", staticPagesRouter);
@@ -19,6 +20,7 @@ router.use("/packages", isMember, packagesRouter);
 router.use("/user", isMember, userRouter);
 router.use("/profile", isMember, profileRouter);
 router.use("/news", isMember, newsRouter);
+router.use("/withdrawal", isMember, withdrawalRouter);
 
 router.use("/admin", adminRouter);
 

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-header"></div>
+              <div class="card-body">
+                <h5 class="card-title">Total Withdrawal Wallet Balance</h5>
+                <p class="card-text text-truncate fs-4">
+                  $ <%= (data.totalBalance).toLocaleString() %>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <div class="card-header"></div>
+              <div class="card-body">
+                <h5 class="card-title">Make Request</h5>
+
+                <!-- General Form Elements -->
+                <form id="withdrawal-request-form">
+                  <div class="row mb-3">
+                    <label for="withdrawWallet" class="col-sm-2 col-form-label"
+                      >Select Wallet</label
+                    >
+                    <div class="col-sm-10">
+                      <select
+                        class="form-select text-capitalize"
+                        name="time-frame"
+                        id="withdrawWallet"
+                      >
+                        <option value="" selected disabled>
+                          <%= data.wallet %>
+                        </option>
+
+                        <option value="bronze">Bronze</option>
+                        <option value="gold">Gold</option>
+                        <option value="diamond">Diamond</option>
+                        <option value="leaderCycle">Leader Cycle</option>
+                        <option value="salesIncome">Sales Income</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="<%= data.wallet ? '' : 'd-none ' %>">
+                    <div class="row mb-3">
+                      <label class="col-md-3 col-form-label"
+                        >Available Balance</label
+                      >
+                      <div class="col-md-9">
+                        <h6
+                          class="form-control"
+                          data-content="<%= data.walletBalance %>"
+                          id="available-balance"
+                        >
+                          $ <%= data.walletBalance %>
+                        </h6>
+                        <small
+                          id="withdrawal-threshold"
+                          class="text-danger fst-italic"
+                          data-content="<%= data.threshold %> "
+                          >Note: $ <%= data.threshold %> minimum
+                          withdrawal</small
+                        >
+                      </div>
+                    </div>
+                    <div class="row mb-3">
+                      <label
+                        for="withdrawal-amount"
+                        class="col-md-3 col-form-label"
+                        >Enter Withdrawal Amount</label
+                      >
+                      <div class="col-md-9">
+                        <input
+                          type="text"
+                          id="withdrawal-amount"
+                          name="amount"
+                          class="form-control"
+                        />
+                        <span class="text-danger fst-italic d-none">
+                          Insufficient funds
+                        </span>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <div class="col-sm-10">
+                        <button
+                          type="submit"
+                          id="withdrawal-btn"
+                          class="btn btn-primary"
+                        >
+                          Withdraw Now
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+                <!-- End General Form Elements -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>
