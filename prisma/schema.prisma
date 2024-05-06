@@ -215,7 +215,7 @@ model News {
   updatedAt   DateTime @updatedAt
 }
 
-enum WithdrawalRequestStatus {
+enum Status {
   APPROVED
   DENIED
   PENDING
@@ -232,7 +232,7 @@ enum WithdrawalRequestWallets {
 model WithdrawalRequest {
   id        Int                      @id @default(autoincrement())
   amount    Int
-  status    WithdrawalRequestStatus  @default(PENDING)
+  status    Status                   @default(PENDING)
   wallets   WithdrawalRequestWallets
   createdAt DateTime                 @default(now())
   updatedAt DateTime                 @updatedAt

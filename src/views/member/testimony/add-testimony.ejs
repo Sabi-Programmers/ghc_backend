@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row">
+          <div class="container" style="color: #012970">
+            <h1>Grand Health Cycle Testimony Bonus</h1>
+            <p>
+              You only get testimony bonus for every completed Cycle comprising
+              your 9 team members.
+            </p>
+            <p>
+              To claim your testimony bonus, you're expected to create a video
+              of yourself showing your self testifying to receiving withdrawal
+              payment from Grand Health Cycle and showing your bank credit alert
+              message prove in your video, then upload the video to Facebook,
+              YouTube, and TikTok and paste the link below to claim your bonus.
+            </p>
+            <h2>Notes On How To Create Your Video:</h2>
+            <ul>
+              <li>
+                Present Grand Health Cycle and its benefits in your video.
+              </li>
+              <li>
+                Place your referral link in your social media bio, profile, or
+                comments section and tell people how to locate it.
+              </li>
+              <li>
+                Briefly tell people how to register and fund their wallet.
+              </li>
+            </ul>
+            <div class="card mt-5">
+              <form class="card-body" action="#">
+                <h5 class="card-title">Upload your Testimony</h5>
+                <div class="mb-3">
+                  <label for="packageType" class="form-label"
+                    >Select Package Testimony Request Type:</label
+                  >
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="packageType"
+                      id="bronzeWithdrawal"
+                      value="Bronze withdrawal"
+                    />
+                    <label class="form-check-label" for="bronzeWithdrawal">
+                      Bronze withdrawal
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="packageType"
+                      id="goldWithdrawal"
+                      value="Gold withdrawal"
+                    />
+                    <label class="form-check-label" for="goldWithdrawal">
+                      Gold withdrawal
+                    </label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="packageType"
+                      id="diamondWithdrawal"
+                      value="Diamond withdrawal"
+                    />
+                    <label class="form-check-label" for="diamondWithdrawal">
+                      Diamond withdrawal
+                    </label>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="facebookLink" class="form-label"
+                    >Paste Facebook video testimony link here:</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="facebookLink"
+                    placeholder="https://www.facebook.com/..."
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="youtubeLink" class="form-label"
+                    >Paste Youtube video testimony link below:</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="youtubeLink"
+                    placeholder="https://www.youtube.com/watch?v=..."
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="tiktokLink" class="form-label"
+                    >Paste Tiktok video testimony link below:</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="tiktokLink"
+                    placeholder="https://www.tiktok.com/..."
+                  />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

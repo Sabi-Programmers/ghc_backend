@@ -23,7 +23,7 @@ const getWithdrawalPage = asyncWrapper(async (req, res) => {
     data.walletBalance = withdrawWallet[wallet];
     data.wallet = wallet;
   }
-  console.log(data);
+
   res.render("member/withdrawal/withdrawal-request", {
     title: "Request From Withdrawal",
     data,
