@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+
+  <body>
+    <%- include('layout/navbar') %> <%- include('partials/logout') %> <%-
+    include('layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div
+            class="col-12 col-lg-6 order-1 order-lg-2"
+            data-aos="zoom-in"
+            data-aos-delay="150"
+          >
+            <img src="/static/assets/img/about.jpg" class="img-fluid" alt="" />
+          </div>
+          <div
+            class="col-12 col-lg-6 pt-4 pt-lg-0 order-2 order-lg-1 content"
+            data-aos="fade-right"
+          >
+            <h3>Training About Promo Contest</h3>
+
+            <ul>
+              <li><b>Day1:</b> Run facebook ads with your referral link.</li>
+
+              <li>
+                <b>Day2:</b> Run facebook, WhatsApp and zoom meeting
+                presentation of your business. Upload your zoom meeting
+                presentation to google drive.
+              </li>
+
+              <li>
+                <b>Day3:</b> Record a 10min long offline seminar of you
+                presenting your business to new prospect in your area, and
+                upload this video to youtube and tiktok respectively, then share
+                link with us under offline promotion.
+              </li>
+            </ul>
+          </div>
+          <div class="order-3 col-12 mt-4">
+            <h3>How To Run Facebook Ads.</h3>
+            <p>
+              Use a dollar card or virtual dollar card services like Payday,
+              chipper cash, klasha, PST and Grey or other virtual dollar card to
+              pay for your facebook ads.
+            </p>
+          </div>
+        </div>
+        <div class="row mt-4 justify-content-center" style="color: #012970">
+          <div class="border p-4 col-lg-8">
+            <h3>Upload Promotion</h3>
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button
+                  class="nav-link active"
+                  data-bs-toggle="tab"
+                  data-bs-target="#ads"
+                >
+                  Ads
+                </button>
+              </li>
+
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#meeting"
+                >
+                  Meeting
+                </button>
+              </li>
+
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#offline"
+                >
+                  Offline
+                </button>
+              </li>
+
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  data-bs-toggle="tab"
+                  data-bs-target="#submit_new"
+                >
+                  Submit new signup list
+                </button>
+              </li>
+            </ul>
+
+            <div class="tab-content pt-2">
+              <!-- This is ads form -->
+              <div class="tab-pane fade show active profile-overview" id="ads">
+                <label for="Upload facebook ads link" class="form-label"
+                  >Upload facebook ads link</label
+                >
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  id="Ads"
+                  placeholder="Upload link"
+                  required
+                />
+
+                <label
+                  for="Upload facebook ads metrics screenshot"
+                  class="form-label"
+                  >Upload facebook ads metrics screenshot</label
+                >
+                <input
+                  type="file"
+                  name="name"
+                  class="form-control"
+                  id="Ads"
+                  required
+                />
+                <div class="mt-3 d-flex justify-content-between p-2">
+                  <button
+                    type="submit"
+                    class="btn btn-primary m-0"
+                    id="submit Ads"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+
+              <!-- This is meeting -->
+              <div class="tab-pane fade show profile-overview" id="meeting">
+                <label for="Facebook group presentation link" class="form-label"
+                  >Facebook group presentation link</label
+                >
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="Upload link"
+                  required
+                />
+
+                <label
+                  for="WhatsApp group presentation screenshot"
+                  class="form-label"
+                  >WhatsApp group presentation screenshot</label
+                >
+                <input type="file" name="name" class="form-control" required />
+
+                <label for="Zoom meeting presentation" class="form-label"
+                  >Zoom meeting presentation</label
+                >
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="paste google drive link here"
+                  required
+                />
+                <div class="mt-3 d-flex justify-content-between p-2">
+                  <button
+                    type="submit"
+                    class="btn btn-primary m-0"
+                    id="submit Ads"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+
+              <!-- this is offline form -->
+              <div class="tab-pane fade show profile-overview" id="offline">
+                <label for="10min Youtube video link" class="form-label"
+                  >10min Youtube video link</label
+                >
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control"
+                  placeholder="Upload link"
+                  required
+                />
+
+                <label for="10min Tiktok video link" class="form-label"
+                  >10min Tiktok video link</label
+                >
+                <input type="text" name="name" class="form-control" required />
+                <div class="mt-3 d-flex justify-content-between p-2">
+                  <button
+                    type="submit"
+                    class="btn btn-primary m-0"
+                    id="submit Ads"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+
+              <!-- this is submit/sign up form -->
+              <div class="tab-pane fade show profile-overview" id="submit_new">
+                <label for=" " class="form-label"
+                  >Submit the username of new members you signed up through this
+                  contest here</label
+                >
+                <input type="text" name="name" class="form-control" required />
+
+                <input
+                  type="text"
+                  name="name"
+                  class="form-control mt-3"
+                  required
+                />
+
+                <div class="mt-3 d-flex justify-content-between p-2">
+                  <button
+                    type="submit"
+                    class="btn btn-primary m-0"
+                    id="submit Ads"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('layout/footer') %> <%- include('partials/scripts') %>
+  </body>
+</html>
