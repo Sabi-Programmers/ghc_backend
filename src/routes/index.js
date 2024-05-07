@@ -12,6 +12,7 @@ import { isMember } from "../middlewares/auth.js";
 import withdrawalRouter from "./withdrawal.js";
 import testimonyRouter from "./testimony.js";
 import bpcRouter from "./bpc.js";
+import productsRouter from "./products.js";
 const router = express.Router();
 
 router.use("/", staticPagesRouter);
@@ -25,6 +26,7 @@ router.use("/news", isMember, newsRouter);
 router.use("/withdrawal", isMember, withdrawalRouter);
 router.use("/testimony", isMember, testimonyRouter);
 router.use("/business-promo-contest", isMember, bpcRouter);
+router.use("/u/products", isMember, productsRouter);
 
 router.use("/admin", adminRouter);
 

@@ -1399,3 +1399,44 @@ input[type="number"] {
   aspect-ratio: 16/9;
   object-fit: cover;
 }
+
+/* product */
+.product-card {
+  transition: all ease-in-out 0.3s;
+}
+.product-card:hover {
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+}
+.card-product-title {
+  color: inherit;
+  transition: all ease-in-out 0.3s;
+}
+.card-product-title:hover {
+  color: #fd7e14;
+  text-decoration: underline;
+}
+.card-product-desc {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  font-size: 0.75rem;
+}
+.card-product-img-wrapper {
+  width: 100%;
+  aspect-ratio: 125/110;
+}
+.card-product-img {
+  transition: all ease-in-out 0.3s;
+}
+.card-product-img:hover {
+  scale: 1.2;
+}
+.product-pagination.pagination .page-link {
+  color: #fd7e14;
+}
+.product-pagination.pagination .active .page-link {
+  background-color: #fd7e14;
+  color: white;
+  border-color: #fd7e14;
+}

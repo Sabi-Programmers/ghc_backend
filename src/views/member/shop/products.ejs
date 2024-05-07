@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="container">
+          <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
+            <strong class="d-block py-2">12 Items found </strong>
+            <div class="ms-auto">
+              <select class="form-select d-inline-block w-auto border pt-1">
+                <option value="1">Digit</option>
+                <option value="2">Physical</option>
+              </select>
+              <select class="form-select d-inline-block w-auto border pt-1">
+                <option value="0" selected disabled>Sort by price</option>
+                <option value="1">High to Low</option>
+                <option value="2">Low to High</option>
+              </select>
+            </div>
+          </header>
+          <div class="row row-gap-5">
+            <div class="col-6 col-md-4 col-lg-3">
+              <div class="card product-card">
+                <div class="overflow-hidden card-product-img-wrapper w-100">
+                  <img
+                    src="/static/assets/img/card.jpg"
+                    class="card-img-top w-100 h-100 card-product-img object-fit-cover"
+                    alt="product"
+                  />
+                </div>
+                <div class="card-body">
+                  <h5 class="card-title text-truncate">
+                    <a href="#" class="text-capitalize card-product-title h6"
+                      >Product name</a
+                    >
+                  </h5>
+
+                  <p class="card-text card-product-desc">
+                    product description Lorem ipsum dolor sit amet, consectetur
+                    adipisicing elit. Dicta commodi dolor nesciunt quisquam
+                    vitae ad, quam odit, exercitationem cumque laboriosam
+                    aspernatur fugiat harum consequuntur debitis maxime placeat
+                    hic, ipsum eligendi!
+                  </p>
+                  <h4 class="text-truncate">&#8358; 30,000</h4>
+                  <a href="#" class="btn btn-primary w-100 m-0">
+                    Add to Cart
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <nav aria-label="Page navigation" class="shadow p-2 rounded-2">
+            <ul
+              class="pagination product-pagination justify-content-center m-0"
+            >
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                </a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">1</a></li>
+              <li class="page-item active" aria-current="page">
+                <a class="page-link" href="#">2</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>
