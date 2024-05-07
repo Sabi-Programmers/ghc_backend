@@ -12,6 +12,7 @@ import {
   createPackages,
   getUplinePackages,
   getUserPackage,
+  updateUplinePackage,
   updateUserPackage,
 } from "../services/packageServices.js";
 import {
@@ -75,19 +76,33 @@ const buyPackages = asyncWrapper(async (req, res) => {
   // ok -e//
 
   // referral bonus to upline
-  const uplineRefBouns = await updateUplineRefferalBonus(
-    uplineData,
-    "bronze",
-    prices
-  );
-  // ok -e//
+  // const uplineRefBouns = await updateUplineRefferalBonus(
+  //   uplineData,
+  //   "bronze",
+  //   prices
+  // );
+  // ok -f//
+
+  // update upline package Data
+  // const updatedUplinePackageData = await updateUplinePackage(
+  //   uplineData,
+  //   "bronze"
+  // );
+  // ok -f//
+
+  // update upline unclaimed bonus Data
+  // const unclaimedBonus = await updateUplineUnclaimedBonus(
+  //   uplineData.id,
+  //   "bronze",
+  //   prices
+  // );
+  // ok -f//
 
   return response.json(
     res,
     StatusCodes.CREATED,
     true,
-    "Package Purchased Successfully",
-    uplineRefBouns
+    "Package Purchased Successfully"
   );
 });
 

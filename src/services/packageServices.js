@@ -80,10 +80,30 @@ const getUserPackage = async (userId, pkg) => {
   return await database[pkg].findFirst({ where: { userId } });
 };
 
+const updateUplinePackage = async (uplineData, pkg) => {
+  // update used slot and currentCycle
+
+  const data = {
+    usedSlots: { increment: 1 },
+  };
+
+  const sum = uplineData[pkg].usedSlots % 9;
+  console.log(sum);
+  if (sum === 8) {
+    data.currentCycle = { increment: 1 };
+  }
+
+  return await database["bronze"].update({
+    where: { userId: uplineData.id },
+    data,
+  });
+};
+
 export {
   createPackages,
   getUplinePackages,
   addUserToUplinePackages,
   getUserPackage,
   updateUserPackage,
+  updateUplinePackage,
 };
