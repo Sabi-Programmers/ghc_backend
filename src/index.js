@@ -7,6 +7,8 @@ import cors from "cors";
 import passport from "passport";
 import session from "express-session";
 import connectFlash from "connect-flash";
+import pg from "pg";
+import pgSession from "connect-pg-simple";
 import router from "./routes/index.js";
 import notFound from "./errors/notFound.js";
 import errorHandler from "./errors/errorHandler.js";
@@ -14,6 +16,8 @@ import "./services/passportLocal.js";
 
 dotenv.config();
 const app = express();
+
+const { DATABASE_URL, PORT } = process.env;
 
 // Setup Veiw Engine
 app.set("view engine", "ejs");
@@ -32,8 +36,20 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Session
+
+const { Pool } = pg;
+const pgSessionInstance = pgSession(session);
+
+const pool = new Pool({
+  connectionString: DATABASE_URL + "?ssl=true",
+});
 app.use(
   session({
+    store: new pgSessionInstance({
+      pool: pool,
+      tableName: "Sessions",
+    }),
     secret: "your_secret_key",
     resave: false,
     saveUninitialized: false,
@@ -58,7 +74,7 @@ app.use(router);
 app.use(errorHandler);
 app.use(notFound);
 
-const port = process.env.PORT;
+const port = PORT;
 app.listen(port, () => {
   console.log(`listening at http://localhost:${port}`);
 });

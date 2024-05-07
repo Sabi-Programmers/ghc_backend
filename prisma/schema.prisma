@@ -255,3 +255,9 @@ model Contants {
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 }
+
+model Sessions {
+  sid    String   @id @default(cuid())
+  sess   Json
+  expire DateTime
+}
