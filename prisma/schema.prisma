@@ -44,6 +44,8 @@ model User {
   role              UserRole           @default(MEMBER)
   isBlocked         Boolean            @default(false)
   hasFunded         Boolean            @default(false)
+  isCycleLeader     Boolean            @default(false)
+  emailVerified     Boolean            @default(false)
   displayPhoto      String?
   bankName          String?
   accountNumber     BigInt?            @unique
@@ -54,12 +56,14 @@ model User {
   leaderCycleBonus  LeaderCycleBonus?
   withdrawalWallet  WithdrawalWallet?
   salesIncomeBonus  SalesIncomeBonus?
-  referrerIncome    ReferrerIncome?
+  referrerIncome    ReferrerIncome[]
   cycleWelcomeBonus CycleWelcomeBonus?
   testimonyBonus    TestimonyBonus?
   completionBonus   CompletionBonus?
   unclaimedRewards  UnclaimedRewards?
-  packages          Package[]
+  bronze            Bronze?
+  gold              Gold?
+  diamond           Diamond?
   packageOrders     PackageOrder[]
   referrals         Referral[]
 }
@@ -102,12 +106,12 @@ model SalesIncomeBonus {
 }
 
 model ReferrerIncome {
-  id      Int   @id @default(autoincrement())
-  bronze  Float @default(0.00)
-  gold    Float @default(0.00)
-  diamond Float @default(0.00)
-  userId  Int   @unique
-  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id      Int         @id @default(autoincrement())
+  amount  Float       @default(0.00)
+  package PackageType
+  cycle   Int
+  userId  Int
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model CycleWelcomeBonus {
@@ -158,16 +162,40 @@ enum PackageType {
   BRONZE
 }
 
-model Package {
-  id               Int           @id @default(autoincrement())
-  package          PackageType
-  packageDownlines Json?
-  availableSlot    Int           @default(9)
-  userId           Int
-  User             User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
-  packageOrder     PackageOrder?
+model Bronze {
+  id           Int      @id @default(autoincrement())
+  totalCycle   Int      @default(0)
+  currentCycle Int      @default(0)
+  usedSlots    Int      @default(0)
+  totalSlots   Int      @default(0)
+  userId       Int      @unique
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Gold {
+  id           Int      @id @default(autoincrement())
+  totalCycle   Int      @default(0)
+  currentCycle Int      @default(0)
+  usedSlots    Int      @default(0)
+  totalSlots   Int      @default(0)
+  userId       Int      @unique
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Diamond {
+  id           Int      @id @default(autoincrement())
+  totalCycle   Int      @default(0)
+  currentCycle Int      @default(0)
+  usedSlots    Int      @default(0)
+  totalSlots   Int      @default(0)
+  userId       Int      @unique
+  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model PackagePrice {
@@ -183,21 +211,31 @@ model PackagePrice {
   updatedAt       DateTime @updatedAt
 }
 
+enum OrderStatus {
+  PENDING
+  DELIVERED
+}
+
 model PackageOrder {
-  id        Int      @id @default(autoincrement())
-  status    Boolean  @default(false)
-  packageId Int      @unique
-  package   Package  @relation(fields: [packageId], references: [id], onDelete: Cascade)
+  id        Int         @id @default(autoincrement())
+  status    OrderStatus @default(PENDING)
+  package   PackageType
+  cycle     Int
   userId    Int
-  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 }
 
 model Referral {
   id        Int         @id @default(autoincrement())
   package   PackageType
-  genealogy Json?
+  first     String
+  second    String?
+  third     String?
+  forth     String?
+  fifth     String?
+  sixth     String?
   userId    Int
   User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime    @default(now())

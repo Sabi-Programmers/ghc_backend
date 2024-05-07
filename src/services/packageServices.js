@@ -59,4 +59,31 @@ const addUserToUplinePackages = async (sponsorId, username, pkgData) => {
   });
 };
 
-export { createPackages, getUplinePackages, addUserToUplinePackages };
+const updateUserPackage = async (pkg, userId, units, prevPkgData) => {
+  const data = {
+    totalCycle: prevPkgData.totalCycle + Number(units),
+    totalSlots: prevPkgData.totalSlots + Number(units) * 9,
+  };
+
+  //update user package current cycle
+  if (prevPkgData.usedSlots === prevPkgData.totalSlots) {
+    data.currentCycle = prevPkgData.currentCycle + 1;
+  }
+
+  return await database[pkg].update({
+    where: { userId },
+    data,
+  });
+};
+
+const getUserPackage = async (userId, pkg) => {
+  return await database[pkg].findFirst({ where: { userId } });
+};
+
+export {
+  createPackages,
+  getUplinePackages,
+  addUserToUplinePackages,
+  getUserPackage,
+  updateUserPackage,
+};

@@ -73,6 +73,20 @@ const addReferralIncome = async (sponsorId, pkg, prices) => {
   });
 };
 
+const updateUplineRefferalBonus = async (uplineData, pkg, contants) => {
+  if (uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
+    return await database.referrerIncome.create({
+      data: {
+        userId: uplineData.id,
+        amount: contants[pkg + "RefBonus"],
+        cycle: uplineData[pkg].currentCycle,
+        package: pkg.toUpperCase(),
+      },
+    });
+  }
+  return false;
+};
+
 export {
   getExistingReferrals,
   getUplineGenealogy,
@@ -80,4 +94,5 @@ export {
   createReferralUplineNoPackage,
   createReferralsUplineWithGen,
   addReferralIncome,
+  updateUplineRefferalBonus,
 };

@@ -74,6 +74,15 @@ const getAllUsersJoinedThisYear = async () => {
   return usersJoinedThisYearCount;
 };
 
+const getUplineDetails = async (id, pkg) => {
+  const include = {};
+  include[pkg] = true;
+  return await database.user.findUnique({
+    where: { id },
+    include,
+  });
+};
+
 const userServices = {
   getUserDashboardDetails,
   getAllUsers,
@@ -81,5 +90,6 @@ const userServices = {
   getAllUsersJoinedToday,
   getAllUsersJoinedThisMonth,
   getAllUsersJoinedThisYear,
+  getUplineDetails,
 };
 export default userServices;
