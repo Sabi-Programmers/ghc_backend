@@ -83,20 +83,25 @@ const getUserPackage = async (userId, pkg) => {
 const updateUplinePackage = async (uplineData, pkg) => {
   // update used slot and currentCycle
 
-  const data = {
-    usedSlots: { increment: 1 },
-  };
+  if (uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
+    const data = {
+      usedSlots: { increment: 1 },
+    };
 
-  const sum = uplineData[pkg].usedSlots % 9;
-  console.log(sum);
-  if (sum === 8) {
-    data.currentCycle = { increment: 1 };
+    const sum = uplineData[pkg].usedSlots % 9;
+    if (
+      sum === 8 &&
+      uplineData[pkg].currentCycle < uplineData[pkg].totalCycle
+    ) {
+      data.currentCycle = { increment: 1 };
+    }
+
+    return await database["bronze"].update({
+      where: { userId: uplineData.id },
+      data,
+    });
   }
-
-  return await database["bronze"].update({
-    where: { userId: uplineData.id },
-    data,
-  });
+  return false;
 };
 
 export {

@@ -30,34 +30,34 @@ model Admin {
 }
 
 model User {
-  id                Int                @id @default(autoincrement())
-  username          String             @unique
+  id                Int                 @id @default(autoincrement())
+  username          String              @unique
   fullName          String
-  email             String             @unique
+  email             String              @unique
   country           String
   city              String
-  sponsorUsername   String             @default("GHC")
-  sponsorId         Int                @default(0)
-  phone             String             @unique
+  sponsorUsername   String              @default("GHC")
+  sponsorId         Int                 @default(0)
+  phone             String              @unique
   password          String
   gender            Genders
-  role              UserRole           @default(MEMBER)
-  isBlocked         Boolean            @default(false)
-  hasFunded         Boolean            @default(false)
-  isCycleLeader     Boolean            @default(false)
-  emailVerified     Boolean            @default(false)
+  role              UserRole            @default(MEMBER)
+  isBlocked         Boolean             @default(false)
+  hasFunded         Boolean             @default(false)
+  isCycleLeader     Boolean             @default(false)
+  emailVerified     Boolean             @default(false)
   displayPhoto      String?
   bankName          String?
-  accountNumber     BigInt?            @unique
+  accountNumber     BigInt?             @unique
   accountName       String?
-  createdAt         DateTime           @default(now())
-  updatedAt         DateTime           @updatedAt
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
   eWallet           Ewallet?
   leaderCycleBonus  LeaderCycleBonus?
   withdrawalWallet  WithdrawalWallet?
   salesIncomeBonus  SalesIncomeBonus?
   referrerIncome    ReferrerIncome[]
-  cycleWelcomeBonus CycleWelcomeBonus?
+  cycleWelcomeBonus CycleWelcomeBonus[]
   testimonyBonus    TestimonyBonus?
   completionBonus   CompletionBonus?
   unclaimedRewards  UnclaimedRewards?
@@ -115,12 +115,12 @@ model ReferrerIncome {
 }
 
 model CycleWelcomeBonus {
-  id      Int   @id @default(autoincrement())
-  bronze  Float @default(0.00)
-  gold    Float @default(0.00)
-  diamond Float @default(0.00)
-  userId  Int   @unique
-  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id      Int         @id @default(autoincrement())
+  amount  Float       @default(0.00)
+  package PackageType
+  cycle   Int
+  userId  Int
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model TestimonyBonus {
@@ -277,21 +277,27 @@ model WithdrawalRequest {
 }
 
 model Contants {
-  id                   Int      @id @default(1)
-  bronze               Float
-  gold                 Float
-  diamond              Float
-  bronzeRefBonus       Float
-  goldRefBonus         Float
-  diamondRefBonus      Float
-  bronzeThreshold      Float
-  goldThreshold        Float
-  diamondThreshold     Float
-  leaderCycleThreshold Float
-  salesIncomeThreshold Float
-  usdRate              Float
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  id                     Int      @id @default(1)
+  bronze                 Float
+  gold                   Float
+  diamond                Float
+  bronzeRefBonus         Float
+  goldRefBonus           Float
+  diamondRefBonus        Float
+  bronzeWelcomeBonus     Float    @default(0.00)
+  goldWelcomeBonus       Float    @default(0.00)
+  diamondWelcomeBonus    Float    @default(0.00)
+  bronzeCompletionBonus  Float    @default(0.00)
+  goldCompletionBonus    Float    @default(0.00)
+  diamondCompletionBonus Float    @default(0.00)
+  bronzeThreshold        Float
+  goldThreshold          Float
+  diamondThreshold       Float
+  leaderCycleThreshold   Float
+  salesIncomeThreshold   Float
+  usdRate                Float
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
 }
 
 model Sessions {
