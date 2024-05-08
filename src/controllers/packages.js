@@ -16,12 +16,7 @@ import {
   updateUserPackage,
 } from "../services/packageServices.js";
 import {
-  addReferralIncome,
-  createReferralUplineNoPackage,
-  createReferralsNoUpline,
-  createReferralsUplineWithGen,
-  getExistingReferrals,
-  getUplineGenealogy,
+  createReferrersData,
   updateUplineRefferalBonus,
 } from "../services/referralServices.js";
 import { updateUplineUnclaimedBonus } from "../services/unclaimedBonus.js";
@@ -82,18 +77,18 @@ const buyPackages = asyncWrapper(async (req, res) => {
     // ok -e//
 
     // referral bonus to upline
-    const uplineRefBouns = await updateUplineRefferalBonus(
-      uplineData,
-      "bronze",
-      prices
-    );
+    // const uplineRefBouns = await updateUplineRefferalBonus(
+    //   uplineData,
+    //   "bronze",
+    //   prices
+    // );
     // ok -f//
 
     // update upline package Data
-    const updatedUplinePackageData = await updateUplinePackage(
-      uplineData,
-      "bronze"
-    );
+    // const updatedUplinePackageData = await updateUplinePackage(
+    //   uplineData,
+    //   "bronze"
+    // );
     // ok -f//
 
     // update upline unclaimed bonus Data
@@ -115,18 +110,26 @@ const buyPackages = asyncWrapper(async (req, res) => {
     // ok -e//
 
     // update upline welcome bonus
-    const uplineWelcomeBonus = await updateUplineCycleWelcomeBonus(
-      uplineData,
-      updatedUplinePackageData,
-      "bronze",
-      prices
-    );
+    // const uplineWelcomeBonus = await updateUplineCycleWelcomeBonus(
+    //   uplineData,
+    //   updatedUplinePackageData,
+    //   "bronze",
+    //   prices
+    // );
     // ok -f//
 
     // update upline completion bonus
-    const uplineCompletionBonus = await updatedUplineCompBonus(
-      updatedUplinePackageData,
-      prices,
+    // const uplineCompletionBonus = await updatedUplineCompBonus(
+    //   updatedUplinePackageData,
+    //   prices,
+    //   "bronze"
+    // );
+    // ok -f//
+
+    // create user referrers data
+    const referrersTable = await createReferrersData(
+      uplineData,
+      userId,
       "bronze"
     );
     // ok -f//
@@ -135,7 +138,8 @@ const buyPackages = asyncWrapper(async (req, res) => {
       res,
       StatusCodes.CREATED,
       true,
-      "Package Purchased Successfully"
+      "Package Purchased Successfully",
+      referrersTable
     );
   } catch (error) {
     console.log(error);

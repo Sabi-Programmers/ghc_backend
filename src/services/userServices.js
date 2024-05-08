@@ -75,7 +75,7 @@ const getAllUsersJoinedThisYear = async () => {
 };
 
 const getUplineDetails = async (id, pkg) => {
-  const include = {};
+  const include = { referrers: { where: { package: pkg.toUpperCase() } } };
   include[pkg] = true;
   return await database.user.findUnique({
     where: { id },

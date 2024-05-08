@@ -1,6 +1,46 @@
 import database from "../libs/prisma.js";
 
-const getExistingReferrals = async (userId, packages) => {
+const updateUplineRefferalBonus = async (uplineData, pkg, contants) => {
+  if (uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
+    return await database.referrerIncome.create({
+      data: {
+        userId: uplineData.id,
+        amount: contants[pkg + "RefBonus"],
+        cycle: uplineData[pkg].currentCycle,
+        package: pkg.toUpperCase(),
+      },
+    });
+  }
+  return false;
+};
+
+const createReferrersData = async (uplineData, userId, pkg) => {
+  const data = {
+    userId,
+    package: pkg.toUpperCase(),
+  };
+
+  if (uplineData === null) {
+    data.first = "GHC";
+  } else {
+    data.first = uplineData.username;
+    data.second = uplineData.referrers.first;
+    data.third = uplineData.referrers.second;
+    data.forth = uplineData.referrers.third;
+    data.fifth = uplineData.referrers.forth;
+  }
+
+  return await database.referrers.create({
+    data,
+  });
+};
+
+export { updateUplineRefferalBonus, createReferrersData };
+
+/**
+ * 
+ * 
+ * const getExistingReferrals = async (userId, packages) => {
   const packagesPurchasedArray = Object.keys(packages).map((packageName) => ({
     package: packageName.toUpperCase(),
   }));
@@ -72,27 +112,4 @@ const addReferralIncome = async (sponsorId, pkg, prices) => {
     data,
   });
 };
-
-const updateUplineRefferalBonus = async (uplineData, pkg, contants) => {
-  if (uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
-    return await database.referrerIncome.create({
-      data: {
-        userId: uplineData.id,
-        amount: contants[pkg + "RefBonus"],
-        cycle: uplineData[pkg].currentCycle,
-        package: pkg.toUpperCase(),
-      },
-    });
-  }
-  return false;
-};
-
-export {
-  getExistingReferrals,
-  getUplineGenealogy,
-  createReferralsNoUpline,
-  createReferralUplineNoPackage,
-  createReferralsUplineWithGen,
-  addReferralIncome,
-  updateUplineRefferalBonus,
-};
+ */

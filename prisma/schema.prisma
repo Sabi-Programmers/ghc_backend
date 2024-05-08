@@ -65,7 +65,7 @@ model User {
   gold              Gold?
   diamond           Diamond?
   packageOrders     PackageOrder[]
-  referrals         Referral[]
+  referrers         Referrers[]
 }
 
 model Ewallet {
@@ -227,7 +227,7 @@ model PackageOrder {
   updatedAt DateTime    @updatedAt
 }
 
-model Referral {
+model Referrers {
   id        Int         @id @default(autoincrement())
   package   PackageType
   first     String
