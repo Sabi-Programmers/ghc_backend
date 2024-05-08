@@ -53,7 +53,7 @@ model User {
   createdAt         DateTime            @default(now())
   updatedAt         DateTime            @updatedAt
   eWallet           Ewallet?
-  leaderCycleBonus  LeaderCycleBonus?
+  cycleLeaderBonus  CycleLeaderBonus[]
   withdrawalWallet  WithdrawalWallet?
   salesIncomeBonus  SalesIncomeBonus?
   referrerIncome    ReferrerIncome[]
@@ -78,15 +78,6 @@ model Ewallet {
   User            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model LeaderCycleBonus {
-  id      Int   @id @default(autoincrement())
-  bronze  Float @default(0.00)
-  gold    Float @default(0.00)
-  diamond Float @default(0.00)
-  userId  Int   @unique
-  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
 model WithdrawalWallet {
   id          Int   @id @default(autoincrement())
   bronze      Float @default(0.00)
@@ -103,6 +94,19 @@ model SalesIncomeBonus {
   amount Float @default(0.00)
   userId Int   @unique
   user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model CycleLeaderBonus {
+  id               Int         @id @default(autoincrement())
+  downlineName     String
+  downlineUsername String
+  amount           Float       @default(0.00)
+  sponsorUsername  String
+  generation       Int
+  package          PackageType
+  userId           Int
+  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt        DateTime    @default(now())
 }
 
 model ReferrerIncome {

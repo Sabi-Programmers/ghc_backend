@@ -86,18 +86,18 @@ const buyPackages = asyncWrapper(async (req, res) => {
     // ok -f//
 
     // update upline package Data
-    // const updatedUplinePackageData = await updateUplinePackage(
-    //   uplineData,
-    //   "bronze"
-    // );
+    const updatedUplinePackageData = await updateUplinePackage(
+      uplineData,
+      "bronze"
+    );
     // ok -f//
 
     // update upline unclaimed bonus Data
-    // const unclaimedBonus = await updateUplineUnclaimedBonus(
-    //   uplineData.id,
-    //   "bronze",
-    //   prices
-    // );
+    const unclaimedBonus = await updateUplineUnclaimedBonus(
+      sponsorId,
+      "bronze",
+      prices
+    );
     // ok -f//
 
     // update user welcome bonus Data
@@ -139,13 +139,19 @@ const buyPackages = asyncWrapper(async (req, res) => {
     const userCycleLeader = await makeUserCycleLeader(newUserPkg);
     // ok -e//
 
+    // make Upline a Cycle Leader
+    const uplineCycleLeader = await makeUserCycleLeader(
+      updatedUplinePackageData
+    );
+    // ok -f//
+
     // console.log(uplineData);
     return response.json(
       res,
       StatusCodes.CREATED,
       true,
       "Package Purchased Successfully",
-      userCycleLeader
+      uplineCycleLeader
     );
   } catch (error) {
     console.log(error);
