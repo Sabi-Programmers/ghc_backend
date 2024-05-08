@@ -30,6 +30,7 @@ import {
   updateUserCycleWelcomeBonus,
   updatedUplineCompBonus,
 } from "../services/cycleWelcomeServies.js";
+import { makeUserCycleLeader } from "../services/cycleLeaderBonus.js";
 
 const buyPackages = asyncWrapper(async (req, res) => {
   try {
@@ -127,19 +128,24 @@ const buyPackages = asyncWrapper(async (req, res) => {
     // ok -f//
 
     // create user referrers data
-    const referrersTable = await createReferrersData(
-      uplineData,
-      userId,
-      "bronze"
-    );
+    // const referrersTable = await createReferrersData(
+    //   uplineData,
+    //   userId,
+    //   "bronze"
+    // );
     // ok -f//
 
+    // make User a Cycle Leader
+    const userCycleLeader = await makeUserCycleLeader(newUserPkg);
+    // ok -e//
+
+    // console.log(uplineData);
     return response.json(
       res,
       StatusCodes.CREATED,
       true,
       "Package Purchased Successfully",
-      referrersTable
+      userCycleLeader
     );
   } catch (error) {
     console.log(error);
