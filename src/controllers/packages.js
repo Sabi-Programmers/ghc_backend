@@ -33,6 +33,7 @@ import { createPackageOrders } from "../services/packageOrderServices.js";
 import {
   updateUplineCycleWelcomeBonus,
   updateUserCycleWelcomeBonus,
+  updatedUplineCompBonus,
 } from "../services/cycleWelcomeServies.js";
 
 const buyPackages = asyncWrapper(async (req, res) => {
@@ -114,20 +115,27 @@ const buyPackages = asyncWrapper(async (req, res) => {
     // ok -e//
 
     // update upline welcome bonus
-    // const uplineWelcomeBonus = await updateUplineCycleWelcomeBonus(
-    //   uplineData,
-    //   updatedUplinePackageData,
-    //   "bronze",
-    //   prices
-    // );
+    const uplineWelcomeBonus = await updateUplineCycleWelcomeBonus(
+      uplineData,
+      updatedUplinePackageData,
+      "bronze",
+      prices
+    );
+    // ok -f//
+
+    // update upline completion bonus
+    const uplineCompletionBonus = await updatedUplineCompBonus(
+      updatedUplinePackageData,
+      prices,
+      "bronze"
+    );
     // ok -f//
 
     return response.json(
       res,
       StatusCodes.CREATED,
       true,
-      "Package Purchased Successfully",
-      uplineWelcomeBonus
+      "Package Purchased Successfully"
     );
   } catch (error) {
     console.log(error);

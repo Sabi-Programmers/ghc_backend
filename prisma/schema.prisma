@@ -59,7 +59,7 @@ model User {
   referrerIncome    ReferrerIncome[]
   cycleWelcomeBonus CycleWelcomeBonus[]
   testimonyBonus    TestimonyBonus?
-  completionBonus   CompletionBonus?
+  completionBonus   CompletionBonus[]
   unclaimedRewards  UnclaimedRewards?
   bronze            Bronze?
   gold              Gold?
@@ -136,12 +136,12 @@ model TestimonyBonus {
 }
 
 model CompletionBonus {
-  id      Int   @id @default(autoincrement())
-  bronze  Float @default(0.00)
-  gold    Float @default(0.00)
-  diamond Float @default(0.00)
-  userId  Int   @unique
-  user    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id      Int         @id @default(autoincrement())
+  amount  Float       @default(0.00)
+  package PackageType
+  cycle   Int
+  userId  Int
+  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model UnclaimedRewards {

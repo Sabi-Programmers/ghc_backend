@@ -39,8 +39,26 @@ const updateUplineCycleWelcomeBonus = async (
   return false;
 };
 
-const updatedUplineCompBonus = async () => {
+const updatedUplineCompBonus = async (updateduplinePkgData, constants, pkg) => {
+  const sum =
+    updateduplinePkgData.usedSlots > 0 ? updateduplinePkgData.usedSlots % 9 : 1;
+  console.log(updateduplinePkgData);
+  if (sum === 0) {
+    return await database.completionBonus.create({
+      data: {
+        userId: updateduplinePkgData.userId,
+        package: pkg.toUpperCase(),
+        cycle: updateduplinePkgData.currentCycle - 1,
+        amount: constants[pkg + "CompletionBonus"],
+      },
+    });
+  }
+
   return false;
 };
 
-export { updateUserCycleWelcomeBonus, updateUplineCycleWelcomeBonus };
+export {
+  updateUserCycleWelcomeBonus,
+  updateUplineCycleWelcomeBonus,
+  updatedUplineCompBonus,
+};
