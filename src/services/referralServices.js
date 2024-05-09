@@ -1,7 +1,7 @@
 import database from "../libs/prisma.js";
 
 const updateUplineRefferalBonus = async (uplineData, pkg, contants) => {
-  if (uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
+  if (uplineData && uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
     return await database.referrerIncome.create({
       data: {
         userId: uplineData.id,

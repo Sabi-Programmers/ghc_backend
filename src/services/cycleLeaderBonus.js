@@ -27,7 +27,7 @@ const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
     sixth: 0.1,
   };
 
-  await Promise.all(
+  return await Promise.all(
     Object.entries(genealogy).map(async ([key, value], i) => {
       if (value !== null && value !== "GHC") {
         await database.user.update({
@@ -51,8 +51,6 @@ const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
       }
     })
   );
-
-  return false;
 };
 
 export { makeUserCycleLeader, cycleLeadersPayments };

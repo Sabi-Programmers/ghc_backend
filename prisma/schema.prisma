@@ -202,19 +202,6 @@ model Diamond {
   updatedAt    DateTime @updatedAt
 }
 
-model PackagePrice {
-  id              Int      @id @default(autoincrement())
-  bronze          Float
-  gold            Float
-  diamond         Float
-  bronzeRefBonus  Float
-  goldRefBonus    Float
-  diamondRefBonus Float
-  usdRate         Float
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
-}
-
 enum OrderStatus {
   PENDING
   DELIVERED

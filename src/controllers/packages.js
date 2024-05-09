@@ -6,11 +6,7 @@ import {
   updateEwalletBalanceUSD,
 } from "../services/eWalletServices.js";
 import userServices from "../services/userServices.js";
-import { getPackagesPrice } from "../services/packagePrices.js";
 import {
-  addUserToUplinePackages,
-  createPackages,
-  getUplinePackages,
   getUserPackage,
   updateUplinePackage,
   updateUserPackage,
@@ -37,13 +33,7 @@ import {
 
 const buyPackages = asyncWrapper(async (req, res) => {
   try {
-    const {
-      id: userId,
-      sponsorUsername,
-      sponsorId,
-      username,
-      fullName,
-    } = req.user;
+    const { id: userId, sponsorId, username, fullName } = req.user;
     const packages = req.body;
 
     /**
@@ -79,38 +69,53 @@ const buyPackages = asyncWrapper(async (req, res) => {
     const newUserPkg = await updateUserPackage("bronze", userId, 1, userPkg);
     // // ok  -e//
 
-    const pkgOrders = await createPackageOrders(userId, "bronze", 1);
+    await createPackageOrders(userId, "bronze", 1);
     // ok -e//
 
     // Get Upline Info
     const uplineData = await userServices.getUplineDetails(sponsorId, "bronze");
     // ok -e//
 
-    // referral bonus to upline
-    // const uplineRefBouns = await updateUplineRefferalBonus(
-    //   uplineData,
-    //   "bronze",
-    //   prices
-    // );
-    // ok -f//
+    if (userPkg.totalCycle === 0) {
+      // referral bonus to upline
+      await updateUplineRefferalBonus(uplineData, "bronze", prices);
+      // ok -f//
 
-    // update upline package Data
-    const updatedUplinePackageData = await updateUplinePackage(
-      uplineData,
-      "bronze"
-    );
-    // ok -f//
+      // update upline package Data
+      const updatedUplinePackageData = await updateUplinePackage(
+        uplineData,
+        "bronze"
+      );
+      // ok -f//
 
-    // update upline unclaimed bonus Data
-    const unclaimedBonus = await updateUplineUnclaimedBonus(
-      sponsorId,
-      "bronze",
-      prices
-    );
-    // ok -f//
+      // update upline unclaimed bonus Data
+      await updateUplineUnclaimedBonus(sponsorId, "bronze", prices, uplineData);
+      // ok -f//
+
+      // update upline welcome bonus
+      await updateUplineCycleWelcomeBonus(
+        uplineData,
+        updatedUplinePackageData,
+        "bronze",
+        prices
+      );
+      // ok -f//
+
+      // update upline completion bonus
+      await updatedUplineCompBonus(updatedUplinePackageData, prices, "bronze");
+      // ok -f//
+
+      // create user referrers data
+      await createReferrersData(uplineData, userId, "bronze");
+      // ok -f//
+
+      // make Upline a Cycle Leader
+      await makeUserCycleLeader(updatedUplinePackageData);
+      // ok -f//
+    }
 
     // update user welcome bonus Data
-    const userWelcomeBonus = await updateUserCycleWelcomeBonus(
+    await updateUserCycleWelcomeBonus(
       userId,
       "bronze",
       userPkg,
@@ -119,47 +124,12 @@ const buyPackages = asyncWrapper(async (req, res) => {
     );
     // ok -e//
 
-    // update upline welcome bonus
-    // const uplineWelcomeBonus = await updateUplineCycleWelcomeBonus(
-    //   uplineData,
-    //   updatedUplinePackageData,
-    //   "bronze",
-    //   prices
-    // );
-    // ok -f//
-
-    // update upline completion bonus
-    // const uplineCompletionBonus = await updatedUplineCompBonus(
-    //   updatedUplinePackageData,
-    //   prices,
-    //   "bronze"
-    // );
-    // ok -f//
-
-    // create user referrers data
-    // const referrersTable = await createReferrersData(
-    //   uplineData,
-    //   userId,
-    //   "bronze"
-    // );
-    // ok -f//
-
     // make User a Cycle Leader
-    const userCycleLeader = await makeUserCycleLeader(newUserPkg);
+    await makeUserCycleLeader(newUserPkg);
     // ok -e//
 
-    // make Upline a Cycle Leader
-    // const uplineCycleLeader = await makeUserCycleLeader(
-    //   updatedUplinePackageData
-    // );
-    // ok -f//
-
-    const payCycleLeader = await cycleLeadersPayments(
-      userId,
-      "bronze",
-      username,
-      fullName
-    );
+    await cycleLeadersPayments(userId, "bronze", username, fullName);
+    // ok -e//
 
     // console.log(uplineData);
     return response.json(
@@ -184,7 +154,7 @@ const getPackages = asyncWrapper(async (req, res) => {
     user: req.user,
   };
 
-  data.prices = await getPackagesPrice();
+  data.prices = await getContants();
 
   res.render("member/packages/buy-packages", { title: "Pick A Package", data });
 });
@@ -194,7 +164,7 @@ const completePackageOrder = asyncWrapper(async (req, res) => {
   };
 
   data.ewallet = await getEwallet(req.user.id);
-  data.prices = await getPackagesPrice();
+  data.prices = await getContants();
 
   res.render("member/packages/complete-packages-order", {
     title: "Complete Package Order",

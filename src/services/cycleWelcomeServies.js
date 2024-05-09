@@ -26,7 +26,10 @@ const updateUplineCycleWelcomeBonus = async (
   pkg,
   constants
 ) => {
-  if (uplineData[pkg].currentCycle < updatedUplinePkgData.currentCycle) {
+  if (
+    uplineData &&
+    uplineData[pkg].currentCycle < updatedUplinePkgData.currentCycle
+  ) {
     return database.cycleWelcomeBonus.create({
       data: {
         package: pkg.toUpperCase(),
@@ -41,8 +44,10 @@ const updateUplineCycleWelcomeBonus = async (
 
 const updatedUplineCompBonus = async (updateduplinePkgData, constants, pkg) => {
   const sum =
-    updateduplinePkgData.usedSlots > 0 ? updateduplinePkgData.usedSlots % 9 : 1;
-  console.log(updateduplinePkgData);
+    updateduplinePkgData && updateduplinePkgData.usedSlots > 0
+      ? updateduplinePkgData.usedSlots % 9
+      : 1;
+
   if (sum === 0) {
     return await database.completionBonus.create({
       data: {
