@@ -28,6 +28,7 @@ const createReferrersData = async (uplineData, userId, pkg) => {
     data.third = uplineData.referrers.second;
     data.forth = uplineData.referrers.third;
     data.fifth = uplineData.referrers.forth;
+    data.sixth = uplineData.referrers.fifth;
   }
 
   return await database.referrers.create({
@@ -35,7 +36,30 @@ const createReferrersData = async (uplineData, userId, pkg) => {
   });
 };
 
-export { updateUplineRefferalBonus, createReferrersData };
+const getUserReferrer = async (userId, pkg) => {
+  return await database.referrers.findFirst({
+    where: { userId, package: pkg.toUpperCase() },
+  });
+};
+const getUserReferrerGen = async (userId, pkg) => {
+  return await database.referrers.findFirst({
+    where: { userId, package: pkg.toUpperCase() },
+    select: {
+      first: true,
+      second: true,
+      third: true,
+      forth: true,
+      fifth: true,
+    },
+  });
+};
+
+export {
+  updateUplineRefferalBonus,
+  createReferrersData,
+  getUserReferrer,
+  getUserReferrerGen,
+};
 
 /**
  * 

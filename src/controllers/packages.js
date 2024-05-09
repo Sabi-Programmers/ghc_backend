@@ -30,11 +30,20 @@ import {
   updateUserCycleWelcomeBonus,
   updatedUplineCompBonus,
 } from "../services/cycleWelcomeServies.js";
-import { makeUserCycleLeader } from "../services/cycleLeaderBonus.js";
+import {
+  cycleLeadersPayments,
+  makeUserCycleLeader,
+} from "../services/cycleLeaderBonus.js";
 
 const buyPackages = asyncWrapper(async (req, res) => {
   try {
-    const { id: userId, sponsorUsername, sponsorId, username } = req.user;
+    const {
+      id: userId,
+      sponsorUsername,
+      sponsorId,
+      username,
+      fullName,
+    } = req.user;
     const packages = req.body;
 
     /**
@@ -70,7 +79,7 @@ const buyPackages = asyncWrapper(async (req, res) => {
     const newUserPkg = await updateUserPackage("bronze", userId, 1, userPkg);
     // // ok  -e//
 
-    // const pkgOrders = await createPackageOrders(userId, "bronze", 1);
+    const pkgOrders = await createPackageOrders(userId, "bronze", 1);
     // ok -e//
 
     // Get Upline Info
@@ -101,13 +110,13 @@ const buyPackages = asyncWrapper(async (req, res) => {
     // ok -f//
 
     // update user welcome bonus Data
-    // const userWelcomeBonus = await updateUserCycleWelcomeBonus(
-    //   userId,
-    //   "bronze",
-    //   userPkg,
-    //   newUserPkg,
-    //   prices
-    // );
+    const userWelcomeBonus = await updateUserCycleWelcomeBonus(
+      userId,
+      "bronze",
+      userPkg,
+      newUserPkg,
+      prices
+    );
     // ok -e//
 
     // update upline welcome bonus
@@ -140,18 +149,24 @@ const buyPackages = asyncWrapper(async (req, res) => {
     // ok -e//
 
     // make Upline a Cycle Leader
-    const uplineCycleLeader = await makeUserCycleLeader(
-      updatedUplinePackageData
-    );
+    // const uplineCycleLeader = await makeUserCycleLeader(
+    //   updatedUplinePackageData
+    // );
     // ok -f//
+
+    const payCycleLeader = await cycleLeadersPayments(
+      userId,
+      "bronze",
+      username,
+      fullName
+    );
 
     // console.log(uplineData);
     return response.json(
       res,
       StatusCodes.CREATED,
       true,
-      "Package Purchased Successfully",
-      uplineCycleLeader
+      "Package Purchased Successfully"
     );
   } catch (error) {
     console.log(error);
