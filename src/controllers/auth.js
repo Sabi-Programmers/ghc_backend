@@ -1,13 +1,15 @@
+import { StatusCodes } from "http-status-codes";
 import { Prisma } from "@prisma/client";
 import bcrypt from "bcryptjs";
+import passport from "passport";
 import database from "../libs/prisma.js";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
 import { createEWallet } from "../services/eWalletServices.js";
+import response from "../utils/response.js";
 
-const getSponsor = asyncWrapper(async (req, res) => {
+const getRegisterPage = asyncWrapper(async (req, res) => {
   const { sponsorId } = req.query;
 
-  //   console.log(req.body);
   let sponsorUsername = null;
   let sponsorID = 0;
   let error = null;
@@ -32,7 +34,7 @@ const getSponsor = asyncWrapper(async (req, res) => {
     data: { sponsorUsername, sponsorID, error },
   });
 });
-const createUser = asyncWrapper(async (req, res, next) => {
+const createUser = asyncWrapper(async (req, res) => {
   const {
     username,
     password,
@@ -64,8 +66,13 @@ const createUser = asyncWrapper(async (req, res, next) => {
       },
     });
 
-    await createEWallet(user, next);
-    res.redirect("/auth/login");
+    await createEWallet(user);
+    return response.json(
+      res,
+      StatusCodes.CREATED,
+      true,
+      "Account created Successfully"
+    );
   } catch (err) {
     let error = "something went wrong";
 
@@ -84,11 +91,55 @@ const createUser = asyncWrapper(async (req, res, next) => {
       }
     }
 
-    return res.render("auth/register", {
-      title: "Create an account",
-      data: { sponsorUsername, sponsorID: sponsorId, error },
-    });
+    return response.json(res, StatusCodes.BAD_REQUEST, false, error);
   }
 });
+const getLoginPage = asyncWrapper(async (req, res) => {
+  return res.render("auth/login", { title: "Login", data: { error: null } });
+});
 
-export { createUser, getSponsor };
+const loginUser = asyncWrapper(async (req, res, next) => {
+  passport.authenticate("member-local", (err, user, info) => {
+    if (err) {
+      return response.json(
+        res,
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        false,
+        "Internal Server Error"
+      );
+    }
+    if (!user) {
+      return response.json(res, StatusCodes.UNAUTHORIZED, false, info.message);
+    }
+
+    req.logIn(user, (err) => {
+      if (err) {
+        return response.json(
+          res,
+          StatusCodes.INTERNAL_SERVER_ERROR,
+          false,
+          "Internal Server Error"
+        );
+      }
+
+      // If authentication was successful, send a success response
+      return response.json(res, StatusCodes.OK, true, "Login successful");
+    });
+  })(req, res, next);
+});
+
+const logoutUser = asyncWrapper(async (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    req.session.destroy((err) => {
+      if (err) {
+        return next(err);
+      }
+      return response.json(res, StatusCodes.OK, true, "Logout successful");
+    });
+  });
+});
+
+export { createUser, getRegisterPage, getLoginPage, loginUser, logoutUser };

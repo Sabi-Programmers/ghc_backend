@@ -64,72 +64,80 @@ const buyPackages = asyncWrapper(async (req, res) => {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    // Get UserPackage
-    const userPkg = await getUserPackage(userId, "bronze");
-    const newUserPkg = await updateUserPackage("bronze", userId, 1, userPkg);
-    // // ok  -e//
+    const actions = async (pkg, unit) => {
+      // Get UserPackage
+      const userPkg = await getUserPackage(userId, pkg);
+      const newUserPkg = await updateUserPackage(pkg, userId, unit, userPkg);
+      // // ok  -e//
 
-    await createPackageOrders(userId, "bronze", 1);
-    // ok -e//
+      await createPackageOrders(userId, pkg, 1);
+      // ok -e//
 
-    // Get Upline Info
-    const uplineData = await userServices.getUplineDetails(sponsorId, "bronze");
-    // ok -e//
+      // Get Upline Info
+      const uplineData = await userServices.getUplineDetails(sponsorId, pkg);
+      // ok -e//
 
-    if (userPkg.totalCycle === 0) {
-      // referral bonus to upline
-      await updateUplineRefferalBonus(uplineData, "bronze", prices);
-      // ok -f//
+      if (userPkg.totalCycle === 0) {
+        // referral bonus to upline
+        await updateUplineRefferalBonus(uplineData, pkg, prices);
+        // ok -f//
 
-      // update upline package Data
-      const updatedUplinePackageData = await updateUplinePackage(
-        uplineData,
-        "bronze"
-      );
-      // ok -f//
+        // update upline package Data
+        const updatedUplinePackageData = await updateUplinePackage(
+          uplineData,
+          pkg
+        );
+        // ok -f//
 
-      // update upline unclaimed bonus Data
-      await updateUplineUnclaimedBonus(sponsorId, "bronze", prices, uplineData);
-      // ok -f//
+        // update upline unclaimed bonus Data
+        await updateUplineUnclaimedBonus(sponsorId, pkg, prices, uplineData);
+        // ok -f//
 
-      // update upline welcome bonus
-      await updateUplineCycleWelcomeBonus(
-        uplineData,
-        updatedUplinePackageData,
-        "bronze",
+        // update upline welcome bonus
+        await updateUplineCycleWelcomeBonus(
+          uplineData,
+          updatedUplinePackageData,
+          pkg,
+          prices
+        );
+        // ok -f//
+
+        // update upline completion bonus
+        await updatedUplineCompBonus(updatedUplinePackageData, prices, pkg);
+        // ok -f//
+
+        // create user referrers data
+        await createReferrersData(uplineData, userId, pkg);
+        // ok -f//
+
+        // make Upline a Cycle Leader
+        await makeUserCycleLeader(updatedUplinePackageData);
+        // ok -f//
+      }
+
+      // update user welcome bonus Data
+      await updateUserCycleWelcomeBonus(
+        userId,
+        pkg,
+        userPkg,
+        newUserPkg,
         prices
       );
-      // ok -f//
+      // ok -e//
 
-      // update upline completion bonus
-      await updatedUplineCompBonus(updatedUplinePackageData, prices, "bronze");
-      // ok -f//
+      // make User a Cycle Leader
+      await makeUserCycleLeader(newUserPkg);
+      // ok -e//
 
-      // create user referrers data
-      await createReferrersData(uplineData, userId, "bronze");
-      // ok -f//
+      await cycleLeadersPayments(userId, pkg, username, fullName);
+      // ok -e//
+    };
 
-      // make Upline a Cycle Leader
-      await makeUserCycleLeader(updatedUplinePackageData);
-      // ok -f//
-    }
-
-    // update user welcome bonus Data
-    await updateUserCycleWelcomeBonus(
-      userId,
-      "bronze",
-      userPkg,
-      newUserPkg,
-      prices
+    await Promise.all(
+      Object.entries(packages).map(
+        async ([key, value]) => await actions(key, value)
+      )
     );
-    // ok -e//
-
-    // make User a Cycle Leader
-    await makeUserCycleLeader(newUserPkg);
-    // ok -e//
-
-    await cycleLeadersPayments(userId, "bronze", username, fullName);
-    // ok -e//
 
     // console.log(uplineData);
     return response.json(

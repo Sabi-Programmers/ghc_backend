@@ -1,6 +1,11 @@
 import express from "express";
-import passport from "passport";
-import { createUser, getSponsor } from "../controllers/auth.js";
+import {
+  createUser,
+  getRegisterPage,
+  getLoginPage,
+  loginUser,
+  logoutUser,
+} from "../controllers/auth.js";
 import {
   validateAuth,
   validateCreateUserAuth,
@@ -9,7 +14,7 @@ import {
 import { isAuthenticated } from "../middlewares/auth.js";
 const authRouter = express.Router();
 
-authRouter.get("/register", isAuthenticated, getSponsor);
+authRouter.get("/register", isAuthenticated, getRegisterPage);
 authRouter.post(
   "/register",
   isAuthenticated,
@@ -17,27 +22,14 @@ authRouter.post(
   validateAuth,
   createUser
 );
-authRouter.get("/login", isAuthenticated, (req, res) => {
-  res.render("auth/login", { title: "Login", data: { error: null } });
-});
+authRouter.get("/login", isAuthenticated, getLoginPage);
 authRouter.post(
   "/login",
   isAuthenticated,
   validateLoginAuth,
   validateAuth,
-  passport.authenticate("member-local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/auth/login",
-    failureFlash: true, // Enable flash messages for authentication failures
-  })
+  loginUser
 );
-authRouter.post("/logout", (req, res, next) => {
-  req.logout(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-});
+authRouter.post("/logout", logoutUser);
 
 export default authRouter;
