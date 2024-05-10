@@ -27,30 +27,39 @@ const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
     sixth: 0.1,
   };
 
-  return await Promise.all(
-    Object.entries(genealogy).map(async ([key, value], i) => {
-      if (value !== null && value !== "GHC") {
-        await database.user.update({
-          where: {
-            username: value,
-            isCycleLeader: true,
-          },
-          data: {
-            cycleLeaderBonus: {
-              create: {
-                downlineName: fullName,
-                downlineUsername: username,
-                generation: i + 1,
-                sponsorUsername: genealogy.first,
-                amount: bonuses[key],
-                package: pkg.toUpperCase(),
-              },
-            },
-          },
-        });
-      }
-    })
-  );
+  const query = Object.values(genealogy)
+    .filter((value) => value !== null && value !== "GHC")
+    .map((value) => ({ username: value }));
+
+  const getAllGen = await database.user.findMany({
+    where: {
+      OR: query,
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  const createQuery = getAllGen
+    .filter((obj) => obj.isCycleLeader)
+    .map((obj) => {
+      const generation = Object.keys(genealogy).find(
+        (key) => genealogy[key] === obj.username
+      );
+      return {
+        userId: obj.id,
+        generation,
+        amount: bonuses[generation],
+        downlineName: fullName,
+        downlineUsername: username,
+        sponsorUsername: genealogy.first,
+        package: pkg.toUpperCase(),
+      };
+    });
+
+  return await database.cycleLeaderBonus.createMany({
+    data: createQuery,
+  });
 };
 
 export { makeUserCycleLeader, cycleLeadersPayments };

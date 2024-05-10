@@ -19,16 +19,18 @@ const createReferrersData = async (uplineData, userId, pkg) => {
     userId,
     package: pkg.toUpperCase(),
   };
-
-  if (uplineData === null) {
+  if (
+    uplineData === null ||
+    uplineData[pkg].usedSlots == uplineData[pkg].totalSlots
+  ) {
     data.first = "GHC";
   } else {
     data.first = uplineData.username;
-    data.second = uplineData.referrers.first;
-    data.third = uplineData.referrers.second;
-    data.forth = uplineData.referrers.third;
-    data.fifth = uplineData.referrers.forth;
-    data.sixth = uplineData.referrers.fifth;
+    data.second = uplineData.referrers[0].first;
+    data.third = uplineData.referrers[0].second;
+    data.forth = uplineData.referrers[0].third;
+    data.fifth = uplineData.referrers[0].forth;
+    data.sixth = uplineData.referrers[0].fifth;
   }
 
   return await database.referrers.create({

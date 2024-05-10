@@ -6,7 +6,7 @@ const updateUplineUnclaimedBonus = async (
   prices,
   uplineData
 ) => {
-  if (uplineData && uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
+  if (uplineData && uplineData[pkg].usedSlots === uplineData[pkg].totalSlots) {
     const packageBonus = prices[`${pkg}RefBonus`];
     const data = {};
 

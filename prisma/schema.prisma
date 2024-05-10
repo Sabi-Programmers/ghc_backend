@@ -102,7 +102,7 @@ model CycleLeaderBonus {
   downlineUsername String
   amount           Float       @default(0.00)
   sponsorUsername  String
-  generation       Int
+  generation       String
   package          PackageType
   userId           Int
   user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
