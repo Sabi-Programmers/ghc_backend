@@ -55,7 +55,7 @@ model User {
   eWallet           Ewallet?
   cycleLeaderBonus  CycleLeaderBonus[]
   withdrawalWallet  WithdrawalWallet?
-  salesIncomeBonus  SalesIncomeBonus?
+  salesIncomeBonus  SalesIncomeBonus[]
   referrerIncome    ReferrerIncome[]
   cycleWelcomeBonus CycleWelcomeBonus[]
   testimonyBonus    TestimonyBonus?
@@ -89,11 +89,19 @@ model WithdrawalWallet {
   user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+enum ProductType {
+  DIGITAL
+  PHYSICAL
+}
+
 model SalesIncomeBonus {
-  id     Int   @id @default(autoincrement())
-  amount Float @default(0.00)
-  userId Int   @unique
-  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          Int         @id @default(autoincrement())
+  amount      Float       @default(0.00)
+  agent       String
+  productType ProductType
+  userId      Int
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt   DateTime    @default(now())
 }
 
 model CycleLeaderBonus {
@@ -110,21 +118,23 @@ model CycleLeaderBonus {
 }
 
 model ReferrerIncome {
-  id      Int         @id @default(autoincrement())
-  amount  Float       @default(0.00)
-  package PackageType
-  cycle   Int
-  userId  Int
-  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        Int         @id @default(autoincrement())
+  amount    Float       @default(0.00)
+  package   PackageType
+  cycle     Int
+  userId    Int
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
 }
 
 model CycleWelcomeBonus {
-  id      Int         @id @default(autoincrement())
-  amount  Float       @default(0.00)
-  package PackageType
-  cycle   Int
-  userId  Int
-  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        Int         @id @default(autoincrement())
+  amount    Float       @default(0.00)
+  package   PackageType
+  cycle     Int
+  userId    Int
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
 }
 
 model TestimonyBonus {
@@ -140,12 +150,13 @@ model TestimonyBonus {
 }
 
 model CompletionBonus {
-  id      Int         @id @default(autoincrement())
-  amount  Float       @default(0.00)
-  package PackageType
-  cycle   Int
-  userId  Int
-  user    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id        Int         @id @default(autoincrement())
+  amount    Float       @default(0.00)
+  package   PackageType
+  cycle     Int
+  userId    Int
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime    @default(now())
 }
 
 model UnclaimedRewards {
@@ -167,39 +178,33 @@ enum PackageType {
 }
 
 model Bronze {
-  id           Int      @id @default(autoincrement())
-  totalCycle   Int      @default(0)
-  currentCycle Int      @default(0)
-  usedSlots    Int      @default(0)
-  totalSlots   Int      @default(0)
-  userId       Int      @unique
-  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id           Int  @id @default(autoincrement())
+  totalCycle   Int  @default(0)
+  currentCycle Int  @default(0)
+  usedSlots    Int  @default(0)
+  totalSlots   Int  @default(0)
+  userId       Int  @unique
+  User         User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Gold {
-  id           Int      @id @default(autoincrement())
-  totalCycle   Int      @default(0)
-  currentCycle Int      @default(0)
-  usedSlots    Int      @default(0)
-  totalSlots   Int      @default(0)
-  userId       Int      @unique
-  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id           Int  @id @default(autoincrement())
+  totalCycle   Int  @default(0)
+  currentCycle Int  @default(0)
+  usedSlots    Int  @default(0)
+  totalSlots   Int  @default(0)
+  userId       Int  @unique
+  User         User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Diamond {
-  id           Int      @id @default(autoincrement())
-  totalCycle   Int      @default(0)
-  currentCycle Int      @default(0)
-  usedSlots    Int      @default(0)
-  totalSlots   Int      @default(0)
-  userId       Int      @unique
-  User         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id           Int  @id @default(autoincrement())
+  totalCycle   Int  @default(0)
+  currentCycle Int  @default(0)
+  usedSlots    Int  @default(0)
+  totalSlots   Int  @default(0)
+  userId       Int  @unique
+  User         User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum OrderStatus {
@@ -219,18 +224,16 @@ model PackageOrder {
 }
 
 model Referrers {
-  id        Int         @id @default(autoincrement())
-  package   PackageType
-  first     String
-  second    String?
-  third     String?
-  forth     String?
-  fifth     String?
-  sixth     String?
-  userId    Int
-  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id      Int         @id @default(autoincrement())
+  package PackageType
+  first   String
+  second  String?
+  third   String?
+  forth   String?
+  fifth   String?
+  sixth   String?
+  userId  Int
+  User    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model News {

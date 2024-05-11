@@ -2009,3 +2009,23 @@ section {
   color: white;
   border-color: #fd7e14;
 }
+
+#api-handler-loader {
+  position: fixed;
+  top: 0;
+  left: 0%;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+  background: #7474746b;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: progress;
+}
+
+#api-handler-loader > div {
+  height: 100px;
+  width: 100px;
+  font-size: 30px;
+}

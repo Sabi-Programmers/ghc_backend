@@ -42,25 +42,9 @@ const fundWallet = asyncWrapper(async (req, res) => {
       data: {
         hasFunded: true,
         eWallet: { update: { balance: { increment: amount } } },
-        // withdrawalWallet: { create: {} },
-        // unclaimedRewards: { create: {} },
-        // completionBonus: { create: {} },
-        // referrerIncome: { create: {} },
-        // testimonyBonus: { create: {} },
-        // salesIncomeBonus: { create: {} },
-        // leaderCycleBonus: { create: {} },
-        // cycleWelcomeBonus: { create: {} },
       },
       include: {
         eWallet: true,
-        withdrawalWallet: true,
-        unclaimedRewards: true,
-        completionBonus: true,
-        cycleWelcomeBonus: true,
-        referrerIncome: true,
-        leaderCycleBonus: true,
-        testimonyBonus: true,
-        salesIncomeBonus: true,
       },
     });
   }

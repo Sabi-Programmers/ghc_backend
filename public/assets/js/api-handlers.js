@@ -30,6 +30,170 @@ window.onload = function () {
     toast.success = success;
     toast.failed = failed;
   }
+  const loaderHtml = `<div id="api-handler-loader">
+                        <div class="spinner-border text-warning" role="status">
+                          <span class="visually-hidden">Loading...</span>
+                        </div>
+                      </div>`;
+
+  function handleLoader(action) {
+    if (action === "show") {
+      document.body.insertAdjacentHTML("beforeend", loaderHtml);
+    } else if (action === "hide") {
+      const loaderElement = document.getElementById("api-handler-loader");
+      if (loaderElement) {
+        loaderElement.remove();
+      }
+    }
+  }
+
+  const redirect = (url) => {
+    setTimeout(() => {
+      window.location.href = url;
+    }, 1500);
+  };
+
+  function formDataToJson(formData) {
+    const json = {};
+    for (const [key, value] of formData.entries()) {
+      json[key] = value;
+    }
+    return json;
+  }
+
+  const handlerPostRequest = async (jsonData, endpoint, redirectUrl) => {
+    try {
+      handleLoader("show");
+      const res = await fetch(endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(jsonData),
+      });
+      const resData = await res.json();
+
+      if (resData.success === false) {
+        throw new Error(resData.message);
+      }
+      handleLoader("hide");
+      toast.success(resData.message);
+
+      redirect(redirectUrl);
+    } catch (error) {
+      handleLoader("hide");
+
+      toast.failed(error.message);
+    }
+  };
+
+  /**
+   *Login
+   */
+  let loginForm = document.getElementById("login-form");
+
+  if (loginForm) {
+    pristine = new Pristine(loginForm);
+
+    const passwordInput = document.getElementById("password");
+
+    pristine.addValidator(
+      passwordInput,
+      function (value, el) {
+        const hasUppercase = /[A-Z]/.test(value);
+        const hasLowercase = /[a-z]/.test(value);
+
+        if (!hasUppercase || !hasLowercase) {
+          return false;
+        }
+        return true;
+      },
+      "Password must contain at least one uppercase and one lowercase letter.",
+      2,
+      false
+    );
+
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      handlerPostRequest(jsonData, "/auth/login", "/dashboard");
+    });
+  }
+  /**
+   * Register
+   */
+  let registerForm = document.getElementById("register-form");
+
+  if (registerForm) {
+    pristine = new Pristine(registerForm);
+
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+
+    if (confirmPasswordInput) {
+      pristine.addValidator(
+        confirmPasswordInput,
+        function (value, el) {
+          const password = passwordInput.value;
+          if (password !== value) {
+            return false;
+          }
+          return true;
+        },
+        "Password does't match.",
+        3,
+        false
+      );
+    }
+
+    pristine.addValidator(
+      passwordInput,
+      function (value, el) {
+        const hasUppercase = /[A-Z]/.test(value);
+        const hasLowercase = /[a-z]/.test(value);
+
+        if (!hasUppercase || !hasLowercase) {
+          return false;
+        }
+        return true;
+      },
+      "Password must contain at least one uppercase and one lowercase letter.",
+      2,
+      false
+    );
+
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      handlerPostRequest(jsonData, "/auth/register", "/dashboard");
+    });
+  }
+
+  let logout = document.getElementById("logout");
+
+  if (logout) {
+    logout.addEventListener("click", () => {
+      handlerPostRequest({}, "/auth/logout", "/");
+    });
+  }
 
   /**
    * News form with Quill text editor

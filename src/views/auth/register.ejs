@@ -85,13 +85,7 @@
 
                     <% } else { %>
                     <!--User details section-->
-                    <form
-                      method="POST"
-                      action="/auth/register"
-                      class=""
-                      id="auth-form"
-                      novalidate
-                    >
+                    <form id="register-form" method="POST" novalidate>
                       <div class="col-12">
                         <p class="text-center small">
                           Enter your personal details to create account
@@ -585,7 +579,7 @@
                         <button
                           type="submit"
                           class="btn btn-primary m-0"
-                          id="submit-user-detail"
+                          id="register-btn"
                         >
                           Create Account
                         </button>
