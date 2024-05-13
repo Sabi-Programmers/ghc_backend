@@ -17,11 +17,29 @@
                 <div class="card-title">
                   <h3>Select Package</h3>
                 </div>
-                <select class="form-select" name="time-frame" id="timeFrame">
-                  <option value="bronze">Bronze Referrer Tree</option>
-                  <option value="month">Gold Referrer Tree</option>
-                  <option value="year">Diamond Referrer Tree</option>
-                </select>
+                <ul class="nav nav-underline">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'bronze' ? 'active': '' %>"
+                      href="?pkg=bronze"
+                      >Bronze</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'gold' ? 'active': '' %>"
+                      href="?pkg=gold"
+                      >Gold</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'diamond' ? 'active': '' %>"
+                      href="?pkg=diamond"
+                      >Diamond</a
+                    >
+                  </li>
+                </ul>
               </div>
             </div>
           </div>

@@ -31,7 +31,47 @@ const getDashbord = asyncWrapper(async (req, res) => {
       diamond: data.user.diamond.usedSlots,
     };
 
-    data.nodata = false;
+    data.referrersIncome = {
+      total: 0,
+      bronze: 0,
+      gold: 0,
+      diamond: 0,
+    };
+    data.cycleWelcomeBonus = {
+      total: 0,
+      bronze: 0,
+      gold: 0,
+      diamond: 0,
+    };
+    data.completionBonus = {
+      total: 0,
+      bronze: 0,
+      gold: 0,
+      diamond: 0,
+    };
+
+    const calculateData = (input, output) => {
+      input.forEach((item) => {
+        output.total += item.amount;
+        switch (item.package) {
+          case "BRONZE":
+            output.bronze += item.amount;
+            break;
+          case "GOLD":
+            output.gold += item.amount;
+            break;
+          case "DIAMOND":
+            output.diamond += item.amount;
+            break;
+          default:
+            break;
+        }
+      });
+    };
+
+    calculateData(data.user.referrerIncome, data.referrersIncome);
+    calculateData(data.user.cycleWelcomeBonus, data.cycleWelcomeBonus);
+    calculateData(data.user.completionBonus, data.completionBonus);
   } else {
     data.user = req.user;
     data.eWallet = await getEwallet(req.user.id);
