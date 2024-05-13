@@ -79,7 +79,9 @@ window.onload = function () {
       handleLoader("hide");
       toast.success(resData.message);
 
-      redirect(redirectUrl);
+      if (redirectUrl !== null) {
+        redirect(redirectUrl);
+      }
     } catch (error) {
       handleLoader("hide");
 
@@ -187,6 +189,9 @@ window.onload = function () {
     });
   }
 
+  /**
+   * Logout
+   */
   let logout = document.getElementById("logout");
 
   if (logout) {
@@ -500,44 +505,22 @@ window.onload = function () {
 
     renderPackageOrderItems();
 
-    submitPackageOrderButton.addEventListener("click", () => {
+    if (packages.length < 1) {
+      submitPackageOrderButton.setAttribute("disabled", true);
+      redirect("/packages");
+    } else {
+      submitPackageOrderButton.removeAttribute("disabled");
+    }
+
+    submitPackageOrderButton.addEventListener("click", async () => {
       const data = {};
-      const modal = document.getElementById("pleaseWaitDialog");
-      const progressBar = modal.querySelector(".progress-bar");
-
-      modal.classList.add("show");
-      modal.style.display = "block";
-
-      progressBar.style.width = "25%";
 
       packages.forEach((pkg) => {
         data[pkg.name] = pkg.quantity;
       });
 
-      const submitPackageOrder = async () => {
-        try {
-          const res = await fetch("/packages", {
-            method: "POST",
-            body: JSON.stringify(data),
-            headers: { "Content-Type": "application/json" },
-          });
-          progressBar.style.width = "50%";
-          if (!res.ok) {
-            console.log("error");
-            return;
-          }
-          await res.json();
-          localStorage.removeItem("selected-packages");
-          progressBar.style.width = "100%";
-          setTimeout(() => {
-            window.location.href = "/dashboard/success";
-          }, 1000);
-        } catch (error) {
-          console.log(error);
-        }
-      };
-
-      submitPackageOrder();
+      localStorage.removeItem("selected-packages");
+      await handlerPostRequest(data, "/packages", "/packages/order-successful");
     });
   }
 

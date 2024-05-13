@@ -180,4 +180,14 @@ const completePackageOrder = asyncWrapper(async (req, res) => {
   });
 });
 
-export { buyPackages, getPackages, completePackageOrder };
+const getSuccessPage = asyncWrapper(async (req, res) => {
+  let data = {
+    user: req.user,
+  };
+  return res.render("member/packages/success", {
+    title: "Order Successful",
+    data,
+  });
+});
+
+export { buyPackages, getPackages, completePackageOrder, getSuccessPage };

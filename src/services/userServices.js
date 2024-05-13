@@ -16,10 +16,13 @@ const getUserDashboardDetails = async (id) => {
       completionBonus: true,
       cycleWelcomeBonus: true,
       referrerIncome: true,
-      leaderCycleBonus: true,
       testimonyBonus: true,
       salesIncomeBonus: true,
       eWallet: true,
+      bronze: true,
+      gold: true,
+      diamond: true,
+      cycleLeaderBonus: true,
     },
   });
 

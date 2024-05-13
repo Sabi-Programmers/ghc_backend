@@ -13,6 +13,7 @@ import withdrawalRouter from "./withdrawal.js";
 import testimonyRouter from "./testimony.js";
 import bpcRouter from "./bpc.js";
 import productsRouter from "./products.js";
+import withdrawalWalletsRouter from "./withdrawal-wallets.js";
 const router = express.Router();
 
 router.use("/", staticPagesRouter);
@@ -24,6 +25,7 @@ router.use("/user", isMember, userRouter);
 router.use("/profile", isMember, profileRouter);
 router.use("/news", isMember, newsRouter);
 router.use("/withdrawal", isMember, withdrawalRouter);
+router.use("/withdrawal-wallet", isMember, withdrawalWalletsRouter);
 router.use("/testimony", isMember, testimonyRouter);
 router.use("/business-promo-contest", isMember, bpcRouter);
 router.use("/u/products", isMember, productsRouter);

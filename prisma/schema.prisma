@@ -30,42 +30,43 @@ model Admin {
 }
 
 model User {
-  id                Int                 @id @default(autoincrement())
-  username          String              @unique
-  fullName          String
-  email             String              @unique
-  country           String
-  city              String
-  sponsorUsername   String              @default("GHC")
-  sponsorId         Int                 @default(0)
-  phone             String              @unique
-  password          String
-  gender            Genders
-  role              UserRole            @default(MEMBER)
-  isBlocked         Boolean             @default(false)
-  hasFunded         Boolean             @default(false)
-  isCycleLeader     Boolean             @default(false)
-  emailVerified     Boolean             @default(false)
-  displayPhoto      String?
-  bankName          String?
-  accountNumber     BigInt?             @unique
-  accountName       String?
-  createdAt         DateTime            @default(now())
-  updatedAt         DateTime            @updatedAt
-  eWallet           Ewallet?
-  cycleLeaderBonus  CycleLeaderBonus[]
-  withdrawalWallet  WithdrawalWallet?
-  salesIncomeBonus  SalesIncomeBonus[]
-  referrerIncome    ReferrerIncome[]
-  cycleWelcomeBonus CycleWelcomeBonus[]
-  testimonyBonus    TestimonyBonus?
-  completionBonus   CompletionBonus[]
-  unclaimedRewards  UnclaimedRewards?
-  bronze            Bronze?
-  gold              Gold?
-  diamond           Diamond?
-  packageOrders     PackageOrder[]
-  referrers         Referrers[]
+  id                     Int                      @id @default(autoincrement())
+  username               String                   @unique
+  fullName               String
+  email                  String                   @unique
+  country                String
+  city                   String
+  sponsorUsername        String                   @default("GHC")
+  sponsorId              Int                      @default(0)
+  phone                  String                   @unique
+  password               String
+  gender                 Genders
+  role                   UserRole                 @default(MEMBER)
+  isBlocked              Boolean                  @default(false)
+  hasFunded              Boolean                  @default(false)
+  isCycleLeader          Boolean                  @default(false)
+  emailVerified          Boolean                  @default(false)
+  displayPhoto           String?
+  bankName               String?
+  accountNumber          BigInt?                  @unique
+  accountName            String?
+  createdAt              DateTime                 @default(now())
+  updatedAt              DateTime                 @updatedAt
+  eWallet                Ewallet?
+  cycleLeaderBonus       CycleLeaderBonus[]
+  withdrawalWallet       WithdrawalWallet?
+  salesIncomeBonus       SalesIncomeBonus[]
+  referrerIncome         ReferrerIncome[]
+  cycleWelcomeBonus      CycleWelcomeBonus[]
+  testimonyBonus         TestimonyBonus?
+  completionBonus        CompletionBonus[]
+  unclaimedRewards       UnclaimedRewards?
+  bronze                 Bronze?
+  gold                   Gold?
+  diamond                Diamond?
+  packageOrders          PackageOrder[]
+  referrers              Referrers[]
+  WithdrawalWalletRecord WithdrawalWalletRecord[]
 }
 
 model Ewallet {
@@ -234,6 +235,33 @@ model Referrers {
   sixth   String?
   userId  Int
   User    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum IncomeType {
+  cycle_welcome
+  testimony
+  referral
+  completion
+  cycle_leader
+  sales_income
+}
+
+model WithdrawalWalletRecord {
+  id              Int          @id @default(autoincrement())
+  name            String?
+  username        String?
+  downlineName    String?
+  sponsorUsername String?
+  generation      String?
+  salesAgent      String?
+  amount          Float        @default(0.00)
+  cycle           Int?
+  incomeType      IncomeType
+  package         PackageType?
+  productType     ProductType?
+  userId          Int
+  User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt       DateTime     @default(now())
 }
 
 model News {

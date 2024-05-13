@@ -37,7 +37,7 @@ const updateUplinePackage = async (uplineData, pkg) => {
       data.currentCycle = { increment: 1 };
     }
 
-    return await database["bronze"].update({
+    return await database[pkg].update({
       where: { userId: uplineData.id },
       data,
     });

@@ -63,6 +63,20 @@ const createUser = asyncWrapper(async (req, res) => {
         sponsorId: Number(sponsorId),
         fullName,
         gender,
+        withdrawalWallet: { create: {} },
+        unclaimedRewards: { create: {} },
+        testimonyBonus: { create: {} },
+        bronze: { create: {} },
+        gold: { create: {} },
+        diamond: { create: {} },
+      },
+      include: {
+        withdrawalWallet: true,
+        unclaimedRewards: true,
+        bronze: true,
+        gold: true,
+        diamond: true,
+        testimonyBonus: true,
       },
     });
 

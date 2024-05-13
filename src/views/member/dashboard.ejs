@@ -305,7 +305,10 @@
                     <i class="bi bi-people"></i>
                   </div>
                   <div class="ps-3">
-                    <h6 class="text-truncate">0</h6>
+                    <h6 class="text-truncate">
+                      <%= data.user.bronze.usedSlots +data.user.gold.usedSlots +
+                      data.user.diamond.usedSlots %>
+                    </h6>
                   </div>
                 </div>
               </div>
@@ -349,7 +352,9 @@
                         >
                           Bronze
                         </h5>
-                        <span class="text-end value"> 0 </span>
+                        <span class="text-end value">
+                          <%= data.user.bronze.usedSlots %>
+                        </span>
                       </li>
                       <li
                         class="list-group-item d-flex justify-content-between px-0 border-0"
@@ -362,7 +367,9 @@
                         >
                           Gold
                         </h5>
-                        <span class="text-end value">0 </span>
+                        <span class="text-end value">
+                          <%= data.user.gold.usedSlots %>
+                        </span>
                       </li>
                       <li
                         class="list-group-item d-flex justify-content-between px-0 border-0"
@@ -375,7 +382,9 @@
                         >
                           Diamond
                         </h5>
-                        <span class="text-end value"> 0 </span>
+                        <span class="text-end value">
+                          <%= data.user.diamond.usedSlots %>
+                        </span>
                       </li>
                     </ul>
                   </div>
@@ -606,9 +615,7 @@
                     <i class="bi bi-cart"></i>
                   </div>
                   <div class="ps-3">
-                    <h6 class="text-truncate">
-                      $ <%- data.user.salesIncomeBonus.amount %>
-                    </h6>
+                    <h6 class="text-truncate">$ 0</h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
                   </div>
@@ -636,11 +643,7 @@
                     <i class="bx bx-crown"></i>
                   </div>
                   <div class="ps-3">
-                    <h6 class="text-truncate">
-                      $ <%- data.user.leaderCycleBonus.diamond +
-                      data.user.leaderCycleBonus.gold +
-                      data.user.leaderCycleBonus.bronze %>
-                    </h6>
+                    <h6 class="text-truncate">$0</h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
                   </div>
@@ -688,9 +691,7 @@
                         >
                           Bronze
                         </h5>
-                        <span class="text-end value">
-                          $ <%- data.user.leaderCycleBonus.bronze %>
-                        </span>
+                        <span class="text-end value"> $ 0 </span>
                       </li>
                       <li
                         class="list-group-item d-flex justify-content-between px-0 border-0"
@@ -703,9 +704,7 @@
                         >
                           Gold
                         </h5>
-                        <span class="text-end value">
-                          $ <%- data.user.leaderCycleBonus.gold %></span
-                        >
+                        <span class="text-end value"> $ 0 </span>
                       </li>
                       <li
                         class="list-group-item d-flex justify-content-between px-0 border-0"
@@ -718,9 +717,7 @@
                         >
                           Diamond
                         </h5>
-                        <span class="text-end value">
-                          $ <%- data.user.leaderCycleBonus.diamond %>
-                        </span>
+                        <span class="text-end value"> $ 0 </span>
                       </li>
                     </ul>
                   </div>
@@ -745,11 +742,7 @@
                     <i class="bi bi-currency-dollar"></i>
                   </div>
                   <div class="ps-3">
-                    <h6 class="text-truncate">
-                      $ <%- data.user.cycleWelcomeBonus.diamond +
-                      data.user.cycleWelcomeBonus.gold +
-                      data.user.cycleWelcomeBonus.bronze %>
-                    </h6>
+                    <h6 class="text-truncate">$ 0</h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
                   </div>
@@ -796,9 +789,7 @@
                         >
                           Bronze
                         </h5>
-                        <span class="text-end value">
-                          $ <%- data.user.cycleWelcomeBonus.bronze %>
-                        </span>
+                        <span class="text-end value"> $ 0 </span>
                       </li>
                       <li
                         class="list-group-item d-flex justify-content-between px-0 border-0"
@@ -811,9 +802,7 @@
                         >
                           Gold
                         </h5>
-                        <span class="text-end value">
-                          $ <%- data.user.cycleWelcomeBonus.gold %>
-                        </span>
+                        <span class="text-end value"> $ 0 </span>
                       </li>
                       <li
                         class="list-group-item d-flex justify-content-between px-0 border-0"
@@ -826,9 +815,7 @@
                         >
                           Diamond
                         </h5>
-                        <span class="text-end value">
-                          $ <%- data.user.cycleWelcomeBonus.diamond %>
-                        </span>
+                        <span class="text-end value"> $ 0 </span>
                       </li>
                     </ul>
                   </div>
@@ -963,18 +950,20 @@
                     <tbody>
                       <tr class="table-danger">
                         <th scope="row">Bronze</th>
-                        <td>0.00</td>
-                        <td>0</td>
+                        <td><%- data.user.testimonyBonus.bronze %></td>
+                        <td><%- data.user.testimonyBonus.bronzeLostCount %></td>
                       </tr>
                       <tr class="table-warning">
                         <th scope="row">Gold</th>
-                        <td>0.00</td>
-                        <td>0</td>
+                        <td><%- data.user.testimonyBonus.gold %></td>
+                        <td><%- data.user.testimonyBonus.goldLostCount %></td>
                       </tr>
                       <tr class="table-info">
                         <th scope="row">Diamond</th>
-                        <td>0.00</td>
-                        <td>0</td>
+                        <td><%- data.user.testimonyBonus.diamond %></td>
+                        <td>
+                          <%- data.user.testimonyBonus.diamondLostCount %>
+                        </td>
                       </tr>
                     </tbody>
                   </table>
