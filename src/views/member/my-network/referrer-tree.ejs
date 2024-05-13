@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section profile">
+        <div class="row" style="color: #012970">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">
+                  <h3>Select Package</h3>
+                </div>
+                <select class="form-select" name="time-frame" id="timeFrame">
+                  <option value="bronze">Bronze Referrer Tree</option>
+                  <option value="month">Gold Referrer Tree</option>
+                  <option value="year">Diamond Referrer Tree</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h6>Cycle <%= data.pagination.currentPage %></h6>
+              </div>
+              <div class="card-body overflow-x-scroll">
+                <div class="tree">
+                  <ul>
+                    <li>
+                      <button
+                        data-bs-toggle="tooltip"
+                        data-bs-placement="top"
+                        data-bs-html="true"
+                        data-bs-title="<span>username </span> </br> <span >name</span>"
+                      >
+                        <img src=<%- data && data.user.displayPhoto ?
+                        data.user.displayPhoto :
+                        "/static/assets/img/default.jpg" %> class="w-100 h-100
+                        object-fit-cover" alt="..." />
+                        <div class="text-container text-truncate">
+                          <span class="text-truncate">
+                            <%= data.user.username %>
+                          </span>
+                          <span class="text-truncate">
+                            <%= data.user.fullName %>
+                          </span>
+                        </div>
+                      </button>
+                      <ul>
+                        <% for( let i = 0; i < data.referrers.length; i++ ) { %>
+                        <li>
+                          <button
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            data-bs-html="true"
+                            data-bs-title="<span> <%= data.referrers[i].username %> </span> </br> <span ><%= data.referrers[i].fullName %> </span>"
+                          >
+                            <img src=<%- data && data.referrers[i].displayPhoto
+                            ? data.referrers[i].displayPhoto :
+                            "/static/assets/img/default.jpg" %> class="w-100
+                            h-100 object-fit-cover" alt="..." />
+                            <div class="text-container text-truncate">
+                              <span class="text-truncate"
+                                ><%= data.referrers[i].username %>
+                              </span>
+                              <span class="text-truncate"
+                                ><%= data.referrers[i].fullName %>
+                              </span>
+                            </div>
+                          </button>
+                        </li>
+                        <% } %> <% for( let i = 0; i < 9 -
+                        data.referrers.length; i++ ) { %>
+                        <li>
+                          <button>Empty</button>
+                        </li>
+                        <% } %>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-footer">
+                <nav aria-label="...">
+                  <ul class="pagination justify-content-center">
+                    <li
+                      class="page-item <%= !data.pagination.prevPage || data.pagination.currentPage === 1 ? 'disabled': '' %>"
+                    >
+                      <a
+                        class="page-link"
+                        href="?pkg=<%=data.pkg%>&page=<%= data.pagination.prevPage || 1 %>"
+                        aria-label="Previous"
+                      >
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <% for (let i = 1; i < data.pagination.totalPages + 1; i++)
+                    {%>
+                    <li
+                      class="page-item <%= i === data.pagination.currentPage ? 'active' : '' %>"
+                      aria-current="page"
+                    >
+                      <a
+                        class="page-link"
+                        href="?pkg=<%=data.pkg%>&page=<%= i %>"
+                        ><%= i %></a
+                      >
+                    </li>
+                    <% } %>
+
+                    <li class="page-item">
+                      <a
+                        class="page-link <%= !data.pagination.nextPage || data.pagination.currentPage === data.pagination.totalPages ? 'disabled': '' %>"
+                        href="?pkg=<%=data.pkg%>&page=<%= data.pagination.nextPage || data.pagination.totalPages %>"
+                        aria-label="Next"
+                      >
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

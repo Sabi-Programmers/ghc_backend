@@ -14,6 +14,7 @@ import testimonyRouter from "./testimony.js";
 import bpcRouter from "./bpc.js";
 import productsRouter from "./products.js";
 import withdrawalWalletsRouter from "./withdrawal-wallets.js";
+import networkRouter from "./network.js";
 const router = express.Router();
 
 router.use("/", staticPagesRouter);
@@ -28,6 +29,7 @@ router.use("/withdrawal", isMember, withdrawalRouter);
 router.use("/withdrawal-wallet", isMember, withdrawalWalletsRouter);
 router.use("/testimony", isMember, testimonyRouter);
 router.use("/business-promo-contest", isMember, bpcRouter);
+router.use("/network", isMember, networkRouter);
 router.use("/u/products", isMember, productsRouter);
 
 router.use("/admin", adminRouter);

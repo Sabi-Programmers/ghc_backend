@@ -17,7 +17,7 @@ import "./services/passportLocal.js";
 dotenv.config();
 const app = express();
 
-const { DATABASE_URL, PORT } = process.env;
+const { DATABASE_URL, PORT, DEVELOPMENT } = process.env;
 
 // Setup Veiw Engine
 app.set("view engine", "ejs");
@@ -42,7 +42,7 @@ const { Pool } = pg;
 const pgSessionInstance = pgSession(session);
 
 const pool = new Pool({
-  connectionString: DATABASE_URL + "?ssl=true",
+  connectionString: DEVELOPMENT ? DATABASE_URL + "?ssl=true" : DATABASE_URL,
 });
 app.use(
   session({
