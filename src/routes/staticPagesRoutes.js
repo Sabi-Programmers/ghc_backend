@@ -1,12 +1,17 @@
 import express from "express";
+import { getContants } from "../services/contantsServices.js";
 const staticPagesRouter = express.Router();
 
-staticPagesRouter.get("", (req, res) => {
+staticPagesRouter.get("", async (req, res) => {
   if (req.query.ref) {
     return res.redirect("/auth/register?sponsorId=" + req.query.ref);
   }
 
-  res.render("staticPages/home", { title: "Home" });
+  const data = {};
+
+  data.prices = await getContants();
+
+  res.render("staticPages/home", { title: "Home", data });
 });
 staticPagesRouter.get("/about", (req, res) => {
   res.render("staticPages/about", { title: "About Us" });
