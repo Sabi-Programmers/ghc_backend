@@ -173,12 +173,18 @@ window.onload = function () {
       false
     );
 
+    const tandc = document.getElementById("accept-terms-and-conditions");
+
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       let valid = pristine.validate();
 
       if (!valid) {
+        return;
+      }
+      if (!tandc.checked) {
+        toast.failed("Please agree to the terms and conditions");
         return;
       }
 

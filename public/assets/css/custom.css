@@ -330,3 +330,11 @@ section {
 .cust-testimonials .swiper-pagination .swiper-pagination-bullet-active {
   background-color: #fd7e14;
 }
+
+.term-and-cond p {
+  position: relative;
+}
+.term-and-cond p::before {
+  content: "✓";
+  padding-right: 10px;
+}

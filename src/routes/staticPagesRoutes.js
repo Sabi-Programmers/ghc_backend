@@ -31,5 +31,8 @@ staticPagesRouter.get("/testimonials", (req, res) => {
 staticPagesRouter.get("/our-products", (req, res) => {
   res.render("staticPages/our-products", { title: "Our Products" });
 });
+staticPagesRouter.get("/legal", (req, res) => {
+  res.render("staticPages/terms-and-cond", { title: "Legal" });
+});
 
 export default staticPagesRouter;
