@@ -5,6 +5,33 @@ today.setHours(0, 0, 0, 0);
 const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
 const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
 
+// const getUserSelectedDetails = async (id, ) => {
+//  const  = []
+
+//   const include = {}
+
+//   const data = await database.user.findUnique({
+//     where: {
+//       id,
+//     },
+//     include: {
+//       withdrawalWallet: true,
+//       unclaimedRewards: true,
+//       completionBonus: true,
+//       cycleWelcomeBonus: true,
+//       referrerIncome: true,
+//       testimonyBonus: true,
+//       salesIncomeBonus: true,
+//       eWallet: true,
+//       bronze: true,
+//       gold: true,
+//       diamond: true,
+//       cycleLeaderBonus: true,
+//     },
+//   });
+
+//   return data;
+// };
 const getUserDashboardDetails = async (id) => {
   const data = await database.user.findUnique({
     where: {

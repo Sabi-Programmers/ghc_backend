@@ -16,8 +16,11 @@ staticPagesRouter.get("", async (req, res) => {
 staticPagesRouter.get("/about", (req, res) => {
   res.render("staticPages/about", { title: "About Us" });
 });
-staticPagesRouter.get("/how-it-works", (req, res) => {
-  res.render("staticPages/how-it-works", { title: "How it Works" });
+staticPagesRouter.get("/how-it-works", async (req, res) => {
+  const data = {};
+
+  data.prices = await getContants();
+  res.render("staticPages/how-it-works", { title: "How it Works", data });
 });
 staticPagesRouter.get("/contact", (req, res) => {
   res.render("staticPages/contact", { title: "Contact Us" });

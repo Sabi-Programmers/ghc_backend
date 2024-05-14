@@ -79,18 +79,18 @@
       <section id="packages" class="packages">
         <div class="container packages-container" data-aos="fade-up">
           <div
-            id="carouselExampleAutoplaying"
+            id="packageCarousel"
             class="carousel slide"
-            data-ride="carousel"
+            data-bs-ride="carousel"
           >
-            <div class="carousel-inner nav">
-              <div class="carousel-item active">
+            <div class="carousel-inner">
+              <div class="carousel-item">
                 <div class="row justify-content-center">
                   <div class="col-md-6">
                     <div class="nav-link bronze package-card">
                       <i class="bi bi-box-seam color-indigo"></i>
                       <h4>Bronze</h4>
-                      <span>N4,000</span>
+                      <span>$<%= data.prices.bronze %></span>
                       <p>Register only 9 people</p>
                       <button
                         class="package-card-btn btn btn-primary active m-0"
@@ -109,13 +109,13 @@
                 </div>
               </div>
               <!-- End package 1 -->
-              <div class="carousel-item">
+              <div class="carousel-item active">
                 <div class="row justify-content-center">
                   <div class="col-md-6">
                     <div class="nav-link package-card gold">
                       <i class="bi bi-box-seam color-indigo"></i>
                       <h4>Gold</h4>
-                      <span>N9,000</span>
+                      <span>$<%= data.prices.gold %></span>
                       <p>Register only 9 people</p>
                       <button
                         class="package-card-btn btn btn-primary m-0"
@@ -140,7 +140,7 @@
                     <div class="nav-link package-card diamond">
                       <i class="bi bi-box-seam color-indigo"></i>
                       <h4>Diamond</h4>
-                      <span>N36,000</span>
+                      <span>$<%= data.prices.diamond %></span>
                       <p>Register only 9 people</p>
                       <button
                         class="package-card-btn btn btn-primary m-0"
@@ -163,7 +163,7 @@
             <button
               class="carousel-control-prev"
               type="button"
-              data-target="#carouselExampleAutoplaying"
+              data-target="#packageCarousel"
               data-slide="prev"
             >
               <span
@@ -175,7 +175,7 @@
             <button
               class="carousel-control-next"
               type="button"
-              data-target="#carouselExampleAutoplaying"
+              data-target="#packageCarousel"
               data-slide="next"
             >
               <span
@@ -249,24 +249,22 @@
                   data-aos-delay="100"
                 >
                   <h3>BRONZE PACKAGE COMPENSATION</h3>
-                  <p class="fst-italic">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
+
                   <ul class="d-flex flex-column gap-3">
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Purchase this package with #4000 naira only.
+                      Purchase this package with $<%= data.prices.bronze %>
+                      only.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get product worth same #4000.
+                      Get product worth same $<%= data.prices.bronze %>.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Login and get #3,000 Naira bronze package welcome bonus
-                      after purchasing your bronze package.
+                      Login and get $<%= data.prices.bronzeWelcomeBonus %>
+                      bronze package welcome bonus after purchasing your bronze
+                      package.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
@@ -276,19 +274,21 @@
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #1,400 Naira per every referral you get until 9
+                      Get $<%= data.prices.bronzeRefBonus %> per every referral
+                      you get until 9
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #2,000 completion bonus after completing your cycle 9
-                      team members
+                      Get $<%= data.prices.bronzeCompletionBonus %> completion
+                      bonus after completing your cycle 9 team members
                     </li>
 
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #2,000 Naira testimony bonus after creating and
-                      uploading testimony video of your cycle withdrawal prove
-                      on facebook, youtube and tiktok, and sending us the link.
+                      Get $<%= data.prices.bronzeTestimonyBonus %> testimony
+                      bonus after creating and uploading testimony video of your
+                      cycle withdrawal prove on facebook, youtube and tiktok,
+                      and sending us the link.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
@@ -304,50 +304,32 @@
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #600 Naira from your first generation downline i.e
-                      people you directly register.
+                      Get $0.6 from your first generation downline i.e people
+                      you directly register.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #500 Naira from your second generation downlines.
+                      Get $0.5 from your second generation downlines.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #400 Naira from your third generation downlines.
+                      Get $0.4 from your third generation downlines.
                     </li>
 
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #300 Naira from your fourth generation downlines.
+                      Get $0.3 from your fourth generation downlines.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #200 Naira from your fifth generation downlines.
+                      Get $0.2 from your fifth generation downlines.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #100 Naira from your sixth generation downlines.
+                      Get $0.1 from your sixth generation downlines.
                     </li>
                   </ul>
-                  <p>
-                    Ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum
-                  </p>
                 </div>
-                <!-- <div
-                  class="col-lg-4 order-1 order-lg-2 text-center aos-init aos-animate"
-                  data-aos="fade-up"
-                  data-aos-delay="200"
-                >
-                  <img
-                    src="./assets/img/features.svg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </div> -->
               </div>
             </div>
             <div
@@ -363,65 +345,60 @@
                   data-aos-delay="100"
                 >
                   <h3>Gold PACKAGE COMPENSATION</h3>
-                  <p class="fst-italic">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
+
                   <ul class="d-flex flex-column gap-3">
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Purchase this package with #12,000 naira only
+                      Purchase this package with $<%= data.prices.gold %> only.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get products worth same #12,000.
+                      Get product worth same $<%= data.prices.gold %>.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Login and get #9,000 Naira gold package welcome bonus
-                      after purchasing your gold package.
+                      Login and get $<%= data.prices.goldWelcomeBonus %> bronze
+                      package welcome bonus after purchasing your bronze
+                      package.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
                       Register 9 people for your given activated cycle, your
-                      ability to register new.
+                      ability to register new members ends after completing 9
+                      team per cycle.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #4,200 Naira per every referral you get until 9.
+                      Get $<%= data.prices.goldRefBonus %> per every referral
+                      you get until 9
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #6,000 completion bonus after completing your cycle 9
-                      team members
+                      Get $<%= data.prices.goldCompletionBonus %> completion
+                      bonus after completing your cycle 9 team members
                     </li>
 
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #6,000 Naira testimony bonus after creating and
-                      uploading testimony video of your cycle withdrawal prove
-                      on facebook, youtube and tiktok, and sending us the
+                      Get $<%= data.prices.goldTestimonyBonus %> testimony bonus
+                      after creating and uploading testimony video of your cycle
+                      withdrawal prove on facebook, youtube and tiktok, and
+                      sending us the link.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Purchase from your dashboard, another #12,000 Naira gold
-                      cycle package that will qualify you to register another 9
-                      team members for cycle 2, you can also purchase multiple
-                      packages at once by adding more than 1Quantity which will
-                      give you the opportunity to register more than 9people
-                    </li>
-                    <li>
-                      <i class="bi bi-check-circle-fill"></i>
-                      Less, any additional member you try to register after
-                      reaching 9 team withoutrepurchasing will not count to you
-                      or becomes unclaimed reward
+                      Purchase from your dashboard, another $<%=
+                      data.prices.gold %> gold cycle package that will qualify
+                      you to register another 9 team members for cycle 2, you
+                      can also purchase multiple packages at once by adding more
+                      than 1Quantity which will give you the opportunity to
+                      register more than 9people
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
                       Keep purchasing next cycle after completing one. You make
                       9 registration per cycle, and completing cycle 2 means
-                      having at least 18 team members.
+                      having at least 18 team members
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
@@ -431,52 +408,32 @@
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      ✓Become a cycle leader at cycle 5 and get opportunity to
-                      earn 6 levels deep leader bonus from your downlines
-                      generations repurchasing packages under you.
+                      Get $1.8 from your first generation downline i.e people
+                      you directly register.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get $1.5 from your second generation downlines.
+                    </li>
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get $1.2 from your third generation downlines.
                     </li>
 
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #1,800 Naira from your first generation downline i.e
-                      people you directly register.
+                      Get $0.9 from your fourth generation downlines.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #1,500 Naira from your second generation downlines.
+                      Get $0.6 from your fifth generation downlines.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #900 Naira from your fourth generation downlines..
-                    </li>
-                    <li>
-                      <i class="bi bi-check-circle-fill"></i>
-                      Get #600 Naira from your fifth generation downlines.
-                    </li>
-                    <li>
-                      <i class="bi bi-check-circle-fill"></i>
-                      Get #300 Naira from your sixth generation downlines.
+                      Get $0.3 from your sixth generation downlines.
                     </li>
                   </ul>
-                  <p>
-                    Ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum
-                  </p>
                 </div>
-                <!-- <div
-                  class="col-lg-4 order-1 order-lg-2 text-center aos-init aos-animate"
-                  data-aos="fade-up"
-                  data-aos-delay="200"
-                >
-                  <img
-                    src="./assets/img/features.svg"
-                    alt=""
-                    class="img-fluid"
-                  />
-                </div> -->
               </div>
             </div>
             <div
@@ -492,24 +449,22 @@
                   data-aos-delay="100"
                 >
                   <h3>DIAMOND PACKAGE COMPENSATION</h3>
-                  <p class="fst-italic">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
-                  </p>
+
                   <ul class="d-flex flex-column gap-3">
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Purchase this package with #36,000 naira only.
+                      Purchase this package with $<%= data.prices.diamond %>
+                      only.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get products worth same #36,000.
+                      Get product worth same $<%= data.prices.diamond %>.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Login and get #27,000 Naira diamond package welcome bonus
-                      after purchasing your diamond package.
+                      Login and get $<%= data.prices.diamondWelcomeBonus %>
+                      bronze package welcome bonus after purchasing your bronze
+                      package.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
@@ -519,76 +474,73 @@
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #12,600 Naira per every referral you get until 9.
+                      Get $<%= data.prices.diamondRefBonus %> per every referral
+                      you get until 9
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #18,000 completion bonus after completing your cycle 9
-                      team members.
+                      Get $<%= data.prices.diamondCompletionBonus %> completion
+                      bonus after completing your cycle 9 team members
+                    </li>
+
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get $<%= data.prices.diamondTestimonyBonus %> testimony
+                      bonus after creating and uploading testimony video of your
+                      cycle withdrawal prove on facebook, youtube and tiktok,
+                      and sending us the link.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #18,000 Naira testimony bonus after creating and
-                      uploading testimony video of your cycle withdrawal prove
-                      on Facebook, YouTube, and TikTok, and sending us the link.
+                      Purchase from your dashboard, another $<%=
+                      data.prices.diamond %> diamond cycle package that will
+                      qualify you to register another 9 team members for cycle
+                      2, you can also purchase multiple packages at once by
+                      adding more than 1 Quantity which will give you the
+                      opportunity to register more than 9 people. Less, any
+                      additional member you try to register after reaching 9
+                      team without repurchasing will not count to you or becomes
+                      unclaimed reward.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Purchase from your dashboard, another #36,000 naira
-                      diamond cycle package that will qualify you to register
-                      another 9 team members for cycle 2, you can also purchase
-                      multiple packages at once by adding more than 1 Quantity
-                      which will give you the opportunity to register more than
-                      9 people. Less, any additional member you try to register
-                      after reaching 9 team without repurchasing will not count
-                      to you or becomes unclaimed reward.
+                      Keep purchasing next cycle after completing one. You make
+                      9 registration per cycle, and completing cycle 2 means
+                      having at least 18 team members
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Keep purchasing the next cycle after completing one. You
-                      make 9 registrations per cycle, and completing cycle 2
-                      means having at least 18 team members.
-                    </li>
-                    <li>
-                      <i class="bi bi-check-circle-fill"></i>
-                      Become a cycle leader at cycle 5 and get an opportunity to
+                      Become a cycle leader at cycle 5 and get opportunity to
                       earn 6 levels deep leader bonus from your downlines
                       generations repurchasing packages under you.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #5,400 Naira from your first generation downline i.e.,
-                      people you directly register.
+                      Get $0.6 from your first generation downline i.e people
+                      you directly register.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #4,500 Naira from your second generation downlines.
+                      Get $0.5 from your second generation downlines.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #3,600 Naira from your third generation downlines.
+                      Get $0.4 from your third generation downlines.
+                    </li>
+
+                    <li>
+                      <i class="bi bi-check-circle-fill"></i>
+                      Get $0.3 from your fourth generation downlines.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #2,700 Naira from your fourth generation downlines.
+                      Get $0.2 from your fifth generation downlines.
                     </li>
                     <li>
                       <i class="bi bi-check-circle-fill"></i>
-                      Get #1,800 Naira from your fifth generation downlines.
-                    </li>
-                    <li>
-                      <i class="bi bi-check-circle-fill"></i>
-                      Get #900 Naira from your sixth generation downlines.
+                      Get $0.1 from your sixth generation downlines.
                     </li>
                   </ul>
-
-                  <p>
-                    Ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    Duis aute irure dolor in reprehenderit in voluptate velit
-                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia
-                    deserunt mollit anim id est laborum
-                  </p>
                 </div>
                 <!-- <div
                   class="col-lg-4 order-1 order-lg-2 text-center aos-init aos-animate"

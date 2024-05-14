@@ -67,6 +67,7 @@ model User {
   packageOrders          PackageOrder[]
   referrers              Referrers[]
   WithdrawalWalletRecord WithdrawalWalletRecord[]
+  TestimonyRecords       TestimonyRecords[]
 }
 
 model Ewallet {
@@ -148,6 +149,24 @@ model TestimonyBonus {
   diamondCount Int   @default(0)
   userId       Int   @unique
   user         User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model TestimonyRecords {
+  id              Int         @id @default(autoincrement())
+  amount          Float       @default(0.00)
+  package         PackageType
+  completedCycles Int         @default(0)
+  lastPaidCycles  Int         @default(0)
+  facebookLink    String?
+  youtubeLink     String?
+  tiktokLink      String?
+  message         String?
+  status          Status      @default(PENDING)
+  publish         Boolean     @default(false)
+  userId          Int
+  user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
 }
 
 model CompletionBonus {
@@ -306,6 +325,9 @@ model Contants {
   bronzeRefBonus         Float
   goldRefBonus           Float
   diamondRefBonus        Float
+  bronzeTestimonyBonus   Float    @default(0.00)
+  goldTestimonyBonus     Float    @default(0.00)
+  diamondTestimonyBonus  Float    @default(0.00)
   bronzeWelcomeBonus     Float    @default(0.00)
   goldWelcomeBonus       Float    @default(0.00)
   diamondWelcomeBonus    Float    @default(0.00)

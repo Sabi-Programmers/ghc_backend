@@ -1,4 +1,11 @@
+import { StatusCodes } from "http-status-codes";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
+import response from "../utils/response.js";
+import { getUserPackage } from "../services/packageServices.js";
+import {
+  createTestimonyRequest,
+  getUserForTestimonyBonus,
+} from "../services/testimonyServices.js";
 
 const getAddTestimonyPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -10,4 +17,51 @@ const getAddTestimonyPage = asyncWrapper(async (req, res) => {
   });
 });
 
-export { getAddTestimonyPage };
+const makeTestimonyRequest = asyncWrapper(async (req, res) => {
+  const { pkg, facebookLink, youtubeLink, tiktokLink } = req.body;
+  const userId = req.user.id;
+
+  if (!facebookLink && !youtubeLink && !tiktokLink) {
+    return response.json(
+      res,
+      StatusCodes.BAD_REQUEST,
+      false,
+      "Must provide at least one Link"
+    );
+  }
+
+  const pkgData = await getUserPackage(userId, pkg);
+  const testimonyBonus = await getUserForTestimonyBonus(userId);
+  const completedCycle =
+    pkgData.currentCycle > 0 ? pkgData.currentCycle - 1 : 0;
+  const lastPaidCycle = testimonyBonus[pkg + "Count"];
+
+  if (completedCycle === lastPaidCycle) {
+    return response.json(res, StatusCodes.BAD_REQUEST, false, "Not Eligible");
+  }
+
+  const testimony = await createTestimonyRequest(
+    userId,
+    pkg,
+    facebookLink,
+    tiktokLink,
+    youtubeLink,
+    completedCycle,
+    lastPaidCycle
+  );
+
+  return response.json(res, StatusCodes.CREATED, true, "Request Submitted", {
+    testimony,
+  });
+  // try {
+  // } catch (error) {
+  //   return response.json(
+  //     res,
+  //     StatusCodes.INTERNAL_SERVER_ERROR,
+  //     false,
+  //     "Internal Server Error"
+  //   );
+  // }
+});
+
+export { getAddTestimonyPage, makeTestimonyRequest };
