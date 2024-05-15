@@ -40,46 +40,22 @@
             <div class="card mt-5">
               <form class="card-body" action="POST" id="add-testimony-form">
                 <h5 class="card-title">Upload your Testimony</h5>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                   <label for="packageType" class="form-label"
                     >Select Package Testimony Request Type:</label
                   >
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="packageType"
-                      id="bronzeWithdrawal"
-                      value="Bronze withdrawal"
-                    />
-                    <label class="form-check-label" for="bronzeWithdrawal">
-                      Bronze withdrawal
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="packageType"
-                      id="goldWithdrawal"
-                      value="Gold withdrawal"
-                    />
-                    <label class="form-check-label" for="goldWithdrawal">
-                      Gold withdrawal
-                    </label>
-                  </div>
-                  <div class="form-check">
-                    <input
-                      class="form-check-input"
-                      type="radio"
-                      name="packageType"
-                      id="diamondWithdrawal"
-                      value="Diamond withdrawal"
-                    />
-                    <label class="form-check-label" for="diamondWithdrawal">
-                      Diamond withdrawal
-                    </label>
-                  </div>
+                  <select
+                    class="form-select form-control"
+                    aria-label="Select package type"
+                    name="pkg"
+                    id="packageType"
+                    required
+                  >
+                    <option value="" selected disabled>---</option>
+                    <option value="bronze">Bronze Withdrawal</option>
+                    <option value="gold">Gold Withdrawal</option>
+                    <option value="diamond">Diamond Withdrawal</option>
+                  </select>
                 </div>
                 <div class="mb-3">
                   <label for="facebookLink" class="form-label"

@@ -16,12 +16,14 @@ window.onload = function () {
     const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLive);
 
     const success = (message) => {
+      toastColor.classList.remove("bg-danger");
       toastColor.classList.add("bg-success");
       toastTitle.innerText = "Success!";
       toastBody.innerText = message;
       toastBootstrap.show();
     };
     const failed = (message) => {
+      toastColor.classList.remove("bg-success");
       toastColor.classList.add("bg-danger");
       toastTitle.innerText = "Failed!";
       toastBody.innerText = message;
@@ -578,4 +580,45 @@ window.onload = function () {
       toast.success(`Otp has been sent to E-Mail`);
     });
   }
+
+  /**
+   * Add Testimony
+   */
+
+  const addTestimonyForm = document.getElementById("add-testimony-form");
+
+  if (addTestimonyForm) {
+    pristine = new Pristine(addTestimonyForm);
+    addTestimonyForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      const urlRegex = new RegExp(
+        /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]*)?$/
+      );
+
+      if (
+        !urlRegex.test(jsonData.facebookLink) &&
+        !urlRegex.test(jsonData.youtubeLink) &&
+        !urlRegex.test(jsonData.tiktokLink)
+      ) {
+        toast.failed("Please add a valid URL link");
+        return;
+      }
+
+      handlerPostRequest(jsonData, "/testimony", "/testimony");
+    });
+  }
+
+  /**
+   * =======================================================
+   */
 };
