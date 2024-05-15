@@ -14,7 +14,10 @@
           <div class="d-md-flex gap-md-4 col-12 w-100">
             <% if (data.eWallet) { %>
 
-            <div class="card w-100" style="color: #012970">
+            <div
+              class="card w-100 info-card customers-card"
+              style="color: #012970"
+            >
               <div class="card-body">
                 <h5 class="card-title">Funding Account details</h5>
                 <div
@@ -28,8 +31,12 @@
                   <h4 class="fs-1"><%= data.eWallet.accountNumber %></h4>
                 </div>
               </div>
+              <div class="w-100 text-center more-info"></div>
             </div>
-            <div class="card w-100" style="color: #012970">
+            <div
+              class="card w-100 info-card customers-card"
+              style="color: #012970"
+            >
               <div class="card-body">
                 <h5 class="card-title">E-wallet Balance</h5>
                 <div class="text-center text-md-start">
@@ -56,6 +63,7 @@
                 </div>
                 <h6>1 USD ($) = 1000 NGN (&#8358;)</h6>
               </div>
+              <div class="w-100 text-center more-info"></div>
             </div>
             <% } else { %>
             <div class="d-flex justify-content-center w-100 my-4">

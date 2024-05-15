@@ -4,8 +4,10 @@ import response from "../utils/response.js";
 import { getUserPackage } from "../services/packageServices.js";
 import {
   createTestimonyRequest,
+  getAllUserTestimony,
   getUserForTestimonyBonus,
 } from "../services/testimonyServices.js";
+import { calculatePagination } from "../utils/index.js";
 
 const getAddTestimonyPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -64,4 +66,28 @@ const makeTestimonyRequest = asyncWrapper(async (req, res) => {
   // }
 });
 
-export { getAddTestimonyPage, makeTestimonyRequest };
+const getViewTestimonies = asyncWrapper(async (req, res) => {
+  const data = {
+    user: req.user,
+  };
+
+  const page = Number(req.query.page) || 1; // Current page
+  const perPage = Number(req.query.limit) || 10; // Number of records per page
+
+  const { testimonies, totalItem } = await getAllUserTestimony(
+    req.user.id,
+    perPage,
+    page
+  );
+
+  data.testimonies = testimonies;
+
+  data.pagination = calculatePagination(totalItem, page, perPage);
+
+  res.render("member/testimony/veiw-testimony", {
+    title: "Veiw Testimonies",
+    data,
+  });
+});
+
+export { getAddTestimonyPage, makeTestimonyRequest, getViewTestimonies };

@@ -26,4 +26,22 @@ const createTestimonyRequest = async (
   });
 };
 
-export { getUserForTestimonyBonus, createTestimonyRequest };
+const getAllUserTestimony = async (userId, perPage, page) => {
+  const testimonies = await database.testimonyRecords.findMany({
+    where: { userId },
+    skip: (page - 1) * perPage,
+    take: perPage,
+    orderBy: { createdAt: "desc" },
+  });
+  const totalItem = await database.testimonyRecords.count({
+    where: { userId },
+  });
+
+  return { testimonies, totalItem };
+};
+
+export {
+  getUserForTestimonyBonus,
+  createTestimonyRequest,
+  getAllUserTestimony,
+};

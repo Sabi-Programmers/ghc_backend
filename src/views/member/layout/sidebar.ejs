@@ -68,7 +68,7 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="#">
+          <a href="/network/my-referrer">
             <i class="bi bi-circle"></i><span>My Referrers </span>
           </a>
         </li>
@@ -117,10 +117,32 @@
     <!-- End Marketing Page Nav -->
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="/testimony">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#testimony-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
         <i class="bx bx-notepad"></i>
         <span>Testimony</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
       </a>
+      <ul
+        id="testimony-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="/testimony">
+            <i class="bi bi-circle"></i><span> Testimony Request </span>
+          </a>
+        </li>
+        <li>
+          <a href="/testimony/view">
+            <i class="bi bi-circle"></i><span>Veiw Testimonies</span>
+          </a>
+        </li>
+      </ul>
     </li>
     <!-- End Testimony Page Nav -->
 
