@@ -17,12 +17,19 @@ const getLastPackageOrder = async (userId, pkg) => {
   });
 };
 
-const getUserPackageOrders = async (userId) => {
-  return await database.packageOrder.findMany({
+const getUserPackageOrders = async (userId, page, perPage) => {
+  const orders = await database.packageOrder.findMany({
     where: {
       userId,
     },
+    skip: (page - 1) * perPage,
+    take: perPage,
+    orderBy: { createdAt: "desc" },
   });
+
+  const totalItem = await database.packageOrder.count({ where: { userId } });
+
+  return { orders, totalItem };
 };
 
 export { createPackageOrders, getUserPackageOrders };

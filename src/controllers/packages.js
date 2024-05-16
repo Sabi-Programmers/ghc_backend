@@ -16,7 +16,7 @@ import {
   updateUplineRefferalBonus,
 } from "../services/referralServices.js";
 import { updateUplineUnclaimedBonus } from "../services/unclaimedBonus.js";
-import { convertToNGN } from "../utils/index.js";
+import { calculatePagination, convertToNGN } from "../utils/index.js";
 import { getTotalPackageOrderedPrice } from "../utils/packages.js";
 import response from "../utils/response.js";
 import { getContants } from "../services/contantsServices.js";
@@ -197,8 +197,17 @@ const getProductDeliveryPage = asyncWrapper(async (req, res) => {
   let data = {
     user: req.user,
   };
+  const page = Number(req.query.page) || 1; // Current page
+  const perPage = Number(req.query.limit) || 10; // Number of records per page
 
-  data.orders = await getUserPackageOrders(req.user.id);
+  const { orders, totalItem } = await getUserPackageOrders(
+    req.user.id,
+    page,
+    perPage
+  );
+  data.orders = orders;
+
+  data.pagination = calculatePagination(totalItem, page, perPage);
 
   return res.render("member/packages/product-delivery", {
     title: "Product Delivery",
