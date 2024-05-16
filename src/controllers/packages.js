@@ -20,7 +20,10 @@ import { convertToNGN } from "../utils/index.js";
 import { getTotalPackageOrderedPrice } from "../utils/packages.js";
 import response from "../utils/response.js";
 import { getContants } from "../services/contantsServices.js";
-import { createPackageOrders } from "../services/packageOrderServices.js";
+import {
+  createPackageOrders,
+  getUserPackageOrders,
+} from "../services/packageOrderServices.js";
 import {
   updateUplineCycleWelcomeBonus,
   updateUserCycleWelcomeBonus,
@@ -190,4 +193,23 @@ const getSuccessPage = asyncWrapper(async (req, res) => {
   });
 });
 
-export { buyPackages, getPackages, completePackageOrder, getSuccessPage };
+const getProductDeliveryPage = asyncWrapper(async (req, res) => {
+  let data = {
+    user: req.user,
+  };
+
+  data.orders = await getUserPackageOrders(req.user.id);
+
+  return res.render("member/packages/product-delivery", {
+    title: "Product Delivery",
+    data,
+  });
+});
+
+export {
+  buyPackages,
+  getPackages,
+  completePackageOrder,
+  getSuccessPage,
+  getProductDeliveryPage,
+};

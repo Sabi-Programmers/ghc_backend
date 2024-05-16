@@ -234,14 +234,15 @@ enum OrderStatus {
 }
 
 model PackageOrder {
-  id        Int         @id @default(autoincrement())
-  status    OrderStatus @default(PENDING)
-  package   PackageType
-  cycle     Int
-  userId    Int
-  User      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  id           Int         @id @default(autoincrement())
+  status       OrderStatus @default(PENDING)
+  package      PackageType
+  cycle        Int
+  deliveryNote String?
+  userId       Int
+  User         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 }
 
 model Referrers {

@@ -17,4 +17,12 @@ const getLastPackageOrder = async (userId, pkg) => {
   });
 };
 
-export { createPackageOrders };
+const getUserPackageOrders = async (userId) => {
+  return await database.packageOrder.findMany({
+    where: {
+      userId,
+    },
+  });
+};
+
+export { createPackageOrders, getUserPackageOrders };
