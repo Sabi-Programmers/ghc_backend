@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section profile">
+        <div class="row" style="color: #012970">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body gap-3 d-flex flex-column flex-md-row pt-2">
+                <div>
+                  <label for="tg-pkg" class="form-label fw-bold"
+                    >Select Package:</label
+                  >
+                  <select
+                    class="form-select text-capitalize"
+                    id="tg-pkg"
+                    data-key="<%= data.filter.pkg %>"
+                  >
+                    <option selected disabled><%= data.filter.pkg %></option>
+                    <option value="bronze">Bronze</option>
+                    <option value="gold">Gold</option>
+                    <option value="diamond">Diamond</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="tg-gen" class="form-label fw-bold"
+                    >Generation:</label
+                  >
+                  <select
+                    id="tg-gen"
+                    data-key="<%= data.filter.gen %>"
+                    class="form-select text-capitalize"
+                  >
+                    <option selected disabled><%- data.filter.gen %></option>
+                    <option value="first">first</option>
+                    <option value="second">second</option>
+                    <option value="third">third</option>
+                    <option value="forth">forth</option>
+                    <option value="fifth">fifth</option>
+                    <option value="sixth">sixth</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body pt-4">
+                <div>
+                  <h5 class="card-title">Team Generation</h5>
+                </div>
+
+                <div class="table-responsive">
+                  <table
+                    class="table orders-table table-striped table-bordered"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th>Downline Name</th>
+                        <th>Username</th>
+                        <th>Phone</th>
+                        <th>Country</th>
+                        <th>Joining Date</th>
+                        <th>Package Type</th>
+                        <th>Current Cycle</th>
+
+                        <th>Sponsor Username</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for( let i = 0; i < data.downlines.length; i++ ) { %>
+
+                      <tr>
+                        <td><%= data.downlines[i].fullName %></td>
+                        <td><%= data.downlines[i].username %></td>
+                        <td><%= data.downlines[i].country %></td>
+                        <td><%= data.downlines[i].phone %></td>
+                        <td>
+                          <%= (data.downlines[i].createdAt).toLocaleDateString()
+                          %>
+                        </td>
+                        <td class="pkg-type">
+                          <% if (data.downlines[i].bronze.totalCycle > 0) { %>
+                          <span> Bronze </span>
+                          <% } %> <% if (data.downlines[i].gold.totalCycle > 0)
+                          { %>
+                          <span> Gold </span>
+                          <% } %> <% if (data.downlines[i].diamond.totalCycle >
+                          0) { %>
+                          <span> Diamond </span>
+                          <% } %>
+                        </td>
+                        <td>
+                          <%= "B" + data.downlines[i].bronze.currentCycle %> <%=
+                          "G" + data.downlines[i].gold.currentCycle %> <%= "D" +
+                          data.downlines[i].diamond.currentCycle %>
+                        </td>
+                        <td><%= data.downlines[i].sponsorUsername %></td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <%- include('../partials/pagination', {urlPrefix: "?pkg=" +
+              data.pkg + "&gen=" + data.gen, data}) %>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

@@ -69,5 +69,67 @@ const getMyReferrersPage = asyncWrapper(async (req, res) => {
     data,
   });
 });
+const getTeamPerformancePage = asyncWrapper(async (req, res) => {
+  const data = {
+    user: req.user,
+  };
 
-export { getReferrerTreePage, getMyReferrersPage };
+  const username = req.user.username;
+  const pkg = req.query.pkg || "bronze";
+
+  res.render("member/my-network/team-performance", {
+    title: "Team Performance",
+    data,
+  });
+});
+const getTeamGenerationPage = asyncWrapper(async (req, res) => {
+  const data = {
+    user: req.user,
+  };
+
+  const page = Number(req.query.page) || 1; // Current page
+  const perPage = Number(req.query.limit) || 10; // Number of records per page
+  const pkg = req.query.pkg || "bronze";
+  const gen = req.query.gen || "first";
+
+  const query = {};
+  query[`${gen}`] = req.user.username;
+  query["package"] = pkg.toUpperCase();
+
+  data.downlines = await database.user.findMany({
+    where: {
+      referrers: {
+        some: query,
+      },
+    },
+    include: { bronze: true, gold: true, diamond: true },
+    skip: (page - 1) * perPage,
+    take: perPage,
+    orderBy: { createdAt: "desc" },
+  });
+
+  const totalItem = await database.user.count({
+    where: {
+      referrers: { some: query },
+    },
+  });
+
+  data.filter = {
+    pkg,
+    gen,
+  };
+
+  data.pagination = calculatePagination(totalItem, page, perPage);
+
+  res.render("member/my-network/team-generation", {
+    title: "Team Performance",
+    data,
+  });
+});
+
+export {
+  getReferrerTreePage,
+  getMyReferrersPage,
+  getTeamPerformancePage,
+  getTeamGenerationPage,
+};

@@ -1671,3 +1671,48 @@ right connector from last child*/
     transform: translateX(-1px) rotate(1.2deg);
   }
 }
+
+ul.team-performance-list > li > ul {
+  display: none;
+}
+ul.team-performance-list > li > ul {
+  padding-top: 20px;
+}
+ul.team-performance-list > li > ul > li {
+  padding-left: 10px;
+}
+ul.team-performance-list > li.show,
+ul.team-performance-list > li.show > ul {
+  display: block;
+}
+ul.team-performance-list > li.show {
+  background: green;
+  color: white;
+  padding: 20px 0 0;
+  text-indent: 10px;
+}
+ul.team-performance-list > li.show > i {
+  transform: rotate(90deg);
+}
+
+.pkg-type span::after {
+  content: ",";
+  margin-left: -0.5ch;
+}
+
+.pkg-type > span:last-child::before {
+  content: "&";
+  margin-left: 0;
+}
+.pkg-type > span:last-child::after {
+  content: "";
+  margin-left: 0;
+}
+.pkg-type > span:first-child::before {
+  content: "";
+  margin-left: 0;
+}
+
+.card-footer nav .pagination.custom-pagination .page-item .page-link {
+  font-size: 0.6875rem !important;
+}

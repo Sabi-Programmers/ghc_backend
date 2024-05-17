@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section profile">
+        <div class="row" style="color: #012970">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">
+                  <h3>Select Package</h3>
+                </div>
+                <ul class="nav nav-underline">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'bronze' ? 'active': '' %>"
+                      href="?pkg=bronze"
+                      >Bronze</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'gold' ? 'active': '' %>"
+                      href="?pkg=gold"
+                      >Gold</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'diamond' ? 'active': '' %>"
+                      href="?pkg=diamond"
+                      >Diamond</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Team Performance</h5>
+              </div>
+              <div class="card-body">
+                <ul
+                  class="list-group list-group-flush team-performance-list"
+                  id="team-performance-list"
+                >
+                  <li class="list-group-item show">
+                    <i class="bx bxs-chevron-right"></i> Anthonydee (cycle 148)
+                    Leader
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">
+                        <i class="bx bxs-chevron-right"></i> Loverbeth3 (cycle
+                        21) Leader
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-footer">
+                <nav aria-label="...">
+                  <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                      <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">1</a>
+                    </li>
+                    <li class="page-item active" aria-current="page">
+                      <a class="page-link" href="#">2</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#">3</a>
+                    </li>
+                    <li class="page-item">
+                      <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

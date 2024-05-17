@@ -42,7 +42,17 @@
                       <td>
                         <%= (data.downlines[i].createdAt).toLocaleDateString()%>
                       </td>
-                      <td>b</td>
+                      <td class="pkg-type">
+                        <% if (data.downlines[i].bronze.totalCycle > 0) { %>
+                        <span> Bronze </span>
+                        <% } %> <% if (data.downlines[i].gold.totalCycle > 0) {
+                        %>
+                        <span> Gold </span>
+                        <% } %> <% if (data.downlines[i].diamond.totalCycle > 0)
+                        { %>
+                        <span> Diamond </span>
+                        <% } %>
+                      </td>
                       <td>
                         <%= "B" + data.downlines[i].bronze.currentCycle + ", G"
                         + data.downlines[i].gold.currentCycle + ", D" +

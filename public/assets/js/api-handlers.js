@@ -621,4 +621,24 @@ window.onload = function () {
   /**
    * =======================================================
    */
+
+  /**
+   * Filters
+   */
+
+  // Team Genration
+
+  if (currentRoute.includes("team-generation")) {
+    const teamGenPkg = document.getElementById("tg-pkg");
+    const teamGen = document.getElementById("tg-gen");
+    const pkg = teamGenPkg.getAttribute("data-key");
+    const gen = teamGen.getAttribute("data-key");
+
+    teamGenPkg.addEventListener("change", (e) => {
+      redirect(`${currentRoute}?pkg=${e.target.value}&gen=${gen}`);
+    });
+    teamGen.addEventListener("change", (e) => {
+      redirect(`${currentRoute}?pkg=${pkg}&gen=${e.target.value}`);
+    });
+  }
 };

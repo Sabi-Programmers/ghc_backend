@@ -105,46 +105,9 @@
                   </ul>
                 </div>
               </div>
-              <div class="card-footer">
-                <nav aria-label="...">
-                  <ul class="pagination justify-content-center">
-                    <li
-                      class="page-item <%= !data.pagination.prevPage || data.pagination.currentPage === 1 ? 'disabled': '' %>"
-                    >
-                      <a
-                        class="page-link"
-                        href="?pkg=<%=data.pkg%>&page=<%= data.pagination.prevPage || 1 %>"
-                        aria-label="Previous"
-                      >
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    <% for (let i = 1; i < data.pagination.totalPages + 1; i++)
-                    {%>
-                    <li
-                      class="page-item <%= i === data.pagination.currentPage ? 'active' : '' %>"
-                      aria-current="page"
-                    >
-                      <a
-                        class="page-link"
-                        href="?pkg=<%=data.pkg%>&page=<%= i %>"
-                        ><%= i %></a
-                      >
-                    </li>
-                    <% } %>
 
-                    <li class="page-item">
-                      <a
-                        class="page-link <%= !data.pagination.nextPage || data.pagination.currentPage === data.pagination.totalPages ? 'disabled': '' %>"
-                        href="?pkg=<%=data.pkg%>&page=<%= data.pagination.nextPage || data.pagination.totalPages %>"
-                        aria-label="Next"
-                      >
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
-              </div>
+              <%- include('../partials/pagination', {urlPrefix: "?pkg=" +
+              data.pkg, data}) %>
             </div>
           </div>
         </div>
