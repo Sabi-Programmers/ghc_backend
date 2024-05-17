@@ -99,18 +99,20 @@
             >
               <div class="box cust-featured">
                 <h3>Bronze</h3>
-                <h4>$ <%= data.prices.bronze %></h4>
+                <h4>
+                  $<%= data.prices.bronze %>/ &#8358;<%= (data.prices.bronze *
+                  data.prices.usdRate).toLocaleString() %>
+                </h4>
                 <ul class="text-start">
                   <li>
-                    Purchase this package with $<%= data.prices.bronze %> only
-                  </li>
-                  <li>Get product worth same $<%= data.prices.bronze %></li>
-                  <li>
-                    Get $<%= data.prices.bronzeRefBonus %> per every referral
+                    Purchase this package with $<%= data.prices.bronze %>/
+                    &#8358;<%= (data.prices.bronze *
+                    data.prices.usdRate).toLocaleString() %> only
                   </li>
                   <li>
-                    Get $<%= data.prices.bronzeCompletionBonus %> completion
-                    bonus
+                    Get product worth same $<%= data.prices.bronze %>/
+                    &#8358;<%= (data.prices.bronze *
+                    data.prices.usdRate).toLocaleString() %>
                   </li>
                 </ul>
                 <div class="btn-wrap">
@@ -126,17 +128,19 @@
             >
               <div class="box cust-featured">
                 <h3>Gold</h3>
-                <h4>$ <%= data.prices.gold %></h4>
+                <h4>
+                  $<%= data.prices.gold %>/ &#8358;<%= (data.prices.gold *
+                  data.prices.usdRate).toLocaleString() %>
+                </h4>
                 <ul class="text-start">
                   <li>
-                    Purchase this package with $<%= data.prices.gold %> only
-                  </li>
-                  <li>Get product worth same $<%= data.prices.gold %></li>
-                  <li>
-                    Get $<%= data.prices.goldRefBonus %> per every referral
+                    Purchase this package with $<%= data.prices.gold %>/
+                    &#8358;<%= (data.prices.gold *
+                    data.prices.usdRate).toLocaleString() %> only
                   </li>
                   <li>
-                    Get $<%= data.prices.goldCompletionBonus %> completion bonus
+                    Get product worth same $<%= data.prices.gold %>/ &#8358;<%=
+                    (data.prices.gold * data.prices.usdRate).toLocaleString() %>
                   </li>
                 </ul>
                 <div class="btn-wrap">
@@ -152,18 +156,20 @@
             >
               <div class="box cust-featured">
                 <h3>Diamond</h3>
-                <h4>$ <%= data.prices.diamond %></h4>
+                <h4>
+                  $<%= data.prices.diamond %>/ &#8358;<%= (data.prices.diamond *
+                  data.prices.usdRate).toLocaleString() %>
+                </h4>
                 <ul class="text-start">
                   <li>
-                    Purchase this package with $<%= data.prices.diamond %> only
-                  </li>
-                  <li>Get product worth same $<%= data.prices.diamond %></li>
-                  <li>
-                    Get $<%= data.prices.diamondRefBonus %> per every referral
+                    Purchase this package with $<%= data.prices.diamond %>/
+                    &#8358;<%= (data.prices.diamond *
+                    data.prices.usdRate).toLocaleString() %> only
                   </li>
                   <li>
-                    Get $<%= data.prices.diamondCompletionBonus %> completion
-                    bonus
+                    Get product worth same $<%= data.prices.diamond %>/
+                    &#8358;<%= (data.prices.diamond *
+                    data.prices.usdRate).toLocaleString() %>
                   </li>
                 </ul>
                 <div class="btn-wrap">
