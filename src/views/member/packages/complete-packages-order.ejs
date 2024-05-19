@@ -43,7 +43,7 @@
                     <span class="fw-bold" id="total"></span>
                   </li>
                   <li
-                    class="list-group-item bg-primary-subtle border-dark d-flex align-items-center flex-column"
+                    class="list-group-item bg-primary-subtle border-dark d-flex align-items-center flex-column border-bottom-0"
                   >
                     <button id="submit-package-order" class="btn btn-primary">
                       Submit Order
@@ -54,6 +54,28 @@
                       class="fst-italic small text-danger"
                     >
                     </span>
+                  </li>
+                  <li
+                    class="list-group-item bg-primary-subtle border-dark d-flex justify-content-between"
+                  >
+                    <div class="text-center">
+                      <div
+                        class="form-check d-flex justify-content-center gap-1 gap-md-2"
+                      >
+                        <input
+                          class="form-check-input"
+                          name="terms"
+                          type="checkbox"
+                          id="accept-terms-and-conditions"
+                        />
+                        <p>
+                          I agree and accept the
+                          <a href="/legal" class="btn-link" target="_blank"
+                            >terms and conditions</a
+                          >
+                        </p>
+                      </div>
+                    </div>
                   </li>
                 </ul>
               </div>

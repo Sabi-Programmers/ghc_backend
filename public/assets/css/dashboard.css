@@ -1716,3 +1716,13 @@ ul.team-performance-list > li.show > i {
 .card-footer nav .pagination.custom-pagination .page-item .page-link {
   font-size: 0.6875rem !important;
 }
+
+.earn-weekly ol li::marker,
+.earn-weekly strong,
+.earn-weekly h5 {
+  color: #012970;
+}
+
+.earn-weekly ol li {
+  padding: 16px 0;
+}

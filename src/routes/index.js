@@ -15,6 +15,7 @@ import bpcRouter from "./bpc.js";
 import productsRouter from "./products.js";
 import withdrawalWalletsRouter from "./withdrawal-wallets.js";
 import networkRouter from "./network.js";
+import marketingRouter from "./marketing.js";
 const router = express.Router();
 
 router.use("/", staticPagesRouter);
@@ -30,6 +31,7 @@ router.use("/withdrawal-wallet", isMember, withdrawalWalletsRouter);
 router.use("/testimony", isMember, testimonyRouter);
 router.use("/business-promo-contest", isMember, bpcRouter);
 router.use("/network", isMember, networkRouter);
+router.use("/marketing", isMember, marketingRouter);
 router.use("/u/products", isMember, productsRouter);
 
 router.use("/admin", adminRouter);

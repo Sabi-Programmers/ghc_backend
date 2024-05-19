@@ -9,39 +9,52 @@
     <main id="main" class="main">
       <%- include('layout/breadcrumb') %>
 
-      <section class="section">
+      <section class="section dashboard">
         <div class="row">
           <div class="d-md-flex gap-md-4 col-12 w-100">
             <% if (data.eWallet) { %>
 
-            <div
-              class="card w-100 info-card customers-card"
-              style="color: #012970"
-            >
+            <div class="card w-100 info-card customers-card pb-0">
               <div class="card-body">
-                <h5 class="card-title">Funding Account details</h5>
-                <div
-                  class="w-100 d-flex flex-column align-items-center align-items-lg-start"
-                >
-                  <p class="mb-0">Account Name:</p>
-                  <h4><%= data.eWallet.accountName %></h4>
-                  <p class="mb-0">Bank Name:</p>
-                  <h4><%= data.eWallet.virtualBankName %></h4>
-                  <p class="mb-0">Account Number:</p>
-                  <h4 class="fs-1"><%= data.eWallet.accountNumber %></h4>
+                <h5 class="card-title pb-0 mb-1">
+                  <%= data.eWallet.virtualBankName %>
+                </h5>
+                <div class="w-100 d-flex flex-column gap-3">
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <div class="text-truncate">
+                      <h6 class="text-truncate copy-item">
+                        <%= data.eWallet.accountNumber %>
+                      </h6>
+                    </div>
+                    <div
+                      class="card-icon rounded-circle d-flex align-items-center justify-content-center copy-button btn"
+                      data-bs-toggle="tooltip"
+                      data-bs-placement="top"
+                    >
+                      <i class="bx bx-copy"></i>
+                    </div>
+                  </div>
+                  <div class="text-truncate">
+                    <h6 class="text-truncate">
+                      <%= data.eWallet.accountName %>
+                    </h6>
+                  </div>
                 </div>
               </div>
               <div class="w-100 text-center more-info"></div>
             </div>
             <div
-              class="card w-100 info-card customers-card"
+              class="card w-100 info-card customers-card pb-0"
               style="color: #012970"
             >
               <div class="card-body">
                 <h5 class="card-title">E-wallet Balance</h5>
                 <div class="text-center text-md-start">
                   <p class="fs-1">
-                    &#8358; <span><%= data.eWallet.balance %></span>
+                    &#8358;
+                    <span><%= (data.eWallet.balance).toLocaleString() %></span>
                   </p>
                 </div>
                 <div class="gap-4 d-flex align-items-center w-100">
@@ -61,16 +74,11 @@
                     <span><%= (data.eWallet.balance / 1000).toFixed(2) %></span>
                   </p>
                 </div>
-                <h6>1 USD ($) = 1000 NGN (&#8358;)</h6>
+                <span>1 USD ($) = 1000 NGN (&#8358;)</span>
               </div>
               <div class="w-100 text-center more-info"></div>
             </div>
-            <% } else { %>
-            <div class="d-flex justify-content-center w-100 my-4">
-              <a href="/e-wallet" class="btn btn-success"
-                >Generate Virtual Account</a
-              >
-            </div>
+
             <% } %>
           </div>
         </div>

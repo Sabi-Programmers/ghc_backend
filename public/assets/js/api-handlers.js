@@ -3,6 +3,9 @@ window.onload = function () {
   const currentRoute = window.location.pathname;
   console.log("Current route:", currentRoute);
 
+  // Terms and conditions
+  const tandc = document.getElementById("accept-terms-and-conditions");
+
   /**
    * Toast
    */
@@ -174,8 +177,6 @@ window.onload = function () {
       2,
       false
     );
-
-    const tandc = document.getElementById("accept-terms-and-conditions");
 
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -522,6 +523,11 @@ window.onload = function () {
 
     submitPackageOrderButton.addEventListener("click", async () => {
       const data = {};
+
+      if (!tandc.checked) {
+        toast.failed("Please agree to the terms and conditions");
+        return;
+      }
 
       packages.forEach((pkg) => {
         data[pkg.name] = pkg.quantity;
