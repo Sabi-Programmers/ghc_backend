@@ -57,19 +57,22 @@
                     <option value="diamond">Diamond Withdrawal</option>
                   </select>
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                   <label for="facebookLink" class="form-label"
                     >Paste Facebook video testimony link here:</label
                   >
                   <input
                     type="text"
                     class="form-control"
+                    required
+                    pattern="/^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]*)?$/"
+                    data-pristine-pattern-message="Please add a valid URL link"
                     id="facebookLink"
                     name="facebookLink"
                     placeholder="https://www.facebook.com/..."
                   />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                   <label for="youtubeLink" class="form-label"
                     >Paste Youtube video testimony link below:</label
                   >
@@ -79,9 +82,12 @@
                     id="youtubeLink"
                     name="youtubeLink"
                     placeholder="https://www.youtube.com/watch?v=..."
+                    pattern="/^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]*)?$/"
+                    data-pristine-pattern-message="Please add a valid URL link"
+                    required
                   />
                 </div>
-                <div class="mb-3">
+                <div class="mb-3 form-group">
                   <label for="tiktokLink" class="form-label"
                     >Paste Tiktok video testimony link below:</label
                   >
@@ -91,8 +97,22 @@
                     id="tiktokLink"
                     name="tiktokLink"
                     placeholder="https://www.tiktok.com/..."
+                    pattern="/^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+\.){1,}[a-zA-Z]{2,}(\/[a-zA-Z0-9-._~:/?#[\]@!$&'()*+,;=]*)?$/"
+                    data-pristine-pattern-message="Please add a valid URL link"
+                    required
                   />
                 </div>
+                <div class="mb-3 form-group">
+                  <label for="packageType" class="form-label">Message</label>
+                  <textarea
+                    class="form-control"
+                    placeholder="Leave a comment here"
+                    name="message"
+                    style="min-height: 100px"
+                    required
+                  ></textarea>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Submit</button>
               </form>
             </div>

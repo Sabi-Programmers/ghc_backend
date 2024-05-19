@@ -20,7 +20,7 @@ const getAddTestimonyPage = asyncWrapper(async (req, res) => {
 });
 
 const makeTestimonyRequest = asyncWrapper(async (req, res) => {
-  const { pkg, facebookLink, youtubeLink, tiktokLink } = req.body;
+  const { pkg, facebookLink, youtubeLink, tiktokLink, message } = req.body;
   const userId = req.user.id;
 
   if (!facebookLink && !youtubeLink && !tiktokLink) {
@@ -49,21 +49,13 @@ const makeTestimonyRequest = asyncWrapper(async (req, res) => {
     tiktokLink,
     youtubeLink,
     completedCycle,
-    lastPaidCycle
+    lastPaidCycle,
+    message
   );
 
   return response.json(res, StatusCodes.CREATED, true, "Request Submitted", {
     testimony,
   });
-  // try {
-  // } catch (error) {
-  //   return response.json(
-  //     res,
-  //     StatusCodes.INTERNAL_SERVER_ERROR,
-  //     false,
-  //     "Internal Server Error"
-  //   );
-  // }
 });
 
 const getViewTestimonies = asyncWrapper(async (req, res) => {

@@ -620,7 +620,7 @@ window.onload = function () {
         return;
       }
 
-      handlerPostRequest(jsonData, "/testimony", "/testimony");
+      handlerPostRequest(jsonData, "/testimony", "/testimony/view");
     });
   }
 

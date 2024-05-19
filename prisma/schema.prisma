@@ -162,6 +162,7 @@ model TestimonyRecords {
   youtubeLink     String?
   tiktokLink      String?
   message         String?
+  feedbackMessage String?
   status          Status      @default(PENDING)
   publish         Boolean     @default(false)
   userId          Int

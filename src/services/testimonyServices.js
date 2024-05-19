@@ -11,7 +11,8 @@ const createTestimonyRequest = async (
   tiktokLink,
   youtubeLink,
   completedCycles,
-  lastPaidCycles
+  lastPaidCycles,
+  message
 ) => {
   return await database.testimonyRecords.create({
     data: {
@@ -22,6 +23,7 @@ const createTestimonyRequest = async (
       youtubeLink,
       completedCycles,
       lastPaidCycles,
+      message,
     },
   });
 };
