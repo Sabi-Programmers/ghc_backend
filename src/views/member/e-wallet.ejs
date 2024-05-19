@@ -52,10 +52,10 @@
               <div class="card-body">
                 <h5 class="card-title">E-wallet Balance</h5>
                 <div class="text-center text-md-start">
-                  <p class="fs-1">
+                  <h6>
                     &#8358;
                     <span><%= (data.eWallet.balance).toLocaleString() %></span>
-                  </p>
+                  </h6>
                 </div>
                 <div class="gap-4 d-flex align-items-center w-100">
                   <span
@@ -69,12 +69,15 @@
                   ></span>
                 </div>
                 <div class="text-center text-md-start">
-                  <p class="fs-1">
+                  <h6>
                     $
-                    <span><%= (data.eWallet.balance / 1000).toFixed(2) %></span>
-                  </p>
+                    <span>
+                      <%= Number((data.eWallet.balance /
+                      1000).toFixed(2)).toLocaleString() %>
+                    </span>
+                  </h6>
                 </div>
-                <span>1 USD ($) = 1000 NGN (&#8358;)</span>
+                <small> <em> 1 USD ($) = 1000 NGN (&#8358;) </em> </small>
               </div>
               <div class="w-100 text-center more-info"></div>
             </div>

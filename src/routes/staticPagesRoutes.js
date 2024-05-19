@@ -7,35 +7,65 @@ staticPagesRouter.get("", async (req, res) => {
     return res.redirect("/auth/register?sponsorId=" + req.query.ref);
   }
 
-  const data = {};
+  const data = {
+    isAuthenticated: req.isAuthenticated(),
+    path: req.path,
+  };
 
   data.prices = await getContants();
 
   res.render("staticPages/home", { title: "Home", data });
 });
 staticPagesRouter.get("/about", (req, res) => {
-  res.render("staticPages/about", { title: "About Us" });
+  const data = {
+    isAuthenticated: req.isAuthenticated(),
+    path: req.path,
+  };
+  res.render("staticPages/about", { title: "About Us", data });
 });
 staticPagesRouter.get("/how-it-works", async (req, res) => {
-  const data = {};
+  const data = {
+    isAuthenticated: req.isAuthenticated(),
+    path: req.path,
+  };
 
   data.prices = await getContants();
   res.render("staticPages/how-it-works", { title: "How it Works", data });
 });
 staticPagesRouter.get("/contact", (req, res) => {
-  res.render("staticPages/contact", { title: "Contact Us" });
+  const data = {
+    isAuthenticated: req.isAuthenticated(),
+    path: req.path,
+  };
+  res.render("staticPages/contact", { title: "Contact Us", data });
 });
 staticPagesRouter.get("/faq", (req, res) => {
-  res.render("staticPages/faq", { title: "FAQ" });
+  const data = {
+    isAuthenticated: req.isAuthenticated(),
+    path: req.path,
+  };
+  res.render("staticPages/faq", { title: "FAQ", data });
 });
 staticPagesRouter.get("/testimonials", (req, res) => {
-  res.render("staticPages/testimonials", { title: "Testimonials" });
+  const data = {
+    isAuthenticated: req.isAuthenticated(),
+    path: req.path,
+  };
+  res.render("staticPages/testimonials", { title: "Testimonials", data });
 });
 staticPagesRouter.get("/our-products", (req, res) => {
-  res.render("staticPages/our-products", { title: "Our Products" });
+  const data = {
+    isAuthenticated: req.isAuthenticated(),
+    path: req.path,
+  };
+  res.render("staticPages/our-products", { title: "Our Products", data });
 });
 staticPagesRouter.get("/legal", (req, res) => {
-  res.render("staticPages/terms-and-cond", { title: "Legal" });
+  const data = {
+    isAuthenticated: req.isAuthenticated(),
+    path: req.path,
+  };
+  res.render("staticPages/terms-and-cond", { title: "Legal", data });
 });
 
 export default staticPagesRouter;

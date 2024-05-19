@@ -1,9 +1,6 @@
 <!-- ======= Header ======= -->
 <header id="header" class="fixed-top shadow">
   <div class="container d-flex align-items-center justify-content-between">
-    <!-- Uncomment below if you prefer to use an image logo -->
-    <!-- <h1 class="logo"><a href="index.html">Techie</a></h1> -->
-    <!-- Uncomment below if you prefer to use an image logo -->
     <a href="/" class="logo gap-3"
       ><img
         src="/static/assets/img/logo_01.png"
@@ -15,26 +12,59 @@
     <nav id="navbar" class="navbar">
       <ul>
         <li>
-          <a class="nav-link scrollto active" href="/">Home</a>
+          <a class="nav-link <%= data.path == '/' ? 'active' : '' %>" href="/"
+            >Home</a
+          >
         </li>
         <li>
-          <a class="nav-link scrollto" href="/about">About us</a>
+          <a
+            class="nav-link <%= data.path == '/about' ? 'active' : '' %>"
+            href="/about"
+            >About us</a
+          >
         </li>
         <li>
-          <a class="nav-link scrollto" href="./how-it-works">How it works</a>
+          <a
+            class="nav-link <%= data.path == '/how-it-works' ? 'active' : '' %>"
+            href="/how-it-works"
+            >How it works</a
+          >
         </li>
         <li>
-          <a class="nav-link scrollto" href="./shop/products.html">Shop now</a>
+          <a class="nav-link" href="/our-products">Our Products</a>
         </li>
         <li>
-          <a class="nav-link scrollto" href="./testimonials">Testimony</a>
+          <a class="nav-link" href="/u/products">Shop now</a>
         </li>
-        <li><a class="faq scrollto" href="./faq">FAQ</a></li>
+        <li>
+          <a
+            class="nav-link <%= data.path == '/testimonials' ? 'active' : '' %>"
+            href="/testimonials"
+            >Testimony</a
+          >
+        </li>
+        <li>
+          <a
+            class="nav-link <%= data.path == '/faq' ? 'active' : '' %>"
+            href="/faq"
+            >FAQ</a
+          >
+        </li>
 
-        <li><a class="faq scrollto" href="./contact">Contact</a></li>
+        <li>
+          <a
+            class="nav-link <%= data.path == '/contact' ? 'active' : '' %>"
+            href="/contact"
+            >Contact</a
+          >
+        </li>
 
         <li>
-          <a class="getstarted scrollto" href="./auth/login">Login</a>
+          <% if (data.isAuthenticated) { %>
+          <a class="getstarted m-0" href="/dashboard">Dashboard</a>
+          <% } else { %>
+          <a class="getstarted m-0" href="/auth/login">Login</a>
+          <% } %>
         </li>
       </ul>
 

@@ -177,7 +177,7 @@ ul {
 }
 
 .navbar > ul > li {
-  padding: 10px 0 10px 24px;
+  padding: 10px 0 10px 16px;
 }
 
 .navbar a,
@@ -187,7 +187,7 @@ ul {
   justify-content: space-between;
   padding: 0 3px;
   font-family: "Poppins", sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   color: #2c4964;
   white-space: nowrap;
