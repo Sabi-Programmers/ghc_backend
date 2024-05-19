@@ -1,7 +1,13 @@
 import express from "express";
-import { getWithdrawalPage } from "../controllers/withdrawal.js";
+import {
+  getOtp,
+  getWithdrawalPage,
+  makeWithdrawalRequest,
+} from "../controllers/withdrawal.js";
 const withdrawalRouter = express.Router();
 
 withdrawalRouter.get("/", getWithdrawalPage);
+withdrawalRouter.post("/", makeWithdrawalRequest);
+withdrawalRouter.post("/otp", getOtp);
 
 export default withdrawalRouter;

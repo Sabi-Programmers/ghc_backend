@@ -583,6 +583,7 @@ window.onload = function () {
     withdrawalRequestForm.addEventListener("submit", (e) => {
       e.preventDefault();
       console.log(withdrawAmount.value);
+
       toast.success(`Otp has been sent to E-Mail`);
     });
   }

@@ -69,6 +69,7 @@ model User {
   WithdrawalWalletRecord WithdrawalWalletRecord[]
   TestimonyRecords       TestimonyRecords[]
   Bpc                    Bpc[]
+  WithdrawalRequest      WithdrawalRequest[]
 }
 
 model Ewallet {
@@ -313,9 +314,11 @@ enum WithdrawalRequestWallets {
 
 model WithdrawalRequest {
   id        Int                      @id @default(autoincrement())
-  amount    Int
+  amount    Float
   status    Status                   @default(PENDING)
   wallets   WithdrawalRequestWallets
+  userId    Int
+  User      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime                 @default(now())
   updatedAt DateTime                 @updatedAt
 }
@@ -360,6 +363,14 @@ model Contants {
   usdRate                Float
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
+}
+
+model OtpToken {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  token     String
+  createAt  DateTime @default(now())
+  expiresAt DateTime
 }
 
 model Sessions {

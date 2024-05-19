@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "WithdrawalRequest" ALTER COLUMN "amount" SET DATA TYPE DOUBLE PRECISION;
