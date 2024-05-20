@@ -135,6 +135,49 @@ window.onload = function () {
       handlerPostRequest(jsonData, "/auth/login", "/dashboard");
     });
   }
+
+  /**
+   * Admin Login
+   */
+  let adminForm = document.getElementById("admin-auth-form");
+
+  if (adminForm) {
+    pristine = new Pristine(adminForm);
+
+    const passwordInput = document.getElementById("password");
+
+    pristine.addValidator(
+      passwordInput,
+      function (value, el) {
+        const hasUppercase = /[A-Z]/.test(value);
+        const hasLowercase = /[a-z]/.test(value);
+
+        if (!hasUppercase || !hasLowercase) {
+          return false;
+        }
+        return true;
+      },
+      "Password must contain at least one uppercase and one lowercase letter.",
+      2,
+      false
+    );
+
+    adminForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      handlerPostRequest(jsonData, "/admin/login", "/admin/dashboard");
+    });
+  }
+
   /**
    * Register
    */

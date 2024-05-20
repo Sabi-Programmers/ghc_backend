@@ -103,6 +103,13 @@ const getAllUsersJoinedThisYear = async () => {
 
   return usersJoinedThisYearCount;
 };
+const getAllUsersByPackage = async (pkg) => {
+  const whereClause = {};
+  whereClause[pkg] = { totalCycle: { gt: 0 } };
+  return await database.user.count({
+    where: whereClause,
+  });
+};
 
 const getUplineDetails = async (id, pkg) => {
   const include = { referrers: { where: { package: pkg.toUpperCase() } } };
@@ -121,5 +128,6 @@ const userServices = {
   getAllUsersJoinedThisMonth,
   getAllUsersJoinedThisYear,
   getUplineDetails,
+  getAllUsersByPackage,
 };
 export default userServices;
