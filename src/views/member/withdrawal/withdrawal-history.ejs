@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="card">
+            <h5 class="card-title">Withdrawal History</h5>
+            <div class="card-body px-0">
+              <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                  <thead class="table-light">
+                    <tr>
+                      <th>Amount</th>
+                      <th>Wallet</th>
+                      <th>Date</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-group-divider">
+                    <% for( let i = 0; i < data.withdrawals.length; i++ ) { %>
+                    <tr class="text-capitalize">
+                      <td scope="row"><%= data.withdrawals[i].amount %></td>
+                      <td>
+                        <%= (data.withdrawals[i].wallets).toLowerCase() %>
+                      </td>
+                      <td>
+                        <%= (data.withdrawals[i].updatedAt).toLocaleDateString()
+                        %>
+                      </td>
+                      <td><%= (data.withdrawals[i].status).toLowerCase() %></td>
+                    </tr>
+
+                    <% } %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

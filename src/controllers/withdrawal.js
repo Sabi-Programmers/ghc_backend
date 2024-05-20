@@ -3,6 +3,7 @@ import asyncWrapper from "../middlewares/asyncWrapper.js";
 import { getContants } from "../services/contantsServices.js";
 import {
   createWithdrawalRequest,
+  getWithdrawalRequest,
   getWithdrawalWallet,
   minusWithdrawalWallet,
 } from "../services/withdrawalWalletServices.js";
@@ -42,6 +43,8 @@ const makeWithdrawalRequest = asyncWrapper(async (req, res) => {
   const wallet = req.body.wallet;
   const token = req.body.token;
   const userId = req.user.id;
+
+  console.log(req.body);
 
   if (!amount || !wallet || !token) {
     return response.json(
@@ -101,8 +104,30 @@ const makeWithdrawalRequest = asyncWrapper(async (req, res) => {
 const getOtp = asyncWrapper(async (req, res) => {
   const otp = await generateOtpToken(req.user.id);
 
+  console.log(otp);
+
   // generate otp
-  return response.json(res, StatusCodes.OK, true, "OTP Sent to your Mail", otp);
+  return response.json(res, StatusCodes.OK, true, "OTP Sent to your Mail");
 });
 
-export { getWithdrawalPage, makeWithdrawalRequest, getOtp };
+const getWithdrawalHistoryPage = asyncWrapper(async (req, res) => {
+  const wallet = req.query.sw;
+  const status = req.query.st;
+  const data = {
+    user: req.user,
+  };
+
+  data.withdrawals = await getWithdrawalRequest(req.user.id, wallet, status);
+
+  res.render("member/withdrawal/withdrawal-history", {
+    title: "Withdrawal History",
+    data,
+  });
+});
+
+export {
+  getWithdrawalPage,
+  makeWithdrawalRequest,
+  getOtp,
+  getWithdrawalHistoryPage,
+};

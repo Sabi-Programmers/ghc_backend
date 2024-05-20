@@ -22,5 +22,27 @@ const createWithdrawalRequest = async (userId, amount, wallet) => {
     },
   });
 };
+const getWithdrawalRequest = async (userId, wallet, status) => {
+  // Initialize the where clause with userId
+  let whereClause = { userId };
 
-export { getWithdrawalWallet, minusWithdrawalWallet, createWithdrawalRequest };
+  // Conditionally add wallet and status to the where clause if they are not null
+  if (wallet !== null) {
+    whereClause.wallet = wallet;
+  }
+  if (status !== null) {
+    whereClause.status = status;
+  }
+
+  // Query the database with the constructed where clause
+  return await database.withdrawalRequest.findMany({
+    where: whereClause,
+  });
+};
+
+export {
+  getWithdrawalWallet,
+  minusWithdrawalWallet,
+  createWithdrawalRequest,
+  getWithdrawalRequest,
+};

@@ -550,41 +550,64 @@ window.onload = function () {
       window.location.href = "/withdrawal?sw=" + e.target.value;
     });
 
-    const withdrawAmount = document.getElementById("withdrawal-amount");
-    const withdrawAmountError = document.querySelector(
-      "#withdrawal-amount + span"
-    );
-    const threshold = document.getElementById("withdrawal-threshold");
-    const availableBalance = document.getElementById("available-balance");
-    const withdrawalBtn = document.getElementById("withdrawal-btn");
+    // Get Otp
+    const sendOtpBtn = document.getElementById("send-otp-btn");
+    const otpCounter = document.getElementById("otp-counter");
 
-    if (withdrawAmount && threshold && availableBalance) {
-      withdrawalBtn.setAttribute("disabled", true);
+    sendOtpBtn.addEventListener("click", async () => {
+      // Disable the send-otp-btn
+      sendOtpBtn.disabled = true;
 
-      const th = Number(threshold.getAttribute("data-content"));
-      const av = Number(availableBalance.getAttribute("data-content"));
+      try {
+        const res = await fetch("/withdrawal/otp", { method: "POST" });
+        const resData = await res.json();
 
-      withdrawAmount.addEventListener("change", (e) => {
-        withdrawAmountError.classList.remove("d-none");
-        const amount = Number(e.target.value);
-        if (amount < av) {
-          withdrawAmountError.classList.add("d-none");
+        if (resData.success === false) {
+          throw new Error(resData.message);
         }
-        if (amount >= th && amount > av) {
-          withdrawalBtn.removeAttribute("disabled");
-        }
-      });
-    }
+
+        toast.success(resData.message);
+
+        // Start a countdown timer for 90 seconds
+        let timeLeft = 90;
+        otpCounter.textContent = `${timeLeft} seconds remaining`;
+
+        const countdown = setInterval(() => {
+          timeLeft -= 1;
+          otpCounter.textContent = `${timeLeft} seconds remaining`;
+
+          if (timeLeft <= 0) {
+            clearInterval(countdown);
+            otpCounter.textContent = "";
+            sendOtpBtn.disabled = false;
+          }
+        }, 1000);
+      } catch (error) {
+        toast.failed(error.message);
+        sendOtpBtn.disabled = false;
+      }
+    });
+
     // submit form
     const withdrawalRequestForm = document.getElementById(
       "withdrawal-request-form"
     );
 
+    pristine = new Pristine(withdrawalRequestForm);
+
     withdrawalRequestForm.addEventListener("submit", (e) => {
       e.preventDefault();
-      console.log(withdrawAmount.value);
 
-      toast.success(`Otp has been sent to E-Mail`);
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      handlerPostRequest(jsonData, "/withdrawal", "/dashboard");
     });
   }
 
