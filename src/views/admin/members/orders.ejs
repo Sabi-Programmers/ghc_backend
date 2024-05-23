@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">
+                  <h3>Select Time Frame</h3>
+                </div>
+                <select class="form-select" name="time-frame" id="timeFrame">
+                  <option value="day">Today</option>
+                  <option value="month">This Month</option>
+                  <option value="year">This Year</option>
+                  <option value="allTime">All Time</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Total Amount Paid In ($)</h5>
+
+                <!-- Pie Chart -->
+                <div id="pieChart"></div>
+
+                <h5 class="card-footer">Total : <span>$13,000</span></h5>
+
+                <!-- End Pie Chart -->
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <div class="card pb-5">
+              <div class="card-body">
+                <div class="card-title">
+                  <h3>Total Amount Paid In</h3>
+                </div>
+                <div>
+                  <h4>Bronze</h4>
+                  <p>$ 3,0000</p>
+                </div>
+                <div>
+                  <h4>Gold</h4>
+                  <p>$ 4,0000</p>
+                </div>
+                <div>
+                  <h4>Diamond</h4>
+                  <p>$ 6,0000</p>
+                </div>
+                <div>
+                  <h4>Total</h4>
+                  <p>$ 13,0000</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body pt-4">
+                <div class="table-responsive">
+                  <table
+                    class="table orders-table table-striped table-bordered datatable"
+                    style="width: 100%"
+                  >
+                    <thead>
+                      <tr>
+                        <th class="d-none d-md-table-cell">Name</th>
+                        <th>Username</th>
+                        <th>Current Cycle</th>
+                        <th>Order ($)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th class="d-none d-md-table-cell">Jane Doe</th>
+                        <td>CackJK</td>
+                        <td>2</td>
+                        <td>3000</td>
+                      </tr>
+                      <tr>
+                        <th class="d-none d-md-table-cell">Abike Johnson</th>
+                        <td>Jack</td>
+                        <td>4</td>
+                        <td>6000</td>
+                      </tr>
+                      <tr>
+                        <th class="d-none d-md-table-cell">Ali Musa</th>
+                        <td>Alan</td>
+                        <td>2</td>
+                        <td>1000</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

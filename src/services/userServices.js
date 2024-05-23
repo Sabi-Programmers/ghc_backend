@@ -56,9 +56,50 @@ const getUserDashboardDetails = async (id) => {
   return data;
 };
 
-const getAllUsers = async () => {
-  const users = await database.user.findMany();
-  return users;
+const getAllUsers = async (data) => {
+  const { page, perPage, membersStatus, searchQuery } = data;
+
+  let whereClause = {};
+
+  if (membersStatus === "active") {
+    whereClause.OR = [
+      { bronze: { currentCycle: { gt: 0 } } },
+      { gold: { currentCycle: { gt: 0 } } },
+      { diamond: { currentCycle: { gt: 0 } } },
+    ];
+  }
+
+  if (searchQuery) {
+    const searchConditions = [
+      { username: { contains: searchQuery, mode: "insensitive" } },
+      { fullName: { contains: searchQuery, mode: "insensitive" } },
+      { email: { contains: searchQuery, mode: "insensitive" } },
+      { sponsorUsername: { contains: searchQuery, mode: "insensitive" } },
+    ];
+
+    if (whereClause.OR) {
+      whereClause.AND = { OR: searchConditions };
+    } else {
+      whereClause.OR = searchConditions;
+    }
+  }
+
+  const members = await database.user.findMany({
+    where: whereClause,
+    include: {
+      bronze: true,
+      gold: true,
+      diamond: true,
+      withdrawalWallet: true,
+    },
+    skip: (page - 1) * perPage,
+    take: perPage,
+    orderBy: { createdAt: "desc" },
+  });
+
+  const totalMembers = await database.user.count({ where: whereClause });
+
+  return { members, totalMembers };
 };
 
 const getTotalUsers = async () => {
