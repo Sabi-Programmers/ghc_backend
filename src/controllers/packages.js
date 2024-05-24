@@ -73,7 +73,7 @@ const buyPackages = asyncWrapper(async (req, res) => {
       const newUserPkg = await updateUserPackage(pkg, userId, unit, userPkg);
       // // ok  -e//
 
-      await createPackageOrders(userId, pkg, 1);
+      await createPackageOrders(userId, pkg, unit);
       // ok -e//
 
       // Get Upline Info

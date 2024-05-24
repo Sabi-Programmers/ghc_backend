@@ -19,12 +19,30 @@ const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
   const genealogy = await getUserReferrerGen(userId, pkg);
 
   const bonuses = {
-    first: 0.6,
-    second: 0.5,
-    third: 0.4,
-    forth: 0.3,
-    fifth: 0.2,
-    sixth: 0.1,
+    bronze: {
+      first: 0.6,
+      second: 0.5,
+      third: 0.4,
+      forth: 0.3,
+      fifth: 0.2,
+      sixth: 0.1,
+    },
+    gold: {
+      first: 1.8,
+      second: 1.5,
+      third: 1.2,
+      forth: 0.9,
+      fifth: 0.6,
+      sixth: 0.3,
+    },
+    diamond: {
+      first: 5.4,
+      second: 4.5,
+      third: 3.6,
+      forth: 2.7,
+      fifth: 1.8,
+      sixth: 0.9,
+    },
   };
 
   const query = Object.values(genealogy)
@@ -49,7 +67,7 @@ const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
       return {
         userId: obj.id,
         generation,
-        amount: bonuses[generation],
+        amount: bonuses[pkg][generation],
         downlineName: fullName,
         downlineUsername: username,
         sponsorUsername: genealogy.first,
