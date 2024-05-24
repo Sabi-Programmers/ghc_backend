@@ -1,13 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
-  new ApexCharts(document.querySelector("#pieChart"), {
-    series: [94, 77, 62],
-    chart: {
-      height: 350,
-      type: "pie",
-      toolbar: {
-        show: true,
+  const pieChart = document.getElementById("pieChart");
+
+  const bronze = Number(pieChart.getAttribute("data-bronze"));
+  const gold = Number(pieChart.getAttribute("data-gold"));
+  const diamond = Number(pieChart.getAttribute("data-diamond"));
+
+  if (pieChart) {
+    new ApexCharts(document.querySelector("#pieChart"), {
+      series: [bronze, gold, diamond],
+      chart: {
+        height: 350,
+        type: "pie",
+        toolbar: {
+          show: true,
+        },
       },
-    },
-    labels: ["Bronze", "Gold", "Diamond"],
-  }).render();
+      labels: ["Bronze", "Gold", "Diamond"],
+    }).render();
+  }
 });

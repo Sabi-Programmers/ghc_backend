@@ -17,12 +17,36 @@
                 <div class="card-title">
                   <h3>Select Time Frame</h3>
                 </div>
-                <select class="form-select" name="time-frame" id="timeFrame">
-                  <option value="day">Today</option>
-                  <option value="month">This Month</option>
-                  <option value="year">This Year</option>
-                  <option value="allTime">All Time</option>
-                </select>
+
+                <div class="dropdown">
+                  <a
+                    class="btn btn-secondary dropdown-toggle"
+                    href="#"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <%= data.du == 'today' ? 'Today' : '' %> <%= data.du !=
+                    'today' && data.du != 'allTime' ? `This ${data.du}` : '' %>
+                    <%= data.du =='allTime' ? 'All Time' : '' %>
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="?du=today">Today</a></li>
+                    <li>
+                      <a class="dropdown-item" href="?du=week"> This Week </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="?du=month">This Month</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="?du=year">This Year</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="?du=allTime">All Time</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
@@ -32,9 +56,16 @@
                 <h5 class="card-title">Total Amount Paid In ($)</h5>
 
                 <!-- Pie Chart -->
-                <div id="pieChart"></div>
+                <div
+                  data-bronze="<%= data.bronze %>"
+                  data-gold="<%= data.gold %>"
+                  data-diamond="<%= data.diamond %>"
+                  id="pieChart"
+                ></div>
 
-                <h5 class="card-footer">Total : <span>$13,000</span></h5>
+                <h5 class="card-footer">
+                  Total : <span>$<%= data.total %></span>
+                </h5>
 
                 <!-- End Pie Chart -->
               </div>
@@ -48,19 +79,19 @@
                 </div>
                 <div>
                   <h4>Bronze</h4>
-                  <p>$ 3,0000</p>
+                  <p>$<%= data.bronze %></p>
                 </div>
                 <div>
                   <h4>Gold</h4>
-                  <p>$ 4,0000</p>
+                  <p>$<%= data.gold %></p>
                 </div>
                 <div>
                   <h4>Diamond</h4>
-                  <p>$ 6,0000</p>
+                  <p>$<%= data.diamond %></p>
                 </div>
                 <div>
                   <h4>Total</h4>
-                  <p>$ 13,0000</p>
+                  <p>$<%= data.total %></p>
                 </div>
               </div>
             </div>
@@ -70,40 +101,32 @@
               <div class="card-body pt-4">
                 <div class="table-responsive">
                   <table
-                    class="table orders-table table-striped table-bordered datatable"
+                    class="table orders-table table-striped table-bordered table-hover"
                     style="width: 100%"
                   >
-                    <thead>
+                    <thead class="table-dark">
                       <tr>
-                        <th class="d-none d-md-table-cell">Name</th>
+                        <th>Name</th>
                         <th>Username</th>
-                        <th>Current Cycle</th>
-                        <th>Order ($)</th>
+                        <th>Ordered Cycle</th>
+                        <th>Package</th>
                       </tr>
                     </thead>
                     <tbody>
+                      <% for( let i = 0; i < data.orders.length; i++ ) { %>
                       <tr>
-                        <th class="d-none d-md-table-cell">Jane Doe</th>
-                        <td>CackJK</td>
-                        <td>2</td>
-                        <td>3000</td>
+                        <td><%= data.orders[i].User.fullName %></td>
+                        <td><%= data.orders[i].User.username %></td>
+                        <td><%= data.orders[i].cycle %></td>
+                        <td><%= data.orders[i].package %></td>
                       </tr>
-                      <tr>
-                        <th class="d-none d-md-table-cell">Abike Johnson</th>
-                        <td>Jack</td>
-                        <td>4</td>
-                        <td>6000</td>
-                      </tr>
-                      <tr>
-                        <th class="d-none d-md-table-cell">Ali Musa</th>
-                        <td>Alan</td>
-                        <td>2</td>
-                        <td>1000</td>
-                      </tr>
+                      <% } %>
                     </tbody>
                   </table>
                 </div>
               </div>
+              <%- include('../partials/pagination', {urlPrefix:
+              `?du=${data.du}`, data}) %>
             </div>
           </div>
         </div>

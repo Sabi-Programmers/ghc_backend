@@ -1,4 +1,5 @@
 import database from "../libs/prisma.js";
+import { durations } from "../utils/index.js";
 
 const createPackageOrders = async (userId, pkg, units) => {
   const prevPkgOrderData = await getLastPackageOrder(userId, pkg);
@@ -32,4 +33,70 @@ const getUserPackageOrders = async (userId, page, perPage) => {
   return { orders, totalItem };
 };
 
-export { createPackageOrders, getUserPackageOrders };
+const allPackageOrdered = async ({ page, perPage, duration }) => {
+  const dateRange = durations(duration);
+  const orders = await database.packageOrder.findMany({
+    where: {
+      createdAt: { ...dateRange },
+    },
+    include: {
+      User: { select: { username: true, fullName: true } },
+    },
+    skip: (page - 1) * perPage,
+    take: perPage,
+    orderBy: { createdAt: "desc" },
+  });
+  const totalItem = await database.packageOrder.count({
+    where: {
+      createdAt: { ...dateRange },
+    },
+  });
+
+  const bronze = await database.packageOrder.count({
+    where: {
+      package: "BRONZE",
+      createdAt: { ...dateRange },
+    },
+  });
+  const gold = await database.packageOrder.count({
+    where: {
+      package: "GOLD",
+      createdAt: { ...dateRange },
+    },
+  });
+  const diamond = await database.packageOrder.count({
+    where: {
+      package: "DIAMOND",
+      createdAt: { ...dateRange },
+    },
+  });
+
+  return { orders, totalItem, bronze, gold, diamond };
+};
+
+const totalPackageOrdered = async () => {
+  const bronze = await database.bronze.aggregate({
+    _sum: {
+      totalCycle: true,
+    },
+  });
+  const gold = await database.gold.aggregate({
+    _sum: {
+      totalCycle: true,
+    },
+  });
+  const diamond = await database.diamond.aggregate({
+    _sum: {
+      totalCycle: true,
+    },
+  });
+
+  return { bronze, gold, diamond };
+};
+
+export {
+  createPackageOrders,
+  getUserPackageOrders,
+  allPackageOrdered,
+  totalPackageOrdered,
+};
