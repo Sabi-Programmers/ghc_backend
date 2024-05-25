@@ -598,15 +598,18 @@ window.onload = function () {
     const otpCounter = document.getElementById("otp-counter");
 
     sendOtpBtn.addEventListener("click", async () => {
-      // Disable the send-otp-btn
+      // Disable the send-otp-btn and show a loading spinner
       sendOtpBtn.disabled = true;
+      sendOtpBtn.innerHTML = `<div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>`;
 
       try {
         const res = await fetch("/withdrawal/otp", { method: "POST" });
         const resData = await res.json();
 
-        if (resData.success === false) {
-          throw new Error(resData.message);
+        if (!res.ok) {
+          throw new Error(resData.message || "Failed to send OTP");
         }
 
         toast.success(resData.message);
@@ -623,11 +626,19 @@ window.onload = function () {
             clearInterval(countdown);
             otpCounter.textContent = "";
             sendOtpBtn.disabled = false;
+            sendOtpBtn.innerHTML = "Send OTP";
           }
         }, 1000);
       } catch (error) {
-        toast.failed(error.message);
+        toast.error(error.message);
         sendOtpBtn.disabled = false;
+        sendOtpBtn.innerHTML = "Send OTP";
+      } finally {
+        // Ensure the button is re-enabled if an error occurs
+        if (sendOtpBtn.disabled) {
+          sendOtpBtn.disabled = false;
+          sendOtpBtn.innerHTML = "Send OTP";
+        }
       }
     });
 

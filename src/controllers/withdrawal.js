@@ -9,6 +9,7 @@ import {
 } from "../services/withdrawalWalletServices.js";
 import response from "../utils/response.js";
 import { generateOtpToken, verifyOtpToken } from "../services/otpServices.js";
+import { sendMail, sendWithdrawalOtpMail } from "../libs/nodemailer.js";
 
 const getWithdrawalPage = asyncWrapper(async (req, res) => {
   const wallet = req.query.sw;
@@ -104,7 +105,7 @@ const makeWithdrawalRequest = asyncWrapper(async (req, res) => {
 const getOtp = asyncWrapper(async (req, res) => {
   const otp = await generateOtpToken(req.user.id);
 
-  console.log(otp);
+  await sendWithdrawalOtpMail(req.user.fullName, otp, req.user.email);
 
   // generate otp
   return response.json(res, StatusCodes.OK, true, "OTP Sent to your Mail");
