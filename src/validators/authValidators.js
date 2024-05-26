@@ -62,6 +62,46 @@ const validateCreateUserAuth = [
       return true;
     }),
 ];
+const validateResetPassword = [
+  body("username").exists().withMessage("Username or Email is required"),
+  body("token")
+    .exists()
+    .withMessage("OTP is required")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Invaild OTP")
+    .isLength({ max: 6 })
+    .withMessage("Invaild OTP"),
+
+  body("password")
+    .exists()
+    .withMessage("Password is required")
+    .trim()
+    .isLength({ min: 6 })
+    .withMessage("Password must be at least 6 characters long")
+    .custom((value) => {
+      // Check if the password contains at least one uppercase letter
+      if (!/[A-Z]/.test(value)) {
+        throw new Error("Password must contain at least one uppercase letter");
+      }
+
+      // Check if the password contains at least one lowercase letter
+      if (!/[a-z]/.test(value)) {
+        throw new Error("Password must contain at least one lowercase letter");
+      }
+
+      return true;
+    }),
+  body("confirmPassword")
+    .exists()
+    .withMessage("Confirm Password is required")
+    .custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error("Passwords do not match");
+      }
+      return true;
+    }),
+];
 const validateLoginAuth = [
   body("username")
     .exists()
@@ -105,4 +145,9 @@ const validateAuth = (req, res, next) => {
   return next();
 };
 
-export { validateLoginAuth, validateCreateUserAuth, validateAuth };
+export {
+  validateLoginAuth,
+  validateCreateUserAuth,
+  validateResetPassword,
+  validateAuth,
+};

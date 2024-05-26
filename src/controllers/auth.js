@@ -6,6 +6,8 @@ import database from "../libs/prisma.js";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
 import { createEWallet } from "../services/eWalletServices.js";
 import response from "../utils/response.js";
+import { sendresetPasswordOtpMail } from "../libs/nodemailer.js";
+import { generateOtpToken, verifyOtpToken } from "../services/otpServices.js";
 
 const getRegisterPage = asyncWrapper(async (req, res) => {
   const { sponsorId } = req.query;
@@ -156,4 +158,144 @@ const logoutUser = asyncWrapper(async (req, res, next) => {
   });
 });
 
-export { createUser, getRegisterPage, getLoginPage, loginUser, logoutUser };
+const getForgotPasswordPage = asyncWrapper(async (req, res) => {
+  return res.render("auth/forgot-password", {
+    title: "Forgot Password",
+    data: { error: null },
+  });
+});
+const forgotPassword = asyncWrapper(async (req, res) => {
+  const username = req.body.username;
+
+  if (!username || username.length < 1) {
+    return response.json(
+      res,
+      StatusCodes.BAD_REQUEST,
+      false,
+      "Username or Email is required"
+    );
+  }
+
+  const user = await database.user.findFirst({
+    where: {
+      OR: [{ username }, { email: username }],
+    },
+    select: { fullName: true, email: true, id: true },
+  });
+
+  if (!user) {
+    return response.json(
+      res,
+      StatusCodes.NOT_FOUND,
+      false,
+      "Username or Email not found"
+    );
+  }
+
+  const otp = await generateOtpToken(user.id);
+
+  const sentMail = await sendresetPasswordOtpMail(
+    user.fullName,
+    otp,
+    user.email
+  );
+
+  if (!sentMail) {
+    return response.json(
+      res,
+      StatusCodes.BAD_REQUEST,
+      false,
+      "OTP Mail Failed"
+    );
+  }
+
+  return response.json(
+    res,
+    StatusCodes.OK,
+    true,
+    "OTP sent to your email address"
+  );
+});
+
+const getResetPasswordPage = asyncWrapper(async (req, res) => {
+  const username = req.query.u;
+
+  if (!username || username.length < 1) {
+    return res.redirect("/auth/forgot-password");
+  }
+
+  const user = await database.user.findFirst({
+    where: {
+      OR: [{ username }, { email: username }],
+    },
+    select: { username: true },
+  });
+
+  if (!user) {
+    return res.redirect("/auth/forgot-password");
+  }
+
+  return res.render("auth/reset-password", {
+    title: "Reset Password",
+    data: { error: null, username: user.username },
+  });
+});
+
+const resetPassword = asyncWrapper(async (req, res) => {
+  const { username, token, password } = req.body;
+
+  const user = await database.user.findFirst({
+    where: {
+      OR: [{ username }, { email: username }],
+    },
+    select: { id: true },
+  });
+
+  if (!user) {
+    return response.json(
+      res,
+      StatusCodes.NOT_FOUND,
+      false,
+      "Username or Email not found"
+    );
+  }
+
+  // verify OTP
+  const verifyOtp = await verifyOtpToken(token, user.id);
+  if (!verifyOtp.status) {
+    return response.json(
+      res,
+      StatusCodes.BAD_REQUEST,
+      false,
+      verifyOtp.message
+    );
+  }
+
+  // Update new password
+  const hashedPassword = await bcrypt.hash(password, 10);
+  await database.user.update({
+    where: { id: user.id },
+    data: {
+      password: hashedPassword,
+    },
+  });
+
+  return response.json(
+    res,
+    StatusCodes.OK,
+    true,
+    "Password reset successfully"
+  );
+});
+
+export {
+  createUser,
+  getRegisterPage,
+  getLoginPage,
+  loginUser,
+  logoutUser,
+  getForgotPasswordPage,
+  getResetPasswordPage,
+  resetPassword,
+  forgotPassword,
+};

@@ -9,7 +9,7 @@ import {
 } from "../services/withdrawalWalletServices.js";
 import response from "../utils/response.js";
 import { generateOtpToken, verifyOtpToken } from "../services/otpServices.js";
-import { sendMail, sendWithdrawalOtpMail } from "../libs/nodemailer.js";
+import { sendWithdrawalOtpMail } from "../libs/nodemailer.js";
 
 const getWithdrawalPage = asyncWrapper(async (req, res) => {
   const wallet = req.query.sw;
@@ -44,8 +44,6 @@ const makeWithdrawalRequest = asyncWrapper(async (req, res) => {
   const wallet = req.body.wallet;
   const token = req.body.token;
   const userId = req.user.id;
-
-  console.log(req.body);
 
   if (!amount || !wallet || !token) {
     return response.json(

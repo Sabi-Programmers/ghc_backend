@@ -23,12 +23,36 @@ export async function sendMail() {
 
   console.log("Message sent: %s", info.messageId);
 }
-// async..await is not allowed in global scope, must use a wrapper
+
 export async function sendWithdrawalOtpMail(fullName, otp, email) {
   await transporter.sendMail({
     from: `"Grand Health Cycle " <${process.env.EMAIL_AUTH_USER}>`,
     to: email,
     subject: "Your OTP Code for Withdrawal Request",
     html: mailTemplates.withdrawal(fullName, otp),
+  });
+}
+
+export async function sendresetPasswordOtpMail(fullName, otp, email) {
+  try {
+    await transporter.sendMail({
+      from: `"Grand Health Cycle " <${process.env.EMAIL_AUTH_USER}>`,
+      to: email,
+      subject: "Your OTP Code for Password Reset",
+      html: mailTemplates.resetPassword(fullName, otp),
+    });
+
+    return true;
+  } catch (error) {
+    console.log(error.message);
+    return false;
+  }
+}
+export async function sendWelcomeMail(fullName, email) {
+  await transporter.sendMail({
+    from: `"Grand Health Cycle " <${process.env.EMAIL_AUTH_USER}>`,
+    to: email,
+    subject: "Welcome to Grand Health Cycle",
+    html: mailTemplates.welcome(fullName),
   });
 }

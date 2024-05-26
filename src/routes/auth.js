@@ -5,11 +5,16 @@ import {
   getLoginPage,
   loginUser,
   logoutUser,
+  getForgotPasswordPage,
+  getResetPasswordPage,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/auth.js";
 import {
   validateAuth,
   validateCreateUserAuth,
   validateLoginAuth,
+  validateResetPassword,
 } from "../validators/authValidators.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 const authRouter = express.Router();
@@ -29,6 +34,15 @@ authRouter.post(
   validateLoginAuth,
   validateAuth,
   loginUser
+);
+authRouter.get("/forgot-password", getForgotPasswordPage);
+authRouter.post("/forgot-password", forgotPassword);
+authRouter.get("/reset-password", getResetPasswordPage);
+authRouter.post(
+  "/reset-password",
+  validateResetPassword,
+  validateAuth,
+  resetPassword
 );
 authRouter.post("/logout", logoutUser);
 

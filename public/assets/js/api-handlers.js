@@ -242,6 +242,91 @@ window.onload = function () {
   }
 
   /**
+   * Forgot Password
+   */
+  let forgotPasswordForm = document.getElementById("forgot-password-form");
+  if (forgotPasswordForm) {
+    pristine = new Pristine(forgotPasswordForm);
+
+    forgotPasswordForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      handlerPostRequest(
+        jsonData,
+        "/auth/forgot-password",
+        "/auth/reset-password?u=" + jsonData.username
+      );
+    });
+  }
+
+  /**
+   * Reset Password
+   */
+  let resetPasswordForm = document.getElementById("reset-password-form");
+  if (resetPasswordForm) {
+    pristine = new Pristine(resetPasswordForm);
+
+    const passwordInput = document.getElementById("password");
+    const confirmPasswordInput = document.getElementById("confirmPassword");
+
+    if (confirmPasswordInput) {
+      pristine.addValidator(
+        confirmPasswordInput,
+        function (value, el) {
+          const password = passwordInput.value;
+          if (password !== value) {
+            return false;
+          }
+          return true;
+        },
+        "Password does't match.",
+        3,
+        false
+      );
+    }
+
+    pristine.addValidator(
+      passwordInput,
+      function (value, el) {
+        const hasUppercase = /[A-Z]/.test(value);
+        const hasLowercase = /[a-z]/.test(value);
+
+        if (!hasUppercase || !hasLowercase) {
+          return false;
+        }
+        return true;
+      },
+      "Password must contain at least one uppercase and one lowercase letter.",
+      2,
+      false
+    );
+
+    resetPasswordForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      handlerPostRequest(jsonData, "/auth/reset-password", "/auth/login");
+    });
+  }
+
+  /**
    * Logout
    */
   let logout = document.getElementById("logout");
