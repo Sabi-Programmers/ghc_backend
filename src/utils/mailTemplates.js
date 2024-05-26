@@ -10,8 +10,7 @@ const withdrawalOTPMailTemp = (fullName, otp) => {
                     font-family: Arial, sans-serif;
                     background-color: #f6f6f6;
                     margin: 0;
-                    padding: 0;
-                "
+                    padding: 0;"
                 >
                 <div
                     style="
@@ -81,8 +80,7 @@ const withdrawalOTPMailTemp = (fullName, otp) => {
                         <a
                         href="mailto:support@grandhealthcycle.com"
                         style="color: #888888; text-decoration: none"
-                        >Contact Support</a
-                        >
+                        >Contact Support: support@grandhealthcycle.com</a>
                     </p>
                     </div>
                 </div>
@@ -171,8 +169,7 @@ const resetPasswordOTPMailTemp = (fullName, otp) => {
                         <a
                         href="mailto:support@grandhealthcycle.com"
                         style="color: #888888; text-decoration: none"
-                        >Contact Support</a
-                        >
+                        >Contact Support: support@grandhealthcycle.com</a>
                     </p>
                     </div>
                 </div>
@@ -257,7 +254,7 @@ const welcomeMailTemp = (fullName) => {
                      <a
                          href="mailto:support@grandhealthcycle.com"
                          style="color: #888888; text-decoration: none"
-                     >Contact Support</a>
+                     >Contact Support: support@grandhealthcycle.com</a>
                  </p>
              </div>
          </div>
@@ -266,10 +263,46 @@ const welcomeMailTemp = (fullName) => {
  `;
 };
 
+const contactUsMailTemp = (name, subject, email, message) => {
+  return `
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8" />
+            <title>Contact Us Form Submission</title>
+        </head>
+        <body style="font-family: Arial, sans-serif; background-color: #f6f6f6; margin: 0; padding: 0;">
+            <div style="background-color: #ffffff; width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #dddddd;">
+                <div style="padding: 20px; text-align: center;">
+                    <h2 style="color: #333333;">Contact Us Form Submission</h2>
+                </div>
+                <div style="padding: 20px;">
+                    <p>Hi Grand Health Cycle Team,</p>
+                    <p>You have received a new message from the Contact Us form on your website. Here are the details:</p>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Subject:</strong> ${subject}</p>
+                    <p><strong>Message:</strong><br/> ${message} </p>
+                    <p>Please respond to the inquiry at your earliest convenience.</p>
+                    <p>Best regards,</p>
+                    <p> www.grandhealthcycle.com</p>
+                </div>
+                <div style="padding: 20px; text-align: center; font-size: 12px; color: #888888;">
+                    <p>Grand Health Cycle, PL 330, FI-00831 Helsinki, SUOMI/FINLAND. 
+                     </p>
+                </div>
+            </div>
+        </body>
+    </html>
+    
+            `;
+};
+
 const mailTemplates = {
   withdrawal: withdrawalOTPMailTemp,
   resetPassword: resetPasswordOTPMailTemp,
   welcome: welcomeMailTemp,
+  contactUs: contactUsMailTemp,
 };
 
 export default mailTemplates;

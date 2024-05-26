@@ -1,7 +1,49 @@
 window.onload = function () {
   // Get the current route
   const currentRoute = window.location.pathname;
-  console.log("Current route:", currentRoute);
+
+  /**
+   * Breadcrumbs
+   */
+
+  // Get the breadcrumb container
+  const breadcrumbContainer = document.getElementById("breadcrumb");
+
+  // Split the route into parts and filter out empty strings
+  const routeParts = currentRoute.split("/").filter((part) => part);
+
+  // Clear any existing breadcrumb items
+  breadcrumbContainer.innerHTML = "";
+
+  // Create the "Home" breadcrumb item
+  const homeCrumb = document.createElement("li");
+  homeCrumb.classList.add("breadcrumb-item");
+  const homeLink = document.createElement("a");
+  homeLink.href = "./dashboard.html"; // Adjust according to your home URL
+  homeLink.textContent = "Home";
+  homeCrumb.appendChild(homeLink);
+  breadcrumbContainer.appendChild(homeCrumb);
+
+  // Create breadcrumb items for each part of the route
+  routeParts.forEach((part, index) => {
+    const crumb = document.createElement("li");
+    crumb.classList.add("breadcrumb-item");
+    if (index === routeParts.length - 1) {
+      // Last part should be active
+      crumb.classList.add("active");
+      crumb.textContent = part.charAt(0).toUpperCase() + part.slice(1);
+    } else {
+      const link = document.createElement("a");
+      link.href = "/" + routeParts.slice(0, index + 1).join("/");
+      link.textContent = part.charAt(0).toUpperCase() + part.slice(1);
+      crumb.appendChild(link);
+    }
+    breadcrumbContainer.appendChild(crumb);
+  });
+
+  /**
+   * =================================================================
+   */
 
   // Terms and conditions
   const tandc = document.getElementById("accept-terms-and-conditions");
