@@ -21,6 +21,15 @@ const getAllNews = async (page, isPublished) => {
 
   return { news, totalNews };
 };
+const getAllPublishedNews = async () => {
+  return await database.news.findMany({
+    where: {
+      isPublished: true,
+    },
+
+    orderBy: { createdAt: "desc" },
+  });
+};
 
 const getSinglenews = async (slug) => {
   return await database.news.findFirst({
@@ -44,4 +53,10 @@ const addNews = async ({ title, description, photo }) => {
 const deleteSingleNews = async (id) =>
   await database.news.delete({ where: { id } });
 
-export { getAllNews, getSinglenews, addNews, deleteSingleNews };
+export {
+  getAllNews,
+  getSinglenews,
+  addNews,
+  deleteSingleNews,
+  getAllPublishedNews,
+};

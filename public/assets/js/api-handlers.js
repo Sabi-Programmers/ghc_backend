@@ -9,37 +9,43 @@ window.onload = function () {
   // Get the breadcrumb container
   const breadcrumbContainer = document.getElementById("breadcrumb");
 
-  // Split the route into parts and filter out empty strings
-  const routeParts = currentRoute.split("/").filter((part) => part);
+  const updateBreadcrumbs = () => {
+    // Split the route into parts and filter out empty strings
+    const routeParts = currentRoute.split("/").filter((part) => part);
 
-  // Clear any existing breadcrumb items
-  breadcrumbContainer.innerHTML = "";
+    // Clear any existing breadcrumb items
+    breadcrumbContainer.innerHTML = "";
 
-  // Create the "Home" breadcrumb item
-  const homeCrumb = document.createElement("li");
-  homeCrumb.classList.add("breadcrumb-item");
-  const homeLink = document.createElement("a");
-  homeLink.href = "./dashboard.html"; // Adjust according to your home URL
-  homeLink.textContent = "Home";
-  homeCrumb.appendChild(homeLink);
-  breadcrumbContainer.appendChild(homeCrumb);
+    // Create the "Home" breadcrumb item
+    const homeCrumb = document.createElement("li");
+    homeCrumb.classList.add("breadcrumb-item");
+    const homeLink = document.createElement("a");
+    homeLink.href = "./dashboard.html"; // Adjust according to your home URL
+    homeLink.textContent = "Home";
+    homeCrumb.appendChild(homeLink);
+    breadcrumbContainer.appendChild(homeCrumb);
 
-  // Create breadcrumb items for each part of the route
-  routeParts.forEach((part, index) => {
-    const crumb = document.createElement("li");
-    crumb.classList.add("breadcrumb-item");
-    if (index === routeParts.length - 1) {
-      // Last part should be active
-      crumb.classList.add("active");
-      crumb.textContent = part.charAt(0).toUpperCase() + part.slice(1);
-    } else {
-      const link = document.createElement("a");
-      link.href = "/" + routeParts.slice(0, index + 1).join("/");
-      link.textContent = part.charAt(0).toUpperCase() + part.slice(1);
-      crumb.appendChild(link);
-    }
-    breadcrumbContainer.appendChild(crumb);
-  });
+    // Create breadcrumb items for each part of the route
+    routeParts.forEach((part, index) => {
+      const crumb = document.createElement("li");
+      crumb.classList.add("breadcrumb-item");
+      if (index === routeParts.length - 1) {
+        // Last part should be active
+        crumb.classList.add("active");
+        crumb.textContent = part.charAt(0).toUpperCase() + part.slice(1);
+      } else {
+        const link = document.createElement("a");
+        link.href = "/" + routeParts.slice(0, index + 1).join("/");
+        link.textContent = part.charAt(0).toUpperCase() + part.slice(1);
+        crumb.appendChild(link);
+      }
+      breadcrumbContainer.appendChild(crumb);
+    });
+  };
+
+  if (breadcrumbContainer) {
+    updateBreadcrumbs();
+  }
 
   /**
    * =================================================================
@@ -851,5 +857,93 @@ window.onload = function () {
     teamGen.addEventListener("change", (e) => {
       redirect(`${currentRoute}?pkg=${pkg}&gen=${e.target.value}`);
     });
+  }
+
+  /**
+   * News / Announcements
+   */
+  const displayNews = async () => {
+    // Show the modal
+    const modal = new bootstrap.Modal(document.getElementById("news-modal"));
+
+    // Manipulate the modal content
+    const modalBody = document.querySelector("#news-modal .modal-content-body");
+    const modalContentTitle = document.querySelector(
+      "#news-modal .modal-content-title"
+    );
+    const modalNewsImg = document.querySelector("#news-modal .modal-news-img");
+    const modalTitle = document.querySelector("#news-modal .modal-title");
+    const modalCloseBtn = document.getElementById("close-news-modal");
+    const modalPrevBtn = document.getElementById("prev-news-modal");
+    const modalNextBtn = document.getElementById("next-news-modal");
+    const modalReadNews = document.getElementById("readNews");
+    const modalReadPages = document.getElementById("news-pages");
+    let newsIndex = 0;
+
+    const fetchNews = async () => {
+      try {
+        const res = await fetch("/news");
+        const resData = await res.json();
+        return resData.data;
+      } catch (error) {
+        return null;
+      }
+    };
+
+    const filterReadNews = (news) => {
+      const readNewsIds = JSON.parse(localStorage.getItem("readNewsIds")) || [];
+      return news.filter((newsItem) => !readNewsIds.includes(newsItem.id));
+    };
+
+    const news = filterReadNews(await fetchNews());
+
+    if (!news || news.length === 0) {
+      return;
+    }
+
+    const renderNews = () => {
+      modalReadPages.innerText = `${newsIndex + 1} of ${news.length} items`;
+      modalTitle.innerText = "Announcements #" + news[newsIndex].id;
+      modalContentTitle.innerText = news[newsIndex].title;
+      modalNewsImg.innerHTML = ` <img
+      src="/uploads/images/${news[newsIndex].photo}"
+      alt="News Photo"
+    />`;
+      modalBody.innerHTML = news[newsIndex].description;
+      modal.show();
+    };
+
+    // Render the first news item
+    renderNews();
+
+    // Next button functionality
+    modalNextBtn.addEventListener("click", () => {
+      if (newsIndex < news.length - 1) {
+        newsIndex++;
+        renderNews();
+      }
+    });
+
+    // Previous button functionality
+    modalPrevBtn.addEventListener("click", () => {
+      if (newsIndex > 0) {
+        newsIndex--;
+        renderNews();
+      }
+    });
+
+    // Close button functionality
+    modalCloseBtn.addEventListener("click", () => {
+      if (modalReadNews.checked) {
+        let readNewsIds = JSON.parse(localStorage.getItem("readNewsIds")) || [];
+        readNewsIds = readNewsIds.concat(news.map((newsItem) => newsItem.id));
+        localStorage.setItem("readNewsIds", JSON.stringify(readNewsIds));
+      }
+      modal.hide();
+    });
+  };
+
+  if (currentRoute === "/dashboard") {
+    setTimeout(displayNews, 2000);
   }
 };

@@ -1,0 +1,65 @@
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="news-modal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title fs-5"></h2>
+        <button
+          type="button"
+          class="btn-close"
+          id="close-news-modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <h2 class="modal-content-title"></h2>
+        <div class="p-0 ratio-16x9 single-news-img modal-news-img"></div>
+        <div class="my-4"></div>
+        <div class="modal-content-body"></div>
+      </div>
+      <div class="modal-footer">
+        <div
+          id="news-pages"
+          class="text-center w-100"
+          style="font-size: 14px; font-weight: 600; padding: 0"
+        ></div>
+        <div
+          class="d-flex align-items-center justify-content-between gap-2 w-100"
+        >
+          <div>
+            <input type="checkbox" id="readNews" />
+            <label for="readNews">
+              <small>
+                <em> Don't Show this annoucements again. </em>
+              </small>
+            </label>
+          </div>
+          <div>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              id="prev-news-modal"
+            >
+              <i class="bx bx-chevron-left" style="font-size: 20px"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-outline-primary btn-sm"
+              id="next-news-modal"
+            >
+              <i class="bx bx-chevron-right" style="font-size: 20px"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1726,3 +1726,7 @@ ul.team-performance-list > li.show > i {
 .earn-weekly ol li {
   padding: 16px 0;
 }
+
+#news-modal .modal-dialog {
+  max-width: 800px !important;
+}
