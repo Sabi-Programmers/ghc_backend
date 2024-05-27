@@ -1,1 +1,1 @@
-import asyncWrapper from "../middlewares/asyncWrapper.js";
+import asyncWrapper from '../middlewares/asyncWrapper.js';

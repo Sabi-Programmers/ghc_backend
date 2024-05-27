@@ -1,66 +1,66 @@
-import database from "../libs/prisma.js";
+import database from '../libs/prisma.js';
 
 const updateUplineRefferalBonus = async (uplineData, pkg, contants) => {
-  if (uplineData && uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
-    return await database.referrerIncome.create({
-      data: {
-        userId: uplineData.id,
-        amount: contants[pkg + "RefBonus"],
-        cycle: uplineData[pkg].currentCycle,
-        package: pkg.toUpperCase(),
-      },
-    });
-  }
-  return false;
+    if (uplineData && uplineData[pkg].usedSlots < uplineData[pkg].totalSlots) {
+        return await database.referrerIncome.create({
+            data: {
+                userId: uplineData.id,
+                amount: contants[pkg + 'RefBonus'],
+                cycle: uplineData[pkg].currentCycle,
+                package: pkg.toUpperCase(),
+            },
+        });
+    }
+    return false;
 };
 
 const createReferrersData = async (uplineData, userId, pkg) => {
-  const data = {
-    userId,
-    package: pkg.toUpperCase(),
-  };
-  if (
-    uplineData === null ||
-    uplineData[pkg].usedSlots == uplineData[pkg].totalSlots
-  ) {
-    data.first = "GHC";
-  } else {
-    data.first = uplineData.username;
-    data.second = uplineData.referrers[0].first;
-    data.third = uplineData.referrers[0].second;
-    data.forth = uplineData.referrers[0].third;
-    data.fifth = uplineData.referrers[0].forth;
-    data.sixth = uplineData.referrers[0].fifth;
-  }
+    const data = {
+        userId,
+        package: pkg.toUpperCase(),
+    };
+    if (
+        uplineData === null ||
+        uplineData[pkg].usedSlots == uplineData[pkg].totalSlots
+    ) {
+        data.first = 'GHC';
+    } else {
+        data.first = uplineData.username;
+        data.second = uplineData.referrers[0].first;
+        data.third = uplineData.referrers[0].second;
+        data.forth = uplineData.referrers[0].third;
+        data.fifth = uplineData.referrers[0].forth;
+        data.sixth = uplineData.referrers[0].fifth;
+    }
 
-  return await database.referrers.create({
-    data,
-  });
+    return await database.referrers.create({
+        data,
+    });
 };
 
 const getUserReferrer = async (userId, pkg) => {
-  return await database.referrers.findFirst({
-    where: { userId, package: pkg.toUpperCase() },
-  });
+    return await database.referrers.findFirst({
+        where: { userId, package: pkg.toUpperCase() },
+    });
 };
 const getUserReferrerGen = async (userId, pkg) => {
-  return await database.referrers.findFirst({
-    where: { userId, package: pkg.toUpperCase() },
-    select: {
-      first: true,
-      second: true,
-      third: true,
-      forth: true,
-      fifth: true,
-    },
-  });
+    return await database.referrers.findFirst({
+        where: { userId, package: pkg.toUpperCase() },
+        select: {
+            first: true,
+            second: true,
+            third: true,
+            forth: true,
+            fifth: true,
+        },
+    });
 };
 
 export {
-  updateUplineRefferalBonus,
-  createReferrersData,
-  getUserReferrer,
-  getUserReferrerGen,
+    updateUplineRefferalBonus,
+    createReferrersData,
+    getUserReferrer,
+    getUserReferrerGen,
 };
 
 /**

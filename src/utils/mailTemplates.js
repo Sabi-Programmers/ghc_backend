@@ -1,5 +1,5 @@
 const withdrawalOTPMailTemp = (fullName, otp) => {
-  return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
             <html>
                 <head>
                 <meta charset="UTF-8" />
@@ -89,7 +89,7 @@ const withdrawalOTPMailTemp = (fullName, otp) => {
             `;
 };
 const resetPasswordOTPMailTemp = (fullName, otp) => {
-  return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
             <html>
                 <head>
                 <meta charset="UTF-8" />
@@ -178,7 +178,7 @@ const resetPasswordOTPMailTemp = (fullName, otp) => {
             `;
 };
 const welcomeMailTemp = (fullName) => {
-  return `<!DOCTYPE html>
+    return `<!DOCTYPE html>
  <html>
      <head>
          <meta charset="UTF-8" />
@@ -264,7 +264,7 @@ const welcomeMailTemp = (fullName) => {
 };
 
 const contactUsMailTemp = (name, subject, email, message) => {
-  return `
+    return `
     <!DOCTYPE html>
     <html>
         <head>
@@ -299,10 +299,10 @@ const contactUsMailTemp = (name, subject, email, message) => {
 };
 
 const mailTemplates = {
-  withdrawal: withdrawalOTPMailTemp,
-  resetPassword: resetPasswordOTPMailTemp,
-  welcome: welcomeMailTemp,
-  contactUs: contactUsMailTemp,
+    withdrawal: withdrawalOTPMailTemp,
+    resetPassword: resetPasswordOTPMailTemp,
+    welcome: welcomeMailTemp,
+    contactUs: contactUsMailTemp,
 };
 
 export default mailTemplates;
