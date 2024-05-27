@@ -48,7 +48,7 @@ model User {
   emailVerified          Boolean                  @default(false)
   displayPhoto           String?
   bankName               String?
-  accountNumber          BigInt?                  @unique
+  accountNumber          String?                  @unique
   accountName            String?
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt

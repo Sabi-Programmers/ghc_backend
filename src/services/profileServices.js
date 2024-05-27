@@ -10,6 +10,14 @@ const getUserProfile = async (id) => {
   return excludeData(user, ["password"]);
 };
 
+const updateUserDisplayPhoto = async (id, photo) => {
+  return await database.user.update({
+    where: { id },
+    data: {
+      displayPhoto: photo,
+    },
+  });
+};
 const updateUserProfile = async (id, data) => {
   return await database.user.update({
     where: { id },
@@ -21,7 +29,7 @@ const updateUserProfile = async (id, data) => {
       country: data.country,
       gender: data.gender.toLowerCase(),
       accountName: data.accountName,
-      accountNumber: data.accountNumber,
+      accountNumber: data.accountNumber == "" ? null : data.accountNumber,
       bankName: data.bankName,
     },
   });
@@ -42,4 +50,40 @@ const changeUserPassword = async (id, oldPassword, password) => {
   });
 };
 
-export { getUserProfile, updateUserProfile, changeUserPassword };
+const deleteUserOtherSessions = async (req) => {
+  const { id: userId, role } = req.user;
+  const currentSession = req.sessionID;
+  const allUsersSession = await database.sessions.findMany({
+    where: {
+      sess: {
+        path: ["passport"],
+        equals: {
+          user: { id: userId, role },
+        },
+      },
+    },
+  });
+
+  // Filter out the current session
+  const sessionsToDelete = allUsersSession.filter(
+    (session) => session.sid !== currentSession
+  );
+
+  // Delete the filtered sessions
+  const deletePromises = sessionsToDelete.map((session) =>
+    database.sessions.delete({
+      where: { sid: session.sid },
+    })
+  );
+
+  // Wait for all delete operations to complete
+  await Promise.all(deletePromises);
+};
+
+export {
+  getUserProfile,
+  updateUserProfile,
+  changeUserPassword,
+  deleteUserOtherSessions,
+  updateUserDisplayPhoto,
+};

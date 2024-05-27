@@ -16,8 +16,8 @@
               <div
                 class="card-body profile-card pt-4 d-flex flex-column align-items-center"
               >
-                <img src=<%- data && data.user.displayPhoto ?
-                data.user.displayPhoto : "/static/assets/img/default.jpg" %>
+                <img src=<%- data && data.user.displayPhoto ? "/uploads/images"
+                + data.user.displayPhoto : "/static/assets/img/default.jpg" %>
                 alt="<%= data.user.username %> Photo" class="rounded-circle" />
                 <h2><%= data.user.fullName %></h2>
                 <h3>Member</h3>
@@ -140,12 +140,7 @@
                     id="profile-edit"
                   >
                     <!-- Profile Edit Form -->
-                    <form
-                      id="profile-form"
-                      novalidate
-                      method="POST"
-                      action="/profile"
-                    >
+                    <form id="profile-form" novalidate>
                       <div class="row mb-3 form-group">
                         <label
                           for="fullName"
@@ -325,7 +320,7 @@
                         >
                         <div class="col-md-8 col-lg-9">
                           <input
-                            name="AccountNumber"
+                            name="accountNumber"
                             type="text"
                             class="form-control"
                             id="AccountName"

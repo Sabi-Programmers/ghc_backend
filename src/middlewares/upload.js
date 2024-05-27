@@ -1,5 +1,8 @@
 // Import necessary modules
 import multer from "multer";
+import fs from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
 
 // Set up storage for image uploads
 const imageStorage = multer.diskStorage({
@@ -44,16 +47,31 @@ const pdfFileFilter = (req, file, cb) => {
   }
 };
 
-// Create the multer instances for image and PDF uploads
+// Create the multer instances for image and PDF uploads with size limits
 const uploadImage = multer({
   storage: imageStorage,
   fileFilter: imageFileFilter,
+  limits: { fileSize: Number(process.env.IMAGE_LIMIT) * 1024 * 1024 },
 });
 
 const uploadPDF = multer({
   storage: pdfStorage,
   fileFilter: pdfFileFilter,
+  limits: { fileSize: Number(process.env.PDF_LIMIT) * 1024 * 1024 },
 });
 
-// Export the upload middleware instances
-export { uploadImage, uploadPDF };
+// Function to delete files
+const deleteFile = (fileName) => {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = dirname(__filename);
+
+  const filePath = join(__dirname, "..", "..", "uploads/images", fileName);
+  fs.unlink(filePath, (err) => {
+    if (err) {
+      console.error(`Error deleting file: ${filePath}`, err);
+    }
+  });
+};
+
+// Export the upload middleware instances and deleteFile function
+export { uploadImage, uploadPDF, deleteFile };

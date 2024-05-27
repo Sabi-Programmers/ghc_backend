@@ -50,7 +50,7 @@ app.use(
       pool: pool,
       tableName: "Sessions",
     }),
-    secret: "your_secret_key",
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
   })

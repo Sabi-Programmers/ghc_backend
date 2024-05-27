@@ -946,4 +946,87 @@ window.onload = function () {
   if (currentRoute === "/dashboard") {
     setTimeout(displayNews, 2000);
   }
+
+  /**
+   * Change Password Form
+   */
+
+  const changePasswordForm = document.getElementById("change-password-form");
+  if (changePasswordForm) {
+    pristine = new Pristine(changePasswordForm);
+
+    const passwordInput = document.getElementById("Password");
+    const confirmPasswordInput = document.getElementById("ConfirmPassword");
+
+    if (confirmPasswordInput) {
+      pristine.addValidator(
+        confirmPasswordInput,
+        function (value, el) {
+          const password = passwordInput.value;
+          if (password !== value) {
+            return false;
+          }
+          return true;
+        },
+        "Password does't match.",
+        3,
+        false
+      );
+    }
+
+    pristine.addValidator(
+      passwordInput,
+      function (value, el) {
+        const hasUppercase = /[A-Z]/.test(value);
+        const hasLowercase = /[a-z]/.test(value);
+
+        if (!hasUppercase || !hasLowercase) {
+          return false;
+        }
+        return true;
+      },
+      "Password must contain at least one uppercase and one lowercase letter.",
+      2,
+      false
+    );
+
+    changePasswordForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      handlerPostRequest(jsonData, "/profile/change-password", "/profile");
+    });
+  }
+
+  /**
+   * Update Profile Form
+   */
+  const profileForm = document.getElementById("profile-form");
+
+  if (profileForm) {
+    pristine = new Pristine(profileForm);
+
+    profileForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      console.log(jsonData);
+
+      handlerPostRequest(jsonData, "/profile", "/profile");
+    });
+  }
 };
