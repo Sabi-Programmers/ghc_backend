@@ -1023,10 +1023,81 @@ window.onload = function () {
 
       const formData = new FormData(e.target);
       const jsonData = formDataToJson(formData);
-
-      console.log(jsonData);
-
       handlerPostRequest(jsonData, "/profile", "/profile");
+    });
+  }
+
+  /**
+   * Upload profile photo
+   */
+
+  if (currentRoute == "/profile") {
+    const photoFile = document.getElementById("profile-photo-file");
+    const imageTag = document.getElementById("profile-photo");
+    const photoCtrls = document.getElementById("profile-photo-btn");
+    const savePhoto = document.getElementById("profile-photo-save-btn");
+    const cancelPhoto = document.getElementById("profile-photo-cancel-btn");
+
+    const currentPhoto = imageTag.getAttribute("src");
+
+    photoFile.addEventListener("change", (e) => {
+      photoCtrls.style.display = "block";
+
+      let uploadedPhoto = e.target.files[0];
+
+      // check if the file selected is not an image file
+      if (!uploadedPhoto.type.includes("image")) {
+        return toast.failed("Only images are allowed!");
+      }
+
+      // check if size (in bytes) exceeds 10 MB
+      if (uploadedPhoto.size > 10_000_000) {
+        return toast.failed("Maximum upload size is 10MB!");
+      }
+
+      if (uploadedPhoto) {
+        let reader = new FileReader();
+
+        reader.onload = function (event) {
+          imageTag.src = event.target.result;
+        };
+
+        reader.readAsDataURL(uploadedPhoto);
+      }
+    });
+
+    cancelPhoto.addEventListener("click", () => {
+      imageTag.src = currentPhoto;
+      photoCtrls.style.display = "none";
+    });
+
+    savePhoto.addEventListener("click", async () => {
+      handleLoader("show");
+      const uploadedPhoto = photoFile.files[0];
+      let formData = new FormData();
+      if (uploadedPhoto) {
+        formData.append("photo", uploadedPhoto);
+        try {
+          const res = await fetch("/profile/photo", {
+            method: "POST",
+            body: formData,
+          });
+          const resData = await res.json();
+
+          if (resData.success === false) {
+            throw new Error(resData.message);
+          }
+          handleLoader("hide");
+          toast.success(resData.message);
+          photoCtrls.style.display = "none";
+        } catch (err) {
+          toast.failed(err.message);
+          return;
+        }
+      } else {
+        handleLoader("hide");
+        toast.failed("No data found");
+      }
     });
   }
 };

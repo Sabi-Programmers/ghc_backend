@@ -1730,3 +1730,59 @@ ul.team-performance-list > li.show > i {
 #news-modal .modal-dialog {
   max-width: 800px !important;
 }
+
+label[for="profile-photo-file"] {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+}
+label[for="profile-photo-file"]:hover img {
+  border-color: blue;
+}
+
+label[for="profile-photo-file"] input {
+  position: fixed;
+  left: -1000px;
+  top: -10000px;
+}
+label[for="profile-photo-file"] img {
+  aspect-ratio: 1/1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 2px solid #ffffff;
+}
+label[for="profile-photo-file"] span {
+  background: #00000041;
+  color: white;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  font-size: 14px;
+}
+label[for="profile-photo-file"]:hover span {
+  display: flex;
+}
+
+#profile-photo-btn {
+  display: none;
+}
+
+.nav-profile {
+  flex: none;
+  width: 36px;
+  height: 36px;
+}
+.nav-profile img {
+  width: 36px;
+  height: 36px;
+  object-fit: cover;
+}

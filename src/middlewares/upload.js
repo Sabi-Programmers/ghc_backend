@@ -4,11 +4,17 @@ import fs from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
 
+// Function to replace spaces with hyphens in the file name
+const replaceSpacesWithHyphens = (filename) => {
+  return filename.replace(/\s+/g, "-");
+};
+
 // Set up storage for image uploads
 const imageStorage = multer.diskStorage({
   destination: "uploads/images",
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
+    const sanitizedFilename = replaceSpacesWithHyphens(file.originalname);
+    cb(null, Date.now() + "-" + sanitizedFilename);
   },
 });
 
@@ -16,7 +22,8 @@ const imageStorage = multer.diskStorage({
 const pdfStorage = multer.diskStorage({
   destination: "uploads/pdfs",
   filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
+    const sanitizedFilename = replaceSpacesWithHyphens(file.originalname);
+    cb(null, Date.now() + "-" + sanitizedFilename);
   },
 });
 

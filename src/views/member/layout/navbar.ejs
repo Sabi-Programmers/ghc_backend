@@ -118,9 +118,9 @@
           href="#"
           data-bs-toggle="dropdown"
         >
-          <img src=<%- data && data.user.displayPhoto ? data.user.displayPhoto :
-          "/static/assets/img/default.jpg" %> alt="User Display Profile"
-          class="rounded-circle" />
+          <img src=<%- data && data.user.displayPhoto ? "/uploads/images/" +
+          data.user.displayPhoto : "/static/assets/img/default.jpg" %> alt="User
+          Display Profile" class="rounded-circle" />
 
           <span class="d-none d-md-block dropdown-toggle ps-2"
             ><%= data.user.username %></span
