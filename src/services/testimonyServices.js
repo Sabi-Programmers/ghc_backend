@@ -1,8 +1,6 @@
 import database from '../libs/prisma.js';
 
-const getUserForTestimonyBonus = async (userId) => {
-    return await database.testimonyBonus.findUnique({ where: { userId } });
-};
+const getUserForTestimonyBonus = async (userId) => await database.testimonyBonus.findUnique({ where: { userId } });
 
 const createTestimonyRequest = async (
     userId,
@@ -13,8 +11,7 @@ const createTestimonyRequest = async (
     completedCycles,
     lastPaidCycles,
     message,
-) => {
-    return await database.testimonyRecords.create({
+) => await database.testimonyRecords.create({
         data: {
             userId,
             package: pkg.toUpperCase(),
@@ -26,7 +23,6 @@ const createTestimonyRequest = async (
             message,
         },
     });
-};
 
 const getAllUserTestimony = async (userId, perPage, page) => {
     const testimonies = await database.testimonyRecords.findMany({

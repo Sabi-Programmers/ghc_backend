@@ -5,6 +5,7 @@ import {
     getWithdrawalPage,
     makeWithdrawalRequest,
 } from '../controllers/withdrawal.js';
+
 const withdrawalRouter = express.Router();
 
 withdrawalRouter.get('/', getWithdrawalPage);

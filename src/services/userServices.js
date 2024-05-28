@@ -59,7 +59,7 @@ const getUserDashboardDetails = async (id) => {
 const getAllUsers = async (data) => {
     const { page, perPage, membersStatus, searchQuery } = data;
 
-    let whereClause = {};
+    const whereClause = {};
 
     if (membersStatus === 'active') {
         whereClause.OR = [

@@ -16,7 +16,7 @@ const createAdmin = asyncWrapper(async (req, res) => {
                 username: username.toLowerCase(),
                 password: hashedPassword,
                 email: email.toLowerCase(),
-                isSuperAdmin: isSuperAdmin ? true : false,
+                isSuperAdmin: !!isSuperAdmin,
             },
         });
 

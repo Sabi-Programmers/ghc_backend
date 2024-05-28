@@ -1,14 +1,11 @@
 import asyncWrapper from '../../middlewares/asyncWrapper.js';
 import { getContants } from '../../services/contantsServices.js';
-import {
-    allPackageOrdered,
-    totalPackageOrdered,
-} from '../../services/packageOrderServices.js';
+import { allPackageOrdered } from '../../services/packageOrderServices.js';
 import userServices from '../../services/userServices.js';
 import { calculatePagination, toTwoDecimals } from '../../utils/index.js';
 
 const getMembers = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
 
@@ -37,7 +34,7 @@ const getMembers = asyncWrapper(async (req, res) => {
 });
 
 const getMembersOrders = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
 

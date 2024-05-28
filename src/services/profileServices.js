@@ -10,16 +10,13 @@ const getUserProfile = async (id) => {
     return excludeData(user, ['password']);
 };
 
-const updateUserDisplayPhoto = async (id, photo) => {
-    return await database.user.update({
+const updateUserDisplayPhoto = async (id, photo) => await database.user.update({
         where: { id },
         data: {
             displayPhoto: photo,
         },
     });
-};
-const updateUserProfile = async (id, data) => {
-    return await database.user.update({
+const updateUserProfile = async (id, data) => await database.user.update({
         where: { id },
         data: {
             fullName: data.fullName,
@@ -33,7 +30,6 @@ const updateUserProfile = async (id, data) => {
             bankName: data.bankName,
         },
     });
-};
 
 const changeUserPassword = async (id, oldPassword, password) => {
     const user = await database.user.findUnique({ where: { id } });

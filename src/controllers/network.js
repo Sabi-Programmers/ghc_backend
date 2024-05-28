@@ -78,8 +78,8 @@ const getTeamPerformancePage = asyncWrapper(async (req, res) => {
         user: req.user,
     };
 
-    const username = req.user.username;
-    const pkg = req.query.pkg || 'bronze';
+    // const username = req.user.username;
+    // const pkg = req.query.pkg || 'bronze';
 
     res.render('member/my-network/team-performance', {
         title: 'Team Performance',
@@ -98,7 +98,7 @@ const getTeamGenerationPage = asyncWrapper(async (req, res) => {
 
     const query = {};
     query[`${gen}`] = req.user.username;
-    query['package'] = pkg.toUpperCase();
+    query.package = pkg.toUpperCase();
 
     data.downlines = await database.user.findMany({
         where: {

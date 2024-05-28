@@ -1,5 +1,5 @@
-import database from '../libs/prisma.js';
 import slugify from 'slugify';
+import database from '../libs/prisma.js';
 import { generateRandomString } from '../utils/index.js';
 
 const getAllNews = async (page, isPublished) => {
@@ -21,25 +21,21 @@ const getAllNews = async (page, isPublished) => {
 
     return { news, totalNews };
 };
-const getAllPublishedNews = async () => {
-    return await database.news.findMany({
+const getAllPublishedNews = async () => await database.news.findMany({
         where: {
             isPublished: true,
         },
 
         orderBy: { createdAt: 'desc' },
     });
-};
 
-const getSinglenews = async (slug) => {
-    return await database.news.findFirst({
+const getSinglenews = async (slug) => await database.news.findFirst({
         where: { slug },
     });
-};
 
 const addNews = async ({ title, description, photo }) => {
     const randomString = generateRandomString(4);
-    const slug = slugify(title + ' ' + randomString, { lower: true });
+    const slug = slugify(`${title  } ${  randomString}`, { lower: true });
     return await database.news.create({
         data: {
             title,

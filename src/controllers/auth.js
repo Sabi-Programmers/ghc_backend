@@ -110,9 +110,7 @@ const createUser = asyncWrapper(async (req, res) => {
         return response.json(res, StatusCodes.BAD_REQUEST, false, error);
     }
 });
-const getLoginPage = asyncWrapper(async (req, res) => {
-    return res.render('auth/login', { title: 'Login', data: { error: null } });
-});
+const getLoginPage = asyncWrapper(async (req, res) => res.render('auth/login', { title: 'Login', data: { error: null } }));
 
 const loginUser = asyncWrapper(async (req, res, next) => {
     passport.authenticate('member-local', (err, user, info) => {
@@ -168,14 +166,12 @@ const logoutUser = asyncWrapper(async (req, res, next) => {
     });
 });
 
-const getForgotPasswordPage = asyncWrapper(async (req, res) => {
-    return res.render('auth/forgot-password', {
+const getForgotPasswordPage = asyncWrapper(async (req, res) => res.render('auth/forgot-password', {
         title: 'Forgot Password',
         data: { error: null },
-    });
-});
+    }));
 const forgotPassword = asyncWrapper(async (req, res) => {
-    const username = req.body.username;
+    const {username} = req.body;
 
     if (!username || username.length < 1) {
         return response.json(

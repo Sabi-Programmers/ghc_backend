@@ -1,6 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import { xss } from 'express-xss-sanitizer';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -42,12 +42,12 @@ const { Pool } = pg;
 const pgSessionInstance = pgSession(session);
 
 const pool = new Pool({
-    connectionString: DEVELOPMENT ? DATABASE_URL + '?ssl=true' : DATABASE_URL,
+    connectionString: DEVELOPMENT ? `${DATABASE_URL  }?ssl=true` : DATABASE_URL,
 });
 app.use(
     session({
         store: new pgSessionInstance({
-            pool: pool,
+            pool,
             tableName: 'Sessions',
         }),
         secret: process.env.SESSION_SECRET,

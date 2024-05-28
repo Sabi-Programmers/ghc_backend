@@ -12,7 +12,7 @@ const updateUserCycleWelcomeBonus = async (
             data: {
                 package: pkg.toUpperCase(),
                 cycle: newPkgData.currentCycle,
-                amount: constants[pkg + 'WelcomeBonus'],
+                amount: constants[`${pkg  }WelcomeBonus`],
                 userId,
             },
         });
@@ -34,7 +34,7 @@ const updateUplineCycleWelcomeBonus = async (
             data: {
                 package: pkg.toUpperCase(),
                 cycle: updatedUplinePkgData.currentCycle,
-                amount: constants[pkg + 'WelcomeBonus'],
+                amount: constants[`${pkg  }WelcomeBonus`],
                 userId: uplineData.id,
             },
         });
@@ -54,7 +54,7 @@ const updatedUplineCompBonus = async (updateduplinePkgData, constants, pkg) => {
                 userId: updateduplinePkgData.userId,
                 package: pkg.toUpperCase(),
                 cycle: updateduplinePkgData.currentCycle - 1,
-                amount: constants[pkg + 'CompletionBonus'],
+                amount: constants[`${pkg  }CompletionBonus`],
             },
         });
     }

@@ -28,7 +28,7 @@ const getWithdrawalPage = asyncWrapper(async (req, res) => {
     if (wallet) {
         // getThreshold from constants
         const threshold = await getContants();
-        data.threshold = threshold[wallet + 'Threshold'];
+        data.threshold = threshold[`${wallet  }Threshold`];
         data.walletBalance = withdrawWallet[wallet];
         data.wallet = wallet;
     }
@@ -41,8 +41,8 @@ const getWithdrawalPage = asyncWrapper(async (req, res) => {
 
 const makeWithdrawalRequest = asyncWrapper(async (req, res) => {
     const amount = Number(req.body.amount);
-    const wallet = req.body.wallet;
-    const token = req.body.token;
+    const {wallet} = req.body;
+    const {token} = req.body;
     const userId = req.user.id;
 
     if (!amount || !wallet || !token) {
@@ -68,7 +68,7 @@ const makeWithdrawalRequest = asyncWrapper(async (req, res) => {
     // get withdrawal wallet balance
     const withdrawWallet = await getWithdrawalWallet(userId);
 
-    //check if user has enough funds
+    // check if user has enough funds
     if (amount > withdrawWallet[wallet]) {
         return response.json(
             res,
@@ -80,7 +80,7 @@ const makeWithdrawalRequest = asyncWrapper(async (req, res) => {
 
     // check amount is up to minimum withdrawable amount
     const threshold = await getContants();
-    const walletThreshold = threshold[wallet + 'Threshold'];
+    const walletThreshold = threshold[`${wallet  }Threshold`];
 
     if (walletThreshold > amount) {
         return response.json(

@@ -16,6 +16,7 @@ import productsRouter from './products.js';
 import withdrawalWalletsRouter from './withdrawal-wallets.js';
 import networkRouter from './network.js';
 import marketingRouter from './marketing.js';
+
 const router = express.Router();
 
 router.use('/', staticPagesRouter);

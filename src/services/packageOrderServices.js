@@ -4,19 +4,15 @@ import { durations } from '../utils/index.js';
 const createPackageOrders = async (userId, pkg, units) => {
     const prevPkgOrderData = await getLastPackageOrder(userId, pkg);
     const lastCycle = prevPkgOrderData ? prevPkgOrderData.cycle : 0;
-    const orders = Array.from({ length: Number(units) }).map((_, i) => {
-        return { package: pkg.toUpperCase(), userId, cycle: i + 1 + lastCycle };
-    });
+    const orders = Array.from({ length: Number(units) }).map((_, i) => ({ package: pkg.toUpperCase(), userId, cycle: i + 1 + lastCycle }));
 
     return await database.packageOrder.createMany({ data: orders });
 };
 
-const getLastPackageOrder = async (userId, pkg) => {
-    return await database.packageOrder.findFirst({
+const getLastPackageOrder = async (userId, pkg) => await database.packageOrder.findFirst({
         where: { userId, package: pkg.toUpperCase() },
         orderBy: { createdAt: 'desc' },
     });
-};
 
 const getUserPackageOrders = async (userId, page, perPage) => {
     const orders = await database.packageOrder.findMany({

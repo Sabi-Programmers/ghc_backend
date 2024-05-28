@@ -36,7 +36,7 @@ const makeTestimonyRequest = asyncWrapper(async (req, res) => {
     const testimonyBonus = await getUserForTestimonyBonus(userId);
     const completedCycle =
         pkgData.currentCycle > 0 ? pkgData.currentCycle - 1 : 0;
-    const lastPaidCycle = testimonyBonus[pkg + 'Count'];
+    const lastPaidCycle = testimonyBonus[`${pkg  }Count`];
 
     if (completedCycle === lastPaidCycle) {
         return response.json(

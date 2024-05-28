@@ -43,7 +43,7 @@ const buyPackages = asyncWrapper(async (req, res) => {
          * General Logic for all users types
          */
 
-        //first get the packages price from the db
+        // first get the packages price from the db
         const prices = await getContants();
 
         // then get the balance from the users ewallet account
@@ -65,7 +65,7 @@ const buyPackages = asyncWrapper(async (req, res) => {
         const newBalance = convertToNGN(sum, prices.usdRate);
         await updateEwalletBalanceUSD(userId, newBalance);
 
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////
+        /// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const actions = async (pkg, unit) => {
             // Get UserPackage
@@ -178,7 +178,7 @@ const buyPackages = asyncWrapper(async (req, res) => {
 });
 
 const getPackages = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
 
@@ -190,7 +190,7 @@ const getPackages = asyncWrapper(async (req, res) => {
     });
 });
 const completePackageOrder = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
 
@@ -204,7 +204,7 @@ const completePackageOrder = asyncWrapper(async (req, res) => {
 });
 
 const getSuccessPage = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
     return res.render('member/packages/success', {
@@ -214,7 +214,7 @@ const getSuccessPage = asyncWrapper(async (req, res) => {
 });
 
 const getProductDeliveryPage = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
     const page = Number(req.query.page) || 1; // Current page

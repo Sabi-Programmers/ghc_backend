@@ -28,18 +28,14 @@ const createEWallet = async (user) => {
     }
 };
 
-const getEwallet = async (userId) => {
-    return await database.ewallet.findFirst({
+const getEwallet = async (userId) => await database.ewallet.findFirst({
         where: { userId },
     });
-};
 
-const getEwalletBalanceNGN = async (userId) => {
-    return await database.ewallet.findFirst({
+const getEwalletBalanceNGN = async (userId) => await database.ewallet.findFirst({
         where: { userId },
         select: { balance: true },
     });
-};
 
 const getEwalletBalanceUSD = async (userId, usdRate) => {
     const balanceNGN = await database.ewallet.findFirst({
@@ -50,12 +46,10 @@ const getEwalletBalanceUSD = async (userId, usdRate) => {
     return balanceNGN.balance / usdRate;
 };
 
-const updateEwalletBalanceUSD = async (userId, balance) => {
-    return await database.ewallet.update({
+const updateEwalletBalanceUSD = async (userId, balance) => await database.ewallet.update({
         where: { userId },
         data: { balance },
     });
-};
 
 export {
     createEWallet,

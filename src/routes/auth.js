@@ -17,6 +17,7 @@ import {
     validateResetPassword,
 } from '../validators/authValidators.js';
 import { isAuthenticated } from '../middlewares/auth.js';
+
 const authRouter = express.Router();
 
 authRouter.get('/register', isAuthenticated, getRegisterPage);

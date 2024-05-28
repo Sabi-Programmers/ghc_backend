@@ -1,10 +1,11 @@
 import express from 'express';
 import { getContants } from '../services/contantsServices.js';
+
 const staticPagesRouter = express.Router();
 
 staticPagesRouter.get('', async (req, res) => {
     if (req.query.ref) {
-        return res.redirect('/auth/register?sponsorId=' + req.query.ref);
+        return res.redirect(`/auth/register?sponsorId=${  req.query.ref}`);
     }
 
     const data = {

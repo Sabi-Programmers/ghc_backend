@@ -2,7 +2,7 @@ import asyncWrapper from '../../middlewares/asyncWrapper.js';
 import userServices from '../../services/userServices.js';
 
 const getAdminDashboard = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
 

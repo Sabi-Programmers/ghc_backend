@@ -1,10 +1,9 @@
-import CustomError from '../errors/CustomError.js';
 import database from '../libs/prisma.js';
 import asyncWrapper from '../middlewares/asyncWrapper.js';
 import { createEWallet } from '../services/eWalletServices.js';
 
 const getEWallet = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
         eWallet: null,
     };

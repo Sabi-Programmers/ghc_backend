@@ -1,18 +1,10 @@
-const convertToUSD = () => {};
+const convertToNGN = (balance, usdRate) => Number((balance * usdRate).toFixed(2));
 
-const convertToNGN = (balance, usdRate) => {
-    return Number((balance * usdRate).toFixed(2));
-};
+const toTwoDecimals = (sum) => Number(sum.toFixed(2));
 
-const toTwoDecimals = (sum) => {
-    return Number(sum.toFixed(2));
-};
-
-const excludeData = (user, keys) => {
-    return Object.fromEntries(
+const excludeData = (user, keys) => Object.fromEntries(
         Object.entries(user).filter(([key]) => !keys.includes(key)),
     );
-};
 
 const calculatePagination = (totalItems, currentPage, pageSize) => {
     const totalPages = Math.ceil(totalItems / pageSize);
@@ -47,7 +39,7 @@ const durations = (data) => {
             output.lt = new Date(new Date().setHours(23, 59, 59, 999)); // End of today
             break;
 
-        case 'week':
+        case 'week': {
             const startOfWeek = new Date();
             startOfWeek.setDate(startOfWeek.getDate() - startOfWeek.getDay()); // Start of the current week (Sunday)
             startOfWeek.setHours(0, 0, 0, 0);
@@ -59,8 +51,9 @@ const durations = (data) => {
             output.gte = startOfWeek;
             output.lt = endOfWeek;
             break;
+        }
 
-        case 'month':
+        case 'month': {
             const startOfMonth = new Date(
                 new Date().getFullYear(),
                 new Date().getMonth(),
@@ -78,8 +71,9 @@ const durations = (data) => {
             output.gte = startOfMonth;
             output.lt = endOfMonth;
             break;
+        }
 
-        case 'year':
+        case 'year': {
             const startOfYear = new Date(new Date().getFullYear(), 0, 1); // Start of the current year
             startOfYear.setHours(0, 0, 0, 0);
 
@@ -89,6 +83,7 @@ const durations = (data) => {
             output.gte = startOfYear;
             output.lt = endOfYear;
             break;
+        }
 
         case 'allTime':
             output.gte = new Date(0); // Start of UNIX epoch time

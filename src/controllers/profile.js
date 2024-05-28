@@ -12,7 +12,7 @@ import response from '../utils/response.js';
 import { deleteFile } from '../middlewares/upload.js';
 
 const getProfile = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: null,
     };
 
@@ -63,7 +63,7 @@ const updateProfile = asyncWrapper(async (req, res) => {
 });
 
 const getAccountSettings = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
     return res.render('member/profile/account-settings', {

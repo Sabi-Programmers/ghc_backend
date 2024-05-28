@@ -3,7 +3,7 @@ import { getEwallet } from '../services/eWalletServices.js';
 import userServices from '../services/userServices.js';
 
 const getDashbord = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: null,
     };
     if (req.user.hasFunded) {

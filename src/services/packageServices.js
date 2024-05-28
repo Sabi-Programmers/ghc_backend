@@ -6,7 +6,7 @@ const updateUserPackage = async (pkg, userId, units, prevPkgData) => {
         totalSlots: prevPkgData.totalSlots + Number(units) * 9,
     };
 
-    //update user package current cycle
+    // update user package current cycle
     if (prevPkgData.usedSlots === prevPkgData.totalSlots) {
         data.currentCycle = prevPkgData.currentCycle + 1;
     }
@@ -17,9 +17,7 @@ const updateUserPackage = async (pkg, userId, units, prevPkgData) => {
     });
 };
 
-const getUserPackage = async (userId, pkg) => {
-    return await database[pkg].findFirst({ where: { userId } });
-};
+const getUserPackage = async (userId, pkg) => await database[pkg].findFirst({ where: { userId } });
 
 const updateUplinePackage = async (uplineData, pkg) => {
     // update used slot and currentCycle

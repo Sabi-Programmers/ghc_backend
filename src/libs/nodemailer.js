@@ -18,7 +18,7 @@ export async function sendMail() {
         from: process.env.EMAIL_AUTH_USER, // sender address
         to: 'dtechlord@gmail.com', // list of receivers
         subject: 'Hello ✔', // Subject line
-        html: mailTemplates['withdrawal'](), // html body
+        html: mailTemplates.withdrawal(), // html body
     });
 
     console.log('Message sent: %s', info.messageId);

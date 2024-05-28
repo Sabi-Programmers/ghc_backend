@@ -10,7 +10,7 @@ import { calculatePagination } from '../../utils/index.js';
 import response from '../../utils/response.js';
 
 const getUploadNews = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
     return res.render('admin/news/upload-news', {
@@ -20,7 +20,7 @@ const getUploadNews = asyncWrapper(async (req, res) => {
 });
 
 const getNews = asyncWrapper(async (req, res) => {
-    let data = {
+    const data = {
         user: req.user,
     };
 
@@ -38,11 +38,11 @@ const getNews = asyncWrapper(async (req, res) => {
 });
 
 const getANews = asyncWrapper(async (req, res, next) => {
-    let data = {
+    const data = {
         user: req.user,
     };
 
-    const slug = req.params.slug;
+    const {slug} = req.params;
     data.news = await getSinglenews(slug);
 
     if (!data.news) {
@@ -79,7 +79,7 @@ const createNews = asyncWrapper(async (req, res) => {
 
 const deleteNews = asyncWrapper(async (req, res) => {
     try {
-        const id = req.params.id;
+        const {id} = req.params;
         await deleteSingleNews(Number(id));
         return response.json(
             res,

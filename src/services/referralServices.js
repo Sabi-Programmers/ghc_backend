@@ -5,7 +5,7 @@ const updateUplineRefferalBonus = async (uplineData, pkg, contants) => {
         return await database.referrerIncome.create({
             data: {
                 userId: uplineData.id,
-                amount: contants[pkg + 'RefBonus'],
+                amount: contants[`${pkg  }RefBonus`],
                 cycle: uplineData[pkg].currentCycle,
                 package: pkg.toUpperCase(),
             },
@@ -38,13 +38,10 @@ const createReferrersData = async (uplineData, userId, pkg) => {
     });
 };
 
-const getUserReferrer = async (userId, pkg) => {
-    return await database.referrers.findFirst({
+const getUserReferrer = async (userId, pkg) => await database.referrers.findFirst({
         where: { userId, package: pkg.toUpperCase() },
     });
-};
-const getUserReferrerGen = async (userId, pkg) => {
-    return await database.referrers.findFirst({
+const getUserReferrerGen = async (userId, pkg) => await database.referrers.findFirst({
         where: { userId, package: pkg.toUpperCase() },
         select: {
             first: true,
@@ -54,7 +51,6 @@ const getUserReferrerGen = async (userId, pkg) => {
             fifth: true,
         },
     });
-};
 
 export {
     updateUplineRefferalBonus,
