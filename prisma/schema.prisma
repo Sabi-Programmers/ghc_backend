@@ -332,7 +332,7 @@ model Bpc {
   zoomMeetingLink    String?
   youtubeVideoLink   String?
   tiktokVideoLink    String?
-  signupUsernames    Json
+  signupUsernames    Json?
   userId             Int
   User               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt          DateTime @default(now())

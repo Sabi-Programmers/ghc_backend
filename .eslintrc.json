@@ -14,8 +14,7 @@
         "sourceType": "module"
     },
     "plugins": [
-        "import",
-        "prettier"
+        "import"
     ],
     "rules": {
         "no-console": "warn",
@@ -25,8 +24,5 @@
             "error",
             "ignorePackages"
         ],
-        "prettier/prettier": [
-            "error"
-        ]
     }
 }
