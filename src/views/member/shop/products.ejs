@@ -12,70 +12,146 @@
       <section class="section dashboard">
         <div class="container">
           <header class="d-sm-flex align-items-center border-bottom mb-4 pb-3">
-            <strong class="d-block py-2">12 Items found </strong>
-            <div class="ms-auto">
-              <select class="form-select d-inline-block w-auto border pt-1">
-                <option value="1">Digit</option>
-                <option value="2">Physical</option>
-              </select>
-              <select class="form-select d-inline-block w-auto border pt-1">
-                <option value="0" selected disabled>Sort by price</option>
-                <option value="1">High to Low</option>
-                <option value="2">Low to High</option>
-              </select>
+            <div class="ms-auto d-flex align-items-center gap-2">
+              <span>Product Type:</span>
+              <div class="dropdown">
+                <button
+                  class="form-select d-inline-block w-auto border pt-1 text-capitalize"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <%= data.productType %>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="?page=<%= data.page %>&limit=<%= data.perPage %>&t=all"
+                      >All</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="?page=<%= data.page %>&limit=<%= data.perPage %>&t=digital"
+                      >Digital</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="?page=<%= data.page %>&limit=<%= data.perPage %>&t=physical"
+                      >Physical</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="ms-auto d-flex align-items-center gap-2">
+              <span>Items:</span>
+              <div class="dropdown">
+                <button
+                  class="form-select d-inline-block w-auto border pt-1 text-capitalize"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <%= data.perPage %>
+                </button>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="?page=<%= data.page %>&limit=10&t=<%= data.productType %>"
+                      >10</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="?page=<%= data.page %>&limit=20&t=<%= data.productType %>"
+                      >25</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="?page=<%= data.page %>&limit=50&t=<%= data.productType %>"
+                      >50</a
+                    >
+                  </li>
+                </ul>
+              </div>
             </div>
           </header>
           <div class="row row-gap-5">
+            <% for( let i = 0; i < data.products.length; i++ ) { %>
             <div class="col-6 col-md-4 col-lg-3">
               <div class="card product-card">
                 <div class="overflow-hidden card-product-img-wrapper w-100">
                   <img
-                    src="/static/assets/img/card.jpg"
+                    src="<%= data.products[i].photo %>"
                     class="card-img-top w-100 h-100 card-product-img object-fit-cover"
                     alt="product"
                   />
                 </div>
                 <div class="card-body">
                   <h5 class="card-title text-truncate">
-                    <a href="#" class="text-capitalize card-product-title h6"
-                      >Product name</a
-                    >
+                    <a href="#" class="text-capitalize card-product-title h6">
+                      <%= data.products[i].name %>
+                    </a>
                   </h5>
 
                   <p class="card-text card-product-desc">
-                    product description Lorem ipsum dolor sit amet, consectetur
-                    adipisicing elit. Dicta commodi dolor nesciunt quisquam
-                    vitae ad, quam odit, exercitationem cumque laboriosam
-                    aspernatur fugiat harum consequuntur debitis maxime placeat
-                    hic, ipsum eligendi!
+                    <%= data.products[i].description %>
                   </p>
-                  <h4 class="text-truncate">&#8358; 30,000</h4>
+                  <h4 class="text-truncate">
+                    $<%= data.products[i].sellingPrice %>
+                  </h4>
                   <a href="#" class="btn btn-primary w-100 m-0">
                     Add to Cart
                   </a>
                 </div>
               </div>
             </div>
+            <% } %>
           </div>
-        </div>
 
-        <div class="container">
-          <nav aria-label="Page navigation" class="shadow p-2 rounded-2">
+          <nav aria-label="...">
             <ul
               class="pagination product-pagination justify-content-center m-0"
             >
-              <li class="page-item">
-                <a class="page-link" href="#" aria-label="Previous">
+              <li
+                class="page-item <%= !data.pagination.prevPage || data.pagination.currentPage === 1 ? 'disabled': '' %>"
+              >
+                <a
+                  class="page-link"
+                  href="?page=<%= data.pagination.prevPage || 1 %>&limit=<%= data.perPage %>&t=<%= data.productType %>"
+                  aria-label="Previous"
+                >
                   <span aria-hidden="true">&laquo;</span>
                 </a>
               </li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2</a>
+              <% for (let i = 1; i < data.pagination.totalPages + 1; i++) {%>
+              <li
+                class="page-item <%= i === data.pagination.currentPage ? 'active' : '' %>"
+                aria-current="page"
+              >
+                <a
+                  class="page-link"
+                  href="?page=<%= i %>&limit=<%= data.perPage %>&t=<%= data.productType %>"
+                  ><%= i %></a
+                >
               </li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <% } %>
+
               <li class="page-item">
-                <a class="page-link" href="#" aria-label="Next">
+                <a
+                  class="page-link <%= !data.pagination.nextPage || data.pagination.currentPage === data.pagination.totalPages ? 'disabled': '' %>"
+                  href="?page=<%= data.pagination.nextPage || data.pagination.totalPages %>&limit=<%= data.perPage %>&t=<%= data.productType %>"
+                  aria-label="Next"
+                >
                   <span aria-hidden="true">&raquo;</span>
                 </a>
               </li>

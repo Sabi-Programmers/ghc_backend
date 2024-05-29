@@ -32,7 +32,17 @@ app.use(
     }),
 );
 app.use(xss());
-app.use(helmet());
+app.use(
+    helmet({
+        contentSecurityPolicy: {
+            directives: {
+                defaultSrc: ["'self'"],
+                imgSrc: ["'self'", 'https:', 'data:'], // Allow images from the same origin, HTTPS, and data URIs
+                childSrc: ["'none'"],
+            },
+        },
+    }),
+);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -42,7 +52,7 @@ const { Pool } = pg;
 const pgSessionInstance = pgSession(session);
 
 const pool = new Pool({
-    connectionString: DEVELOPMENT ? `${DATABASE_URL  }?ssl=true` : DATABASE_URL,
+    connectionString: DEVELOPMENT ? `${DATABASE_URL}?ssl=true` : DATABASE_URL,
 });
 app.use(
     session({

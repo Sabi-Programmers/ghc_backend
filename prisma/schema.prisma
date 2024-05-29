@@ -98,6 +98,21 @@ enum ProductType {
   PHYSICAL
 }
 
+model Product {
+  id           Int         @id @default(autoincrement())
+  name         String
+  price        Float
+  sellingPrice Float
+  productType  ProductType
+  slug         String      @unique
+  category     String?
+  description  String
+  photo        String
+  file         String?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
 model SalesIncomeBonus {
   id          Int         @id @default(autoincrement())
   amount      Float       @default(0.00)
