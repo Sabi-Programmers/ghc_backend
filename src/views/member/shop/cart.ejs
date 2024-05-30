@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title p-0">Cart Items</h5>
+              </div>
+              <div class="card-body cart-item-wrapper p-0"></div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="card bg-primary-subtle mb-3">
+              <div class="card-body">
+                <h5 class="card-title text-center">Summary</h5>
+                <ul class="list-group list-group-flush bg-info">
+                  <li
+                    class="list-group-item bg-primary-subtle border-dark d-flex justify-content-between"
+                  >
+                    <span class="fw-semibold"> Total </span>
+                    <span class="fw-bold" id="total"></span>
+                  </li>
+                  <li
+                    class="list-group-item bg-primary-subtle border-dark d-flex align-items-center flex-column border-bottom-0"
+                  >
+                    <button id="submit-package-order" class="btn btn-primary">
+                      Checkout Order
+                    </button>
+
+                    <span
+                      id="package-order-error"
+                      class="fst-italic small text-danger"
+                    >
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <!-- Product section -->
+
+        <div class="container px-4 px-lg-5 my-5">
+          <div class="row gx-4 gx-lg-5 align-items-center">
+            <div class="col-md-6">
+              <img
+                class="card-img-top mb-5 mb-md-0"
+                src="<%= data.product.photo %>"
+                alt="<%= data.product.name %> photo"
+              />
+            </div>
+            <div class="col-md-6">
+              <div class="small mb-1"><%= data.product.productType %></div>
+              <h1 class="display-5 fw-bolder"><%= data.product.name %></h1>
+              <div class="fs-5 mb-5">
+                <span>$<%= data.product.sellingPrice %></span>
+              </div>
+              <p class="lead"><%= data.product.description %></p>
+              <form class="add-to-cart-form">
+                <div class="d-flex">
+                  <% if (data.product.productType === 'DIGITAL') { %>
+                  <input
+                    class="form-control text-center me-3 inputQuantity"
+                    type="number"
+                    value="1"
+                    style="max-width: 3rem"
+                    name="quantity"
+                    readonly
+                  />
+
+                  <% } else { %>
+
+                  <input
+                    class="form-control text-center me-3 inputQuantity"
+                    type="number"
+                    value="1"
+                    style="max-width: 3rem"
+                    name="quantity"
+                  />
+                  <% } %>
+
+                  <input
+                    type="text"
+                    value="<%= data.product.id %>"
+                    name="itemId"
+                    class="d-none"
+                  />
+
+                  <input
+                    type="text"
+                    value="<%= data.product.name %>"
+                    name="name"
+                    class="d-none"
+                  />
+                  <input
+                    type="text"
+                    value="<%= data.product.sellingPrice %>"
+                    name="price"
+                    class="d-none"
+                  />
+                  <input
+                    type="text"
+                    value="<%= data.product.productType %>"
+                    name="type"
+                    class="d-none"
+                  />
+                  <input
+                    type="text"
+                    value="<%= data.product.photo %>"
+                    name="image"
+                    class="d-none"
+                  />
+                  <button
+                    class="btn btn-outline-dark flex-shrink-0"
+                    id="add-to-cart-btn"
+                    type="submit"
+                  >
+                    <i class="bi-cart-fill me-1"></i>
+                    Add to cart
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

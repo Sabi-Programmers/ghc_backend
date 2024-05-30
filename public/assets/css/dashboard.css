@@ -1300,16 +1300,19 @@ h6 {
   aspect-ratio: 125/110;
 }
 
-.package-order-item {
+.package-order-item,
+.cart-item {
   display: flex;
   height: 120px;
   padding: 10px 4px;
 }
-.package-order-item > div:first-child {
+.package-order-item > div:first-child,
+.cart-item > div:first-child {
   height: 100%;
 }
 
-.package-quantity {
+.package-quantity,
+.cart-item-quantity {
   width: 5ch;
   padding: 0px;
   height: 30px;
@@ -1425,6 +1428,15 @@ input[type="number"] {
 .card-product-img-wrapper {
   width: 100%;
   aspect-ratio: 125/110;
+  position: relative;
+}
+
+.card-product-img-wrapper .badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
+  cursor: pointer;
 }
 .card-product-img {
   transition: all ease-in-out 0.3s;
