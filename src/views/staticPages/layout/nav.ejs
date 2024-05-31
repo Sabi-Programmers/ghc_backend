@@ -34,7 +34,11 @@
           <a class="nav-link" href="/our-products">Our Products</a>
         </li>
         <li>
-          <a class="nav-link" href="/u/products">Shop now</a>
+          <a
+            class="nav-link <%= data.path.includes('shop') ? 'active' : '' %>"
+            href="/shop"
+            >Shop now
+          </a>
         </li>
         <li>
           <a
@@ -66,6 +70,17 @@
           <a class="getstarted m-0" href="/auth/login">Login</a>
           <% } %>
         </li>
+
+        <a
+          href="/shop/cart"
+          class="nav-link position-relative p-2 un-cart d-none"
+        >
+          <i class="bx bx-cart-alt" style="font-size: 24px"></i>
+          <span
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-item-count"
+          >
+          </span>
+        </a>
       </ul>
 
       <i class="bi bi-list mobile-nav-toggle"></i>

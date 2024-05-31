@@ -8,6 +8,7 @@ import { calculatePagination } from "../utils/index.js";
 const getProductsPage = asyncWrapper(async (req, res) => {
   const data = {
     user: req.user,
+    path: req.baseUrl,
   };
 
   const page = Number(req.query.page) || 1; // Current page
@@ -31,6 +32,13 @@ const getProductsPage = asyncWrapper(async (req, res) => {
   data.productType = productType;
   data.category = category;
 
+  if (!req.user || req.user.role !== "MEMBER") {
+    return res.render("staticPages/shop/products", {
+      title: "Products",
+      data,
+    });
+  }
+
   res.render("member/shop/products", {
     title: "Products",
     data,
@@ -40,11 +48,20 @@ const getProductsPage = asyncWrapper(async (req, res) => {
 const getSingleProductPage = asyncWrapper(async (req, res) => {
   const data = {
     user: req.user,
+    path: req.baseUrl,
   };
 
   const slug = req.params.slug;
 
   data.product = await getSingleProduct(slug);
+
+  if (!req.user || req.user.role !== "MEMBER") {
+    return res.render("staticPages/shop/single-product", {
+      title: data.product.name,
+      data,
+      path: req.path,
+    });
+  }
 
   res.render("member/shop/single-product", {
     title: data.product.name,
@@ -55,7 +72,15 @@ const getSingleProductPage = asyncWrapper(async (req, res) => {
 const getCartPage = asyncWrapper(async (req, res) => {
   const data = {
     user: req.user,
+    path: req.baseUrl,
   };
+
+  if (!req.user || req.user.role !== "MEMBER") {
+    return res.render("staticPages/shop/cart", {
+      title: "Cart",
+      data,
+    });
+  }
 
   res.render("member/shop/cart", {
     title: "Cart",
@@ -65,7 +90,15 @@ const getCartPage = asyncWrapper(async (req, res) => {
 const getCheckoutPage = asyncWrapper(async (req, res) => {
   const data = {
     user: req.user,
+    path: req.baseUrl,
   };
+
+  if (!req.user || req.user.role !== "MEMBER") {
+    return res.render("staticPages/shop/checkout", {
+      title: "Checkout Order",
+      data,
+    });
+  }
 
   res.render("member/shop/checkout", {
     title: "Checkout Order",

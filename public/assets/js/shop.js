@@ -107,6 +107,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const unCart = document.querySelector(".un-cart");
+
+    if (cart.length > 0) {
+      unCart.classList.remove("d-none");
+    }
 
     const cartItemCount = document.querySelector(".cart-item-count");
     cartItemCount.innerText = cart.length;

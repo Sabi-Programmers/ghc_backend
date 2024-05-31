@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/nav') %>
+
+    <main id="main">
+      <!-- ======= Breadcrumbs ======= -->
+      <section class="breadcrumbs">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-center">
+            <h2>Cart</h2>
+            <ol>
+              <li><a href="/">Home</a></li>
+              <li><a href="/shop">Shop</a></li>
+              <li>Cart</li>
+            </ol>
+          </div>
+        </div>
+      </section>
+      <!-- End Breadcrumbs -->
+
+      <section>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-title p-0">Cart Items</h5>
+                </div>
+                <div class="card-body cart-item-wrapper p-0"></div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="card bg-primary-subtle mb-3">
+                <div class="card-body">
+                  <h5 class="card-title text-center">Summary</h5>
+                  <ul class="list-group list-group-flush bg-info">
+                    <li
+                      class="list-group-item bg-primary-subtle border-dark d-flex justify-content-between"
+                    >
+                      <span class="fw-semibold"> Total </span>
+                      <span class="fw-bold" id="total"></span>
+                    </li>
+                    <li
+                      class="list-group-item bg-primary-subtle border-dark d-flex align-items-center flex-column border-bottom-0"
+                    >
+                      <button
+                        id="submit-cart-item"
+                        class="btn btn-primary w-100 flex-shrink-0 m-0"
+                      >
+                        Checkout Order
+                      </button>
+
+                      <span
+                        id="package-order-error"
+                        class="fst-italic small text-danger"
+                      >
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <!-- ======= Footer ======= -->
+    <%- include('../layout/footer') %>
+    <!-- End Footer -->
+
+    <%- include('../partials/scripts') %>
+  </body>
+</html>
