@@ -37,10 +37,24 @@ const getAllProducts = async (page, perPage, productType, category) => {
   return { products, totalItem };
 };
 
-const getSingleProduct = async (slug) => {
-  const product = await database.product.findUnique({
-    where: { slug },
-  });
+const getSingleProduct = async (slug, id, selectOption = null) => {
+  let whereClause = {};
+  if (slug) {
+    whereClause = { slug };
+  } else {
+    whereClause = { id };
+  }
+  const query = {
+    where: whereClause,
+  };
+
+  if (selectOption) {
+    query.select = selectOption;
+  }
+  const product = await database.product.findUnique(query);
+  if (!product) {
+    return null;
+  }
 
   return excludeData(product, ["price", "updatedAt"]);
 };

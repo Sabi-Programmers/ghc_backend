@@ -100,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (existingItemIndex > -1) {
       // If it exists, update the quantity and subtotal
-      if (cart[existingItemIndex].type === "cart") {
+      if (cart[existingItemIndex].type === "DIGITAL") {
         cart[existingItemIndex].quantity = 1;
         cart[existingItemIndex].subtotal = parseFloat(price);
       } else {

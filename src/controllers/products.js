@@ -8,6 +8,8 @@ import {
 import { calculatePagination } from "../utils/index.js";
 import response from "../utils/response.js";
 import { getPaymentLink } from "../libs/paymentGateway.js";
+import { getContants } from "../services/contantsServices.js";
+import { createdManyOrders } from "../services/shopOrderServices.js";
 
 const getProductsPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -129,10 +131,81 @@ const getOrderCompletePage = asyncWrapper(async (req, res) => {
 });
 
 const checkoutOrder = asyncWrapper(async (req, res) => {
-  const { email, fullName, phone, currency } = req.body;
+  const { email, fullName, phone, currency, orders, address, country, city } =
+    req.body;
 
-  const totalAmount = 200;
+  // get all product ordered
+  let items = await Promise.all(
+    orders.map(async (order) => {
+      const product = await getSingleProduct(null, Number(order.id), {
+        sellingPrice: true,
+        id: true,
+      });
+      if (!product) {
+        return null;
+      }
+      return product;
+    })
+  );
+
+  // if any of the product doesnt exist return
+  if (items.some((item) => item === null)) {
+    return response.json(
+      res,
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      false,
+      "Something Went Wrong"
+    );
+  }
+
+  // Get total order Price
+  function getTotalPrice(orders, products) {
+    return orders.reduce((total, order) => {
+      const product = products.find((p) => p.id === parseInt(order.id));
+      if (product) {
+        total += product.sellingPrice * order.quantity;
+      }
+      return total;
+    }, 0);
+  }
+  const constant = await getContants();
+  const totalAmount =
+    currency === "NGN"
+      ? constant.usdRate * getTotalPrice(orders, items)
+      : getTotalPrice(orders, items);
+
+  // Create The Order for the different products
   const tx_ref = uuidv4();
+
+  const outputArray = orders.map((order) => {
+    const product = items.find((p) => p.id.toString() === order.id);
+    const amount = product ? product.sellingPrice * order.quantity : 0;
+
+    return {
+      address,
+      city,
+      amount,
+      country,
+      email,
+      fullName,
+      itemId: Number(order.id),
+      phone,
+      quantity: order.quantity,
+      tx_ref,
+      sellerId: null,
+    };
+  });
+
+  const shopOrders = await createdManyOrders(outputArray);
+
+  if (!shopOrders) {
+    return response.json(
+      res,
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      false,
+      "Something Went Wrong"
+    );
+  }
 
   const inputData = {
     tx_ref,
