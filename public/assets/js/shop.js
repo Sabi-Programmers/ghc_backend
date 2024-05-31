@@ -30,6 +30,16 @@ document.addEventListener("DOMContentLoaded", () => {
     toast.failed = failed;
   }
 
+  function formDataToJson(formData) {
+    const json = {};
+    for (const [key, value] of formData.entries()) {
+      json[key] = value;
+    }
+    return json;
+  }
+
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
   document.querySelectorAll(".add-to-cart-form").forEach((formEl) => {
     formEl.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -45,6 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const type = form.type.value;
     const image = form.image.value;
     const id = form.itemId.value;
+    const ref = null;
 
     // Set quantity to 1 if product type is 'cart'
     const adjustedQuantity = type === "DIGITAL" ? 1 : parseInt(quantity, 10);
@@ -61,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: image,
       quantity: adjustedQuantity,
       subtotal: subtotal,
+      ref: null,
     };
 
     // Retrieve existing cart items from local storage
@@ -217,4 +229,56 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initial render
   renderCartItems();
+
+  const submitCartItemsButton = document.getElementById("submit-cart-item");
+
+  const submitCartItems = () => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length < 0) {
+      toast.failed("cart is empty");
+      return;
+    }
+
+    window.location.href = "/shop/checkout/";
+  };
+  if (submitCartItemsButton) {
+    submitCartItemsButton.addEventListener("click", submitCartItems);
+  }
+
+  const submitCheckout = function () {
+    const checkoutForm = document.getElementById("checkout-form");
+    pristine = new Pristine(checkoutForm);
+    checkoutForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      const orders = cart.map((item) => ({
+        id: item.id,
+        quantity: item.quantity,
+        ref: item.ref,
+      }));
+
+      const finalOutput = {
+        ...jsonData,
+        orders: orders,
+      };
+
+      console.log(finalOutput);
+    });
+  };
+
+  if (currentRoute.includes("checkout")) {
+    submitCheckout();
+    document.getElementById("checkout-order-total").innerText =
+      "$" + cart.reduce((sum, item) => sum + item.subtotal, 0);
+  }
 });

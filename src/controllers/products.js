@@ -1,6 +1,5 @@
 import asyncWrapper from "../middlewares/asyncWrapper.js";
 import {
-  generateProduct,
   getSingleProduct,
   getAllProducts,
 } from "../services/productServices.js";
@@ -63,5 +62,15 @@ const getCartPage = asyncWrapper(async (req, res) => {
     data,
   });
 });
+const getCheckoutPage = asyncWrapper(async (req, res) => {
+  const data = {
+    user: req.user,
+  };
 
-export { getProductsPage, getSingleProductPage, getCartPage };
+  res.render("member/shop/checkout", {
+    title: "Checkout Order",
+    data,
+  });
+});
+
+export { getProductsPage, getSingleProductPage, getCartPage, getCheckoutPage };

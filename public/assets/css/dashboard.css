@@ -1790,8 +1790,6 @@ label[for="profile-photo-file"]:hover span {
 
 .nav-profile {
   flex: none;
-  width: 36px;
-  height: 36px;
 }
 .nav-profile img {
   width: 36px;

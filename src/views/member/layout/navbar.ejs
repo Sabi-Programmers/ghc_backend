@@ -9,30 +9,8 @@
   </div>
   <!-- End Logo -->
 
-  <div class="search-bar">
-    <form class="search-form d-flex align-items-center" method="GET" action="#">
-      <input
-        type="text"
-        name="query"
-        placeholder="Search"
-        title="Enter search keyword"
-      />
-      <button type="submit" title="Search">
-        <i class="bi bi-search"></i>
-      </button>
-    </form>
-  </div>
-  <!-- End Search Bar -->
-
   <nav class="header-nav ms-auto">
     <ul class="d-flex align-items-center">
-      <li class="nav-item d-block d-lg-none">
-        <a class="nav-link nav-icon search-bar-toggle" href="#">
-          <i class="bi bi-search"></i>
-        </a>
-      </li>
-      <!-- End Search Icon-->
-
       <li class="nav-item dropdown">
         <a class="nav-link nav-icon" href="/shop/cart">
           <i class="bx bx-cart-alt"></i>
@@ -96,11 +74,11 @@
           <img src=<%- data && data.user.displayPhoto ? "/uploads/images/" +
           data.user.displayPhoto : "/static/assets/img/default.jpg" %> alt="User
           Display Profile" class="rounded-circle" />
-
           <span class="d-none d-md-block dropdown-toggle ps-2"
-            ><%= data.user.username %></span
-          > </a
-        ><!-- End Profile Iamge Icon -->
+            ><%= data.user.username %>
+          </span>
+        </a>
+        <!-- End Profile Iamge Icon -->
 
         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
           <li class="dropdown-header">
