@@ -1,9 +1,13 @@
+import { StatusCodes } from "http-status-codes";
+import { v4 as uuidv4 } from "uuid";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
 import {
   getSingleProduct,
   getAllProducts,
 } from "../services/productServices.js";
 import { calculatePagination } from "../utils/index.js";
+import response from "../utils/response.js";
+import { getPaymentLink } from "../libs/paymentGateway.js";
 
 const getProductsPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -105,5 +109,62 @@ const getCheckoutPage = asyncWrapper(async (req, res) => {
     data,
   });
 });
+const getOrderCompletePage = asyncWrapper(async (req, res) => {
+  const data = {
+    user: req.user,
+    path: req.baseUrl,
+  };
 
-export { getProductsPage, getSingleProductPage, getCartPage, getCheckoutPage };
+  if (!req.user || req.user.role !== "MEMBER") {
+    return res.render("staticPages/shop/order-complete", {
+      title: "Checkout Order",
+      data,
+    });
+  }
+
+  res.render("member/shop/order-complete", {
+    title: "Checkout Order",
+    data,
+  });
+});
+
+const checkoutOrder = asyncWrapper(async (req, res) => {
+  const { email, fullName, phone, currency } = req.body;
+
+  const totalAmount = 200;
+  const tx_ref = uuidv4();
+
+  const inputData = {
+    tx_ref,
+    amount: totalAmount,
+    currency,
+    redirect_url: process.env.BASE_URL + "/shop/order-complete",
+    customer: {
+      email,
+      phonenumber: phone,
+      name: fullName,
+    },
+  };
+
+  const paymentLink = await getPaymentLink(inputData);
+
+  if (!paymentLink || paymentLink.status !== "success") {
+    return response.json(
+      res,
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      false,
+      "Something Went Wrong"
+    );
+  }
+
+  return response.json(res, StatusCodes.OK, true, "Okay", paymentLink);
+});
+
+export {
+  getProductsPage,
+  getSingleProductPage,
+  getCartPage,
+  getCheckoutPage,
+  checkoutOrder,
+  getOrderCompletePage,
+};

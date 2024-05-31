@@ -38,6 +38,23 @@ document.addEventListener("DOMContentLoaded", () => {
     return json;
   }
 
+  const loaderHtml = `<div id="api-handler-loader">
+  <div class="spinner-border text-warning" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>`;
+
+  function handleLoader(action) {
+    if (action === "show") {
+      document.body.insertAdjacentHTML("beforeend", loaderHtml);
+    } else if (action === "hide") {
+      const loaderElement = document.getElementById("api-handler-loader");
+      if (loaderElement) {
+        loaderElement.remove();
+      }
+    }
+  }
+
   let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
   document.querySelectorAll(".add-to-cart-form").forEach((formEl) => {
@@ -251,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
     submitCartItemsButton.addEventListener("click", submitCartItems);
   }
 
-  const submitCheckout = function () {
+  const submitCheckout = async function () {
     const checkoutForm = document.getElementById("checkout-form");
     pristine = new Pristine(checkoutForm);
     checkoutForm.addEventListener("submit", async (e) => {
@@ -262,7 +279,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!valid) {
         return;
       }
-
+      handleLoader("show");
       const formData = new FormData(e.target);
       const jsonData = formDataToJson(formData);
 
@@ -277,13 +294,48 @@ document.addEventListener("DOMContentLoaded", () => {
         orders: orders,
       };
 
-      console.log(finalOutput);
+      try {
+        const res = await fetch("/shop/checkout", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(finalOutput),
+        });
+
+        const resData = await res.json();
+
+        if (resData.success === false) {
+          throw new Error(resData.message);
+        }
+        toast.success("Checkout Success");
+
+        window.location.href = resData.data.data.link;
+      } catch (err) {
+        toast.failed(err.message);
+      } finally {
+        handleLoader("hide");
+      }
     });
   };
 
   if (currentRoute.includes("checkout")) {
     submitCheckout();
-    document.getElementById("checkout-order-total").innerText =
-      "$" + cart.reduce((sum, item) => sum + item.subtotal, 0);
+    const dollarTotal = cart.reduce((sum, item) => sum + item.subtotal, 0);
+    const checkoutTotalEl = document.getElementById("checkout-order-total");
+    checkoutTotalEl.innerText = "$" + dollarTotal.toLocaleString();
+
+    document
+      .getElementById("checkout_currency")
+      .addEventListener("change", (e) => {
+        if (e.target.value === "NGN") {
+          checkoutTotalEl.innerText =
+            "$" +
+            dollarTotal.toLocaleString() +
+            " ≈ " +
+            "₦" +
+            (dollarTotal * 1000).toLocaleString();
+        } else {
+          checkoutTotalEl.innerText = "$" + dollarTotal.toLocaleString();
+        }
+      });
   }
 });
