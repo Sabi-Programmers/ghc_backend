@@ -4,7 +4,7 @@
     <a href="/" class="logo gap-3"
       ><img
         src="/static/assets/img/logo_01.png"
-        alt=""
+        alt="GHC LOGO"
         class="img-fluid image"
       /><span>GHC</span></a
     >
@@ -62,7 +62,6 @@
             >Contact</a
           >
         </li>
-
         <li>
           <% if (data.isAuthenticated) { %>
           <a class="getstarted m-0" href="/dashboard">Dashboard</a>
@@ -82,7 +81,17 @@
           </span>
         </a>
       </ul>
-
+     
+      <a
+        href="/shop/cart"
+        class="nav-link position-relative p-2 un-cart-mob d-none d-lg-none me-4"
+      >
+        <i class="bx bx-cart-alt" style="font-size: 24px"></i>
+        <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger cart-item-count"
+        >
+        </span>
+      </a>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>
     <!-- .navbar -->

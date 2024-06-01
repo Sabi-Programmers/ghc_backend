@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <%- include('../partials/head') %>
 
@@ -71,34 +71,41 @@
                 </div>
 
                 <div class="col-md-4 form-group">
-                  <label for="state" class="form-label">State</label>
+                  <label for="city" class="form-label">City</label>
                   <input
                     type="text"
                     class="form-control"
-                    name="state"
-                    placeholder="Abuja"
+                    name="city"
+                    placeholder="Ikeja"
                     required
                   />
                 </div>
 
                 <div class="col-md-3 form-group">
-                  <label for="zip" class="form-label">Zip</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="zip"
-                    placeholder=""
-                  />
+                  <label for="checkout_currency" class="form-label"
+                    >currency</label
+                  >
+                  <select
+                    class="form-select"
+                    name="currency"
+                    id="checkout_currency"
+                  >
+                    <option value="USD">US Dollar</option>
+                    <option value="NGN">Naira</option>
+                  </select>
                 </div>
               </div>
 
               <hr class="mt-3" />
               <div class="d-flex justify-content-between">
                 <h5>Order Total:</h5>
-                <h5 id="checkout-order-total">$000</h5>
+                <h5 id="checkout-order-total"></h5>
               </div>
 
-              <button class="w-100 btn btn-primary mt-5 btn-lg" type="submit">
+              <button
+                class="w-100 btn btn-primary m-0 mt-5 btn-lg"
+                type="submit"
+              >
                 Continue to checkout
               </button>
             </form>

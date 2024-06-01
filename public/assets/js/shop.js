@@ -125,13 +125,17 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateCartCount() {
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     const unCart = document.querySelector(".un-cart");
+    const unCartMob = document.querySelector(".un-cart-mob");
 
     if (cart.length > 0) {
       unCart.classList.remove("d-none");
+      unCartMob.classList.remove("d-none");
     }
 
-    const cartItemCount = document.querySelector(".cart-item-count");
-    cartItemCount.innerText = cart.length;
+    const cartItemCount = document.querySelectorAll(".cart-item-count");
+    cartItemCount.forEach((clc) => {
+      clc.innerText = cart.length;
+    });
   }
 
   const renderCartItems = () => {
@@ -256,8 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const submitCartItems = () => {
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    if (cart.length < 0) {
+    if (cart.length < 1) {
       toast.failed("cart is empty");
       return;
     }
@@ -273,6 +276,12 @@ document.addEventListener("DOMContentLoaded", () => {
     pristine = new Pristine(checkoutForm);
     checkoutForm.addEventListener("submit", async (e) => {
       e.preventDefault();
+
+      if (cart.length < 1) {
+        toast.failed("Cart is empty");
+        window.location.href = "/shop";
+        return;
+      }
 
       let valid = pristine.validate();
 
@@ -318,7 +327,13 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   if (currentRoute.includes("checkout")) {
+    if (cart.length < 1) {
+      window.location.href = "/shop";
+      return;
+    }
+
     submitCheckout();
+
     const dollarTotal = cart.reduce((sum, item) => sum + item.subtotal, 0);
     const checkoutTotalEl = document.getElementById("checkout-order-total");
     checkoutTotalEl.innerText = "$" + dollarTotal.toLocaleString();
