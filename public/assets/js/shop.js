@@ -128,8 +128,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const unCartMob = document.querySelector(".un-cart-mob");
 
     if (cart.length > 0) {
-      unCart.classList.remove("d-none");
-      unCartMob.classList.remove("d-none");
+      if (unCartMob && unCart) {
+        unCart.classList.remove("d-none");
+        unCartMob.classList.remove("d-none");
+      }
     }
 
     const cartItemCount = document.querySelectorAll(".cart-item-count");
@@ -353,4 +355,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
   }
+
+  if (currentRoute.includes("order-complete")) {
+    const queryString = window.location.search;
+
+    // Create a URLSearchParams object
+    const urlParams = new URLSearchParams(queryString);
+    const status = urlParams.get("status");
+    if (!status) {
+      window.location.href = "/shop";
+    }
+    if (status === "successful") {
+      localStorage.removeItem("cart");
+      updateCartCount();
+    }
+  }
+
+  const downloadFiles = document.querySelectorAll(".download-files");
+  downloadFiles.forEach((fileValue) => {
+    const file = fileValue.getAttribute("data-value");
+    let link = document.createElement("a");
+    link.href = "/uploads/pdfs/" + file;
+
+    link.download = file;
+    // Programmatically click the link to trigger the download
+    link.click();
+  });
 });

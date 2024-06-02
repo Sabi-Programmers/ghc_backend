@@ -7,9 +7,14 @@ import {
 } from "../services/productServices.js";
 import { calculatePagination } from "../utils/index.js";
 import response from "../utils/response.js";
-import { getPaymentLink } from "../libs/paymentGateway.js";
+import { getPaymentLink, verifyPayment } from "../libs/paymentGateway.js";
 import { getContants } from "../services/contantsServices.js";
-import { createdManyOrders } from "../services/shopOrderServices.js";
+import {
+  createdManyOrders,
+  getTxShopOrders,
+  ordersTotalAmount,
+  updateOrderStatus,
+} from "../services/shopOrderServices.js";
 
 const getProductsPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -115,7 +120,82 @@ const getOrderCompletePage = asyncWrapper(async (req, res) => {
   const data = {
     user: req.user,
     path: req.baseUrl,
+    status: null,
+    items: [],
+    isDigital: false,
   };
+
+  const { tx_ref, transaction_id, status } = req.query;
+  const allOrders = await getTxShopOrders(tx_ref);
+
+  if (status === "successful") {
+    const constant = await getContants();
+    // Get all Order with tx_ref
+    const transactionTotal = await ordersTotalAmount(tx_ref);
+
+    const transaction = await verifyPayment(transaction_id);
+
+    if (transaction.status === "success") {
+      if (
+        transaction.data.currency === "USD" &&
+        transaction.data.amount === transactionTotal._sum.amount
+      ) {
+        await Promise.all(
+          allOrders.map(async (ord) => {
+            return await updateOrderStatus(tx_ref, ord.Item.productType);
+          })
+        );
+        data.items = allOrders;
+
+        data.items.forEach((item) => {
+          if (item.Item && item.Item.productType === "DIGITAL") {
+            data.isDigital = true;
+          }
+        });
+        data.status = "success";
+      } else if (
+        transaction.data.currency === "NGN" &&
+        transaction.data.amount / constant.usdRate ===
+          transactionTotal._sum.amount
+      ) {
+        await Promise.all(
+          allOrders.map(async (ord) => {
+            return await updateOrderStatus(tx_ref, ord.Item.productType);
+          })
+        );
+        data.items = allOrders;
+
+        data.items.forEach((item) => {
+          if (item.Item && item.Item.productType === "DIGITAL") {
+            data.isDigital = true;
+          }
+        });
+        data.status = "success";
+      } else {
+        await Promise.all(
+          allOrders.map(async (ord) => {
+            return await updateOrderStatus(tx_ref, ord.Item.productType, true);
+          })
+        );
+        data.status = "failed";
+      }
+    } else {
+      await Promise.all(
+        allOrders.map(async (ord) => {
+          return await updateOrderStatus(tx_ref, ord.Item.productType, true);
+        })
+      );
+
+      data.status = "failed";
+    }
+  } else {
+    await Promise.all(
+      allOrders.map(async (ord) => {
+        return await updateOrderStatus(tx_ref, ord.Item.productType, true);
+      })
+    );
+    data.status = "failed";
+  }
 
   if (!req.user || req.user.role !== "MEMBER") {
     return res.render("staticPages/shop/order-complete", {
@@ -123,7 +203,6 @@ const getOrderCompletePage = asyncWrapper(async (req, res) => {
       data,
     });
   }
-
   res.render("member/shop/order-complete", {
     title: "Checkout Order",
     data,
