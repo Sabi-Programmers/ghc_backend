@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <ul class="nav nav-underline">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'bronze' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=bronze"
+                    >
+                      Bronze
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'gold' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=gold"
+                    >
+                      Gold
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'diamond' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=diamond"
+                    >
+                      Diamond
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'leaderCycle' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=leaderCycle"
+                    >
+                      Cycle Leader
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'salesIncome' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=salesIncome"
+                    >
+                      Sales Income
+                    </a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body pt-4">
+                <form action="" method="GET">
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      name="q"
+                      class="form-control"
+                      placeholder="Search username, fullname, or email"
+                      aria-label="Search"
+                      value="<%= data.q %>"
+                    />
+                    <button class="btn btn-outline-secondary" type="submit">
+                      <i class="bx bx-search-alt-2"></i>
+                    </button>
+                  </div>
+                </form>
+                <div class="table-responsive">
+                  <table
+                    class="table orders-table table-striped table-hover table-bordered text-truncate"
+                    style="width: 100%"
+                  >
+                    <thead class="table-dark">
+                      <tr>
+                        <th>Member Name</th>
+                        <th>Username</th>
+                        <th>Amount</th>
+                        <th>Request Date</th>
+                        <th>Wallet Balance</th>
+                        <th>Approve</th>
+                        <th>Reject</th>
+                        <th>Withdrawal Record</th>
+                        <th>View account.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for( let i = 0; i < data.requests.length; i++ ) { %>
+                      <tr>
+                        <td><%= data.requests[i].User.fullName %></td>
+                        <td><%= data.requests[i].User.username %></td>
+                        <td>
+                          <%= (data.requests[i].amount).toLocaleString() %>
+                        </td>
+                        <td>
+                          <%= (data.requests[i].createdAt).toLocaleDateString()
+                          %>
+                        </td>
+                        <td>
+                          <%=
+                          data.requests[i].User.withdrawalWallet[data.wallet] %>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-success btn-sm">
+                            Approve
+                          </button>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-danger btn-sm">
+                            Reject
+                          </button>
+                        </td>
+                        <td>
+                          <a
+                            href="<%= `?wt=${data.wallet}&q=${data.requests[i].User.username}` %>"
+                            class="btn btn-info btn-sm"
+                          >
+                            View
+                          </a>
+                        </td>
+                        <td>
+                          <button type="button" class="btn btn-info btn-sm">
+                            View
+                          </button>
+                        </td>
+                      </tr>
+                      <!-- Button trigger modal -->
+
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <%- include('../partials/pagination', {urlPrefix: data.q ?
+              `?wt=${data.wallet}&q=${data.q}` : `?wt=${data.wallet}`, data}) %>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>
