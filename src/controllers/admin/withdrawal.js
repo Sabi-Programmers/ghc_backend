@@ -15,7 +15,8 @@ const getWithdrawalRequestPage = asyncWrapper(async (req, res) => {
   const { requests, totalItems } = await getAllWithdrawalRequests(
     page,
     perPage,
-    wallet
+    wallet,
+    false
   );
 
   data.q = searchQuery;
@@ -30,5 +31,34 @@ const getWithdrawalRequestPage = asyncWrapper(async (req, res) => {
     data,
   });
 });
+const getWithdrawalHistoryPage = asyncWrapper(async (req, res) => {
+  const data = {
+    user: req.user,
+  };
 
-export { getWithdrawalRequestPage };
+  const searchQuery = req.query.q || null;
+  const wallet = req.query.wt || "bronze";
+  const page = Number(req.query.page) || 1; // Current page
+  const perPage = Number(req.query.limit) || 10; // Number of records per page
+
+  const { requests, totalItems } = await getAllWithdrawalRequests(
+    page,
+    perPage,
+    wallet,
+    true
+  );
+
+  data.q = searchQuery;
+
+  // console.log(requests[0].User.withdrawalWallet);
+  data.requests = requests;
+  data.pagination = calculatePagination(totalItems, page, perPage);
+  data.wallet = wallet;
+
+  res.render("admin/withdrawals/history", {
+    title: "Withdrawal History",
+    data,
+  });
+});
+
+export { getWithdrawalRequestPage, getWithdrawalHistoryPage };

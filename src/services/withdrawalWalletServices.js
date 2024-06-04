@@ -38,10 +38,18 @@ const getWithdrawalRequest = async (userId, wallet, status) => {
   });
 };
 
-const getAllWithdrawalRequests = async (page, perPage, wallet) => {
+const getAllWithdrawalRequests = async (page, perPage, wallet, paid) => {
   const whereClause = {};
 
   whereClause.wallets = wallet.toUpperCase();
+
+  if (!paid) {
+    whereClause.status = "PENDING";
+  } else {
+    whereClause.status = {
+      not: "PENDING",
+    };
+  }
 
   const requests = await database.withdrawalRequest.findMany({
     where: whereClause,
@@ -56,7 +64,9 @@ const getAllWithdrawalRequests = async (page, perPage, wallet) => {
     take: perPage,
     orderBy: { createdAt: "desc" },
   });
-  const totalItems = await database.withdrawalRequest.count();
+  const totalItems = await database.withdrawalRequest.count({
+    where: whereClause,
+  });
   return { requests, totalItems };
 };
 

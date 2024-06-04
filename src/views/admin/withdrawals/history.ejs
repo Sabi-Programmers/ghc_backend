@@ -13,7 +13,55 @@
         <div class="row" style="color: #012970">
           <div class="col-12">
             <div class="card">
-              <div class="card-header"></div>
+              <div class="card-header">
+                <ul class="nav nav-underline">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'bronze' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=bronze"
+                    >
+                      Bronze
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'gold' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=gold"
+                    >
+                      Gold
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'diamond' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=diamond"
+                    >
+                      Diamond
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'leaderCycle' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=leaderCycle"
+                    >
+                      Cycle Leader
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%= data.wallet === 'salesIncome' ? 'active disabled' : '' %>"
+                      aria-current="page"
+                      href="?wt=salesIncome"
+                    >
+                      Sales Income
+                    </a>
+                  </li>
+                </ul>
+              </div>
               <div class="card-body pt-4">
                 <form action="" method="GET">
                   <div class="input-group mb-3">
@@ -39,22 +87,44 @@
                       <tr>
                         <th>Member Name</th>
                         <th>Username</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th>Phone</th>
-                        <th>Sponsor Username</th>
-                        <th>Joining Date</th>
-                        <th>Current Cycle</th>
-                        <th>Reg Record</th>
-                        <th>Total Wallet Balance ($)</th>
-                        <th>View Account</th>
+                        <th>Paid Amount</th>
+                        <th>Payout Date</th>
+                        <th>Status</th>
+                        <th>Withdrawal Record</th>
                       </tr>
                     </thead>
+                    <tbody>
+                      <% for( let i = 0; i < data.requests.length; i++ ) { %>
+                      <tr>
+                        <td><%= data.requests[i].User.fullName %></td>
+                        <td><%= data.requests[i].User.username %></td>
+                        <td>
+                          <%= (data.requests[i].amount).toLocaleString() %>
+                        </td>
+                        <td>
+                          <%= (data.requests[i].updatedAt).toLocaleDateString()
+                          %>
+                        </td>
+                        <td><%= data.requests[i].status %></td>
+
+                        <td>
+                          <a
+                            href="<%= `?wt=${data.wallet}&q=${data.requests[i].User.username}` %>"
+                            class="btn btn-info btn-sm"
+                          >
+                            View
+                          </a>
+                        </td>
+                      </tr>
+                      <!-- Button trigger modal -->
+
+                      <% } %>
+                    </tbody>
                   </table>
                 </div>
               </div>
-              <!-- <%- include('../partials/pagination', {urlPrefix: data.q ?
-              `?st=${data.st}&q=${data.q}` : `?st=${data.st}`, data}) %> -->
+              <%- include('../partials/pagination', {urlPrefix: data.q ?
+              `?wt=${data.wallet}&q=${data.q}` : `?wt=${data.wallet}`, data}) %>
             </div>
           </div>
         </div>

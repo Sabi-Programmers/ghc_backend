@@ -334,6 +334,7 @@ model WithdrawalRequest {
   amount    Float
   status    Status                   @default(PENDING)
   wallets   WithdrawalRequestWallets
+  message   String?
   userId    Int
   User      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime                 @default(now())
