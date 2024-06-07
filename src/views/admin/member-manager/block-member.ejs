@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+            <div class="card">
+              <form class="card-body p-4">
+                <div class="mb-3">
+                  <label for="username" class="form-label"
+                    >Enter Member Username</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="username"
+                    placeholder="Username"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="confirmName" class="form-label"
+                    >Confirm Name</label
+                  >
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="confirmName"
+                    placeholder="Confirm Name"
+                    required
+                  />
+                </div>
+                <div class="mb-3">
+                  <label for="narration" class="form-label"
+                    >Enter Narration</label
+                  >
+                  <textarea
+                    class="form-control"
+                    id="narration"
+                    rows="3"
+                    placeholder="Narration"
+                    required
+                  ></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger">
+                  Block Account
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

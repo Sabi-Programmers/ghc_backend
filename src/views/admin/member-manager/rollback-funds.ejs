@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+            <div class="card">
+              <div class="card-body">
+                <% if (data.member) { %>
+                <a href="?" class="btn btn-sm btn-secondary mt-3"> Back </a>
+
+                <div class="form-group">
+                  <div class="mb-3">
+                    <label for="inputText" class="col-form-label fw-bold"
+                      >Confirm Name</label
+                    >
+                    <div>
+                      <h6 class="form-control text-capitalize">
+                        <%= data.member.fullName %>
+                      </h6>
+                    </div>
+                  </div>
+                </div>
+
+                <label class="col-form-label pt-0 fw-bold">
+                  Choose Wallet
+                </label>
+                <div class="dropdown mb-3">
+                  <button
+                    class="form-select"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <%= data.wallet ? data.wallet + ' wallet' : "------" %>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="?<%=`member=${data.member.username}&wt=bronze` %>"
+                        >Bronze wallet</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="?<%=`member=${data.member.username}&wt=gold` %>"
+                        >Gold wallet</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="?<%=`member=${data.member.username}&wt=diamond` %>"
+                        >Diamond wallet</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="?<%=`member=${data.member.username}&wt=leaderCycle` %>"
+                        >Leader Cycle wallet</a
+                      >
+                    </li>
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="?<%=`member=${data.member.username}&wt=salesIncome` %>"
+                        >Sales Bonus wallet</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="mb-3">
+                  <label class="col-form-label pt-0 fw-bold">
+                    Wallet Balance
+                  </label>
+                  <div class="form-control">
+                    $<%= data.wallet ? data.member.withdrawalWallet[data.wallet]
+                    : 0 %>
+                  </div>
+                </div>
+                <form id="roll-back-form">
+                  <div class="mb-3 mt-3">
+                    <label for="inputText" class="col-form-label fw-bold"
+                      >Enter Roll Back Amount</label
+                    >
+                    <input
+                      type="text"
+                      name="username"
+                      value="<%= data.member.username %>"
+                      class="d-none"
+                    />
+                    <input
+                      type="text"
+                      name="wallet"
+                      value="<%= data.wallet  %>"
+                      class="d-none"
+                    />
+                    <div class="position-relative">
+                      <input
+                        type="number"
+                        name="amount"
+                        id="roll-back-amount"
+                        class="form-control"
+                      />
+                    </div>
+                  </div>
+                  <div class="mt-4 text-center">
+                    <button class="btn btn-primary">Roll Back Funds</button>
+                  </div>
+                </form>
+                <% } else { %>
+                <div id="search-member-container" class="mb-3 mt-3">
+                  <div class="input-group mb-3">
+                    <input
+                      type="search"
+                      id="search-member-input"
+                      class="form-control"
+                      placeholder="Search member's username"
+                      aria-label="Search member's username"
+                    />
+                  </div>
+                  <ul id="search-member-results"></ul>
+                </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

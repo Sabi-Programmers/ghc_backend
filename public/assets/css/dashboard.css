@@ -1796,3 +1796,47 @@ label[for="profile-photo-file"]:hover span {
   height: 36px;
   object-fit: cover;
 }
+
+#search-member-container {
+  position: relative;
+}
+#search-member-container > div {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+#search-member-container > div input {
+  width: 100%;
+}
+
+#search-member-results {
+  list-style: none;
+  padding: 0;
+}
+
+#search-member-results .search-member {
+  list-style: none;
+}
+#search-member-results .search-member a {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  text-decoration: inherit;
+  color: inherit;
+  padding: 10px 0;
+  border-bottom: 1px solid #101010;
+  transition: all ease-in-out 0.3s;
+}
+#search-member-results .search-member a:hover {
+  background-color: rgba(1, 41, 112, 0.2);
+}
+#search-member-results .search-member img {
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+#search-member-results .search-member p {
+  padding: 0;
+  margin: 0;
+}
