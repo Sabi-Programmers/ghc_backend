@@ -185,6 +185,32 @@ const getUserForRollBack = async (username) => {
     },
   });
 };
+const getUserForBlocking = async (username) => {
+  return await database.user.findFirst({
+    where: {
+      username,
+    },
+    select: {
+      username: true,
+      fullName: true,
+    },
+  });
+};
+const blockUser = async (username, reason) => {
+  return await database.user.update({
+    where: {
+      username,
+    },
+    data: {
+      BlockedUser: {
+        update: {
+          status: true,
+          reason,
+        },
+      },
+    },
+  });
+};
 const updateUserForRollBack = async (username, wallet, balance) => {
   const updatedWallet = {};
   updatedWallet[wallet] = balance;
@@ -202,6 +228,8 @@ const updateUserForRollBack = async (username, wallet, balance) => {
 
 const userServices = {
   getUserForRollBack,
+  getUserForBlocking,
+  blockUser,
   updateUserForRollBack,
   searchUsers,
   getUserDashboardDetails,

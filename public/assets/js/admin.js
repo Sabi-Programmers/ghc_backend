@@ -196,4 +196,17 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload();
     });
   }
+
+  const blockMemberForm = document.getElementById("block-member-form");
+  if (blockMemberForm) {
+    blockMemberForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      await handlerPostRequest(jsonData, "/admin/members/block");
+
+      window.location.reload();
+    });
+  }
 });

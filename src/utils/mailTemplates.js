@@ -290,11 +290,104 @@ const contactUsMailTemp = (name, subject, email, message) => `
     
             `;
 
+const accountBlockedMailTemp = (fullName, reason) => `<!DOCTYPE html>
+            <html>
+                <head>
+                    <meta charset="UTF-8" />
+                    <title>Account Blocked Notification</title>
+                </head>
+                <body
+                    style="
+                        font-family: Arial, sans-serif;
+                        background-color: #f6f6f6;
+                        margin: 0;
+                        padding: 0;
+                    "
+                >
+                    <div
+                        style="
+                            background-color: #ffffff;
+                            width: 100%;
+                            max-width: 600px;
+                            margin: 0 auto;
+                            padding: 20px;
+                            border: 1px solid #dddddd;
+                        "
+                    >
+                        <div
+                            style="
+                                text-align: center;
+                                padding: 20px;
+                                display: flex;
+                            "
+                        >
+                            <img
+                                src="https://grandhealthcycle-v1.onrender.com/assets/img/ghc_logo.png"
+                                alt="Grand Health Cycle"
+                                style="max-width: 100px; margin: 0 auto;"
+                            />
+                        </div>
+                        <h2 style="text-align: center;">Grand Health Cycle</h2>
+                        <div style="padding: 20px">
+                            <p>Hi ${fullName},</p>
+                            <p>
+                                We regret to inform you that your account on Grand Health Cycle has been blocked. This action was taken due to the following reason:
+                            </p>
+                            <div
+                                style="
+                                    text-align: center;
+                                    padding: 10px 20px;
+                                    margin: 20px 0;
+                                    font-size: 20px;
+                                    font-weight: bold;
+                                    color: #ee6408;
+                                    border-radius: 5px;
+                                "
+                            >
+                                ${reason}
+                            </div>
+                            <p>
+                                We understand this may be inconvenient, and we are here to help resolve any issues. If you believe this action was taken in error or if you have any questions, please contact our support team at <a href="mailto:support@grandhealthcycle.com" style="color: #888888; text-decoration: none">support@grandhealthcycle.com</a> or call us at [Support Phone Number].
+                            </p>
+                            <p>
+                                Please note that until this issue is resolved, you will not be able to access your account or use any of our services.
+                            </p>
+                            <p>
+                                We apologize for any inconvenience this may cause and appreciate your understanding and cooperation.
+                            </p>
+                            <p>
+                                Best regards,<br/>
+                                Grand Health Cycle Support Team
+                            </p>
+                        </div>
+                        <div
+                            style="
+                                padding: 20px;
+                                text-align: center;
+                                font-size: 12px;
+                                color: #888888;
+                            "
+                        >
+                            <p>PL 330, FI-00831 Helsinki, SUOMI/FINLAND.</p>
+                            <p>
+                                Need help?
+                                <a
+                                    href="mailto:support@grandhealthcycle.com"
+                                    style="color: #888888; text-decoration: none"
+                                >Contact Support: support@grandhealthcycle.com</a>
+                            </p>
+                        </div>
+                    </div>
+                </body>
+            </html>
+            `;
+
 const mailTemplates = {
-    withdrawal: withdrawalOTPMailTemp,
-    resetPassword: resetPasswordOTPMailTemp,
-    welcome: welcomeMailTemp,
-    contactUs: contactUsMailTemp,
+  withdrawal: withdrawalOTPMailTemp,
+  resetPassword: resetPasswordOTPMailTemp,
+  welcome: welcomeMailTemp,
+  contactUs: contactUsMailTemp,
+  blockMember: accountBlockedMailTemp,
 };
 
 export default mailTemplates;

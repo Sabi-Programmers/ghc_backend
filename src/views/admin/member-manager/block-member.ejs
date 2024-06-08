@@ -13,47 +13,72 @@
         <div class="row" style="color: #012970">
           <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
             <div class="card">
-              <form class="card-body p-4">
-                <div class="mb-3">
-                  <label for="username" class="form-label"
-                    >Enter Member Username</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="username"
-                    placeholder="Username"
-                    required
-                  />
+              <div class="card-body p-4">
+                <% if (data.member) { %>
+                <a href="?" class="btn btn-sm btn-secondary mt-3 mb-3">
+                  Back
+                </a>
+                <form id="block-member-form">
+                  <div class="mb-3">
+                    <label for="confirmName" class="form-label"
+                      >Confirm Name</label
+                    >
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="confirmName"
+                      name="fullName"
+                      readonly
+                      required
+                      value="<%= data.member.fullName %>"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="username"
+                      name="username"
+                      readonly
+                      required
+                      value="<%= data.member.username %>"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label for="narration" class="form-label"
+                      >Enter Narration</label
+                    >
+                    <textarea
+                      class="form-control"
+                      id="narration"
+                      rows="3"
+                      name="reason"
+                      placeholder="Narration"
+                      required
+                    ></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-danger">
+                    Block Account
+                  </button>
+                </form>
+
+                <% } else { %>
+                <div id="search-member-container" class="mb-3 mt-3">
+                  <div class="input-group mb-3">
+                    <input
+                      type="search"
+                      id="search-member-input"
+                      class="form-control"
+                      placeholder="Search member's username"
+                      aria-label="Search member's username"
+                    />
+                  </div>
+                  <ul id="search-member-results"></ul>
                 </div>
-                <div class="mb-3">
-                  <label for="confirmName" class="form-label"
-                    >Confirm Name</label
-                  >
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="confirmName"
-                    placeholder="Confirm Name"
-                    required
-                  />
-                </div>
-                <div class="mb-3">
-                  <label for="narration" class="form-label"
-                    >Enter Narration</label
-                  >
-                  <textarea
-                    class="form-control"
-                    id="narration"
-                    rows="3"
-                    placeholder="Narration"
-                    required
-                  ></textarea>
-                </div>
-                <button type="submit" class="btn btn-danger">
-                  Block Account
-                </button>
-              </form>
+
+                <% } %>
+              </div>
             </div>
           </div>
         </div>

@@ -42,7 +42,6 @@ model User {
   password               String
   gender                 Genders
   role                   UserRole                 @default(MEMBER)
-  isBlocked              Boolean                  @default(false)
   hasFunded              Boolean                  @default(false)
   isCycleLeader          Boolean                  @default(false)
   emailVerified          Boolean                  @default(false)
@@ -71,6 +70,17 @@ model User {
   Bpc                    Bpc[]
   WithdrawalRequest      WithdrawalRequest[]
   ShopOrders             ShopOrders[]
+  BlockedUser            BlockedUser?
+}
+
+model BlockedUser {
+  id        Int      @id @default(autoincrement())
+  status    Boolean  @default(false)
+  reason    String?
+  userId    Int      @unique
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Ewallet {

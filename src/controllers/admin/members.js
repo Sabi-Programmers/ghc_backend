@@ -5,6 +5,7 @@ import { allPackageOrdered } from "../../services/packageOrderServices.js";
 import userServices from "../../services/userServices.js";
 import { calculatePagination, toTwoDecimals } from "../../utils/index.js";
 import response from "../../utils/response.js";
+import { sendBlockedMemberMail } from "../../libs/nodemailer.js";
 
 const getMembers = asyncWrapper(async (req, res) => {
   const data = {
@@ -73,11 +74,41 @@ const getMembersOrders = asyncWrapper(async (req, res) => {
 const getBlockMemberPage = asyncWrapper(async (req, res) => {
   const data = {
     user: req.user,
+    member: null,
   };
+  const member = req.query.member;
+  if (member) {
+    data.member = await userServices.getUserForBlocking(member);
+  }
+
   res.render("admin/member-manager/block-member", {
     title: "Block member",
     data,
   });
+});
+const blockMember = asyncWrapper(async (req, res) => {
+  const { username, fullName, reason } = req.body;
+
+  if (!username || !fullName || !reason) {
+    return response.json(
+      res,
+      StatusCodes.BAD_REQUEST,
+      false,
+      "Field Missing or Invalid"
+    );
+  }
+
+  const member = await userServices.blockUser(username, reason);
+
+  try {
+    await sendBlockedMemberMail(
+      member.fullName,
+      member.email,
+      member.blockedReason
+    );
+  } catch (error) {}
+
+  return response.json(res, StatusCodes.OK, true, "Member account blocked");
 });
 const getBlockedMembersPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -161,4 +192,5 @@ export {
   getRollBackFundsPage,
   searchMember,
   rollBackFunds,
+  blockMember,
 };
