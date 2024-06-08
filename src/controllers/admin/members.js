@@ -5,7 +5,10 @@ import { allPackageOrdered } from "../../services/packageOrderServices.js";
 import userServices from "../../services/userServices.js";
 import { calculatePagination, toTwoDecimals } from "../../utils/index.js";
 import response from "../../utils/response.js";
-import { sendBlockedMemberMail } from "../../libs/nodemailer.js";
+import {
+  sendBlockedMemberMail,
+  sendUnblockedMemberMail,
+} from "../../libs/nodemailer.js";
 
 const getMembers = asyncWrapper(async (req, res) => {
   const data = {
@@ -110,10 +113,44 @@ const blockMember = asyncWrapper(async (req, res) => {
 
   return response.json(res, StatusCodes.OK, true, "Member account blocked");
 });
+const unblockMember = asyncWrapper(async (req, res) => {
+  const { memberId } = req.body;
+
+  if (!memberId) {
+    return response.json(
+      res,
+      StatusCodes.BAD_REQUEST,
+      false,
+      "Field Missing or Invalid"
+    );
+  }
+
+  const member = await userServices.unblockUser(memberId);
+
+  try {
+    await sendUnblockedMemberMail(member.fullName, member.email);
+  } catch (error) {}
+
+  return response.json(res, StatusCodes.OK, true, "Member account unblocked");
+});
 const getBlockedMembersPage = asyncWrapper(async (req, res) => {
   const data = {
     user: req.user,
   };
+
+  const searchQuery = req.query.q || null;
+
+  const page = Number(req.query.page) || 1; // Current page
+  const perPage = Number(req.query.limit) || 10; // Number of records per page
+  const { members, totalItem } = await userServices.getAllBlockedUsers(
+    page,
+    perPage,
+    searchQuery
+  );
+  data.members = members;
+
+  data.pagination = calculatePagination(totalItem, page, perPage);
+
   res.render("admin/member-manager/blocked-members", {
     title: "Blocked members",
     data,
@@ -193,4 +230,5 @@ export {
   searchMember,
   rollBackFunds,
   blockMember,
+  unblockMember,
 };

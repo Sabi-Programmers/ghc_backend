@@ -64,3 +64,11 @@ export async function sendBlockedMemberMail(fullName, email, reason) {
     html: mailTemplates.blockMember(fullName, reason),
   });
 }
+export async function sendUnblockedMemberMail(fullName, email) {
+  await transporter.sendMail({
+    from: `"Grand Health Cycle " <${process.env.EMAIL_AUTH_USER}>`,
+    to: email,
+    subject: "Account Unblocked Notification",
+    html: mailTemplates.unblockMember(fullName),
+  });
+}

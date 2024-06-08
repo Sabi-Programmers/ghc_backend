@@ -209,4 +209,18 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload();
     });
   }
+
+  const unBlockMemberForms = document.querySelectorAll(".unblock-member");
+
+  unBlockMemberForms.forEach((el) => {
+    el.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      await handlerPostRequest(jsonData, "/admin/members/unblock");
+
+      window.location.reload();
+    });
+  });
 });

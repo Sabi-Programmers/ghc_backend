@@ -211,6 +211,21 @@ const blockUser = async (username, reason) => {
     },
   });
 };
+const unblockUser = async (memberId) => {
+  return await database.user.update({
+    where: {
+      id: Number(memberId),
+    },
+    data: {
+      BlockedUser: {
+        update: {
+          status: false,
+          reason: "",
+        },
+      },
+    },
+  });
+};
 const updateUserForRollBack = async (username, wallet, balance) => {
   const updatedWallet = {};
   updatedWallet[wallet] = balance;
@@ -226,10 +241,54 @@ const updateUserForRollBack = async (username, wallet, balance) => {
   });
 };
 
+const getAllBlockedUsers = async (page, perPage, searchQuery) => {
+  const whereClause = {
+    BlockedUser: {
+      status: true,
+    },
+  };
+
+  if (searchQuery) {
+    whereClause.OR = [
+      { username: { contains: searchQuery, mode: "insensitive" } },
+      { fullName: { contains: searchQuery, mode: "insensitive" } },
+    ];
+  }
+
+  const members = await database.user.findMany({
+    where: whereClause,
+    include: {
+      BlockedUser: true,
+      bronze: {
+        select: {
+          currentCycle: true,
+        },
+      },
+      gold: {
+        select: {
+          currentCycle: true,
+        },
+      },
+      diamond: {
+        select: {
+          currentCycle: true,
+        },
+      },
+    },
+    skip: (page - 1) * perPage,
+    take: perPage,
+    orderBy: { createdAt: "desc" },
+  });
+  const totalItem = await database.blockedUser.findMany();
+  return { members, totalItem };
+};
+
 const userServices = {
+  getAllBlockedUsers,
   getUserForRollBack,
   getUserForBlocking,
   blockUser,
+  unblockUser,
   updateUserForRollBack,
   searchUsers,
   getUserDashboardDetails,
