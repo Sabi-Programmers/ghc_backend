@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import database from "../libs/prisma.js";
 import { excludeData } from "../utils/index.js";
 
@@ -125,4 +126,41 @@ const generateProduct = async () => {
   });
 };
 
-export { getAllProducts, generateProduct, getSingleProduct };
+const createProduct = async ({
+  name,
+  description,
+  price,
+  sellingPrice,
+  photo,
+  productType,
+}) => {
+  const slug = slugify(name);
+  return await database.product.create({
+    data: {
+      name,
+      description,
+      price: parseFloat(price),
+      sellingPrice: parseFloat(sellingPrice),
+      photo,
+      slug,
+      productType: productType.toUpperCase(),
+    },
+  });
+};
+
+const uploadProductFile = async (id, file) => {
+  return await database.product.update({
+    where: { id: Number(id) },
+    data: {
+      file,
+    },
+  });
+};
+
+export {
+  getAllProducts,
+  generateProduct,
+  getSingleProduct,
+  createProduct,
+  uploadProductFile,
+};

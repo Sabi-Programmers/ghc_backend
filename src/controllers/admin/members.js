@@ -149,6 +149,8 @@ const getBlockedMembersPage = asyncWrapper(async (req, res) => {
   );
   data.members = members;
 
+  data.q = searchQuery;
+
   data.pagination = calculatePagination(totalItem, page, perPage);
 
   res.render("admin/member-manager/blocked-members", {

@@ -223,4 +223,37 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload();
     });
   });
+
+  function toggleFields() {
+    const productType = document.getElementById("productType").value;
+    const digitalFields = document.getElementById("digitalProductFields");
+    const physicalFields = document.getElementById("physicalProductFields");
+
+    if (productType === "digital") {
+      digitalFields.style.display = "block";
+      physicalFields.style.display = "none";
+    } else if (productType === "physical") {
+      digitalFields.style.display = "none";
+      physicalFields.style.display = "block";
+    } else {
+      digitalFields.style.display = "none";
+      physicalFields.style.display = "none";
+    }
+  }
+
+  const selectProductType = document.getElementById("productType");
+  if (selectProductType) {
+    selectProductType.addEventListener("change", toggleFields);
+  }
+
+  const addProductForm = document.getElementById("add-product-form");
+  if (addProductForm) {
+    addProductForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+      console.log(jsonData);
+    });
+  }
 });
