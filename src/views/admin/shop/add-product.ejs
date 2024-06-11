@@ -15,11 +15,76 @@
             <div class="card-body pt-5">
               <form id="add-product-form">
                 <div class="row mb-3">
+                  <label for="productName" class="col-sm-2 col-form-label"
+                    >Product Name</label
+                  >
+                  <div class="col-sm-10 form-group">
+                    <input
+                      type="text"
+                      name="name"
+                      class="form-control"
+                      id="productName"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="productPrice" class="col-sm-2 col-form-label"
+                    >Product Price ($)</label
+                  >
+                  <div class="col-sm-10 form-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="price"
+                      id="productPrice"
+                      required
+                    />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label
+                    for="productSellingPrice"
+                    class="col-sm-2 col-form-label"
+                    >Product Selling Price ($)</label
+                  >
+                  <div class="col-sm-10 form-group">
+                    <input
+                      type="number"
+                      class="form-control"
+                      name="sellingPrice"
+                      id="productSellingPrice"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="uploadPictures" class="col-sm-2 col-form-label"
+                    >Upload Pictures</label
+                  >
+                  <div class="col-sm-10 form-group">
+                    <input
+                      class="form-control"
+                      type="file"
+                      id="uploadPictures"
+                      accept="image/*"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="row mb-3">
                   <label for="productType" class="col-sm-2 col-form-label"
                     >Product Type</label
                   >
-                  <div class="col-sm-10">
-                    <select class="form-select" id="productType">
+                  <div class="col-sm-10 form-group">
+                    <select
+                      class="form-select"
+                      name="productType"
+                      id="productType"
+                      required
+                    >
                       <option value="" selected disabled>
                         Select Product Type
                       </option>
@@ -29,198 +94,58 @@
                   </div>
                 </div>
 
-                <div class="row mb-3">
-                  <label for="productName" class="col-sm-2 col-form-label"
-                    >Product Name</label
-                  >
-                  <div class="col-sm-10">
-                    <input type="text" class="form-control" id="productName" />
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label for="productPrice" class="col-sm-2 col-form-label"
-                    >Product Price</label
-                  >
-                  <div class="col-sm-10">
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="price"
-                      id="productPrice"
-                    />
-                  </div>
-                </div>
-                <div class="row mb-3">
-                  <label
-                    for="productSellingPrice"
-                    class="col-sm-2 col-form-label"
-                    >Product Selling Price</label
-                  >
-                  <div class="col-sm-10">
-                    <input
-                      type="number"
-                      class="form-control"
-                      name="sellingPrice"
-                      id="productSellingPrice"
-                    />
-                  </div>
-                </div>
-
                 <div id="digitalProductFields" style="display: none">
-                  <fieldset class="row mb-3">
-                    <legend class="col-form-label col-sm-2 pt-0">
-                      Add Category
-                    </legend>
-                    <div class="col-sm-10">
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="category"
-                          id="categoryEbooks"
-                          value="Ebooks"
-                        />
-                        <label class="form-check-label" for="categoryEbooks"
-                          >Ebooks</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="category"
-                          id="categoryCourses"
-                          value="Courses"
-                        />
-                        <label class="form-check-label" for="categoryCourses"
-                          >Courses</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="category"
-                          id="categoryPodcast"
-                          value="Podcast"
-                        />
-                        <label class="form-check-label" for="categoryPodcast"
-                          >Podcast</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="category"
-                          id="categorySoftware"
-                          value="Software"
-                        />
-                        <label class="form-check-label" for="categorySoftware"
-                          >Software</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="category"
-                          id="categoryAudioBooks"
-                          value="Audio books"
-                        />
-                        <label class="form-check-label" for="categoryAudioBooks"
-                          >Audio books</label
-                        >
-                      </div>
-                      <div class="form-check">
-                        <input
-                          class="form-check-input"
-                          type="radio"
-                          name="category"
-                          id="categoryVideo"
-                          value="Video"
-                        />
-                        <label class="form-check-label" for="categoryVideo"
-                          >Video</label
-                        >
-                      </div>
-                    </div>
-                  </fieldset>
                   <div class="row mb-3">
-                    <label
-                      for="digitalProductDescription"
-                      class="col-sm-2 col-form-label"
-                      >Product Description</label
+                    <label for="category" class="col-form-label col-sm-2 pt-0"
+                      >Add Category</label
                     >
                     <div class="col-sm-10">
-                      <textarea
-                        class="form-control"
-                        id="digitalProductDescription"
-                        style="height: 100px"
-                        name="description"
-                      ></textarea>
+                      <select class="form-select" id="category" name="category">
+                        <option value="" selected disabled>----</option>
+                        <option value="Ebooks">Ebooks</option>
+                        <option value="Courses">Courses</option>
+                        <option value="Podcast">Podcast</option>
+                        <option value="Software">Software</option>
+                        <option value="Audio books">Audio books</option>
+                        <option value="Video">Video</option>
+                        <option value="Others">Others</option>
+                      </select>
                     </div>
                   </div>
-                  <div class="row mb-3">
-                    <label
-                      for="uploadDigitalPictures"
-                      class="col-sm-2 col-form-label"
-                      >Upload Pictures</label
-                    >
-                    <div class="col-sm-10">
-                      <input
-                        class="form-control"
-                        type="file"
-                        id="uploadDigitalPictures"
-                        multiple
-                      />
-                    </div>
-                  </div>
+
                   <div class="row mb-3">
                     <label
                       for="uploadProductFile"
                       class="col-sm-2 col-form-label"
                       >Upload Product File</label
                     >
-                    <div class="col-sm-10">
+                    <div class="col-sm-10 form-group">
                       <input
                         class="form-control"
                         type="file"
                         id="uploadProductFile"
+                        accept="application/pdf"
                       />
                     </div>
                   </div>
                 </div>
 
-                <div id="physicalProductFields" style="display: none">
-                  <div class="row mb-3">
-                    <label
-                      for="physicalProductDescription"
-                      class="col-sm-2 col-form-label"
-                      >Product Description</label
-                    >
-                    <div class="col-sm-10">
-                      <textarea
-                        class="form-control"
-                        id="physicalProductDescription"
-                        style="height: 100px"
-                      ></textarea>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <label
-                      for="uploadPhysicalPictures"
-                      class="col-sm-2 col-form-label"
-                      >Upload Pictures</label
-                    >
-                    <div class="col-sm-10">
-                      <input
-                        class="form-control"
-                        type="file"
-                        id="uploadPhysicalPictures"
-                        multiple
-                      />
-                    </div>
+                <div id="physicalProductFields" style="display: none"></div>
+
+                <div class="row mb-3">
+                  <label
+                    for="productDescription"
+                    class="col-sm-2 col-form-label"
+                    >Product Description</label
+                  >
+                  <div class="col-sm-10 form-group">
+                    <textarea
+                      class="form-control"
+                      id="productDescription"
+                      style="height: 100px"
+                      name="description"
+                      required
+                    ></textarea>
                   </div>
                 </div>
 

@@ -247,13 +247,89 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const addProductForm = document.getElementById("add-product-form");
-  if (addProductForm) {
-    addProductForm.addEventListener("submit", (e) => {
-      e.preventDefault();
+  const uploadPicturesInput = document.getElementById("uploadPictures");
+  const uploadProductFileInput = document.getElementById("uploadProductFile");
+  if (addProductForm && uploadPicturesInput) {
+    pristine = new Pristine(addProductForm);
 
+    const productSellingPrice = document.getElementById("productSellingPrice");
+    const productPrice = document.getElementById("productPrice");
+
+    if (productSellingPrice && productPrice) {
+      pristine.addValidator(
+        productSellingPrice,
+        function (value, el) {
+          const price = productPrice.value;
+          if (parseFloat(price) > parseFloat(value)) {
+            return false;
+          }
+          return true;
+        },
+        "Selling Price must be greater than Price",
+        3,
+        false
+      );
+    }
+    const uploadDigitalProductFile = async (id) => {
+      const digitalFormData = new FormData();
+      digitalFormData.append("file", uploadProductFileInput.files[0]);
+      digitalFormData.append("id", id);
+      const digitalRes = await fetch("/admin/shop/add-product/file", {
+        method: "POST",
+        body: digitalFormData,
+      });
+      const digitalResData = await digitalRes.json();
+      if (digitalResData.success === false) {
+        throw new Error(resData.message);
+      }
+    };
+
+    const submitProductForm = async (formData) => {
+      handleLoader("show");
+
+      try {
+        const res = await fetch("/admin/shop/add-product", {
+          method: "POST",
+          body: formData,
+        });
+        const resData = await res.json();
+        if (resData.success === false) {
+          throw new Error(resData.message);
+        }
+        if (resData.data.productType !== "PHYSICAL") {
+          await uploadDigitalProductFile(resData.data.id);
+        }
+        toast.success(resData.message);
+        window.location.href = "/admin/shop/product/" + resData.data.slug;
+      } catch (error) {
+        toast.failed("Failed to add product");
+      } finally {
+        handleLoader("hide");
+      }
+    };
+
+    addProductForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const photo = uploadPictures.files[0];
       const formData = new FormData(e.target);
-      const jsonData = formDataToJson(formData);
-      console.log(jsonData);
+      formData.append("photo", photo);
+
+      if (
+        e.target.productType.value === "digital" &&
+        (uploadProductFileInput.files.length === 0 ||
+          e.target.category.value.length === 0)
+      ) {
+        toast.failed("All Feilds are required");
+        return;
+      }
+
+      submitProductForm(formData);
     });
   }
 });

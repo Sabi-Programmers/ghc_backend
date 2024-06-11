@@ -133,8 +133,10 @@ const createProduct = async ({
   sellingPrice,
   photo,
   productType,
+  category,
 }) => {
-  const slug = slugify(name);
+  const slug = slugify(name + "-" + Math.floor(100 + Math.random() * 900));
+
   return await database.product.create({
     data: {
       name,
@@ -143,6 +145,7 @@ const createProduct = async ({
       sellingPrice: parseFloat(sellingPrice),
       photo,
       slug,
+      category: category ? category : null,
       productType: productType.toUpperCase(),
     },
   });

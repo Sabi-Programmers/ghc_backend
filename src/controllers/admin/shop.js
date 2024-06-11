@@ -17,9 +17,6 @@ const getAddProductPage = asyncWrapper(async (req, res) => {
   });
 });
 const addProduct = asyncWrapper(async (req, res) => {
-  console.log(req.body);
-  console.log(req.file.filename);
-
   const product = await createProduct({
     ...req.body,
     photo: req.file.filename,
