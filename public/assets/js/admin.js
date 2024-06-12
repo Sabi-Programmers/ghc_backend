@@ -332,4 +332,14 @@ document.addEventListener("DOMContentLoaded", () => {
       submitProductForm(formData);
     });
   }
+
+  const confirmDeliveryBtn = document.querySelectorAll(".confirmDeliveryBtn");
+  confirmDeliveryBtn.forEach((el) => {
+    el.addEventListener("click", async () => {
+      const id = el.getAttribute("data-id");
+
+      await handlerPostRequest({ id }, "/admin/shop/orders/physical");
+      window.location.reload();
+    });
+  });
 });
