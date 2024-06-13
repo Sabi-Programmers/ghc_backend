@@ -342,4 +342,15 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload();
     });
   });
+  const confirmPkgDeliveryBtn = document.querySelectorAll(
+    ".confirmPkgDeliveryBtn"
+  );
+  confirmPkgDeliveryBtn.forEach((el) => {
+    el.addEventListener("click", async () => {
+      const id = el.getAttribute("data-id");
+
+      await handlerPostRequest({ id }, "/admin/product-delivery/undelivered");
+      window.location.reload();
+    });
+  });
 });

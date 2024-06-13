@@ -15,7 +15,7 @@
             <div class="card">
               <div class="card-header">
                 <div class="d-flex align-items-center gap-3">
-                  <h5 class="p-0 m-0">Status:</h5>
+                  <h5 class="p-0 m-0">Select Package:</h5>
                   <div class="dropdown">
                     <button
                       class="btn btn-secondary dropdown-toggle text-capitalize"
@@ -24,7 +24,7 @@
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <%= data.st.toLowerCase() %>
+                      <%= data.package.toLowerCase() %>
                     </button>
                     <ul
                       class="dropdown-menu"
@@ -32,23 +32,23 @@
                     >
                       <li>
                         <a
-                          class="dropdown-item <%= data.st === 'all' ? 'active disabled' : '' %>"
-                          href="?st=all"
-                          >All</a
+                          class="dropdown-item <%= data.package === 'Bronze' ? 'active disabled' : '' %>"
+                          href="?pkg=Bronze"
+                          >Bronze</a
                         >
                       </li>
                       <li>
                         <a
-                          class="dropdown-item <%= data.st === 'DELIVERED' ? 'active disabled' : '' %>"
-                          href="?st=DELIVERED"
-                          >Delivered</a
+                          class="dropdown-item <%= data.package === 'Gold' ? 'active disabled' : '' %>"
+                          href="?pkg=Gold"
+                          >Gold</a
                         >
                       </li>
                       <li>
                         <a
-                          class="dropdown-item <%= data.st === 'UNDELIVERED' ? 'active disabled' : '' %>"
-                          href="?st=UNDELIVERED"
-                          >Undelivered</a
+                          class="dropdown-item <%= data.package === 'Diamond' ? 'active disabled' : '' %>"
+                          href="?pkg=Diamond"
+                          >Diamond</a
                         >
                       </li>
                     </ul>
@@ -60,9 +60,15 @@
                   <div class="input-group mb-3">
                     <input
                       type="text"
+                      name="pkg"
+                      class="form-control d-none"
+                      value="<%= data.package %>"
+                    />
+                    <input
+                      type="text"
                       name="q"
                       class="form-control"
-                      placeholder="Search username, fullname, or email"
+                      placeholder="Search username, or fullname"
                       aria-label="Search"
                       value="<%= data.q %>"
                     />
@@ -78,57 +84,38 @@
                   >
                     <thead class="table-dark">
                       <tr>
-                        <th>Id</th>
-                        <th>Item requested</th>
-                        <th>Seller name</th>
+                        <th>Name</th>
+                        <th>Username</th>
                         <th>Delivery status</th>
-                        <th>Purchase amount</th>
-                        <th>Buyer's name</th>
-                        <th>Phone number</th>
-                        <th>Email</th>
-                        <th>Product type</th>
-                        <th>Country</th>
-                        <th>City</th>
-                        <th>Address</th>
+                        <th>Delivery cycle</th>
+                        <th>User history</th>
+                        <th>Confirm delivery</th>
+                        <th>Phone</th>
                         <th>Date</th>
-                        <th>Confirm Delivery</th>
-                        <th>Transaction Ref</th>
                       </tr>
                     </thead>
                     <tbody>
                       <% for( let i = 0; i < data.orders.length; i++ ) { %>
                       <tr>
-                        <td><%= data.orders[i].id %></td>
-                        <td><%= data.orders[i].Item.name %></td>
-                        <td>
-                          <%= data.orders[i].sellerId ?
-                          data.orders[i].Seller.name : "None" %>
-                        </td>
+                        <td><%= data.orders[i].User.fullName %></td>
+                        <td><%= data.orders[i].User.username %></td>
                         <td><%= data.orders[i].status %></td>
-                        <td>$<%= data.orders[i].Item.sellingPrice %></td>
-                        <td><%= data.orders[i].fullName %></td>
-                        <td><%= data.orders[i].phone %></td>
-                        <td><%= data.orders[i].email %></td>
-                        <td><%= data.orders[i].Item.productType %></td>
-                        <td><%= data.orders[i].country %></td>
-                        <td><%= data.orders[i].city %></td>
-                        <td><%= data.orders[i].address %></td>
-
+                        <td><%= data.orders[i].cycle %></td>
                         <td>
-                          <%= (data.orders[i].createdAt).toLocaleDateString()%>
+                          <Button class="btn btn-sm btn-info">View</Button>
                         </td>
                         <td>
                           <button
                             type="button"
                             class="btn btn-primary btn-sm <%= data.orders[i].status === 'DELIVERED' ? 'disabled' : '' %>"
                             data-bs-toggle="modal"
-                            data-bs-target="#confirmDeliveryModal-<%= data.orders[i].id %>"
+                            data-bs-target="#confirmPkgDeliveryModal-<%= data.orders[i].id %>"
                           >
                             Confirm
                           </button>
                           <div
                             class="modal fade"
-                            id="confirmDeliveryModal-<%= data.orders[i].id %>"
+                            id="confirmPkgDeliveryModal-<%= data.orders[i].id %>"
                             tabindex="-1"
                             data-bs-backdrop="static"
                             data-bs-keyboard="false"
@@ -137,13 +124,13 @@
                             aria-hidden="true"
                           >
                             <div
-                              class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md"
+                              class="modal-dialog modal-dialog-centered modal-md"
                               role="document"
                             >
                               <div class="modal-content">
                                 <div class="modal-header">
                                   <h5 class="modal-title" id="modalTitleId">
-                                    Confirm Product Delivery
+                                    Confirm Package Order Delivery
                                   </h5>
                                   <button
                                     type="button"
@@ -153,9 +140,8 @@
                                   ></button>
                                 </div>
                                 <div class="modal-body">
-                                  Are you sure <%= data.orders[i].Item.name %>
-                                  has been delivered to <%=
-                                  data.orders[i].fullName %>?
+                                  Are you sure the product has been delivered to
+                                  <%= data.orders[i].User.fullName %>?
                                 </div>
                                 <div class="modal-footer">
                                   <button
@@ -167,7 +153,7 @@
                                   </button>
                                   <button
                                     type="button"
-                                    class="btn btn-primary confirmDeliveryBtn"
+                                    class="btn btn-primary confirmPkgDeliveryBtn"
                                     data-id="<%= data.orders[i].id %>"
                                   >
                                     Yes
@@ -177,7 +163,11 @@
                             </div>
                           </div>
                         </td>
-                        <td><%= data.orders[i].tx_ref %></td>
+                        <td><%= data.orders[i].User.phone %></td>
+
+                        <td>
+                          <%= (data.orders[i].createdAt).toLocaleDateString()%>
+                        </td>
                       </tr>
 
                       <% } %>
@@ -186,7 +176,8 @@
                 </div>
               </div>
               <%- include('../partials/pagination', {urlPrefix: data.q ?
-              `?st=${data.st}&q=${data.q}` : `?st=${data.st}`, data}) %>
+              `?pkg=${data.package}&q=${data.q}` : `?pkg=${data.package}`,
+              data}) %>
             </div>
           </div>
         </div>

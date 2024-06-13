@@ -143,18 +143,36 @@
     <li class="nav-item">
       <a
         class="nav-link collapsed"
-        href="./e-commerce-shop/sold-product-records.html"
+        data-bs-target="#shop-marketing-admin-nav"
+        data-bs-toggle="collapse"
+        href="#"
       >
-        <i class="bx bx-shopping-bag"></i>
-        <span>Shop Marketing</span>
+        <i class="bx bxs-detail"></i><span>Shop Marketing</span
+        ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
+      <ul
+        id="shop-marketing-admin-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="/admin/shop/orders/physical">
+            <i class="bi bi-circle"></i><span>Physical Products</span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/shop/orders/digital">
+            <i class="bi bi-circle"></i><span>Digital Products</span>
+          </a>
+        </li>
+      </ul>
     </li>
     <!-- End Shop Marketing Page Nav -->
 
     <li class="nav-item">
       <a
         class="nav-link collapsed"
-        data-bs-target="#testimony-admin-nav"
+        data-bs-target="#product-delivery-admin-nav"
         data-bs-toggle="collapse"
         href="#"
       >
@@ -162,18 +180,18 @@
         ><i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul
-        id="testimony-admin-nav"
+        id="product-delivery-admin-nav"
         class="nav-content collapse"
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="./product-delivery-status/undelivered-product.html">
-            <i class="bi bi-circle"></i><span>Undelivery Products </span>
+          <a href="/admin/product-delivery/undelivered">
+            <i class="bi bi-circle"></i><span>Undelivered Products </span>
           </a>
         </li>
         <li>
-          <a href="./product-delivery-status/delivered-product.html">
-            <i class="bi bi-circle"></i><span>Delivery Products</span>
+          <a href="/admin/product-delivery/delivered">
+            <i class="bi bi-circle"></i><span>Delivered Products</span>
           </a>
         </li>
       </ul>
