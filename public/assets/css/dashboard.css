@@ -1840,3 +1840,9 @@ label[for="profile-photo-file"]:hover span {
   padding: 0;
   margin: 0;
 }
+
+.text-full {
+  white-space: normal; /* Allow text to wrap */
+  overflow: visible; /* Ensure no overflow hidden */
+  text-overflow: clip; /* Ensure no text truncation */
+}
