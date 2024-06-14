@@ -289,11 +289,11 @@ window.onload = function () {
       const formData = new FormData(e.target);
       const jsonData = formDataToJson(formData);
 
-      console.log(jsonData);
+      const banks = document.querySelector("#bankName");
+      const selectedBank = banks.options[banks.selectedIndex];
+      jsonData.bankCode = selectedBank.getAttribute("data-code");
 
-      // sessionStorage.setItem("user-form", JSON.stringify(jsonData));
-
-      // handlerPostRequest(jsonData, "/auth/register", "/dashboard");
+      handlerPostRequest(jsonData, "/auth/register", "/dashboard");
     });
   }
 

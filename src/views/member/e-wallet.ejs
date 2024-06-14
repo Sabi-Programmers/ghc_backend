@@ -16,16 +16,14 @@
 
             <div class="card w-100 info-card customers-card pb-0">
               <div class="card-body">
-                <h5 class="card-title pb-0 mb-1">
-                  <%= data.eWallet.virtualBankName %>
-                </h5>
+                <h5 class="card-title pb-0 mb-1"><%= data.bank.bankName %></h5>
                 <div class="w-100 d-flex flex-column gap-3">
                   <div
                     class="d-flex align-items-center justify-content-between"
                   >
                     <div class="text-truncate">
                       <h6 class="text-truncate copy-item">
-                        <%= data.eWallet.accountNumber %>
+                        <%= data.bank.accountNumber %>
                       </h6>
                     </div>
                     <div
@@ -37,9 +35,7 @@
                     </div>
                   </div>
                   <div class="text-truncate">
-                    <h6 class="text-truncate">
-                      <%= data.eWallet.accountName %>
-                    </h6>
+                    <h6 class="text-truncate"><%= data.bank.accountName %></h6>
                   </div>
                 </div>
               </div>
@@ -73,11 +69,13 @@
                     $
                     <span>
                       <%= Number((data.eWallet.balance /
-                      1000).toFixed(2)).toLocaleString() %>
+                      data.bank.usdRate).toFixed(2)).toLocaleString() %>
                     </span>
                   </h6>
                 </div>
-                <small> <em> 1 USD ($) = 1000 NGN (&#8358;) </em> </small>
+                <small>
+                  <em> 1 USD ($) = <%= data.bank.usdRate %> NGN (&#8358;) </em>
+                </small>
               </div>
               <div class="w-100 text-center more-info"></div>
             </div>

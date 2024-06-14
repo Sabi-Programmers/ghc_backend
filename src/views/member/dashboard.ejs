@@ -79,7 +79,7 @@
                         $
                         <span
                           ><%- data.user.eWallet ? (data.user.eWallet.balance /
-                          1000).toFixed(2) : 0.00 %></span
+                          data.bank.usdRate).toFixed(2) : 0.00 %></span
                         >
                       </h6>
                     </div>
@@ -120,16 +120,14 @@
           <div class="col-md-6">
             <div class="card info-card customers-card pb-0">
               <div class="card-body">
-                <h5 class="card-title pb-0 mb-1">
-                  <%= data.eWallet.virtualBankName %>
-                </h5>
+                <h5 class="card-title pb-0 mb-1"><%= data.bank.bankName %></h5>
                 <div class="w-100 d-flex flex-column gap-3">
                   <div
                     class="d-flex align-items-center justify-content-between"
                   >
                     <div class="text-truncate">
                       <h6 class="text-truncate copy-item">
-                        <%= data.eWallet.accountNumber %>
+                        <%= data.bank.accountNumber %>
                       </h6>
                     </div>
                     <div
@@ -141,9 +139,7 @@
                     </div>
                   </div>
                   <div class="text-truncate">
-                    <h6 class="text-truncate">
-                      <%= data.eWallet.accountName %>
-                    </h6>
+                    <h6 class="text-truncate"><%= data.bank.accountName %></h6>
                   </div>
                 </div>
               </div>

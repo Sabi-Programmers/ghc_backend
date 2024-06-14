@@ -46,9 +46,9 @@ model User {
   isCycleLeader          Boolean                  @default(false)
   emailVerified          Boolean                  @default(false)
   displayPhoto           String?
-  bankName               String?
-  accountNumber          String?                  @unique
-  accountName            String?
+  bankName               String
+  accountNumber          String                   @unique
+  accountName            String
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
   eWallet                Ewallet?
@@ -84,13 +84,10 @@ model BlockedUser {
 }
 
 model Ewallet {
-  id              Int    @id @default(autoincrement())
-  virtualBankName String
-  accountNumber   BigInt
-  accountName     String
-  balance         Float  @default(0.00)
-  userId          Int    @unique
-  User            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id      Int   @id @default(autoincrement())
+  balance Float @default(0.00)
+  userId  Int   @unique
+  User    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model WithdrawalWallet {
@@ -395,6 +392,9 @@ model ShopOrders {
 
 model Contants {
   id                     Int      @id @default(1)
+  bankName               String   @default("")
+  accountNumber          String   @default("")
+  accountName            String   @default("")
   bronze                 Float
   gold                   Float
   diamond                Float
