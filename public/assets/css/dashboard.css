@@ -1846,3 +1846,53 @@ label[for="profile-photo-file"]:hover span {
   overflow: visible; /* Ensure no overflow hidden */
   text-overflow: clip; /* Ensure no text truncation */
 }
+
+.chat-messages {
+  display: flex;
+  flex-direction: column;
+  min-height: 500px;
+  height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+  overflow: -moz-scrollbars-none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+.chat-messages::-webkit-scrollbar {
+  display: none;
+}
+
+.chat-messages em {
+  font-size: 10px;
+}
+
+.chat-message-left,
+.chat-message-right {
+  display: flex;
+  flex-shrink: 0;
+  width: 80%;
+  max-width: 70ch;
+}
+
+.chat-message-left {
+  margin-right: auto;
+}
+
+.chat-message-right {
+  flex-direction: row-reverse;
+  margin-left: auto;
+}
+.chat-message-left > div {
+  border-radius: 30px;
+  border-top-left-radius: 0;
+}
+.chat-message-right > div {
+  border-radius: 30px;
+  border-top-right-radius: 0;
+}
+
+.max-height {
+  max-height: 25vh; /* Or max-height: 52px; */
+  overflow: hidden;
+  resize: none;
+}

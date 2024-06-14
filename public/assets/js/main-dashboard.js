@@ -194,4 +194,16 @@
         });
     });
   }
+
+  const textarea = document.getElementById("prompt-textarea");
+
+  if (textarea) {
+    textarea.addEventListener("input", function () {
+      this.style.height = "auto";
+      this.style.height = this.scrollHeight + "px";
+    });
+
+    // Initialize the height to the content or placeholder
+    textarea.style.height = textarea.scrollHeight + "px";
+  }
 })();

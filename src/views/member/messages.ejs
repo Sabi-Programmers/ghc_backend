@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('partials/head') %>
+
+  <body>
+    <%- include('layout/navbar') %> <%- include('partials/logout') %> <%-
+    include('layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="position-relative">
+                <div class="chat-messages p-4">
+                  <div class="chat-message-right pb-4">
+                    <div
+                      class="flex-shrink-1 bg-light py-2 px-3 mr-3 d-flex flex-column"
+                    >
+                      <p class="m-0 p-0">
+                        Lorem ipsum dolor sit amet, vis erat denique in, dicunt
+                        prodesset te vix. Lorem ipsum dolor sit amet, vis erat
+                        denique in, dicunt prodesset te.
+                      </p>
+                      <div class="mb-1 ms-auto">
+                        <em> 12/11/24 - 2:30pm</em>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="chat-message-left pb-4">
+                    <div
+                      class="flex-shrink-1 bg-secondary-subtle py-2 px-3 mr-3 d-flex flex-column"
+                    >
+                      <p class="m-0 p-0">
+                        Lorem ipsum dolor sit amet, vis erat denique in, dicunt
+                        prodesset te vix. Lorem ipsum dolor sit amet, vis erat
+                        denique in, dicunt prodesset te.
+                      </p>
+                      <div class="mb-1 ms-auto">
+                        <em> 12/11/24 - 2:30pm</em>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div
+                class="flex-grow-0 py-3 border-top px-2 gap-2 d-flex flex-column"
+              >
+                <div class="d-flex min-w-0 flex-1 flex-column">
+                  <textarea
+                    id="prompt-textarea"
+                    tabindex="0"
+                    dir="auto"
+                    rows="1"
+                    placeholder="Type message..."
+                    class="form-control border-0 bg-transparent p-0 focus:ring-0 max-height"
+                  ></textarea>
+                </div>
+
+                <button class="btn btn-primary">Send</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+    <%- include('layout/footer') %> <%- include('partials/scripts') %>
+  </body>
+</html>

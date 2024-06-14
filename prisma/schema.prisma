@@ -71,6 +71,7 @@ model User {
   WithdrawalRequest      WithdrawalRequest[]
   ShopOrders             ShopOrders[]
   BlockedUser            BlockedUser?
+  message                Message[]
 }
 
 model BlockedUser {
@@ -418,6 +419,22 @@ model Contants {
   usdRate                Float
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
+}
+
+enum Sender {
+  ADMIN
+  USER
+}
+
+model Message {
+  id        Int      @id @default(autoincrement())
+  sender    Sender
+  userId    Int
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title     String
+  narration String
+  unread    Boolean  @default(true)
+  createdAt DateTime @default(now())
 }
 
 model OtpToken {

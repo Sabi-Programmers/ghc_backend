@@ -16,6 +16,7 @@ import productsRouter from "./products.js";
 import withdrawalWalletsRouter from "./withdrawal-wallets.js";
 import networkRouter from "./network.js";
 import marketingRouter from "./marketing.js";
+import messagesRouter from "./messages.js";
 
 const router = express.Router();
 
@@ -27,6 +28,7 @@ router.use("/packages", isMember, packagesRouter);
 router.use("/user", isMember, userRouter);
 router.use("/profile", isMember, profileRouter);
 router.use("/news", isMember, newsRouter);
+router.use("/messages", isMember, messagesRouter);
 router.use("/withdrawal", isMember, withdrawalRouter);
 router.use("/withdrawal-wallet", isMember, withdrawalWalletsRouter);
 router.use("/testimony", isMember, testimonyRouter);
