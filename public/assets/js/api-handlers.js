@@ -230,8 +230,12 @@ window.onload = function () {
    * Register
    */
   let registerForm = document.getElementById("register-form");
+  let completeRegisterForm = document.getElementById("complete-register-form");
 
   if (registerForm) {
+    // userDetails.style.display = "none";
+    // userBankInfo.style.display = "grid";
+
     pristine = new Pristine(registerForm);
 
     const passwordInput = document.getElementById("password");
@@ -285,7 +289,11 @@ window.onload = function () {
       const formData = new FormData(e.target);
       const jsonData = formDataToJson(formData);
 
-      handlerPostRequest(jsonData, "/auth/register", "/dashboard");
+      console.log(jsonData);
+
+      // sessionStorage.setItem("user-form", JSON.stringify(jsonData));
+
+      // handlerPostRequest(jsonData, "/auth/register", "/dashboard");
     });
   }
 
