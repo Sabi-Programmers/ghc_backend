@@ -1,13 +1,13 @@
-import slugify from 'slugify';
-import database from '../libs/prisma.js';
-import { generateRandomString } from '../utils/index.js';
+import slugify from 'slugify'
+import database from '../libs/prisma.js'
+import { generateRandomString } from '../utils/index.js'
 
 const getAllNews = async (page, isPublished) => {
-    const skip = (page - 1) * 10;
-    const filter = {};
+    const skip = (page - 1) * 10
+    const filter = {}
 
     if (isPublished) {
-        filter.isPublished = true;
+        filter.isPublished = true
     }
 
     const news = await database.news.findMany({
@@ -15,27 +15,29 @@ const getAllNews = async (page, isPublished) => {
         skip,
         take: 10,
         orderBy: { createdAt: 'desc' },
-    });
+    })
 
-    const totalNews = await database.news.count();
+    const totalNews = await database.news.count()
 
-    return { news, totalNews };
-};
-const getAllPublishedNews = async () => await database.news.findMany({
+    return { news, totalNews }
+}
+const getAllPublishedNews = async () =>
+    await database.news.findMany({
         where: {
             isPublished: true,
         },
 
         orderBy: { createdAt: 'desc' },
-    });
+    })
 
-const getSinglenews = async (slug) => await database.news.findFirst({
+const getSinglenews = async (slug) =>
+    await database.news.findFirst({
         where: { slug },
-    });
+    })
 
 const addNews = async ({ title, description, photo }) => {
-    const randomString = generateRandomString(4);
-    const slug = slugify(`${title  } ${  randomString}`, { lower: true });
+    const randomString = generateRandomString(4)
+    const slug = slugify(`${title} ${randomString}`, { lower: true })
     return await database.news.create({
         data: {
             title,
@@ -43,11 +45,11 @@ const addNews = async ({ title, description, photo }) => {
             photo,
             slug,
         },
-    });
-};
+    })
+}
 
 const deleteSingleNews = async (id) =>
-    await database.news.delete({ where: { id } });
+    await database.news.delete({ where: { id } })
 
 export {
     getAllNews,
@@ -55,4 +57,4 @@ export {
     addNews,
     deleteSingleNews,
     getAllPublishedNews,
-};
+}

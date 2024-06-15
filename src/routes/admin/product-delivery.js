@@ -1,14 +1,14 @@
-import express from "express";
+import express from 'express'
 import {
-  confirmPackageOrder,
-  getDeliveredPage,
-  getUndeliveredPage,
-} from "../../controllers/admin/product-delivery.js";
+    confirmPackageOrder,
+    getDeliveredPage,
+    getUndeliveredPage,
+} from '../../controllers/admin/product-delivery.js'
 
-const productDeliveryRouter = express.Router();
+const productDeliveryRouter = express.Router()
 
-productDeliveryRouter.get("/undelivered", getUndeliveredPage);
-productDeliveryRouter.post("/undelivered", confirmPackageOrder);
-productDeliveryRouter.get("/delivered", getDeliveredPage);
+productDeliveryRouter.get('/undelivered', getUndeliveredPage)
+productDeliveryRouter.post('/undelivered', confirmPackageOrder)
+productDeliveryRouter.get('/delivered', getDeliveredPage)
 
-export default productDeliveryRouter;
+export default productDeliveryRouter

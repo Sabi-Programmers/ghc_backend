@@ -1,103 +1,103 @@
-import { StatusCodes } from 'http-status-codes';
-import asyncWrapper from '../middlewares/asyncWrapper.js';
+import { StatusCodes } from 'http-status-codes'
+import asyncWrapper from '../middlewares/asyncWrapper.js'
 import {
     getEwallet,
     getEwalletBalanceUSD,
     updateEwalletBalanceUSD,
-} from '../services/eWalletServices.js';
-import userServices from '../services/userServices.js';
+} from '../services/eWalletServices.js'
+import userServices from '../services/userServices.js'
 import {
     getUserPackage,
     updateUplinePackage,
     updateUserPackage,
-} from '../services/packageServices.js';
+} from '../services/packageServices.js'
 import {
     createReferrersData,
     updateUplineRefferalBonus,
-} from '../services/referralServices.js';
-import { updateUplineUnclaimedBonus } from '../services/unclaimedBonus.js';
-import { calculatePagination, convertToNGN } from '../utils/index.js';
-import { getTotalPackageOrderedPrice } from '../utils/packages.js';
-import response from '../utils/response.js';
-import { getContants } from '../services/contantsServices.js';
+} from '../services/referralServices.js'
+import { updateUplineUnclaimedBonus } from '../services/unclaimedBonus.js'
+import { calculatePagination, convertToNGN } from '../utils/index.js'
+import { getTotalPackageOrderedPrice } from '../utils/packages.js'
+import response from '../utils/response.js'
+import { getContants } from '../services/contantsServices.js'
 import {
     createPackageOrders,
     getUserPackageOrders,
-} from '../services/packageOrderServices.js';
+} from '../services/packageOrderServices.js'
 import {
     updateUplineCycleWelcomeBonus,
     updateUserCycleWelcomeBonus,
     updatedUplineCompBonus,
-} from '../services/cycleWelcomeServies.js';
+} from '../services/cycleWelcomeServies.js'
 import {
     cycleLeadersPayments,
     makeUserCycleLeader,
-} from '../services/cycleLeaderBonus.js';
+} from '../services/cycleLeaderBonus.js'
 
 const buyPackages = asyncWrapper(async (req, res) => {
     try {
-        const { id: userId, sponsorId, username, fullName } = req.user;
-        const packages = req.body;
+        const { id: userId, sponsorId, username, fullName } = req.user
+        const packages = req.body
 
         /**
          * General Logic for all users types
          */
 
         // first get the packages price from the db
-        const prices = await getContants();
+        const prices = await getContants()
 
         // then get the balance from the users ewallet account
-        const balance = await getEwalletBalanceUSD(userId, prices.usdRate);
+        const balance = await getEwalletBalanceUSD(userId, prices.usdRate)
 
         // Calculate total price for all packages
-        const total = getTotalPackageOrderedPrice(packages, prices);
+        const total = getTotalPackageOrderedPrice(packages, prices)
 
         if (total > balance) {
             return response.json(
                 res,
                 StatusCodes.BAD_REQUEST,
                 false,
-                'Insufficient funds',
-            );
+                'Insufficient funds'
+            )
         }
 
-        const sum = balance - total;
-        const newBalance = convertToNGN(sum, prices.usdRate);
-        await updateEwalletBalanceUSD(userId, newBalance);
+        const sum = balance - total
+        const newBalance = convertToNGN(sum, prices.usdRate)
+        await updateEwalletBalanceUSD(userId, newBalance)
 
         /// /////////////////////////////////////////////////////////////////////////////////////////////////////
 
         const actions = async (pkg, unit) => {
             // Get UserPackage
-            const userPkg = await getUserPackage(userId, pkg);
+            const userPkg = await getUserPackage(userId, pkg)
             const newUserPkg = await updateUserPackage(
                 pkg,
                 userId,
                 unit,
-                userPkg,
-            );
+                userPkg
+            )
             // // ok  -e//
 
-            await createPackageOrders(userId, pkg, unit);
+            await createPackageOrders(userId, pkg, unit)
             // ok -e//
 
             // Get Upline Info
             const uplineData = await userServices.getUplineDetails(
                 sponsorId,
-                pkg,
-            );
+                pkg
+            )
             // ok -e//
 
             if (userPkg.totalCycle === 0) {
                 // referral bonus to upline
-                await updateUplineRefferalBonus(uplineData, pkg, prices);
+                await updateUplineRefferalBonus(uplineData, pkg, prices)
                 // ok -f//
 
                 // update upline package Data
                 const updatedUplinePackageData = await updateUplinePackage(
                     uplineData,
-                    pkg,
-                );
+                    pkg
+                )
                 // ok -f//
 
                 // update upline unclaimed bonus Data
@@ -105,8 +105,8 @@ const buyPackages = asyncWrapper(async (req, res) => {
                     sponsorId,
                     pkg,
                     prices,
-                    uplineData,
-                );
+                    uplineData
+                )
                 // ok -f//
 
                 // update upline welcome bonus
@@ -114,24 +114,24 @@ const buyPackages = asyncWrapper(async (req, res) => {
                     uplineData,
                     updatedUplinePackageData,
                     pkg,
-                    prices,
-                );
+                    prices
+                )
                 // ok -f//
 
                 // update upline completion bonus
                 await updatedUplineCompBonus(
                     updatedUplinePackageData,
                     prices,
-                    pkg,
-                );
+                    pkg
+                )
                 // ok -f//
 
                 // create user referrers data
-                await createReferrersData(uplineData, userId, pkg);
+                await createReferrersData(uplineData, userId, pkg)
                 // ok -f//
 
                 // make Upline a Cycle Leader
-                await makeUserCycleLeader(updatedUplinePackageData);
+                await makeUserCycleLeader(updatedUplinePackageData)
                 // ok -f//
             }
 
@@ -141,99 +141,99 @@ const buyPackages = asyncWrapper(async (req, res) => {
                 pkg,
                 userPkg,
                 newUserPkg,
-                prices,
-            );
+                prices
+            )
             // ok -e//
 
             // make User a Cycle Leader
-            await makeUserCycleLeader(newUserPkg);
+            await makeUserCycleLeader(newUserPkg)
             // ok -e//
 
-            await cycleLeadersPayments(userId, pkg, username, fullName);
+            await cycleLeadersPayments(userId, pkg, username, fullName)
             // ok -e//
-        };
+        }
 
         await Promise.all(
             Object.entries(packages).map(
-                async ([key, value]) => await actions(key, value),
-            ),
-        );
+                async ([key, value]) => await actions(key, value)
+            )
+        )
 
         // console.log(uplineData);
         return response.json(
             res,
             StatusCodes.CREATED,
             true,
-            'Package Purchased Successfully',
-        );
+            'Package Purchased Successfully'
+        )
     } catch (error) {
-        console.log(error);
+        console.log(error)
         return response.json(
             res,
             StatusCodes.INTERNAL_SERVER_ERROR,
             false,
-            error.message,
-        );
+            error.message
+        )
     }
-});
+})
 
 const getPackages = asyncWrapper(async (req, res) => {
     const data = {
         user: req.user,
-    };
+    }
 
-    data.prices = await getContants();
+    data.prices = await getContants()
 
     res.render('member/packages/buy-packages', {
         title: 'Pick A Package',
         data,
-    });
-});
+    })
+})
 const completePackageOrder = asyncWrapper(async (req, res) => {
     const data = {
         user: req.user,
-    };
+    }
 
-    data.ewallet = await getEwallet(req.user.id);
-    data.prices = await getContants();
+    data.ewallet = await getEwallet(req.user.id)
+    data.prices = await getContants()
 
     res.render('member/packages/complete-packages-order', {
         title: 'Complete Package Order',
         data,
-    });
-});
+    })
+})
 
 const getSuccessPage = asyncWrapper(async (req, res) => {
     const data = {
         user: req.user,
-    };
+    }
     return res.render('member/packages/success', {
         title: 'Order Successful',
         data,
-    });
-});
+    })
+})
 
 const getProductDeliveryPage = asyncWrapper(async (req, res) => {
     const data = {
         user: req.user,
-    };
-    const page = Number(req.query.page) || 1; // Current page
-    const perPage = Number(req.query.limit) || 10; // Number of records per page
+    }
+    const page = Number(req.query.page) || 1 // Current page
+    const perPage = Number(req.query.limit) || 10 // Number of records per page
 
     const { orders, totalItem } = await getUserPackageOrders(
         req.user.id,
         page,
-        perPage,
-    );
-    data.orders = orders;
+        perPage
+    )
+    data.orders = orders
 
-    data.pagination = calculatePagination(totalItem, page, perPage);
+    data.pagination = calculatePagination(totalItem, page, perPage)
 
     return res.render('member/packages/product-delivery', {
         title: 'Product Delivery',
         data,
-    });
-});
+    })
+})
 
 export {
     buyPackages,
@@ -241,4 +241,4 @@ export {
     completePackageOrder,
     getSuccessPage,
     getProductDeliveryPage,
-};
+}

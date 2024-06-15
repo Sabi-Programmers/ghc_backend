@@ -1,8 +1,8 @@
-import express from "express";
-import { getPendingTestimoniesPage } from "../../controllers/admin/testimony.js";
+import express from 'express'
+import { getPendingTestimoniesPage } from '../../controllers/admin/testimony.js'
 
-const testmonyRouter = express.Router();
+const testmonyRouter = express.Router()
 
-testmonyRouter.get("/", getPendingTestimoniesPage);
+testmonyRouter.get('/', getPendingTestimoniesPage)
 
-export default testmonyRouter;
+export default testmonyRouter

@@ -85,7 +85,7 @@ const withdrawalOTPMailTemp = (fullName, otp) => `<!DOCTYPE html>
                 </div>
                 </body>
             </html>
-            `;
+            `
 const resetPasswordOTPMailTemp = (fullName, otp) => `<!DOCTYPE html>
             <html>
                 <head>
@@ -172,7 +172,7 @@ const resetPasswordOTPMailTemp = (fullName, otp) => `<!DOCTYPE html>
                 </div>
                 </body>
             </html>
-            `;
+            `
 const welcomeMailTemp = (fullName) => `<!DOCTYPE html>
  <html>
      <head>
@@ -255,7 +255,7 @@ const welcomeMailTemp = (fullName) => `<!DOCTYPE html>
          </div>
      </body>
  </html>
- `;
+ `
 
 const contactUsMailTemp = (name, subject, email, message) => `
     <!DOCTYPE html>
@@ -288,7 +288,7 @@ const contactUsMailTemp = (name, subject, email, message) => `
         </body>
     </html>
     
-            `;
+            `
 
 const accountBlockedMailTemp = (fullName, reason) => `<!DOCTYPE html>
             <html>
@@ -380,7 +380,7 @@ const accountBlockedMailTemp = (fullName, reason) => `<!DOCTYPE html>
                     </div>
                 </body>
             </html>
-            `;
+            `
 
 const accountUnblockedMailTemp = (fullName) => `<!DOCTYPE html>
             <html>
@@ -459,15 +459,15 @@ const accountUnblockedMailTemp = (fullName) => `<!DOCTYPE html>
                     </div>
                 </body>
             </html>
-            `;
+            `
 
 const mailTemplates = {
-  withdrawal: withdrawalOTPMailTemp,
-  resetPassword: resetPasswordOTPMailTemp,
-  welcome: welcomeMailTemp,
-  contactUs: contactUsMailTemp,
-  blockMember: accountBlockedMailTemp,
-  unblockMember: accountUnblockedMailTemp,
-};
+    withdrawal: withdrawalOTPMailTemp,
+    resetPassword: resetPasswordOTPMailTemp,
+    welcome: welcomeMailTemp,
+    contactUs: contactUsMailTemp,
+    blockMember: accountBlockedMailTemp,
+    unblockMember: accountUnblockedMailTemp,
+}
 
-export default mailTemplates;
+export default mailTemplates

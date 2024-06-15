@@ -1,16 +1,16 @@
-import express from "express";
+import express from 'express'
 import {
-  getMessagesPage,
-  getAMessagePage,
-  getAddMessagePage,
-  addMessage,
-} from "../controllers/messages.js";
+    getMessagesPage,
+    getAMessagePage,
+    getAddMessagePage,
+    addMessage,
+} from '../controllers/messages.js'
 
-const messagesRouter = express.Router();
+const messagesRouter = express.Router()
 
-messagesRouter.get("", getMessagesPage);
-messagesRouter.get("/send", getAddMessagePage);
-messagesRouter.post("/send", addMessage);
-messagesRouter.get("/:id", getAMessagePage);
+messagesRouter.get('', getMessagesPage)
+messagesRouter.get('/send', getAddMessagePage)
+messagesRouter.post('/send', addMessage)
+messagesRouter.get('/:id', getAMessagePage)
 
-export default messagesRouter;
+export default messagesRouter

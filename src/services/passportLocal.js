@@ -1,7 +1,7 @@
-import passport from 'passport';
-import LocalStrategy from 'passport-local/lib/strategy.js';
-import bcrypt from 'bcryptjs';
-import database from '../libs/prisma.js';
+import passport from 'passport'
+import LocalStrategy from 'passport-local/lib/strategy.js'
+import bcrypt from 'bcryptjs'
+import database from '../libs/prisma.js'
 
 // Passport local strategy for authentication
 passport.use(
@@ -19,21 +19,21 @@ passport.use(
                         { email: username.toLowerCase() },
                     ],
                 },
-            });
+            })
             if (!user) {
                 return done(null, false, {
                     message: "Username or Email does't match Password",
-                });
+                })
             }
             if (!bcrypt.compareSync(password, user.password)) {
                 return done(null, false, {
                     message: "Username or Email does't match Password",
-                });
+                })
             }
-            return done(null, user);
-        },
-    ),
-);
+            return done(null, user)
+        }
+    )
+)
 passport.use(
     'admin-local',
     new LocalStrategy(
@@ -49,40 +49,40 @@ passport.use(
                         { email: username.toLowerCase() },
                     ],
                 },
-            });
+            })
             if (!admin) {
                 return done(null, false, {
                     message: "Username or Email does't match Password",
-                });
+                })
             }
             if (!bcrypt.compareSync(password, admin.password)) {
                 return done(null, false, {
                     message: "Username or Email does't match Password",
-                });
+                })
             }
-            return done(null, admin);
-        },
-    ),
-);
+            return done(null, admin)
+        }
+    )
+)
 
 // Serialize and deserialize user
 passport.serializeUser((user, done) => {
-    done(null, { id: user.id, role: user.role });
-});
+    done(null, { id: user.id, role: user.role })
+})
 
 passport.deserializeUser(async ({ id, role }, done) => {
     if (role === 'MEMBER') {
         const user = await database.user.findFirst({
             where: { id },
-        });
-        done(null, user);
+        })
+        done(null, user)
     } else if (role === 'ADMIN') {
         const user = await database.admin.findFirst({
             where: { id },
-        });
+        })
 
-        done(null, user);
+        done(null, user)
     } else {
-        done({ message: 'No entity found' }, null);
+        done({ message: 'No entity found' }, null)
     }
-});
+})

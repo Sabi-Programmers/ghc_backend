@@ -1,22 +1,24 @@
-import bcrypt from 'bcryptjs';
-import database from '../libs/prisma.js';
-import { excludeData } from '../utils/index.js';
+import bcrypt from 'bcryptjs'
+import database from '../libs/prisma.js'
+import { excludeData } from '../utils/index.js'
 
 const getUserProfile = async (id) => {
     const user = await database.user.findUnique({
         where: { id },
-    });
+    })
 
-    return excludeData(user, ['password']);
-};
+    return excludeData(user, ['password'])
+}
 
-const updateUserDisplayPhoto = async (id, photo) => await database.user.update({
+const updateUserDisplayPhoto = async (id, photo) =>
+    await database.user.update({
         where: { id },
         data: {
             displayPhoto: photo,
         },
-    });
-const updateUserProfile = async (id, data) => await database.user.update({
+    })
+const updateUserProfile = async (id, data) =>
+    await database.user.update({
         where: { id },
         data: {
             fullName: data.fullName,
@@ -29,26 +31,26 @@ const updateUserProfile = async (id, data) => await database.user.update({
             accountNumber: data.accountNumber == '' ? null : data.accountNumber,
             bankName: data.bankName,
         },
-    });
+    })
 
 const changeUserPassword = async (id, oldPassword, password) => {
-    const user = await database.user.findUnique({ where: { id } });
+    const user = await database.user.findUnique({ where: { id } })
 
     if (!bcrypt.compareSync(oldPassword, user.password)) {
-        return false;
+        return false
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10)
 
     return await database.user.update({
         where: { id },
         data: { password: hashedPassword },
-    });
-};
+    })
+}
 
 const deleteUserOtherSessions = async (req) => {
-    const { id: userId, role } = req.user;
-    const currentSession = req.sessionID;
+    const { id: userId, role } = req.user
+    const currentSession = req.sessionID
     const allUsersSession = await database.sessions.findMany({
         where: {
             sess: {
@@ -58,23 +60,23 @@ const deleteUserOtherSessions = async (req) => {
                 },
             },
         },
-    });
+    })
 
     // Filter out the current session
     const sessionsToDelete = allUsersSession.filter(
-        (session) => session.sid !== currentSession,
-    );
+        (session) => session.sid !== currentSession
+    )
 
     // Delete the filtered sessions
     const deletePromises = sessionsToDelete.map((session) =>
         database.sessions.delete({
             where: { sid: session.sid },
-        }),
-    );
+        })
+    )
 
     // Wait for all delete operations to complete
-    await Promise.all(deletePromises);
-};
+    await Promise.all(deletePromises)
+}
 
 export {
     getUserProfile,
@@ -82,4 +84,4 @@ export {
     changeUserPassword,
     deleteUserOtherSessions,
     updateUserDisplayPhoto,
-};
+}
