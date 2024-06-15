@@ -23,8 +23,7 @@ const getPaymentLink = async (inputData) => {
 
         return data
     } catch (err) {
-        // console.log(err.code);
-        // console.log(err.response.body);
+        err
         return null
     }
 }
@@ -51,8 +50,7 @@ const getAllBanksInfo = async () => {
         const data = await response.json()
         return data
     } catch (err) {
-        // console.log(err.code);
-        // console.log(err.response.body);
+        err
         return null
     }
 }

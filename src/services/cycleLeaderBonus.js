@@ -1,6 +1,5 @@
 import database from '../libs/prisma.js'
-import { getUserPackage } from './packageServices.js'
-import { getUserReferrer, getUserReferrerGen } from './referralServices.js'
+import { getUserReferrerGen } from './referralServices.js'
 
 const makeUserCycleLeader = async (newUserPkg) => {
     if (newUserPkg.currentCycle === 5 && newUserPkg.usedSlots === 36) {

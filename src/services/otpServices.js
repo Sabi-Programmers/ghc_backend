@@ -1,5 +1,4 @@
 import bcrypt from 'bcryptjs'
-import crypto from 'crypto'
 import database from '../libs/prisma.js'
 
 const generateOtpToken = async (userId) => {

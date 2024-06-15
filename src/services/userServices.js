@@ -107,7 +107,7 @@ const getTotalUsers = async () => {
     return total
 }
 
-const getAllUsersJoinedToday = async (count) => {
+const getAllUsersJoinedToday = async () => {
     const usersJoinedTodayCount = await database.user.count({
         where: {
             createdAt: {

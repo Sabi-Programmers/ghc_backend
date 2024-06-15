@@ -73,6 +73,7 @@ const deleteFile = (fileName) => {
     const filePath = join(__dirname, '..', '..', 'uploads/images', fileName)
     fs.unlink(filePath, (err) => {
         if (err) {
+            // eslint-disable-next-line no-console
             console.error(`Error deleting file: ${filePath}`, err)
         }
     })

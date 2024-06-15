@@ -86,5 +86,6 @@ app.use(notFound)
 
 const port = PORT
 app.listen(port, () => {
+    // eslint-disable-next-line no-console
     console.log(`listening at http://localhost:${port}`)
 })

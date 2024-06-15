@@ -167,7 +167,6 @@ const buyPackages = asyncWrapper(async (req, res) => {
             'Package Purchased Successfully'
         )
     } catch (error) {
-        console.log(error)
         return response.json(
             res,
             StatusCodes.INTERNAL_SERVER_ERROR,

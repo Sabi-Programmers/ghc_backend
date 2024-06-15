@@ -11,19 +11,6 @@ const transporter = nodemailer.createTransport({
     },
 })
 
-// async..await is not allowed in global scope, must use a wrapper
-export async function sendMail() {
-    // send mail with defined transport object
-    const info = await transporter.sendMail({
-        from: process.env.EMAIL_AUTH_USER, // sender address
-        to: 'dtechlord@gmail.com', // list of receivers
-        subject: 'Hello ✔', // Subject line
-        html: mailTemplates.withdrawal(), // html body
-    })
-
-    console.log('Message sent: %s', info.messageId)
-}
-
 export async function sendWithdrawalOtpMail(fullName, otp, email) {
     await transporter.sendMail({
         from: `"Grand Health Cycle " <${process.env.EMAIL_AUTH_USER}>`,
@@ -44,7 +31,7 @@ export async function sendresetPasswordOtpMail(fullName, otp, email) {
 
         return true
     } catch (error) {
-        console.log(error.message)
+        error
         return false
     }
 }

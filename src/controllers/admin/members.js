@@ -110,7 +110,9 @@ const blockMember = asyncWrapper(async (req, res) => {
             member.email,
             member.blockedReason
         )
-    } catch (error) {}
+    } catch (error) {
+        error
+    }
 
     return response.json(res, StatusCodes.OK, true, 'Member account blocked')
 })
@@ -130,7 +132,9 @@ const unblockMember = asyncWrapper(async (req, res) => {
 
     try {
         await sendUnblockedMemberMail(member.fullName, member.email)
-    } catch (error) {}
+    } catch (error) {
+        error
+    }
 
     return response.json(res, StatusCodes.OK, true, 'Member account unblocked')
 })

@@ -17,7 +17,6 @@ import {
     validateResetPassword,
 } from '../validators/authValidators.js'
 import { isAuthenticated } from '../middlewares/auth.js'
-import countryNames from '../utils/countriesData.js'
 
 const authRouter = express.Router()
 

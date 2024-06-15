@@ -1,5 +1,4 @@
 import database from '../libs/prisma.js'
-import { generateVitualBankDetails } from './virtualBank.js'
 
 const getEwallet = async (userId) =>
     await database.ewallet.findFirst({

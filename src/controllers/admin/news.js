@@ -72,7 +72,8 @@ const createNews = asyncWrapper(async (req, res) => {
             res,
             StatusCodes.INTERNAL_SERVER_ERROR,
             true,
-            'Something went wrong!'
+            'Something went wrong!',
+            error.message
         )
     }
 })
@@ -92,7 +93,8 @@ const deleteNews = asyncWrapper(async (req, res) => {
             res,
             StatusCodes.INTERNAL_SERVER_ERROR,
             true,
-            'Something went wrong!'
+            'Something went wrong!',
+            error.message
         )
     }
 })

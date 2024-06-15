@@ -61,6 +61,7 @@ const createUser = asyncWrapper(async (req, res) => {
         accountName,
         accountNumber,
         bankName,
+        // eslint-disable-next-line no-unused-vars
         bankCode,
     } = req.body
 
@@ -105,7 +106,9 @@ const createUser = asyncWrapper(async (req, res) => {
 
         try {
             await sendWelcomeMail(user.fullName, user.email)
-        } catch (error) {}
+        } catch (error) {
+            error
+        }
 
         return response.json(
             res,
