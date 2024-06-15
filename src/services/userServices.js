@@ -283,6 +283,12 @@ const getAllBlockedUsers = async (page, perPage, searchQuery) => {
   return { members, totalItem };
 };
 
+const getSingleUser = async (username) => {
+  return await database.user.findUnique({
+    where: { username: username.toLowerCase() },
+  });
+};
+
 const userServices = {
   getAllBlockedUsers,
   getUserForRollBack,
@@ -299,5 +305,6 @@ const userServices = {
   getAllUsersJoinedThisYear,
   getUplineDetails,
   getAllUsersByPackage,
+  getSingleUser,
 };
 export default userServices;

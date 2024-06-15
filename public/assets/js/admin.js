@@ -353,4 +353,60 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload();
     });
   });
+
+  /**
+   * Message form with Quill text editor
+   */
+
+  const mgsOptions = {
+    placeholder: "Type message...",
+    theme: "snow",
+  };
+
+  const messageEditor = document.getElementById("admin-message-editor");
+  const messageForm = document.getElementById("admin-message-form");
+
+  if (messageEditor && messageForm) {
+    const quill = new Quill(messageEditor, mgsOptions);
+
+    const messageTitleInput = document.getElementById("message-title-input");
+
+    const messageUserId = document.getElementById("message-user-id-input");
+
+    const validateFields = (title, description, userId) => {
+      if (userId.value.trim().length < 1) {
+        toast.failed("Please select member");
+        return false;
+      }
+      if (title.value.trim().length < 1) {
+        toast.failed("Please enter a title");
+        return false;
+      }
+      if (description.trim().length < 1) {
+        toast.failed("Please enter a Message");
+        return false;
+      }
+      return true;
+    };
+
+    messageForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const messageText = quill.getText();
+      const messageHtml = quill.getSemanticHTML();
+      const validate = validateFields(
+        messageTitleInput,
+        messageText,
+        messageUserId
+      );
+      if (validate) {
+        const data = {
+          title: messageTitleInput.value,
+          narration: messageHtml,
+          userId: messageUserId.value,
+        };
+        await handlerPostRequest(data, "/admin/messages/send");
+        window.location.href = "/admin/messages";
+      }
+    });
+  }
 });

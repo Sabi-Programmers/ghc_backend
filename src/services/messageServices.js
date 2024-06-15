@@ -6,7 +6,7 @@ const createMessage = async (title, narration, sender, userId) => {
       title,
       narration,
       sender,
-      userId,
+      userId: Number(userId),
     },
   });
 };
