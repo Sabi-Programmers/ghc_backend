@@ -8,12 +8,33 @@
 
     <main id="main" class="main">
       <%- include('../layout/breadcrumb') %>
-
       <section class="section dashboard">
         <div class="row">
           <div class="col-12 mb-3 d-flex gap-2 justify-content-end">
+            <% if (data.message.sender === "USER") { %>
+            <a
+              href="/admin/messages/send?member=<%= data.member.username %>"
+              class="btn btn-primary"
+            >
+              Reply
+            </a>
+            <% } %>
+
+            <a
+              href="/admin/messages/<%= data.member.id %>"
+              class="btn btn-info"
+            >
+              Veiw Conversation
+            </a>
             <% if (data.message.sender === "ADMIN") { %>
-            <a href="/messages/send" class="btn btn-primary"> Reply </a>
+            <button
+              class="btn btn-danger"
+              id="deleteMessageBtn"
+              data-id=" <%= data.message.id %>"
+            >
+              <i class="bx bx-trash"></i>
+              <span class="d-none d-md-inline"> Delete </span>
+            </button>
             <% } %>
           </div>
           <div class="col-12">
@@ -23,9 +44,9 @@
                   class="card-title border-bottom d-flex justify-content-between"
                 >
                   <%= data.message.title %>
-                  <span class="flex-shrink-0"
-                    >From: <%= data.message.sender === 'USER' ? 'You': 'Admin'
-                    %>
+                  <span class="flex-shrink-0">
+                    <%= data.message.sender === 'USER' ? 'From:': 'To:' %> <%=
+                    data.member.username %>
                   </span>
                 </h5>
                 <p><%- data.message.narration %></p>

@@ -284,8 +284,17 @@ const getAllBlockedUsers = async (page, perPage, searchQuery) => {
 };
 
 const getSingleUser = async (username) => {
+  // Check if username is a valid number
+  const userIdNumber = Number(username);
+  const isNumber = !isNaN(userIdNumber);
+
+  // Construct the where clause based on the type of username
+  const whereClause = isNumber
+    ? { id: userIdNumber }
+    : { username: username.toLowerCase() };
+
   return await database.user.findUnique({
-    where: { username: username.toLowerCase() },
+    where: whereClause,
   });
 };
 

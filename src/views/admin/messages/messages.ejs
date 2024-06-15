@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+      <section class="section dashboard">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">Mail Box</h5>
+
+                <div class="list-group">
+                  <a
+                    href="?"
+                    class="list-group-item <%= data.type !== 'sent' ? 'active': '' %>"
+                    aria-current="true"
+                  >
+                    <i class="bi bi-inbox me-1"></i> Inbox</a
+                  >
+                  <a
+                    href="?t=sent"
+                    class="list-group-item <%= data.type !== 'sent' ? '': 'active' %>"
+                    aria-current="false"
+                  >
+                    <i class="bi bi-inbox me-1"></i> Sent</a
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="card">
+              <ul class="list-group list-group-flush">
+                <% for( let i = 0; i < data.messages.length; i++ ) { %>
+
+                <li
+                  class="list-group-item list-group-item-action <%= data.messages[i].sender.includes('USER') && data.messages[i].unread ? 'list-group-item-info' : '' %>"
+                >
+                  <div class="text-truncate close-message-item">
+                    <a
+                      href="/admin/messages/<%= data.messages[i].User.id %>/<%= data.messages[i].id %>"
+                      class="text-truncate text-dark <%= data.messages[i].sender.includes('USER') && data.messages[i].unread ? 'fw-bold' : '' %>"
+                    >
+                      <%= data.messages[i].title %>
+                    </a>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <% if (data.messages[i].sender === "USER") { %>
+                      <span class="badge text-bg-secondary">
+                        From: <%= data.messages[i].User.username %>
+                      </span>
+                      <% } else { %>
+                      <span class="badge text-bg-warning"
+                        >To: <%= data.messages[i].User.username %></span
+                      >
+                      <% } %>
+                      <em
+                        ><small>
+                          <%=
+                          data.messages[i].createdAt.toLocaleDateString('en-GB',
+                          { day: '2-digit', month: '2-digit', year: '2-digit' })
+                          %> - <%=
+                          data.messages[i].createdAt.toLocaleTimeString('en-GB',
+                          { hour: '2-digit', minute: '2-digit', hour12: false })
+                          %></small
+                        ></em
+                      >
+                    </div>
+                  </div>
+                </li>
+                <% } %>
+              </ul>
+            </div>
+            <%- include('../partials/pagination', {urlPrefix: '?t=' + data.type,
+            data}) %>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

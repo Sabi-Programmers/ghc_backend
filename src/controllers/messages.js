@@ -34,7 +34,11 @@ const getAMessagePage = asyncWrapper(async (req, res) => {
     user: req.user,
   };
 
-  data.message = await getSingleMessage(req.user.id, req.params.id);
+  data.message = await getSingleMessage(
+    req.user.id,
+    req.params.id,
+    req.user.role
+  );
 
   return res.render("member/messages/single-message", {
     title: data.message.title,

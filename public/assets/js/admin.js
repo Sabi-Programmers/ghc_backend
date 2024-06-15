@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
+  // Get the current route
+  const currentRoute = window.location.pathname;
+
   const toastLive = document.getElementById("live-toast");
   const toast = {};
   if (toastLive) {
@@ -407,6 +410,16 @@ document.addEventListener("DOMContentLoaded", () => {
         await handlerPostRequest(data, "/admin/messages/send");
         window.location.href = "/admin/messages";
       }
+    });
+  }
+
+  const deleteMessageBtn = document.getElementById("deleteMessageBtn");
+  if (deleteMessageBtn) {
+    deleteMessageBtn.addEventListener("click", () => {
+      const id = deleteMessageBtn.getAttribute("data-id");
+
+      handlerPostRequest({ id }, currentRoute + "/delete");
+      window.location.href = "/admin/messages";
     });
   }
 });
