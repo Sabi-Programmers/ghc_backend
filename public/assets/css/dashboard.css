@@ -1896,3 +1896,8 @@ label[for="profile-photo-file"]:hover span {
   overflow: hidden;
   resize: none;
 }
+
+/* Close Messages */
+.close-message-item a:hover {
+  text-decoration: underline;
+}

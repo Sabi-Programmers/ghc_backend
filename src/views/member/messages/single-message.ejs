@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <h5
+                  class="card-title border-bottom d-flex justify-content-between"
+                >
+                  <%= data.message.title %>
+                  <span class="flex-shrink-0"
+                    >From: <%= data.message.sender === 'USER' ? 'You': 'Admin'
+                    %>
+                  </span>
+                </h5>
+                <p><%- data.message.narration %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

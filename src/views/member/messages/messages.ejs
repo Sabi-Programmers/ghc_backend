@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <ul class="list-group list-group-flush">
+                <% for( let i = 0; i < data.messages.length; i++ ) { %>
+
+                <li
+                  class="list-group-item list-group-item-action <%= data.messages[i].sender.includes('ADMIN') && data.messages[i].unread ? 'list-group-item-info' : '' %>"
+                >
+                  <div class="text-truncate close-message-item">
+                    <a
+                      href="/messages/<%= data.messages[i].id %>"
+                      class="text-truncate text-dark <%= data.messages[i].sender.includes('ADMIN') && data.messages[i].unread ? 'fw-bold' : '' %>"
+                    >
+                      <%= data.messages[i].title %>
+                    </a>
+                    <div
+                      class="d-flex justify-content-between align-items-center"
+                    >
+                      <% if (data.messages[i].sender === "USER") { %>
+                      <span class="badge text-bg-secondary">You</span>
+                      <% } else { %>
+                      <span class="badge text-bg-warning">Admin</span>
+                      <% } %>
+                      <em><small>11/10/24 - (20:45)</small></em>
+                    </div>
+                  </div>
+                </li>
+                <% } %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>
