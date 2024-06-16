@@ -1,7 +1,8 @@
 import { StatusCodes } from 'http-status-codes'
 import CustomError from './CustomError.js'
 
-const errorHandler = (err, req, res) => {
+// eslint-disable-next-line no-unused-vars
+const errorHandler = (err, req, res, next) => {
     // eslint-disable-next-line no-console
     console.log(`From Error Handler: ${err}`)
     if (err instanceof CustomError) {

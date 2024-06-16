@@ -1,8 +1,8 @@
 // Import necessary modules
-import multer from 'multer'
-import fs from 'fs'
-import { join, dirname } from 'path'
-import { fileURLToPath } from 'url'
+const multer = require('multer')
+const fs = require('fs')
+const { join, dirname } = require('path')
+const { fileURLToPath } = require('url')
 
 // Function to replace spaces with hyphens in the file name
 const replaceSpacesWithHyphens = (filename) => filename.replace(/\s+/g, '-')
@@ -67,7 +67,7 @@ const uploadPDF = multer({
 
 // Function to delete files
 const deleteFile = (fileName) => {
-    const __filename = fileURLToPath(import.meta.url)
+    const __filename = fileURLToPath(require('url').pathToFileURL(__filename))
     const __dirname = dirname(__filename)
 
     const filePath = join(__dirname, '..', '..', 'uploads/images', fileName)
@@ -80,4 +80,4 @@ const deleteFile = (fileName) => {
 }
 
 // Export the upload middleware instances and deleteFile function
-export { uploadImage, uploadPDF, deleteFile }
+module.exports = { uploadImage, uploadPDF, deleteFile }
