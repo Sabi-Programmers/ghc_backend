@@ -38,7 +38,7 @@ model User {
   city                   String
   sponsorUsername        String                   @default("GHC")
   sponsorId              Int                      @default(0)
-  phone                  String                   @unique
+  phone                  String
   password               String
   gender                 Genders
   role                   UserRole                 @default(MEMBER)
@@ -48,7 +48,8 @@ model User {
   displayPhoto           String?
   bankName               String
   accountNumber          String                   @unique
-  accountName            String
+  accountFName           String
+  accountLName           String
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
   eWallet                Ewallet?

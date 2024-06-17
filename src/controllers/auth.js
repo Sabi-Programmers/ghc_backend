@@ -12,6 +12,7 @@ import {
 import { generateOtpToken, verifyOtpToken } from "../services/otpServices.js";
 import { getAllBanksInfo } from "../libs/paymentGateway.js";
 import countryNames from "../utils/countriesData.js";
+import bankSystem from "../libs/bankSystem.js";
 
 const getRegisterPage = asyncWrapper(async (req, res) => {
   const { sponsorId } = req.query;
@@ -58,7 +59,8 @@ const createUser = asyncWrapper(async (req, res) => {
     country,
     email,
     gender,
-    accountName,
+    accountFName,
+    accountLName,
     accountNumber,
     bankName,
     bankCode,
@@ -66,6 +68,8 @@ const createUser = asyncWrapper(async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    console.log("1");
 
     const user = await database.user.create({
       data: {
@@ -86,7 +90,8 @@ const createUser = asyncWrapper(async (req, res) => {
         gold: { create: {} },
         diamond: { create: {} },
         eWallet: { create: {} },
-        accountName,
+        accountFName,
+        accountLName,
         accountNumber,
         bankName,
         BlockedUser: { create: {} },
@@ -103,10 +108,52 @@ const createUser = asyncWrapper(async (req, res) => {
       },
     });
 
+    console.log(user);
+
     try {
       await sendWelcomeMail(user.fullName, user.email);
     } catch (error) {}
 
+    const bank = await bankSystem.init();
+
+    const data = {
+      FirstName: accountFName,
+      LastName: accountLName,
+      OtherName: "",
+      PhoneNumber: phone,
+      Gender: gender,
+      Email: email,
+      CustomerAccountNumber: accountNumber,
+      CustomerBankCode: bankCode,
+    };
+    if (!bank || (bank && bank.message !== "Successfully!")) {
+      await database.user.delete({
+        where: { id: user.id },
+      });
+      return response.json(
+        res,
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        false,
+        "Internal Server Error"
+      );
+    }
+
+    const flippedAcc = await bankSystem.createFlippedAcc(
+      bank.Authorisation.accesscode,
+      data
+    );
+    console.log(flippedAcc);
+    if (!flippedAcc || flippedAcc.error) {
+      await database.user.delete({
+        where: { id: user.id },
+      });
+      return response.json(
+        res,
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        false,
+        "Internal Server Error"
+      );
+    }
     return response.json(
       res,
       StatusCodes.CREATED,

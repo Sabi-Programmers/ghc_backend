@@ -43,7 +43,32 @@ router.use("/admin", adminRouter);
 router.get("/test-bank", async (req, res) => {
   try {
     const bank = await bankSystem.init();
-    return res.status(200).json(bank);
+
+    const data = {
+      FirstName: "Taiwo",
+      LastName: "Ademola",
+      OtherName: "Ayomide",
+      PhoneNumber: "09060199984",
+      Gender: "Male",
+      Email: "adetaiwo0604@gmail.com",
+      CustomerAccountNumber: "6504751435",
+      CustomerBankCode: "101",
+    };
+
+    if (!bank) {
+      return res.status(500).json({ error: "NO BANK" });
+    }
+    if (bank && bank.message !== "Successfully!") {
+      return res.status(500).json({ error: bank.message });
+    }
+    const filedAcc = await bankSystem.createFlippedAcc(
+      bank.Authorisation.accesscode,
+      data
+    );
+
+    const info = await bankSystem.getInfo(bank.Authorisation.accesscode);
+
+    return res.status(200).json({ bank, info, filedAcc });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

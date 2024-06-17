@@ -7,7 +7,8 @@ const validateCreateUserAuth = [
   body("sponsorId").exists().withMessage("sponspor Id is required"),
   body("fullName").exists().withMessage("name is required"),
   body("accountNumber").exists().withMessage("Account Number is required"),
-  body("accountName").exists().withMessage("Account Name is required"),
+  body("accountFName").exists().withMessage("Account First Name is required"),
+  body("accountLName").exists().withMessage("Account Last Name is required"),
   body("bankName").exists().withMessage("Bank Name is required"),
   body("bankCode").exists().withMessage("Bank Code is required"),
 
