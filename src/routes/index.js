@@ -17,6 +17,7 @@ import withdrawalWalletsRouter from "./withdrawal-wallets.js";
 import networkRouter from "./network.js";
 import marketingRouter from "./marketing.js";
 import messagesRouter from "./messages.js";
+import bankSystem from "../libs/bankSystem.js";
 
 const router = express.Router();
 
@@ -38,5 +39,14 @@ router.use("/marketing", isMember, marketingRouter);
 router.use("/shop", productsRouter);
 
 router.use("/admin", adminRouter);
+
+router.get("/test-bank", async (req, res) => {
+  try {
+    const bank = await bankSystem.init();
+    return res.status(200).json(bank);
+  } catch (error) {
+    return res.status(500).json({ error: error.message });
+  }
+});
 
 export default router;
