@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body pt-4">
+                <div class="table-responsive">
+                  <table
+                    class="table orders-table table-striped table-hover table-bordered text-truncate"
+                    style="width: 100%"
+                  >
+                    <thead class="table-dark">
+                      <tr>
+                        <th>Member name</th>
+                        <th>Username</th>
+                        <th>Current cycle</th>
+                        <th>Request Date</th>
+                        <th>Testimony type</th>
+                        <th>View Testimony</th>
+                        <th>View Account</th>
+                        <th>Message member</th>
+                        <th>Reject Testimony</th>
+                        <th>Credit Bonus</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% for( let i = 0; i < data.testimonies.length; i++ ) { %>
+
+                      <tr>
+                        <td class="text-capitalize">
+                          <%= data.testimonies[i].user.fullName %>
+                        </td>
+                        <td><%= data.testimonies[i].user.username%></td>
+                        <td>
+                          <%= "B" + data.testimonies[i].user.bronze.currentCycle
+                          + ", G" + data.testimonies[i].user.gold.currentCycle +
+                          ", D" + data.testimonies[i].user.diamond.currentCycle
+                          %>
+                        </td>
+                        <td>
+                          <%=
+                          (data.testimonies[i].createdAt).toLocaleDateString()%>
+                        </td>
+                        <td class="text-capitalize">
+                          <%= (data.testimonies[i].package).toLowerCase()%>
+                          Withdrawal
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-primary btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#viewTestimonyModal-<%= data.testimonies[i].id %>"
+                          >
+                            View
+                          </button>
+                          <div
+                            class="modal fade"
+                            id="viewTestimonyModal-<%= data.testimonies[i].id %>"
+                            tabindex="-1"
+                            data-bs-backdrop="static"
+                            data-bs-keyboard="false"
+                            role="dialog"
+                            aria-labelledby="modalTitleId-<%= data.testimonies[i].id %>"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5
+                                    class="modal-title"
+                                    id="modalTitleId-<%= data.testimonies[i].id %>"
+                                  >
+                                    View Testimony
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  ></button>
+                                </div>
+                                <div class="modal-body text-full">
+                                  <div>
+                                    <strong>Facebook Link:</strong>
+                                    <p>
+                                      <%= data.testimonies[i].facebookLink %>
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <strong>Youtube Link:</strong>
+                                    <p>
+                                      <%= data.testimonies[i].youtubeLink %>
+                                    </p>
+                                  </div>
+                                  <div>
+                                    <strong>Tiktok Link:</strong>
+                                    <p><%= data.testimonies[i].tiktokLink %></p>
+                                  </div>
+                                  <div>
+                                    <strong>Message:</strong>
+                                    <p><%= data.testimonies[i].message %></p>
+                                  </div>
+                                </div>
+                                <div class="modal-footer">
+                                  <button
+                                    type="button"
+                                    class="btn btn-secondary"
+                                    data-bs-dismiss="modal"
+                                  >
+                                    Close
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-info">View</button>
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-secondary">
+                            Message
+                          </button>
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-danger">Reject</button>
+                        </td>
+                        <td>
+                          <button class="btn btn-sm btn-success">Reject</button>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <%- include('../partials/pagination', {urlPrefix:'?k=p', data}) %>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>
