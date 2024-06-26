@@ -55,24 +55,24 @@ router.get("/test-bank", async (req, res) => {
     //   CustomerBankCode: "101",
     // };
 
-    // if (!bank) {
-    //   return res.status(500).json({ error: "NO BANK" });
-    // }
-    // if (bank && bank.message !== "Successfully!") {
-    //   return res.status(500).json({ error: bank.message });
-    // }
+    if (!bank) {
+      return res.status(500).json({ error: "NO BANK" });
+    }
+    if (bank && bank.message !== "Successfully!") {
+      return res.status(500).json({ error: bank.message });
+    }
     // const filedAcc = await bankSystem.createFlippedAcc(
     //   bank.Authorisation.accesscode,
     //   data
     // );
 
-    // const info = await bankSystem.getInfo(bank.Authorisation.accesscode);
+    const info = await bankSystem.getInfo(bank.Authorisation.accesscode);
 
-    // const bankList = await bankSystem.getBankList(
-    //   bank.Authorisation.accesscode
-    // );
+    const bankList = await bankSystem.getBankList(
+      bank.Authorisation.accesscode
+    );
 
-    return res.status(200).json({ bank });
+    return res.status(200).json({ bank, info, bankList });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }
