@@ -422,4 +422,26 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "/admin/messages";
     });
   }
+
+  const rejectTestimonyForm = document.querySelectorAll(".rejectTestimonyForm");
+
+  rejectTestimonyForm.forEach((el) => {
+    el.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      if (jsonData.feedbackMessage.length <= 1) {
+        toast.failed("Please enter a feedback message");
+        return;
+      }
+
+      await handlerPostRequest(
+        { feedbackMessage: jsonData.feedbackMessage },
+        `/admin/testimony/${jsonData.userId}/reject/${jsonData.id}`
+      );
+
+      window.location.reload();
+    });
+  });
 });

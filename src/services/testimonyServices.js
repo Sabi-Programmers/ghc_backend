@@ -28,21 +28,21 @@ const createTestimonyRequest = async (
 
 const getAllUserTestimony = async (userId, perPage, page) => {
   const testimonies = await database.testimonyRecords.findMany({
-    where: { userId: Number(userId) },
+    where: { userId: Number(userId), status: "PENDING" },
     include: { user: { include: { bronze: true, gold: true, diamond: true } } },
     skip: (page - 1) * perPage,
     take: perPage,
     orderBy: { createdAt: "desc" },
   });
   const totalItem = await database.testimonyRecords.count({
-    where: { userId: Number(userId) },
+    where: { userId: Number(userId), status: "PENDING" },
   });
 
   return { testimonies, totalItem };
 };
 
 const getAllTestimony = async (page, perPage, searchQuery) => {
-  const whereClause = {};
+  const whereClause = { status: "PENDING" };
   if (searchQuery) {
     const searchConditions = [
       { user: { username: { contains: searchQuery, mode: "insensitive" } } },
@@ -69,9 +69,23 @@ const getAllTestimony = async (page, perPage, searchQuery) => {
   return { testimonies, totalItem };
 };
 
+const rejectUserTestimony = async (userId, id, feedbackMessage) => {
+  return await database.testimonyRecords.update({
+    where: {
+      id: Number(id),
+      userId: Number(userId),
+    },
+    data: {
+      feedbackMessage,
+      status: "DENIED",
+    },
+  });
+};
+
 export {
   getUserForTestimonyBonus,
   createTestimonyRequest,
   getAllUserTestimony,
   getAllTestimony,
+  rejectUserTestimony,
 };

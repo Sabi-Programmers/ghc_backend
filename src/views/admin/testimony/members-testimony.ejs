@@ -129,15 +129,104 @@
                           <button class="btn btn-sm btn-info">View</button>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-secondary">
+                          <a
+                            href="admin/messages/send?member=<%= data.testimonies[i].user.username %>"
+                            class="btn btn-sm btn-secondary"
+                          >
                             Message
+                          </a>
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-danger btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#rejectTestimonyModal-<%= data.testimonies[i].id %>"
+                          >
+                            Reject
                           </button>
+                          <div
+                            class="modal fade"
+                            id="rejectTestimonyModal-<%= data.testimonies[i].id %>"
+                            tabindex="-1"
+                            data-bs-backdrop="static"
+                            data-bs-keyboard="false"
+                            role="dialog"
+                            aria-labelledby="rejectTestimonyTitleId-<%= data.testimonies[i].id %>"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5
+                                    class="modal-title"
+                                    id="rejectTestimonyTitleId-<%= data.testimonies[i].id %>"
+                                  >
+                                    Reject Testimony
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  ></button>
+                                </div>
+                                <div class="modal-body text-full">
+                                  <input
+                                    class="form-control mb-3"
+                                    type="text"
+                                    readonly
+                                    value="<%= data.testimonies[i].user.fullName %>"
+                                  />
+                                  <form class="rejectTestimonyForm">
+                                    <input
+                                      type="text"
+                                      value="<%= data.testimonies[i].user.id %>"
+                                      name="userId"
+                                      class="d-none"
+                                    />
+                                    <input
+                                      type="text"
+                                      value="<%= data.testimonies[i].id %>"
+                                      name="id"
+                                      class="d-none"
+                                    />
+                                    <div class="mb-3">
+                                      <label
+                                        for="feedbackMessage"
+                                        class="form-label"
+                                        >Feedback Message</label
+                                      >
+                                      <textarea
+                                        class="form-control"
+                                        id="feedbackMessage"
+                                        name="feedbackMessage"
+                                        rows="3"
+                                      ></textarea>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-sm btn-secondary"
+                                        data-bs-dismiss="modal"
+                                      >
+                                        Cancel
+                                      </button>
+                                      <button
+                                        type="submit"
+                                        class="btn btn-sm btn-danger"
+                                      >
+                                        Reject
+                                      </button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-danger">Reject</button>
-                        </td>
-                        <td>
-                          <button class="btn btn-sm btn-success">Reject</button>
+                          <button class="btn btn-sm btn-success">Credit</button>
                         </td>
                       </tr>
                       <% } %>

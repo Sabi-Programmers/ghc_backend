@@ -1,10 +1,13 @@
+import { StatusCodes } from "http-status-codes";
 import asyncWrapper from "../../middlewares/asyncWrapper.js";
 import {
   getAllTestimony,
   getAllUserTestimony,
+  rejectUserTestimony,
 } from "../../services/testimonyServices.js";
 import userServices from "../../services/userServices.js";
 import { calculatePagination } from "../../utils/index.js";
+import response from "../../utils/response.js";
 
 const getPendingTestimoniesPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -59,4 +62,17 @@ const getUserPendingTestimoniesPage = asyncWrapper(async (req, res) => {
   });
 });
 
-export { getPendingTestimoniesPage, getUserPendingTestimoniesPage };
+const rejectTestimony = asyncWrapper(async (req, res) => {
+  const userId = req.params.userId;
+  const id = req.params.id;
+  const feedbackMessage = req.body.feedbackMessage;
+  await rejectUserTestimony(userId, id, feedbackMessage);
+
+  return response.json(res, StatusCodes.OK, true, "Testimony rejected");
+});
+
+export {
+  getPendingTestimoniesPage,
+  getUserPendingTestimoniesPage,
+  rejectTestimony,
+};

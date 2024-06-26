@@ -234,13 +234,36 @@
       </a>
     </li>
     <!-- End Business Promotion Contest Page Nav -->
+
     <li class="nav-item">
-      <a class="nav-link collapsed" href="./message-member/create-message.html">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#messages-admin-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
         <i class="bi bi-envelope"></i>
-        <span>Message Member</span>
+        <span>Message Member</span><i class="bi bi-chevron-down ms-auto"></i>
       </a>
+      <ul
+        id="messages-admin-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="/admin/messages/send">
+            <i class="bi bi-circle"></i><span>Messages </span>
+          </a>
+        </li>
+        <li>
+          <a href="/admin/messages">
+            <i class="bi bi-circle"></i><span>Send Message </span>
+          </a>
+        </li>
+      </ul>
     </li>
     <!-- End Message Member Nav -->
+
     <li class="nav-item">
       <a
         class="nav-link collapsed"
