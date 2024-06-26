@@ -41,8 +41,8 @@ const getAllUserTestimony = async (userId, perPage, page) => {
   return { testimonies, totalItem };
 };
 
-const getAllTestimony = async (page, perPage, searchQuery) => {
-  const whereClause = { status: "PENDING" };
+const getAllTestimony = async (page, perPage, searchQuery, status) => {
+  const whereClause = { status };
   if (searchQuery) {
     const searchConditions = [
       { user: { username: { contains: searchQuery, mode: "insensitive" } } },
