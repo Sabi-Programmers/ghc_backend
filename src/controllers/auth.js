@@ -69,7 +69,7 @@ const getUserAccountName = asyncWrapper(async (req, res) => {
     return response.json(
       res,
       StatusCodes.INTERNAL_SERVER_ERROR,
-      true,
+      false,
       "No bank"
     );
   }
@@ -77,7 +77,7 @@ const getUserAccountName = asyncWrapper(async (req, res) => {
     return response.json(
       res,
       StatusCodes.INTERNAL_SERVER_ERROR,
-      true,
+      false,
       bank.message
     );
   }
@@ -86,6 +86,15 @@ const getUserAccountName = asyncWrapper(async (req, res) => {
     RecipientBankCode: bankCode,
     RecipientAccountNumber: accountNumber,
   });
+
+  if (!accName) {
+    return response.json(
+      res,
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      false,
+      "Invalid account number"
+    );
+  }
 
   const accountName = accName.AccountDetails.RecipientAccountName;
 

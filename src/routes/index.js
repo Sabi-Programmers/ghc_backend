@@ -18,6 +18,7 @@ import networkRouter from "./network.js";
 import marketingRouter from "./marketing.js";
 import messagesRouter from "./messages.js";
 import bankSystem from "../libs/bankSystem.js";
+import webhookRouter from "./webhook.js";
 
 const router = express.Router();
 
@@ -39,6 +40,7 @@ router.use("/marketing", isMember, marketingRouter);
 router.use("/shop", productsRouter);
 
 router.use("/admin", adminRouter);
+router.use("/webhook", webhookRouter);
 
 router.get("/test-bank", async (req, res) => {
   try {

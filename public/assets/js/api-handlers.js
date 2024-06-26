@@ -261,9 +261,7 @@ window.onload = function () {
           throw new Error(resData.message);
         }
 
-        accountName.value = resData.data.accountName;
-      } else {
-        throw new Error("Invalid account number or bank code");
+        accountName.value = resData.data;
       }
     } catch (error) {
       toast.failed(error.message);
