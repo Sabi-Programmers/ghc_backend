@@ -68,11 +68,16 @@ router.get("/test-bank", async (req, res) => {
 
     const info = await bankSystem.getInfo(bank.Authorisation.accesscode);
 
+    const accName = await bankSystem.getAccName(bank.Authorisation.accesscode, {
+      RecipientBankCode: "101",
+      RecipientAccountNumber: "6504751435",
+    });
+
     const bankList = await bankSystem.getBankList(
       bank.Authorisation.accesscode
     );
 
-    return res.status(200).json({ bank, info, bankList });
+    return res.status(200).json({ bank, info, accName, bankList });
   } catch (error) {
     return res.status(500).json({ error: error.message });
   }

@@ -37,9 +37,12 @@ const getRegisterPage = asyncWrapper(async (req, res) => {
       }
     }
 
-    const getBanks = await getAllBanksInfo();
-    banks = getBanks && getBanks.data.length ? getBanks.data : null;
-    banks.sort((a, b) => a.name.localeCompare(b.name));
+    const bank = await bankSystem.init();
+
+    const getBanks = await bankSystem.getBankList(
+      bank.Authorisation.accesscode
+    );
+    banks = getBanks.BankList;
   }
 
   res.render("auth/register", {
@@ -68,8 +71,6 @@ const createUser = asyncWrapper(async (req, res) => {
 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-
-    console.log("1");
 
     const user = await database.user.create({
       data: {

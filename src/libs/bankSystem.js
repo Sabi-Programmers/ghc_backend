@@ -22,6 +22,31 @@ const init = async () => {
     return error.message;
   }
 };
+const getAccName = async (accessToken, data) => {
+  try {
+    const myHeaders = new Headers();
+    myHeaders.append("X-Auth-Signature", BANK_AUTH);
+    myHeaders.append("Authorization", "Bearer " + accessToken);
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: JSON.stringify(data),
+    };
+
+    console.log(requestOptions);
+    const res = await fetch(
+      "https://api.vendpocket.com/v1/bank/accountname",
+      requestOptions
+    );
+    const resData = await res.json();
+    return resData;
+  } catch (error) {
+    console.log(error.message);
+    return error.message;
+  }
+};
 const createFlippedAcc = async (accessToken, data) => {
   try {
     const myHeaders = new Headers();
@@ -97,7 +122,13 @@ const getBankList = async (accessToken) => {
   }
 };
 let bankSystem = {};
-export default bankSystem = { init, createFlippedAcc, getInfo, getBankList };
+export default bankSystem = {
+  init,
+  createFlippedAcc,
+  getInfo,
+  getBankList,
+  getAccName,
+};
 
 /**
  * var myHeaders = new Headers();
