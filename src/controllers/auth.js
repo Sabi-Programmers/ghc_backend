@@ -63,48 +63,57 @@ const getUserAccountName = asyncWrapper(async (req, res) => {
     );
   }
 
-  const bank = await bankSystem.init();
+  try {
+    const bank = await bankSystem.init();
 
-  if (!bank) {
+    if (!bank) {
+      return response.json(
+        res,
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        false,
+        "No bank"
+      );
+    }
+    if (bank && bank.message !== "Successfully!") {
+      return response.json(
+        res,
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        false,
+        bank.message
+      );
+    }
+
+    const accName = await bankSystem.getAccName(bank.Authorisation.accesscode, {
+      RecipientBankCode: bankCode,
+      RecipientAccountNumber: accountNumber,
+    });
+
+    if (!accName) {
+      return response.json(
+        res,
+        StatusCodes.INTERNAL_SERVER_ERROR,
+        false,
+        "Invalid account number"
+      );
+    }
+
+    const accountName = accName.AccountDetails.RecipientAccountName;
+
+    return response.json(
+      res,
+      StatusCodes.OK,
+      true,
+      "Account Name Found",
+      accountName
+    );
+  } catch (error) {
     return response.json(
       res,
       StatusCodes.INTERNAL_SERVER_ERROR,
       false,
-      "No bank"
+      error.message
     );
   }
-  if (bank && bank.message !== "Successfully!") {
-    return response.json(
-      res,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-      false,
-      bank.message
-    );
-  }
-
-  const accName = await bankSystem.getAccName(bank.Authorisation.accesscode, {
-    RecipientBankCode: bankCode,
-    RecipientAccountNumber: accountNumber,
-  });
-
-  if (!accName) {
-    return response.json(
-      res,
-      StatusCodes.INTERNAL_SERVER_ERROR,
-      false,
-      "Invalid account number"
-    );
-  }
-
-  const accountName = accName.AccountDetails.RecipientAccountName;
-
-  return response.json(
-    res,
-    StatusCodes.OK,
-    true,
-    "Account Name Found",
-    accountName
-  );
 });
 
 const createUser = asyncWrapper(async (req, res) => {

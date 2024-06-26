@@ -238,6 +238,7 @@ window.onload = function () {
       const bankCode = selectedBank.getAttribute("data-code");
       const accountNumber = accountNumberInput.value;
       const accountName = document.getElementById("accountName");
+      accountName.value = "";
 
       if (accountNumber && accountNumber.length === 10 && bankCode) {
         const res = await fetch("/auth/get-account-name", {
