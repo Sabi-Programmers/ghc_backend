@@ -76,6 +76,25 @@ model User {
   message                Message[]
 }
 
+model Transactions {
+  id                     Int      @id @default(autoincrement())
+  collectionType         String
+  amount                 Float
+  depositorAccountNumber String
+  depositorAccountName   String
+  narration              String
+  channel                String
+  dateTime               DateTime
+  accountNumber          String
+  accountName            String
+  transactionReference   String   @unique
+  originatorBank         String
+  description            String
+  settlementReference    String   @unique
+  sessionID              String   @unique
+  uniqueIdentifier       String
+}
+
 model BlockedUser {
   id        Int      @id @default(autoincrement())
   status    Boolean  @default(false)
