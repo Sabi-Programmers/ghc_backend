@@ -237,6 +237,7 @@ window.onload = function () {
       const selectedBank = banks.options[banks.selectedIndex];
       const bankCode = selectedBank.getAttribute("data-code");
       const accountNumber = accountNumberInput.value;
+      const accountName = document.getElementById("accountName");
 
       if (accountNumber && accountNumber.length === 10 && bankCode) {
         const res = await fetch("/auth/get-account-name", {
@@ -249,14 +250,20 @@ window.onload = function () {
             bankCode,
           }),
         });
+
+        if (!res.ok) {
+          throw new Error(`Error: ${res.statusText}`);
+        }
+
         const resData = await res.json();
-        if (resData.success === false) {
+
+        if (!resData.success) {
           throw new Error(resData.message);
         }
 
-        const accountName = document.getElementById("accountName");
-
         accountName.value = resData.data.accountName;
+      } else {
+        throw new Error("Invalid account number or bank code");
       }
     } catch (error) {
       toast.failed(error.message);

@@ -1,4 +1,7 @@
 import Flutterwave from "flutterwave-node-v3";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const flw = new Flutterwave(
   process.env.FLW_PUBLIC_KEY,
