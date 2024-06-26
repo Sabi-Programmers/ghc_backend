@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
-import asyncWrapper from "../middlewares/asyncWrapper";
-import response from "../utils/response";
+import asyncWrapper from "../middlewares/asyncWrapper.js";
+import response from "../utils/response.js";
 
 const getTransactionNotifcation = asyncWrapper(async (req, res) => {
   const {
