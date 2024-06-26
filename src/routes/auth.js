@@ -9,6 +9,7 @@ import {
   getResetPasswordPage,
   forgotPassword,
   resetPassword,
+  getUserAccountName,
 } from "../controllers/auth.js";
 import {
   validateAuth,
@@ -17,7 +18,6 @@ import {
   validateResetPassword,
 } from "../validators/authValidators.js";
 import { isAuthenticated } from "../middlewares/auth.js";
-import countryNames from "../utils/countriesData.js";
 
 const authRouter = express.Router();
 
@@ -47,5 +47,6 @@ authRouter.post(
   resetPassword
 );
 authRouter.post("/logout", logoutUser);
+authRouter.post("/get-account-name", getUserAccountName);
 
 export default authRouter;

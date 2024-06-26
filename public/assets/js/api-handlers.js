@@ -232,6 +232,37 @@ window.onload = function () {
   let registerForm = document.getElementById("register-form");
   let completeRegisterForm = document.getElementById("complete-register-form");
 
+  const getAccName = async (accountNumberInput, banks) => {
+    try {
+      const selectedBank = banks.options[banks.selectedIndex];
+      const bankCode = selectedBank.getAttribute("data-code");
+      const accountNumber = accountNumberInput.value;
+
+      if (accountNumber && accountNumber.length === 10 && bankCode) {
+        const res = await fetch("/auth/get-account-name", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            accountNumber,
+            bankCode,
+          }),
+        });
+        const resData = await res.json();
+        if (resData.success === false) {
+          throw new Error(resData.message);
+        }
+
+        const accountName = document.getElementById("accountName");
+
+        accountName.value = resData.data.accountName;
+      }
+    } catch (error) {
+      toast.failed(error.message);
+    }
+  };
+
   if (registerForm) {
     // userDetails.style.display = "none";
     // userBankInfo.style.display = "grid";
@@ -273,6 +304,21 @@ window.onload = function () {
       false
     );
 
+    const banks = document.querySelector("#bankName");
+    const accountNumberInput = document.querySelector("#accountNumber");
+    const selectedBank = banks.options[banks.selectedIndex];
+
+    banks.addEventListener("change", async () => {
+      await getAccName(accountNumberInput, banks);
+    });
+
+    accountNumberInput &&
+      accountNumberInput.addEventListener("input", async () => {
+        await getAccName(accountNumberInput, banks);
+      });
+
+    // getAccName(accountNumber, bankCode)
+
     registerForm.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -289,9 +335,7 @@ window.onload = function () {
       const formData = new FormData(e.target);
       const jsonData = formDataToJson(formData);
 
-      const banks = document.querySelector("#bankName");
-      const selectedBank = banks.options[banks.selectedIndex];
-      jsonData.bankCode = selectedBank.getAttribute("data-code");
+      jsonData.bankCode = bankCode;
 
       handlerPostRequest(jsonData, "/auth/register", "/dashboard");
     });

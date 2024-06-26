@@ -37,12 +37,9 @@ const getRegisterPage = asyncWrapper(async (req, res) => {
       }
     }
 
-    const bank = await bankSystem.init();
-
-    const getBanks = await bankSystem.getBankList(
-      bank.Authorisation.accesscode
-    );
-    banks = getBanks.BankList;
+    const getBanks = await getAllBanksInfo();
+    banks = getBanks && getBanks.data.length ? getBanks.data : null;
+    banks.sort((a, b) => a.name.localeCompare(b.name));
   }
 
   res.render("auth/register", {
@@ -50,6 +47,54 @@ const getRegisterPage = asyncWrapper(async (req, res) => {
     data: { sponsorUsername, sponsorID, banks, error, countries },
   });
 });
+
+const getUserAccountName = asyncWrapper(async (req, res) => {
+  const { accountNumber, bankCode } = req.body;
+
+  if (!accountNumber || !bankCode) {
+    return response.json(
+      res,
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      true,
+      "Account number or bank code is missing"
+    );
+  }
+
+  const bank = await bankSystem.init();
+
+  if (!bank) {
+    return response.json(
+      res,
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      true,
+      "No bank"
+    );
+  }
+  if (bank && bank.message !== "Successfully!") {
+    return response.json(
+      res,
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      true,
+      bank.message
+    );
+  }
+
+  const accName = await bankSystem.getAccName(bank.Authorisation.accesscode, {
+    RecipientBankCode: bankCode,
+    RecipientAccountNumber: accountNumber,
+  });
+
+  const accountName = accName.AccountDetails.RecipientAccountName;
+
+  return response.json(
+    res,
+    StatusCodes.OK,
+    true,
+    "Account Name Found",
+    accountName
+  );
+});
+
 const createUser = asyncWrapper(async (req, res) => {
   const {
     username,
@@ -62,8 +107,7 @@ const createUser = asyncWrapper(async (req, res) => {
     country,
     email,
     gender,
-    accountFName,
-    accountLName,
+    accountName,
     accountNumber,
     bankName,
     bankCode,
@@ -91,8 +135,7 @@ const createUser = asyncWrapper(async (req, res) => {
         gold: { create: {} },
         diamond: { create: {} },
         eWallet: { create: {} },
-        accountFName,
-        accountLName,
+        accountName,
         accountNumber,
         bankName,
         BlockedUser: { create: {} },
@@ -109,8 +152,6 @@ const createUser = asyncWrapper(async (req, res) => {
       },
     });
 
-    console.log(user);
-
     try {
       await sendWelcomeMail(user.fullName, user.email);
     } catch (error) {}
@@ -118,8 +159,8 @@ const createUser = asyncWrapper(async (req, res) => {
     const bank = await bankSystem.init();
 
     const data = {
-      FirstName: accountFName,
-      LastName: accountLName,
+      FirstName: "",
+      LastName: "",
       OtherName: "",
       PhoneNumber: phone,
       Gender: gender,
@@ -373,4 +414,5 @@ export {
   getResetPasswordPage,
   resetPassword,
   forgotPassword,
+  getUserAccountName,
 };

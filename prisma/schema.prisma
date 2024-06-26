@@ -48,8 +48,9 @@ model User {
   displayPhoto           String?
   bankName               String
   accountNumber          String                   @unique
-  accountFName           String
-  accountLName           String
+  accountName            String                   @default("")
+  accountFName           String?
+  accountLName           String?
   createdAt              DateTime                 @default(now())
   updatedAt              DateTime                 @updatedAt
   eWallet                Ewallet?

@@ -283,37 +283,6 @@
                                   </div>
 
                                   <div class="row">
-                                    <div class="form-group col-md-6">
-                                      <label
-                                        for="accountFName"
-                                        class="form-label"
-                                      >
-                                        Account First Name
-                                      </label>
-                                      <input
-                                        type="text"
-                                        name="accountFName"
-                                        class="form-control"
-                                        id="accountFName"
-                                        required
-                                      />
-                                    </div>
-                                    <div class="form-group col-md-6">
-                                      <label
-                                        for="accountLName"
-                                        class="form-label"
-                                      >
-                                        Account Last Name
-                                      </label>
-                                      <input
-                                        type="text"
-                                        name="accountLName"
-                                        class="form-control"
-                                        id="accountLName"
-                                        required
-                                      />
-                                    </div>
-
                                     <div class="col-12 form-group">
                                       <label
                                         for="accountNumber"
@@ -327,6 +296,8 @@
                                         class="form-control"
                                         id="accountNumber"
                                         required
+                                        minlength="10"
+                                        maxlength="10"
                                       />
                                     </div>
                                     <div class="col-12 form-group">
@@ -352,6 +323,21 @@
 
                                         <% } %>
                                       </select>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                      <label
+                                        for="accountName"
+                                        class="form-label"
+                                      >
+                                        Account Name
+                                      </label>
+                                      <input
+                                        type="text"
+                                        name="accountName"
+                                        class="form-control"
+                                        id="accountName"
+                                        required
+                                      />
                                     </div>
                                   </div>
                                 </div>
