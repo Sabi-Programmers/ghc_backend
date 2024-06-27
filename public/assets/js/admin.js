@@ -424,6 +424,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   const rejectTestimonyForm = document.querySelectorAll(".rejectTestimonyForm");
+  const creditTestimonyForm = document.querySelectorAll(".creditTestimonyForm");
 
   rejectTestimonyForm.forEach((el) => {
     el.addEventListener("submit", async (e) => {
@@ -439,6 +440,26 @@ document.addEventListener("DOMContentLoaded", () => {
       await handlerPostRequest(
         { feedbackMessage: jsonData.feedbackMessage },
         `/admin/testimony/${jsonData.userId}/reject/${jsonData.id}`
+      );
+
+      window.location.reload();
+    });
+  });
+
+  creditTestimonyForm.forEach((el) => {
+    el.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      // if (jsonData.length <= 1) {
+      //   toast.failed("Please enter a feedback message");
+      //   return;
+      // }
+
+      await handlerPostRequest(
+        { feedbackMessage: jsonData.feedbackMessage },
+        `/admin/testimony/${jsonData.userId}/accept/${jsonData.id}`
       );
 
       window.location.reload();

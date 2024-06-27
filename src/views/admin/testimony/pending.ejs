@@ -144,9 +144,12 @@
                           <button class="btn btn-sm btn-info">View</button>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-secondary">
+                          <a
+                            href="/admin/messages/send?member=<%= data.testimonies[i].user.username %>"
+                            class="btn btn-sm btn-secondary"
+                          >
                             Message
-                          </button>
+                          </a>
                         </td>
                         <td>
                           <button
@@ -238,9 +241,124 @@
                           </div>
                         </td>
                         <td>
-                          <button class="btn btn-sm btn-success">
-                            Approve
+                          <button
+                            type="button"
+                            class="btn btn-success btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#creditTestimonyModal-<%= data.testimonies[i].id %>"
+                          >
+                            Credit
                           </button>
+                          <div
+                            class="modal fade"
+                            id="creditTestimonyModal-<%= data.testimonies[i].id %>"
+                            tabindex="-1"
+                            data-bs-backdrop="static"
+                            data-bs-keyboard="false"
+                            role="dialog"
+                            aria-labelledby="creditTestimonyTitleId-<%= data.testimonies[i].id %>"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5
+                                    class="modal-title"
+                                    id="creditTestimonyTitleId-<%= data.testimonies[i].id %>"
+                                  >
+                                    Credit Testimony Bonus
+                                  </h5>
+                                  <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  ></button>
+                                </div>
+                                <div class="modal-body text-full">
+                                  <label> Name </label>
+                                  <input
+                                    class="form-control mb-3"
+                                    type="text"
+                                    readonly
+                                    value="<%= data.testimonies[i].user.fullName %>"
+                                  />
+
+                                  <label class="mt-3">Package</label>
+                                  <input
+                                    class="form-control mb-3"
+                                    type="text"
+                                    readonly
+                                    value="<%= data.testimonies[i].package %>"
+                                  />
+
+                                  <label class="mt-3"
+                                    >Last Testimony Bonus Credit Count</label
+                                  >
+                                  <input
+                                    class="form-control mb-3"
+                                    type="text"
+                                    readonly
+                                    value="<%= data.testimonies[i].lastPaidCycles %>"
+                                  />
+                                  <label class="mt-3"
+                                    >Testimony Bonus Record</label
+                                  >
+                                  <a
+                                    href="/admin/testimony/<%= data.testimonies[i].user.id %>"
+                                    class="btn btn-info btn-sm text-white d-block mt-1 w-auto"
+                                  >
+                                    View
+                                  </a>
+                                  <form class="creditTestimonyForm mt-3">
+                                    <input
+                                      type="text"
+                                      value="<%= data.testimonies[i].user.id %>"
+                                      name="userId"
+                                      class="d-none"
+                                    />
+                                    <input
+                                      type="text"
+                                      value="<%= data.testimonies[i].id %>"
+                                      name="id"
+                                      class="d-none"
+                                    />
+                                    <div class="mb-3">
+                                      <div class="form-check">
+                                        <input
+                                          class="form-check-input"
+                                          type="checkbox"
+                                          value=""
+                                          id="flexCheckDefault"
+                                        />
+                                        <label
+                                          class="form-check-label"
+                                          for="flexCheckDefault"
+                                        >
+                                          Published to web pages
+                                        </label>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button
+                                        type="button"
+                                        class="btn btn-sm btn-secondary"
+                                        data-bs-dismiss="modal"
+                                      >
+                                        Cancel
+                                      </button>
+                                      <button
+                                        type="submit"
+                                        class="btn btn-sm btn-success"
+                                      >
+                                        Credit
+                                      </button>
+                                    </div>
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                       </tr>
                       <% } %>

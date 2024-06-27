@@ -13,6 +13,6 @@ testmonyRouter.get("/", getPendingTestimoniesPage);
 testmonyRouter.get("/records", getTestimonyRecordsPage);
 testmonyRouter.get("/:userId", getUserPendingTestimoniesPage);
 testmonyRouter.post("/:userId/reject/:id", rejectTestimony);
-testmonyRouter.get("/:userId/accept/:id", acceptTestimony);
+testmonyRouter.post("/:userId/accept/:id", acceptTestimony);
 
 export default testmonyRouter;
