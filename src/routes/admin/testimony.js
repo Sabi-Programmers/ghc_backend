@@ -1,5 +1,6 @@
 import express from "express";
 import {
+  acceptTestimony,
   getPendingTestimoniesPage,
   getTestimonyRecordsPage,
   getUserPendingTestimoniesPage,
@@ -12,5 +13,6 @@ testmonyRouter.get("/", getPendingTestimoniesPage);
 testmonyRouter.get("/records", getTestimonyRecordsPage);
 testmonyRouter.get("/:userId", getUserPendingTestimoniesPage);
 testmonyRouter.post("/:userId/reject/:id", rejectTestimony);
+testmonyRouter.get("/:userId/accept/:id", acceptTestimony);
 
 export default testmonyRouter;

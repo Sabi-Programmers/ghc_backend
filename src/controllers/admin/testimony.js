@@ -1,6 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import asyncWrapper from "../../middlewares/asyncWrapper.js";
 import {
+  acceptUserTestimony,
   getAllTestimony,
   getAllUserTestimony,
   rejectUserTestimony,
@@ -99,9 +100,19 @@ const rejectTestimony = asyncWrapper(async (req, res) => {
   return response.json(res, StatusCodes.OK, true, "Testimony rejected");
 });
 
+const acceptTestimony = asyncWrapper(async (req, res) => {
+  const userId = req.params.userId;
+  const id = req.params.id;
+  const publish = req.body.publish;
+
+  await acceptUserTestimony(userId, id, publish);
+  return response.json(res, StatusCodes.OK, true, "Testmoniny Bonus Paid");
+});
+
 export {
   getTestimonyRecordsPage,
   getPendingTestimoniesPage,
   getUserPendingTestimoniesPage,
   rejectTestimony,
+  acceptTestimony,
 };

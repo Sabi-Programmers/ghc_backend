@@ -1,4 +1,5 @@
 import database from "../libs/prisma.js";
+import { getContants } from "./contantsServices.js";
 
 const getUserForTestimonyBonus = async (userId) =>
   await database.testimonyBonus.findUnique({ where: { userId } });
@@ -82,10 +83,92 @@ const rejectUserTestimony = async (userId, id, feedbackMessage) => {
   });
 };
 
+const acceptUserTestimony = async (userId, id, publish = false) => {
+  // Update testimony record status to "APPRoved"
+  const tm = await database.testimonyRecords.update({
+    where: {
+      id: Number(id),
+      userId: Number(userId),
+    },
+    data: {
+      status: "APPROVED",
+      publish,
+    },
+  });
+
+  // Get constants
+  const constant = await getContants();
+
+  // Retrieve user details
+  const user = await database.user.findUnique({
+    where: {
+      id: Number(userId),
+    },
+    select: {
+      id: true,
+      withdrawalWallet: true,
+      testimonyBonus: true,
+      fullName: true,
+      username: true,
+    },
+  });
+
+  // Calculate bonus amount and update testimony bonus
+  const count = tm.completedCycles - tm.lastPaidCycles;
+  const testimonyBonusData = {};
+  const pkg = tm.package.toLowerCase();
+  const amount = constant[pkg + "TestimonyBonus"];
+  const totalAmount = amount * count + user.testimonyBonus[pkg];
+  testimonyBonusData[pkg] = parseFloat(totalAmount.toFixed(2));
+  testimonyBonusData[pkg + "Count"] =
+    count + user.testimonyBonus[pkg + "Count"];
+
+  await database.testimonyBonus.update({
+    where: {
+      userId: Number(userId),
+    },
+    data: testimonyBonusData,
+  });
+
+  // Create withdrawal wallet records without using a loop
+  const withdrawalWalletRecords = Array.from({ length: count }, (_, i) => ({
+    incomeType: "testimony",
+    amount: amount,
+    name: user.fullName,
+    username: user.username,
+    userId: user.id,
+    cycle: user.testimonyBonus[pkg + "Count"] + i,
+    package: pkg.toUpperCase(),
+  }));
+
+  await Promise.all(
+    withdrawalWalletRecords.map((record) =>
+      database.withdrawalWalletRecord.create({ data: record })
+    )
+  );
+
+  // Update withdrawal wallet
+  const withdrawalWalletData = {};
+  withdrawalWalletData[pkg] = parseFloat(
+    (amount * count + user.withdrawalWallet[pkg]).toFixed(2)
+  );
+
+  await database.withdrawalWallet.update({
+    where: {
+      userId: user.id,
+    },
+    data: withdrawalWalletData,
+  });
+
+  // When all actions are completed, return "yes"
+  return true;
+};
+
 export {
   getUserForTestimonyBonus,
   createTestimonyRequest,
   getAllUserTestimony,
   getAllTestimony,
   rejectUserTestimony,
+  acceptUserTestimony,
 };
