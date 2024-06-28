@@ -465,4 +465,42 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload();
     });
   });
+
+  const approveWithdrawalForm = document.querySelectorAll(
+    ".approveWithdrawalForm"
+  );
+  const rejectRequestForm = document.querySelectorAll(".rejectRequestForm");
+
+  rejectRequestForm.forEach((el) => {
+    el.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      if (jsonData.message.length < 1) {
+        toast.failed("Please enter a reason");
+        return;
+      }
+
+      await handlerPostRequest({}, `/admin/withdrawals/reject/${jsonData.id}`);
+
+      window.location.reload();
+    });
+  });
+  approveWithdrawalForm.forEach((el) => {
+    el.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      if (!jsonData.checked) {
+        toast.failed("Please click the checkbox below");
+        return;
+      }
+
+      await handlerPostRequest({}, `/admin/withdrawals/approve/${jsonData.id}`);
+
+      window.location.reload();
+    });
+  });
 });

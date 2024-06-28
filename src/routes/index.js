@@ -19,6 +19,7 @@ import marketingRouter from "./marketing.js";
 import messagesRouter from "./messages.js";
 import bankSystem from "../libs/bankSystem.js";
 import webhookRouter from "./webhook.js";
+import database from "../libs/prisma.js";
 
 const router = express.Router();
 
@@ -82,6 +83,40 @@ router.get("/test-bank", async (req, res) => {
     return res.status(200).json({ bank, info, accName, bankList });
   } catch (error) {
     return res.status(500).json({ error: error.message });
+  }
+});
+
+router.get("/seed", async (req, res) => {
+  const getRandomAmount = () => Math.floor(Math.random() * 901) + 100; // Random amount between 100 and 1000
+  const getRandomStatus = () => "PENDING"; // Only "PENDING" status as per provided data
+  const wallets = ["GOLD", "BRONZE"];
+  const getRandomWallet = () =>
+    wallets[Math.floor(Math.random() * wallets.length)];
+  const userIds = [27, 28, 29, 30];
+  const getRandomUserId = () =>
+    userIds[Math.floor(Math.random() * userIds.length)];
+
+  const seedData = Array.from({ length: 20 }, () => ({
+    amount: getRandomAmount(),
+    status: getRandomStatus(),
+    wallets: getRandomWallet(),
+    userId: getRandomUserId(),
+  }));
+
+  try {
+    await database.withdrawalRequest.createMany({
+      data: seedData,
+    });
+
+    res.status(200).json({
+      success: true,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({
+      success: false,
+      message: "An error occurred while seeding data.",
+    });
   }
 });
 

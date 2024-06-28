@@ -1,6 +1,12 @@
+import { StatusCodes } from "http-status-codes";
 import asyncWrapper from "../../middlewares/asyncWrapper.js";
-import { getAllWithdrawalRequests } from "../../services/withdrawalWalletServices.js";
+import {
+  approveUserRequest,
+  getAllWithdrawalRequests,
+  rejectUserRequest,
+} from "../../services/withdrawalWalletServices.js";
 import { calculatePagination } from "../../utils/index.js";
+import response from "../../utils/response.js";
 
 const getWithdrawalRequestPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -60,5 +66,29 @@ const getWithdrawalHistoryPage = asyncWrapper(async (req, res) => {
     data,
   });
 });
+const approveWithdrawalRequest = asyncWrapper(async (req, res) => {
+  await approveUserRequest(req.params.id);
+  return response.json(
+    res,
+    StatusCodes.OK,
+    true,
+    "withdrawal Payment successful"
+  );
+});
 
-export { getWithdrawalRequestPage, getWithdrawalHistoryPage };
+const rejectWithdrawalRequest = asyncWrapper(async (req, res) => {
+  await rejectUserRequest(req.params.id, req.body.message);
+  return response.json(
+    res,
+    StatusCodes.OK,
+    true,
+    "withdrawal Request Rejected"
+  );
+});
+
+export {
+  getWithdrawalRequestPage,
+  getWithdrawalHistoryPage,
+  approveWithdrawalRequest,
+  rejectWithdrawalRequest,
+};

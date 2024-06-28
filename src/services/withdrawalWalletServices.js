@@ -70,10 +70,56 @@ const getAllWithdrawalRequests = async (page, perPage, wallet, paid) => {
   return { requests, totalItems };
 };
 
+const approveUserRequest = async (id) => {
+  return await database.withdrawalRequest.update({
+    where: { id: Number(id) },
+    data: { status: "APPROVED" },
+  });
+};
+
+const rejectUserRequest = async (id, message) => {
+  const wr = await database.withdrawalRequest.findUnique({
+    where: { id: Number(id) },
+  });
+  // return money to user
+  const ww = await database.withdrawalWallet.findFirst({
+    where: { userId: wr.userId },
+  });
+
+  const pkg = wr.wallets;
+
+  const wwData = {};
+
+  if (pkg === "LEADERCYCLE") {
+    wwData["leaderCycle"] = parseFloat(
+      (ww["leaderCycle"] + wr.amount).toFixed(2)
+    );
+  } else if (pkg === "SALESINCOME") {
+    wwData["salesIncome"] = parseFloat(
+      (ww["salesIncome"] + wr.amount).toFixed(2)
+    );
+  } else {
+    wwData[pkg.toLowerCase()] = parseFloat(
+      (ww[pkg.toLowerCase()] + wr.amount).toFixed(2)
+    );
+  }
+
+  await database.withdrawalWallet.update({
+    where: { userId: wr.userId },
+    data: wwData,
+  });
+  return await database.withdrawalRequest.update({
+    where: { id: Number(id) },
+    data: { status: "DENIED", message },
+  });
+};
+
 export {
   getWithdrawalWallet,
   minusWithdrawalWallet,
   createWithdrawalRequest,
   getWithdrawalRequest,
   getAllWithdrawalRequests,
+  approveUserRequest,
+  rejectUserRequest,
 };

@@ -113,14 +113,180 @@
                           data.requests[i].User.withdrawalWallet[data.wallet] %>
                         </td>
                         <td>
-                          <button type="button" class="btn btn-success btn-sm">
+                          <button
+                            type="button"
+                            class="btn btn-success btn-sm"
+                            data-bs-toggle="modal"
+                            data-bs-target="#request-modal-<%= data.requests[i].id %>"
+                          >
                             Approve
                           </button>
+
+                          <!-- Modal -->
+                          <div
+                            class="modal fade"
+                            id="request-modal-<%= data.requests[i].id %>"
+                            tabindex="-1"
+                            aria-labelledby="exampleModalLabel"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1
+                                    class="modal-title fs-5"
+                                    id="exampleModalLabel"
+                                  >
+                                    Member Withdrawal Banking Details
+                                  </h1>
+                                  <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  ></button>
+                                </div>
+
+                                <form class="approveWithdrawalForm">
+                                  <input
+                                    type="text"
+                                    name="id"
+                                    value="<%= data.requests[i].id %>"
+                                    class="d-none"
+                                  />
+
+                                  <div class="modal-body">
+                                    <div class="mb-3">
+                                      <label class="form-label"
+                                        >Bank Name</label
+                                      >
+                                      <input
+                                        class="form-control"
+                                        value="<%= data.requests[i].User.bankName %>"
+                                      />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label"
+                                        >Account Name</label
+                                      >
+                                      <input
+                                        class="form-control"
+                                        value="<%= data.requests[i].User.accountName %>"
+                                      />
+                                    </div>
+                                    <div class="mb-3">
+                                      <label class="form-label"
+                                        >Account Number</label
+                                      >
+                                      <input
+                                        class="form-control"
+                                        value="<%= data.requests[i].User.accountNumber %>"
+                                      />
+                                    </div>
+                                    <div class="form-check">
+                                      <input
+                                        class="form-check-input adminPayment"
+                                        type="checkbox"
+                                        name="checked"
+                                        id="adminPayment"
+                                      />
+                                      <label
+                                        class="form-check-label"
+                                        for="adminPayment"
+                                      >
+                                        Admin made payment to this account
+                                      </label>
+                                    </div>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                    <button
+                                      type="button"
+                                      class="btn btn-secondary"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Close
+                                    </button>
+
+                                    <button
+                                      type="submit"
+                                      class="btn btn-success"
+                                    >
+                                      Approve Withdrawal
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                         <td>
-                          <button type="button" class="btn btn-danger btn-sm">
+                          <!-- Button trigger modal -->
+                          <button
+                            type="button"
+                            class="btn btn-sm btn-danger"
+                            data-bs-toggle="modal"
+                            data-bs-target="#reject-request-modal-<%= data.requests[i].id %>"
+                          >
                             Reject
                           </button>
+
+                          <!-- Modal -->
+                          <div
+                            class="modal fade"
+                            id="reject-request-modal-<%= data.requests[i].id %>"
+                            tabindex="-1"
+                            aria-hidden="true"
+                          >
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5">
+                                    Reject Withdrawal Request
+                                  </h1>
+                                  <button
+                                    type="button"
+                                    class="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  ></button>
+                                </div>
+                                <form class="rejectRequestForm">
+                                  <input
+                                    type="text"
+                                    name="id"
+                                    value="<%= data.requests[i].id %>"
+                                    class="d-none"
+                                  />
+                                  <div class="modal-body">
+                                    <div class="mb-3">
+                                      <label class="form-label">Reason</label>
+                                      <textarea
+                                        class="form-control"
+                                        rows="3"
+                                        name="message"
+                                      ></textarea>
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button
+                                      type="button"
+                                      class="btn btn-secondary"
+                                      data-bs-dismiss="modal"
+                                    >
+                                      Close
+                                    </button>
+                                    <button
+                                      type="submit"
+                                      class="btn btn-danger"
+                                    >
+                                      Reject
+                                    </button>
+                                  </div>
+                                </form>
+                              </div>
+                            </div>
+                          </div>
                         </td>
                         <td>
                           <a
