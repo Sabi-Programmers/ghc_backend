@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-body">
+                <div class="card-title">
+                  <h3>Select Package</h3>
+                </div>
+                <ul class="nav nav-underline">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'bronze' ? 'active': '' %>"
+                      href="?pkg=bronze<%= data.currentUsername ? `&cu=${data.currentUsername.username}` : '' %>"
+                      >Bronze</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'gold' ? 'active': '' %>"
+                      href="?pkg=gold<%= data.currentUsername ? `&cu=${data.currentUsername.username}` : '' %>"
+                      >Gold</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      class="nav-link <%- data.pkg == 'diamond' ? 'active': '' %>"
+                      href="?pkg=diamond<%= data.currentUsername ? `&cu=${data.currentUsername.username}` : '' %>"
+                      >Diamond</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title">Team Performance</h5>
+              </div>
+              <div class="card-body">
+                <div class="list-group list-group-flush">
+                  <% if (data.prevUsername) { %>
+                  <a
+                    href="?pkg=<%= data.pkg %>&cu=<%= data.prevUsername.username %>"
+                    class="list-group-item list-group-item-action ps-0 text-capitalize"
+                  >
+                    <i class="bx bxs-chevron-down"></i> <%=
+                    data.prevUsername.username %> (cycle <%=
+                    data.prevUsername[data.pkg].currentCycle %>) <%=
+                    data.prevUsername.isCycleLeader ? "Leader": "" %>
+                  </a>
+
+                  <% } else { %>
+
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action ps-0 text-capitalize disabled"
+                  >
+                    <i class="bx bxs-chevron-down"></i> Grandhealthcycle
+                    (default) Leader
+                  </a>
+                  <% } %> <% if (data.currentUsername) { %>
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action text-capitalize active ps-2 disabled"
+                    aria-current="true"
+                  >
+                    <i class="bx bxs-chevron-down"></i> <%=
+                    data.currentUsername.username %> (cycle <%=
+                    data.currentUsername[data.pkg].currentCycle %>) <%=
+                    data.currentUsername.isCycleLeader ? "Leader": "" %>
+                  </a>
+                  <% } %> <% for( let i = 0; i < data.downlines.length; i++ ) {
+                  %>
+                  <a
+                    href="?pkg=<%= data.pkg %>&cu=<%= data.downlines[i].username %>"
+                    class="list-group-item list-group-item-action ps-4 text-capitalize"
+                  >
+                    <i class="bx bxs-chevron-right"></i> <%=
+                    data.downlines[i].username %> (cycle <%=
+                    data.downlines[i][data.pkg].currentCycle %>) <%=
+                    data.downlines[i].isCycleLeader ? "Leader": "" %>
+                  </a>
+
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>

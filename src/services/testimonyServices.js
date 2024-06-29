@@ -29,14 +29,14 @@ const createTestimonyRequest = async (
 
 const getAllUserTestimony = async (userId, perPage, page) => {
   const testimonies = await database.testimonyRecords.findMany({
-    where: { userId: Number(userId), status: "PENDING" },
+    where: { userId: Number(userId) },
     include: { user: { include: { bronze: true, gold: true, diamond: true } } },
     skip: (page - 1) * perPage,
     take: perPage,
     orderBy: { createdAt: "desc" },
   });
   const totalItem = await database.testimonyRecords.count({
-    where: { userId: Number(userId), status: "PENDING" },
+    where: { userId: Number(userId) },
   });
 
   return { testimonies, totalItem };

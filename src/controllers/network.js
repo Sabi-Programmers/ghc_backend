@@ -80,6 +80,8 @@ const getTeamPerformancePage = asyncWrapper(async (req, res) => {
   const query = {};
   query["first"] = currentUsername;
   query.package = pkg.toUpperCase();
+  const order = {};
+  order[pkg] = { currentCycle: "desc" };
 
   data.downlines = await database.user.findMany({
     where: {
@@ -94,6 +96,7 @@ const getTeamPerformancePage = asyncWrapper(async (req, res) => {
       username: true,
       isCycleLeader: true,
     },
+    orderBy: order,
   });
 
   data.pkg = pkg;
