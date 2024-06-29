@@ -21,21 +21,21 @@
                   <li class="nav-item">
                     <a
                       class="nav-link <%- data.pkg == 'bronze' ? 'active': '' %>"
-                      href="?pkg=bronze"
+                      href="?pkg=bronze&cu=<%= data.currentUsername.username %>"
                       >Bronze</a
                     >
                   </li>
                   <li class="nav-item">
                     <a
                       class="nav-link <%- data.pkg == 'gold' ? 'active': '' %>"
-                      href="?pkg=gold"
+                      href="?pkg=gold&cu=<%= data.currentUsername.username %>"
                       >Gold</a
                     >
                   </li>
                   <li class="nav-item">
                     <a
                       class="nav-link <%- data.pkg == 'diamond' ? 'active': '' %>"
-                      href="?pkg=diamond"
+                      href="?pkg=diamond&cu=<%= data.currentUsername.username %>"
                       >Diamond</a
                     >
                   </li>
@@ -49,46 +49,51 @@
                 <h5 class="card-title">Team Performance</h5>
               </div>
               <div class="card-body">
-                <ul
-                  class="list-group list-group-flush team-performance-list"
-                  id="team-performance-list"
-                >
-                  <li class="list-group-item show">
-                    <i class="bx bxs-chevron-right"></i> Anthonydee (cycle 148)
-                    Leader
-                    <ul class="list-group list-group-flush">
-                      <li class="list-group-item">
-                        <i class="bx bxs-chevron-right"></i> Loverbeth3 (cycle
-                        21) Leader
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
-              <div class="card-footer">
-                <nav aria-label="...">
-                  <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                      <a class="page-link" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                      </a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">1</a>
-                    </li>
-                    <li class="page-item active" aria-current="page">
-                      <a class="page-link" href="#">2</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#">3</a>
-                    </li>
-                    <li class="page-item">
-                      <a class="page-link" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                      </a>
-                    </li>
-                  </ul>
-                </nav>
+                <div class="list-group list-group-flush">
+                  <% if (data.prevUsername) { %>
+                  <a
+                    href="?pkg=<%= data.pkg %>&cu=<%= data.prevUsername.username %>"
+                    class="list-group-item list-group-item-action ps-0 text-capitalize"
+                  >
+                    <i class="bx bxs-chevron-down"></i> <%=
+                    data.prevUsername.username %> (cycle <%=
+                    data.prevUsername[data.pkg].currentCycle %>) <%=
+                    data.prevUsername.isCycleLeader ? "Leader": "" %>
+                  </a>
+
+                  <% } else { %>
+
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action ps-0 text-capitalize disabled"
+                  >
+                    <i class="bx bxs-chevron-down"></i> Grandhealthcycle
+                    (default) Leader
+                  </a>
+                  <% } %>
+                  <a
+                    href="#"
+                    class="list-group-item list-group-item-action text-capitalize active ps-2 disabled"
+                    aria-current="true"
+                  >
+                    <i class="bx bxs-chevron-down"></i> <%=
+                    data.currentUsername.username %> (cycle <%=
+                    data.currentUsername[data.pkg].currentCycle %>) <%=
+                    data.currentUsername.isCycleLeader ? "Leader": "" %>
+                  </a>
+                  <% for( let i = 0; i < data.downlines.length; i++ ) { %>
+                  <a
+                    href="?pkg=<%= data.pkg %>&cu=<%= data.downlines[i].username %>"
+                    class="list-group-item list-group-item-action ps-4 text-capitalize"
+                  >
+                    <i class="bx bxs-chevron-right"></i> <%=
+                    data.downlines[i].username %> (cycle <%=
+                    data.downlines[i][data.pkg].currentCycle %>) <%=
+                    data.downlines[i].isCycleLeader ? "Leader": "" %>
+                  </a>
+
+                  <% } %>
+                </div>
               </div>
             </div>
           </div>

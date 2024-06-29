@@ -79,7 +79,9 @@
                         $
                         <span
                           ><%- data.user.eWallet ? (data.user.eWallet.balance /
-                          data.bank.usdRate).toFixed(2) : 0.00 %></span
+                          data.bank.usdRate).toLocaleString('en-US', {
+                          minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                          : 0.00 %></span
                         >
                       </h6>
                     </div>
@@ -164,11 +166,12 @@
                   </div>
                   <div class="ps-3 text-truncate">
                     <h6 class="text-truncate">
-                      $ <%- data.user.withdrawalWallet.salesIncome +
+                      $ <%- (data.user.withdrawalWallet.salesIncome +
                       data.user.withdrawalWallet.gold +
                       data.user.withdrawalWallet.diamond +
                       data.user.withdrawalWallet.bronze +
-                      data.user.withdrawalWallet.leaderCycle %>
+                      data.user.withdrawalWallet.leaderCycle).toLocaleString('en-US',
+                      { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                     </h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
@@ -218,7 +221,10 @@
                           Bronze
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.user.withdrawalWallet.bronze %>
+                          $ <%-
+                          (data.user.withdrawalWallet.bronze).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                       <li
@@ -233,7 +239,10 @@
                           Gold
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.user.withdrawalWallet.gold %>
+                          $ <%-
+                          (data.user.withdrawalWallet.gold).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                       <li
@@ -248,7 +257,10 @@
                           Diamond
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.user.withdrawalWallet.diamond %>
+                          $ <%-
+                          (data.user.withdrawalWallet.diamond).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                       <li
@@ -263,7 +275,10 @@
                           Leader cylce
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.user.withdrawalWallet.leaderCycle %>
+                          $ <%-
+                          (data.user.withdrawalWallet.leaderCycle).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                       <li
@@ -278,7 +293,10 @@
                           Sales income
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.user.withdrawalWallet.salesIncome %>
+                          $ <%-
+                          (data.user.withdrawalWallet.salesIncome).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                     </ul>
@@ -405,7 +423,9 @@
                     <h6 class="text-truncate">
                       $
                       <span>
-                        <%= (data.referrersIncome.total).toFixed(2) %>
+                        <%= (data.referrersIncome.total).toLocaleString('en-US',
+                        { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                        %>
                       </span>
                     </h6>
                   </div>
@@ -455,7 +475,10 @@
                         </h5>
 
                         <span class="text-end value">
-                          $ <%= (data.referrersIncome.bronze).toFixed(2) %>
+                          $ <%=
+                          (data.referrersIncome.bronze).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                       <li
@@ -470,7 +493,10 @@
                           Gold
                         </h5>
                         <span class="text-end value">
-                          $ <%= (data.referrersIncome.gold).toFixed(2) %>
+                          $ <%=
+                          (data.referrersIncome.gold).toLocaleString('en-US', {
+                          minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                          %>
                         </span>
                       </li>
                       <li
@@ -485,7 +511,10 @@
                           Diamond
                         </h5>
                         <span class="text-end value">
-                          $ <%= (data.referrersIncome.diamond).toFixed(2) %>
+                          $ <%=
+                          (data.referrersIncome.diamond).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                     </ul>
@@ -755,7 +784,9 @@
                   </div>
                   <div class="ps-3">
                     <h6 class="text-truncate">
-                      $ <%= (data.cycleWelcomeBonus.total).toFixed(2) %>
+                      $ <%=
+                      (data.cycleWelcomeBonus.total).toLocaleString('en-US', {
+                      minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                     </h6>
                   </div>
                 </div>
@@ -802,7 +833,10 @@
                           Bronze
                         </h5>
                         <span class="text-end value">
-                          $ <%= (data.cycleWelcomeBonus.bronze).toFixed(2) %>
+                          $ <%=
+                          (data.cycleWelcomeBonus.bronze).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                       <li
@@ -817,7 +851,10 @@
                           Gold
                         </h5>
                         <span class="text-end value">
-                          $ <%= (data.cycleWelcomeBonus.gold).toFixed(2) %>
+                          $ <%=
+                          (data.cycleWelcomeBonus.gold).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                       <li
@@ -832,7 +869,10 @@
                           Diamond
                         </h5>
                         <span class="text-end value">
-                          $ <%= (data.cycleWelcomeBonus.diamond).toFixed(2) %>
+                          $ <%=
+                          (data.cycleWelcomeBonus.diamond).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                     </ul>
@@ -859,7 +899,8 @@
                   </div>
                   <div class="ps-3">
                     <h6 class="text-truncate">
-                      $ <%= (data.completionBonus.total).toFixed(2) %>
+                      $ <%= (data.completionBonus.total).toLocaleString('en-US',
+                      { minimumFractionDigits: 2, maximumFractionDigits: 2 }) %>
                     </h6>
                     <!-- <span class="text-success small pt-1 fw-bold">8%</span>
                     <span class="text-muted small pt-2 ps-1">increase</span> -->
@@ -909,7 +950,10 @@
                           Bronze
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.completionBonus.bronze %>
+                          $ <%-
+                          (data.completionBonus.bronze).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                       <li
@@ -924,7 +968,10 @@
                           Gold
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.completionBonus.gold %>
+                          $ <%-
+                          (data.completionBonus.gold).toLocaleString('en-US', {
+                          minimumFractionDigits: 2, maximumFractionDigits: 2 })
+                          %>
                         </span>
                       </li>
                       <li
@@ -939,7 +986,10 @@
                           Diamond
                         </h5>
                         <span class="text-end value">
-                          $ <%- data.completionBonus.diamond %>
+                          $ <%-
+                          (data.completionBonus.diamond).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
                         </span>
                       </li>
                     </ul>
@@ -966,17 +1016,37 @@
                     <tbody>
                       <tr class="table-danger">
                         <th scope="row">Bronze</th>
-                        <td><%- data.user.testimonyBonus.bronze %></td>
-                        <td><%- data.user.testimonyBonus.bronzeCount %></td>
+                        <td>
+                          <%-
+                          (data.user.testimonyBonus.bronze).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
+                        </td>
+                        <td>
+                          <%-
+                          (data.user.testimonyBonus.bronzeCount).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
+                        </td>
                       </tr>
                       <tr class="table-warning">
                         <th scope="row">Gold</th>
-                        <td><%- data.user.testimonyBonus.gold %></td>
+                        <td>
+                          <%-
+                          (data.user.testimonyBonus.gold).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
+                        </td>
                         <td><%- data.user.testimonyBonus.goldCount %></td>
                       </tr>
                       <tr class="table-info">
                         <th scope="row">Diamond</th>
-                        <td><%- data.user.testimonyBonus.diamond %></td>
+                        <td>
+                          <%-
+                          (data.user.testimonyBonus.diamond).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
+                        </td>
                         <td><%- data.user.testimonyBonus.diamondCount %></td>
                       </tr>
                     </tbody>
@@ -1003,19 +1073,34 @@
                     <tbody>
                       <tr class="table-danger">
                         <th scope="row">Bronze</th>
-                        <td><%- data.user.unclaimedRewards.bronze %></td>
+                        <td>
+                          <%-
+                          (data.user.unclaimedRewards.bronze).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
+                        </td>
                         <td>
                           <%- data.user.unclaimedRewards.bronzeLostCount %>
                         </td>
                       </tr>
                       <tr class="table-warning">
                         <th scope="row">Gold</th>
-                        <td><%- data.user.unclaimedRewards.gold %></td>
+                        <td>
+                          <%-
+                          (data.user.unclaimedRewards.gold).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
+                        </td>
                         <td><%- data.user.unclaimedRewards.goldLostCount %></td>
                       </tr>
                       <tr class="table-info">
                         <th scope="row">Diamond</th>
-                        <td><%- data.user.unclaimedRewards.diamond %></td>
+                        <td>
+                          <%-
+                          (data.user.unclaimedRewards.diamond).toLocaleString('en-US',
+                          { minimumFractionDigits: 2, maximumFractionDigits: 2
+                          }) %>
+                        </td>
                         <td>
                           <%- data.user.unclaimedRewards.diamondLostCount %>
                         </td>
