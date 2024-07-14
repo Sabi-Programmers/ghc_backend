@@ -18,6 +18,59 @@ const ordersTotalAmount = async (tx_ref) => {
 };
 
 const updateOrderStatus = async (tx_ref, type, failed = null) => {
+  const order = await database.shopOrders.findMany({
+    where: {
+      tx_ref,
+    },
+    include: { Item: true },
+  });
+
+  const getSponsorInfo = async (id) => {
+    return await database.user.findUnique({
+      where: { id },
+      select: { sponsorId: true },
+    });
+  };
+
+  const updateSellerSalesIncome = async (
+    userId,
+    productType,
+    agent,
+    gain,
+    percentage
+  ) => {
+    const amount = parseFloat((gain * (percentage / 100)).toFixed(2));
+
+    return await database.salesIncomeBonus.create({
+      data: { amount, productType, userId, agent },
+    });
+  };
+
+  order.map(async (data, i) => {
+    if (data.sellerId) {
+      const gain = data.Item.sellingPrice - data.Item.price;
+      const { sponsorId: sellerSponsor } = await getSponsorInfo(data.sellerId);
+      console.log(gain, sellerSponsor);
+      // update seller percentage 50%
+      await updateSellerSalesIncome(
+        data.sellerId,
+        data.Item.productType,
+        "Myself",
+        gain,
+        50
+      );
+      if (sellerSponsor !== 0) {
+        await updateSellerSalesIncome(
+          sellerSponsor,
+          data.Item.productType,
+          "Downline",
+          gain,
+          25
+        );
+      }
+    }
+  });
+
   return await database.shopOrders.updateMany({
     where: {
       tx_ref,

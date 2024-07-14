@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <%- include('../partials/head') %>
 
@@ -23,7 +23,83 @@
 
       <section>
         <div class="container">
-          <div class="row">Order Completed</div>
+          <div class="row">
+            <div class="col-md-10 col-lg-8 offset-lg-2 offset-md-1">
+              <div class="card">
+                <div class="card-body text-center">
+                  <% if (data.status === 'success') { %>
+                  <h5 class="card-title">Payment Successful</h5>
+                  <div class="my-3">
+                    <i
+                      class="bx bxs-check-circle text-success"
+                      style="font-size: 100px"
+                    ></i>
+                  </div>
+                  <p class="card-text">
+                    CONTACT GHC SUPPORT TO GET DELIVERY OF THIS ORDER
+                  </p>
+                  <div class="d-flex flex-column gap-4">
+                    <a
+                      href="https://wa.link/lfz1px
+               "
+                    >
+                      <img
+                        src="../static/assets/img/whatsapp.jpg"
+                        alt="whatsapp"
+                        style="max-width: 250px"
+                        class="img-fluid rounded-5"
+                      />
+                    </a>
+                    <span> OR </span>
+
+                    <a
+                      href="https://wa.link/lfz1px
+               "
+                    >
+                      https://wa.link/lfz1px
+                    </a>
+                  </div>
+                  <% } else { %>
+                  <h5 class="card-title">Payment Failed</h5>
+                  <div class="my-3">
+                    <i
+                      class="bx bxs-x-circle text-danger"
+                      style="font-size: 100px"
+                    ></i>
+                  </div>
+                  <% } %>
+                </div>
+                <div class="card-footer">
+                  <% if (data.isDigital) { %>
+                  <p>
+                    Your download will start automatically. If it doesn't, Click
+                    on the download buttons below
+                  </p>
+                  <% } %>
+
+                  <ul class="list-group">
+                    <% for( let i = 0; i < data.items.length; i++ ) { %> <% if
+                    (data.isDigital && data.items[i].Item.file) { %>
+
+                    <li
+                      class="list-group-item download-files"
+                      data-value="<%= data.items[i].Item.file %>"
+                    >
+                      <a
+                        class="btn btn-sm btn-primary"
+                        href="/uploads/images/<%= data.items[i].Item.file %>"
+                        download="<%= data.items[i].Item.file  %>"
+                      >
+                        Download
+                      </a>
+                      <span> Item <%= i + 1 %> </span>
+                    </li>
+                    <% } %> <% } %>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

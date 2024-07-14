@@ -4,6 +4,8 @@ import asyncWrapper from "../middlewares/asyncWrapper.js";
 import {
   getSingleProduct,
   getAllProducts,
+  getSponsor,
+  paySalesIncome,
 } from "../services/productServices.js";
 import { calculatePagination } from "../utils/index.js";
 import response from "../utils/response.js";
@@ -210,8 +212,17 @@ const getOrderCompletePage = asyncWrapper(async (req, res) => {
 });
 
 const checkoutOrder = asyncWrapper(async (req, res) => {
-  const { email, fullName, phone, currency, orders, address, country, city } =
-    req.body;
+  const {
+    email,
+    fullName,
+    phone,
+    currency,
+    orders,
+    address,
+    country,
+    city,
+    ref,
+  } = req.body;
 
   // get all product ordered
   let items = await Promise.all(
@@ -256,6 +267,8 @@ const checkoutOrder = asyncWrapper(async (req, res) => {
   // Create The Order for the different products
   const tx_ref = uuidv4();
 
+  const sponsor = ref ? await getSponsor(ref) : null;
+
   const outputArray = orders.map((order) => {
     const product = items.find((p) => p.id.toString() === order.id);
     const amount = product ? product.sellingPrice * order.quantity : 0;
@@ -271,7 +284,7 @@ const checkoutOrder = asyncWrapper(async (req, res) => {
       phone,
       quantity: order.quantity,
       tx_ref,
-      sellerId: null,
+      sellerId: sponsor ? sponsor.id : null,
     };
   });
 

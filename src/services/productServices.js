@@ -160,10 +160,52 @@ const uploadProductFile = async (id, file) => {
   });
 };
 
+const getSponsor = async (username) => {
+  // find sponspor and upline
+  const sponsor = await database.user.findUnique({
+    where: { username },
+    select: { id: true, sponsorId: true },
+  });
+  if (!sponsor) {
+    return null;
+  }
+  return sponsor;
+};
+
+const paySalesIncome = async (sponsor, gain, productType) => {
+  const { sponsorId, id } = sponsor;
+  // create sales income for sponsor and 50%
+  const fiftyPercent = parseFloat((gain / 2).toFixed());
+  await database.salesIncomeBonus.create({
+    data: {
+      productType,
+      userId: id,
+      amount: fiftyPercent,
+      agent: "Myself",
+    },
+  });
+
+  if (sponsorId !== 0) {
+    // create sales income for upline and 25% to upline
+    const twentyfivePercent = parseFloat((gain / 4).toFixed());
+    await database.salesIncomeBonus.create({
+      data: {
+        productType,
+        userId: sponsorId,
+        amount: twentyfivePercent,
+        agent: "Downline",
+      },
+    });
+  }
+  return true;
+};
+
 export {
   getAllProducts,
   generateProduct,
   getSingleProduct,
   createProduct,
   uploadProductFile,
+  getSponsor,
+  paySalesIncome,
 };

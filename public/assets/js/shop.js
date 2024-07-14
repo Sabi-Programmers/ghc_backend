@@ -65,6 +65,10 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   function addToCart(form) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const ref = urlParams.get("ref") ? urlParams.get("ref") : null;
+
     // Get form values
     const quantity = form.quantity.value;
     const name = form.name.value;
@@ -72,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const type = form.type.value;
     const image = form.image.value;
     const id = form.itemId.value;
-    const ref = null;
 
     // Set quantity to 1 if product type is 'cart'
     const adjustedQuantity = type === "DIGITAL" ? 1 : parseInt(quantity, 10);
@@ -89,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
       image: image,
       quantity: adjustedQuantity,
       subtotal: subtotal,
-      ref: null,
+      ref: ref,
     };
 
     // Retrieve existing cart items from local storage
@@ -300,9 +303,14 @@ document.addEventListener("DOMContentLoaded", () => {
         ref: item.ref,
       }));
 
+      const refs = cart
+        .filter((item) => item.ref !== null) // Filter out items where ref is not null
+        .map((item) => item.ref);
+
       const finalOutput = {
         ...jsonData,
         orders: orders,
+        ref: refs ? refs[0] : null,
       };
 
       try {
