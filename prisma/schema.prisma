@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
@@ -21,7 +21,7 @@ enum UserRole {
 }
 
 model Admin {
-  id           Int      @id @default(autoincrement())
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
   username     String   @unique
   email        String   @unique
   password     String
@@ -30,7 +30,7 @@ model Admin {
 }
 
 model User {
-  id                     Int                      @id @default(autoincrement())
+  id                     String                   @id @default(auto()) @map("_id") @db.ObjectId
   username               String                   @unique
   fullName               String
   email                  String                   @unique
@@ -77,7 +77,7 @@ model User {
 }
 
 model Transactions {
-  id                     Int      @id @default(autoincrement())
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
   collectionType         String
   amount                 Float
   depositorAccountNumber String
@@ -96,31 +96,31 @@ model Transactions {
 }
 
 model BlockedUser {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   status    Boolean  @default(false)
   reason    String?
-  userId    Int      @unique
+  userId    String   @unique
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
 model Ewallet {
-  id      Int   @id @default(autoincrement())
-  balance Float @default(0.00)
-  userId  Int   @unique
-  User    User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  balance Float  @default(0.00)
+  userId  String @unique
+  User    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model WithdrawalWallet {
-  id          Int   @id @default(autoincrement())
-  bronze      Float @default(0.00)
-  gold        Float @default(0.00)
-  diamond     Float @default(0.00)
-  leaderCycle Float @default(0.00)
-  salesIncome Float @default(0.00)
-  userId      Int   @unique
-  user        User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  bronze      Float  @default(0.00)
+  gold        Float  @default(0.00)
+  diamond     Float  @default(0.00)
+  leaderCycle Float  @default(0.00)
+  salesIncome Float  @default(0.00)
+  userId      String @unique
+  user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum ProductType {
@@ -129,7 +129,7 @@ enum ProductType {
 }
 
 model Product {
-  id           Int          @id @default(autoincrement())
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
   name         String
   price        Float
   sellingPrice Float
@@ -145,62 +145,62 @@ model Product {
 }
 
 model SalesIncomeBonus {
-  id          Int         @id @default(autoincrement())
+  id          String      @id @default(auto()) @map("_id") @db.ObjectId
   amount      Float       @default(0.00)
   agent       String
   productType ProductType
-  userId      Int
+  userId      String
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime    @default(now())
 }
 
 model CycleLeaderBonus {
-  id               Int         @id @default(autoincrement())
+  id               String      @id @default(auto()) @map("_id") @db.ObjectId
   downlineName     String
   downlineUsername String
   amount           Float       @default(0.00)
   sponsorUsername  String
   generation       String
   package          PackageType
-  userId           Int
+  userId           String      @db.ObjectId
   user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt        DateTime    @default(now())
 }
 
 model ReferrerIncome {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
   amount    Float       @default(0.00)
   package   PackageType
   cycle     Int
-  userId    Int
+  userId    String      @db.ObjectId
   user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime    @default(now())
 }
 
 model CycleWelcomeBonus {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
   amount    Float       @default(0.00)
   package   PackageType
   cycle     Int
-  userId    Int
+  userId    String      @db.ObjectId
   user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime    @default(now())
 }
 
 model TestimonyBonus {
-  id           Int   @id @default(autoincrement())
-  bronze       Float @default(0.00)
-  gold         Float @default(0.00)
-  diamond      Float @default(0.00)
-  bronzeCount  Int   @default(0)
-  goldCount    Int   @default(0)
-  diamondCount Int   @default(0)
-  userId       Int   @unique
-  user         User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  bronze       Float  @default(0.00)
+  gold         Float  @default(0.00)
+  diamond      Float  @default(0.00)
+  bronzeCount  Int    @default(0)
+  goldCount    Int    @default(0)
+  diamondCount Int    @default(0)
+  userId       String @unique @db.ObjectId
+  user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model TestimonyRecords {
-  id              Int         @id @default(autoincrement())
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
   amount          Float       @default(0.00)
   package         PackageType
   completedCycles Int         @default(0)
@@ -212,32 +212,32 @@ model TestimonyRecords {
   feedbackMessage String?
   status          Status      @default(PENDING)
   publish         Boolean     @default(false)
-  userId          Int
+  userId          String
   user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
 }
 
 model CompletionBonus {
-  id        Int         @id @default(autoincrement())
+  id        String      @id @default(auto()) @map("_id") @db.ObjectId
   amount    Float       @default(0.00)
   package   PackageType
   cycle     Int
-  userId    Int
+  userId    String      @db.ObjectId
   user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime    @default(now())
 }
 
 model UnclaimedRewards {
-  id               Int   @id @default(autoincrement())
-  bronze           Float @default(0.00)
-  bronzeLostCount  Int   @default(0)
-  gold             Float @default(0.00)
-  goldLostCount    Int   @default(0)
-  diamond          Float @default(0.00)
-  diamondLostCount Int   @default(0)
-  userId           Int   @unique
-  user             User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  bronze           Float  @default(0.00)
+  bronzeLostCount  Int    @default(0)
+  gold             Float  @default(0.00)
+  goldLostCount    Int    @default(0)
+  diamond          Float  @default(0.00)
+  diamondLostCount Int    @default(0)
+  userId           String @unique @db.ObjectId
+  user             User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum PackageType {
@@ -247,33 +247,33 @@ enum PackageType {
 }
 
 model Bronze {
-  id           Int  @id @default(autoincrement())
-  totalCycle   Int  @default(0)
-  currentCycle Int  @default(0)
-  usedSlots    Int  @default(0)
-  totalSlots   Int  @default(0)
-  userId       Int  @unique
-  User         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  totalCycle   Int    @default(0)
+  currentCycle Int    @default(0)
+  usedSlots    Int    @default(0)
+  totalSlots   Int    @default(0)
+  userId       Int    @unique
+  User         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Gold {
-  id           Int  @id @default(autoincrement())
-  totalCycle   Int  @default(0)
-  currentCycle Int  @default(0)
-  usedSlots    Int  @default(0)
-  totalSlots   Int  @default(0)
-  userId       Int  @unique
-  User         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  totalCycle   Int    @default(0)
+  currentCycle Int    @default(0)
+  usedSlots    Int    @default(0)
+  totalSlots   Int    @default(0)
+  userId       Int    @unique
+  User         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Diamond {
-  id           Int  @id @default(autoincrement())
-  totalCycle   Int  @default(0)
-  currentCycle Int  @default(0)
-  usedSlots    Int  @default(0)
-  totalSlots   Int  @default(0)
-  userId       Int  @unique
-  User         User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id           String @id @default(auto()) @map("_id") @db.ObjectId
+  totalCycle   Int    @default(0)
+  currentCycle Int    @default(0)
+  usedSlots    Int    @default(0)
+  totalSlots   Int    @default(0)
+  userId       Int    @unique
+  User         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 enum OrderStatus {
@@ -282,7 +282,7 @@ enum OrderStatus {
 }
 
 model PackageOrder {
-  id           Int         @id @default(autoincrement())
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
   status       OrderStatus @default(PENDING)
   package      PackageType
   cycle        Int
@@ -294,7 +294,7 @@ model PackageOrder {
 }
 
 model Referrers {
-  id      Int         @id @default(autoincrement())
+  id      String      @id @default(auto()) @map("_id") @db.ObjectId
   package PackageType
   first   String
   second  String?
@@ -316,7 +316,7 @@ enum IncomeType {
 }
 
 model WithdrawalWalletRecord {
-  id              Int          @id @default(autoincrement())
+  id              String       @id @default(auto()) @map("_id") @db.ObjectId
   name            String?
   username        String?
   downlineName    String?
@@ -334,7 +334,7 @@ model WithdrawalWalletRecord {
 }
 
 model News {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
   title       String
   description String
   photo       String
@@ -359,7 +359,7 @@ enum WithdrawalRequestWallets {
 }
 
 model WithdrawalRequest {
-  id        Int                      @id @default(autoincrement())
+  id        String                   @id @default(auto()) @map("_id") @db.ObjectId
   amount    Float
   status    Status                   @default(PENDING)
   wallets   WithdrawalRequestWallets
@@ -371,7 +371,7 @@ model WithdrawalRequest {
 }
 
 model Bpc {
-  id                 Int      @id @default(autoincrement())
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
   facebookAdsLink    String?
   facebookAdsPhoto   String?
   facebookGroupLink  String?
@@ -393,9 +393,9 @@ enum ShopStatus {
 }
 
 model ShopOrders {
-  id        Int        @id @default(autoincrement())
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
   Item      Product    @relation(fields: [itemId], references: [id])
-  itemId    Int
+  itemId    String
   Seller    User?      @relation(fields: [sellerId], references: [id])
   sellerId  Int?
   status    ShopStatus @default(NOT_PAID)
@@ -413,7 +413,7 @@ model ShopOrders {
 }
 
 model Contants {
-  id                     Int      @id @default(1)
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
   bankName               String   @default("")
   accountNumber          String   @default("")
   accountName            String   @default("")
@@ -448,7 +448,7 @@ enum Sender {
 }
 
 model Message {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   sender    Sender
   userId    Int
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -459,7 +459,7 @@ model Message {
 }
 
 model OtpToken {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
   userId    Int
   token     String
   createAt  DateTime @default(now())
@@ -467,7 +467,7 @@ model OtpToken {
 }
 
 model Sessions {
-  sid    String   @id @default(cuid())
+  sid    String   @id @default(auto()) @map("_id") @db.ObjectId
   sess   Json
   expire DateTime
 }
