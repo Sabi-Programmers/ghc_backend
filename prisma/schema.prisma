@@ -99,7 +99,7 @@ model BlockedUser {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   status    Boolean  @default(false)
   reason    String?
-  userId    String   @unique
+  userId    String   @unique @db.ObjectId
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -108,7 +108,7 @@ model BlockedUser {
 model Ewallet {
   id      String @id @default(auto()) @map("_id") @db.ObjectId
   balance Float  @default(0.00)
-  userId  String @unique
+  userId  String @unique @db.ObjectId
   User    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -119,7 +119,7 @@ model WithdrawalWallet {
   diamond     Float  @default(0.00)
   leaderCycle Float  @default(0.00)
   salesIncome Float  @default(0.00)
-  userId      String @unique
+  userId      String @unique @db.ObjectId
   user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -149,7 +149,7 @@ model SalesIncomeBonus {
   amount      Float       @default(0.00)
   agent       String
   productType ProductType
-  userId      String
+  userId      String @db.ObjectId
   user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt   DateTime    @default(now())
 }
@@ -212,7 +212,7 @@ model TestimonyRecords {
   feedbackMessage String?
   status          Status      @default(PENDING)
   publish         Boolean     @default(false)
-  userId          String
+  userId          String @db.ObjectId
   user            User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt       DateTime    @default(now())
   updatedAt       DateTime    @updatedAt
@@ -252,7 +252,7 @@ model Bronze {
   currentCycle Int    @default(0)
   usedSlots    Int    @default(0)
   totalSlots   Int    @default(0)
-  userId       Int    @unique
+  userId       String    @unique @db.ObjectId
   User         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -262,7 +262,7 @@ model Gold {
   currentCycle Int    @default(0)
   usedSlots    Int    @default(0)
   totalSlots   Int    @default(0)
-  userId       Int    @unique
+  userId       String    @unique @db.ObjectId
   User         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -272,7 +272,7 @@ model Diamond {
   currentCycle Int    @default(0)
   usedSlots    Int    @default(0)
   totalSlots   Int    @default(0)
-  userId       Int    @unique
+  userId       String    @unique @db.ObjectId
   User         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -287,7 +287,7 @@ model PackageOrder {
   package      PackageType
   cycle        Int
   deliveryNote String?
-  userId       Int
+  userId       String @db.ObjectId
   User         User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
@@ -302,7 +302,7 @@ model Referrers {
   forth   String?
   fifth   String?
   sixth   String?
-  userId  Int
+  userId  String @db.ObjectId
   User    User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -328,7 +328,7 @@ model WithdrawalWalletRecord {
   incomeType      IncomeType
   package         PackageType?
   productType     ProductType?
-  userId          Int
+  userId          String @db.ObjectId
   User            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt       DateTime     @default(now())
 }
@@ -364,7 +364,7 @@ model WithdrawalRequest {
   status    Status                   @default(PENDING)
   wallets   WithdrawalRequestWallets
   message   String?
-  userId    Int
+  userId    String @db.ObjectId
   User      User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime                 @default(now())
   updatedAt DateTime                 @updatedAt
@@ -380,7 +380,7 @@ model Bpc {
   youtubeVideoLink   String?
   tiktokVideoLink    String?
   signupUsernames    Json?
-  userId             Int
+  userId             String @db.ObjectId
   User               User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt          DateTime @default(now())
 }
@@ -395,9 +395,9 @@ enum ShopStatus {
 model ShopOrders {
   id        String     @id @default(auto()) @map("_id") @db.ObjectId
   Item      Product    @relation(fields: [itemId], references: [id])
-  itemId    String
+  itemId    String @db.ObjectId
   Seller    User?      @relation(fields: [sellerId], references: [id])
-  sellerId  Int?
+  sellerId  String? @db.ObjectId
   status    ShopStatus @default(NOT_PAID)
   amount    Float
   quantity  Int
@@ -450,7 +450,7 @@ enum Sender {
 model Message {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   sender    Sender
-  userId    Int
+  userId    String @db.ObjectId
   User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   title     String
   narration String
