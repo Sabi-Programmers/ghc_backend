@@ -1,9 +1,9 @@
-import express from 'express';
+import express from 'express'
 
-const userRouter = express.Router();
+const userRouter = express.Router()
 
 userRouter.get('/:username', (req, res) => {
-    res.send('USers');
-});
+    res.send('USers')
+})
 
-export default userRouter;
+export default userRouter

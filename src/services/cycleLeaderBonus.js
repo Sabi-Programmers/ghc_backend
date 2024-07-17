@@ -1,6 +1,6 @@
-import database from '../libs/prisma.js';
-import { getUserPackage } from './packageServices.js';
-import { getUserReferrer, getUserReferrerGen } from './referralServices.js';
+import database from '../libs/prisma.js'
+import { getUserPackage } from './packageServices.js'
+import { getUserReferrer, getUserReferrerGen } from './referralServices.js'
 
 const makeUserCycleLeader = async (newUserPkg) => {
     if (newUserPkg.currentCycle === 5 && newUserPkg.usedSlots === 36) {
@@ -9,14 +9,14 @@ const makeUserCycleLeader = async (newUserPkg) => {
             data: {
                 isCycleLeader: true,
             },
-        });
+        })
     }
 
-    return false;
-};
+    return false
+}
 
 const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
-    const genealogy = await getUserReferrerGen(userId, pkg);
+    const genealogy = await getUserReferrerGen(userId, pkg)
 
     const bonuses = {
         bronze: {
@@ -43,11 +43,11 @@ const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
             fifth: 1.8,
             sixth: 0.9,
         },
-    };
+    }
 
     const query = Object.values(genealogy)
         .filter((value) => value !== null && value !== 'GHC')
-        .map((value) => ({ username: value }));
+        .map((value) => ({ username: value }))
 
     const getAllGen = await database.user.findMany({
         where: {
@@ -56,14 +56,14 @@ const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
         orderBy: {
             createdAt: 'desc',
         },
-    });
+    })
 
     const createQuery = getAllGen
         .filter((obj) => obj.isCycleLeader)
         .map((obj) => {
             const generation = Object.keys(genealogy).find(
-                (key) => genealogy[key] === obj.username,
-            );
+                (key) => genealogy[key] === obj.username
+            )
             return {
                 userId: obj.id,
                 generation,
@@ -72,12 +72,12 @@ const cycleLeadersPayments = async (userId, pkg, username, fullName) => {
                 downlineUsername: username,
                 sponsorUsername: genealogy.first,
                 package: pkg.toUpperCase(),
-            };
-        });
+            }
+        })
 
     return await database.cycleLeaderBonus.createMany({
         data: createQuery,
-    });
-};
+    })
+}
 
-export { makeUserCycleLeader, cycleLeadersPayments };
+export { makeUserCycleLeader, cycleLeadersPayments }

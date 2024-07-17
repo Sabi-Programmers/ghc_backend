@@ -1,134 +1,134 @@
-const { BANK_TOKEN, BANK_AUTH } = process.env;
+const { BANK_TOKEN, BANK_AUTH } = process.env
 
 const init = async () => {
-  try {
-    const formdata = new FormData();
-    formdata.append("auth", BANK_AUTH);
-    formdata.append("token", BANK_TOKEN);
+    try {
+        const formdata = new FormData()
+        formdata.append('auth', BANK_AUTH)
+        formdata.append('token', BANK_TOKEN)
 
-    const requestOptions = {
-      method: "POST",
-      body: formdata,
-      //   redirect: "follow",
-    };
-    const res = await fetch(
-      "https://api.vendpocket.com/v2/init",
-      requestOptions
-    );
-    const resData = await res.json();
-    return resData;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
-  }
-};
+        const requestOptions = {
+            method: 'POST',
+            body: formdata,
+            //   redirect: "follow",
+        }
+        const res = await fetch(
+            'https://api.vendpocket.com/v2/init',
+            requestOptions
+        )
+        const resData = await res.json()
+        return resData
+    } catch (error) {
+        console.log(error.message)
+        return error.message
+    }
+}
 const getAccName = async (accessToken, data) => {
-  try {
-    const myHeaders = new Headers();
-    myHeaders.append("X-Auth-Signature", BANK_AUTH);
-    myHeaders.append("Authorization", "Bearer " + accessToken);
-    myHeaders.append("Content-Type", "application/json");
+    try {
+        const myHeaders = new Headers()
+        myHeaders.append('X-Auth-Signature', BANK_AUTH)
+        myHeaders.append('Authorization', 'Bearer ' + accessToken)
+        myHeaders.append('Content-Type', 'application/json')
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: JSON.stringify(data),
-    };
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify(data),
+        }
 
-    console.log(requestOptions);
-    const res = await fetch(
-      "https://api.vendpocket.com/v1/bank/accountname",
-      requestOptions
-    );
-    const resData = await res.json();
-    return resData;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
-  }
-};
+        console.log(requestOptions)
+        const res = await fetch(
+            'https://api.vendpocket.com/v1/bank/accountname',
+            requestOptions
+        )
+        const resData = await res.json()
+        return resData
+    } catch (error) {
+        console.log(error.message)
+        return error.message
+    }
+}
 const createFlippedAcc = async (accessToken, data) => {
-  try {
-    const myHeaders = new Headers();
-    myHeaders.append("X-Auth-Signature", BANK_AUTH);
-    myHeaders.append("Authorization", "Bearer " + accessToken);
-    myHeaders.append("Content-Type", "application/json");
+    try {
+        const myHeaders = new Headers()
+        myHeaders.append('X-Auth-Signature', BANK_AUTH)
+        myHeaders.append('Authorization', 'Bearer ' + accessToken)
+        myHeaders.append('Content-Type', 'application/json')
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: JSON.stringify(data),
-    };
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify(data),
+        }
 
-    console.log(requestOptions);
-    const res = await fetch(
-      "https://api.vendpocket.com/v2/virtual/create_flipped",
-      requestOptions
-    );
-    const resData = await res.json();
-    return resData;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
-  }
-};
+        console.log(requestOptions)
+        const res = await fetch(
+            'https://api.vendpocket.com/v2/virtual/create_flipped',
+            requestOptions
+        )
+        const resData = await res.json()
+        return resData
+    } catch (error) {
+        console.log(error.message)
+        return error.message
+    }
+}
 
 const getInfo = async (accessToken) => {
-  try {
-    const myHeaders = new Headers();
-    myHeaders.append("X-Auth-Signature", BANK_AUTH);
-    myHeaders.append("Authorization", "Bearer " + accessToken);
+    try {
+        const myHeaders = new Headers()
+        myHeaders.append('X-Auth-Signature', BANK_AUTH)
+        myHeaders.append('Authorization', 'Bearer ' + accessToken)
 
-    let raw = "";
+        let raw = ''
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-    };
-    const res = await fetch(
-      "https://api.vendpocket.com/v1/account_stats",
-      requestOptions
-    );
-    const resData = await res.json();
-    return resData;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
-  }
-};
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+        }
+        const res = await fetch(
+            'https://api.vendpocket.com/v1/account_stats',
+            requestOptions
+        )
+        const resData = await res.json()
+        return resData
+    } catch (error) {
+        console.log(error.message)
+        return error.message
+    }
+}
 const getBankList = async (accessToken) => {
-  try {
-    const myHeaders = new Headers();
-    myHeaders.append("X-Auth-Signature", BANK_AUTH);
-    myHeaders.append("Authorization", "Bearer " + accessToken);
+    try {
+        const myHeaders = new Headers()
+        myHeaders.append('X-Auth-Signature', BANK_AUTH)
+        myHeaders.append('Authorization', 'Bearer ' + accessToken)
 
-    let raw = "";
+        let raw = ''
 
-    const requestOptions = {
-      method: "POST",
-      headers: myHeaders,
-      body: raw,
-    };
-    const res = await fetch(
-      "https://api.vendpocket.com/v1/banklist",
-      requestOptions
-    );
-    const resData = await res.json();
-    return resData;
-  } catch (error) {
-    console.log(error.message);
-    return error.message;
-  }
-};
-let bankSystem = {};
+        const requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+        }
+        const res = await fetch(
+            'https://api.vendpocket.com/v1/banklist',
+            requestOptions
+        )
+        const resData = await res.json()
+        return resData
+    } catch (error) {
+        console.log(error.message)
+        return error.message
+    }
+}
+let bankSystem = {}
 export default bankSystem = {
-  init,
-  createFlippedAcc,
-  getInfo,
-  getBankList,
-  getAccName,
-};
+    init,
+    createFlippedAcc,
+    getInfo,
+    getBankList,
+    getAccName,
+}
 
 /**
  * var myHeaders = new Headers();

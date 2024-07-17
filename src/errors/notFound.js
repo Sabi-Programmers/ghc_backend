@@ -3,7 +3,7 @@ const notFound = (req, res) => {
         title: 'Page Not Found',
         statusCode: 404,
         message: "Opps, The page you are looking for cant't be found",
-    });
-};
+    })
+}
 
-export default notFound;
+export default notFound

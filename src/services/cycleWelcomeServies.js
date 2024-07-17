@@ -1,30 +1,30 @@
-import database from '../libs/prisma.js';
+import database from '../libs/prisma.js'
 
 const updateUserCycleWelcomeBonus = async (
     userId,
     pkg,
     userPkg,
     newPkgData,
-    constants,
+    constants
 ) => {
     if (userPkg.currentCycle < newPkgData.currentCycle) {
         return await database.cycleWelcomeBonus.create({
             data: {
                 package: pkg.toUpperCase(),
                 cycle: newPkgData.currentCycle,
-                amount: constants[`${pkg  }WelcomeBonus`],
+                amount: constants[`${pkg}WelcomeBonus`],
                 userId,
             },
-        });
+        })
     }
-    return false;
-};
+    return false
+}
 
 const updateUplineCycleWelcomeBonus = async (
     uplineData,
     updatedUplinePkgData,
     pkg,
-    constants,
+    constants
 ) => {
     if (
         uplineData &&
@@ -34,19 +34,19 @@ const updateUplineCycleWelcomeBonus = async (
             data: {
                 package: pkg.toUpperCase(),
                 cycle: updatedUplinePkgData.currentCycle,
-                amount: constants[`${pkg  }WelcomeBonus`],
+                amount: constants[`${pkg}WelcomeBonus`],
                 userId: uplineData.id,
             },
-        });
+        })
     }
-    return false;
-};
+    return false
+}
 
 const updatedUplineCompBonus = async (updateduplinePkgData, constants, pkg) => {
     const sum =
         updateduplinePkgData && updateduplinePkgData.usedSlots > 0
             ? updateduplinePkgData.usedSlots % 9
-            : 1;
+            : 1
 
     if (sum === 0) {
         return await database.completionBonus.create({
@@ -54,16 +54,16 @@ const updatedUplineCompBonus = async (updateduplinePkgData, constants, pkg) => {
                 userId: updateduplinePkgData.userId,
                 package: pkg.toUpperCase(),
                 cycle: updateduplinePkgData.currentCycle - 1,
-                amount: constants[`${pkg  }CompletionBonus`],
+                amount: constants[`${pkg}CompletionBonus`],
             },
-        });
+        })
     }
 
-    return false;
-};
+    return false
+}
 
 export {
     updateUserCycleWelcomeBonus,
     updateUplineCycleWelcomeBonus,
     updatedUplineCompBonus,
-};
+}

@@ -1,8 +1,8 @@
-import express from "express";
-import { getTransactionNotification } from "../controllers/webhook.js";
+import express from 'express'
+import { getTransactionNotification } from '../controllers/webhook.js'
 
-const webhookRouter = express.Router();
+const webhookRouter = express.Router()
 
-webhookRouter.post("/", getTransactionNotification);
+webhookRouter.post('/', getTransactionNotification)
 
-export default webhookRouter;
+export default webhookRouter

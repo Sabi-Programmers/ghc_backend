@@ -1,18 +1,18 @@
-import express from "express";
+import express from 'express'
 import {
-  acceptTestimony,
-  getPendingTestimoniesPage,
-  getTestimonyRecordsPage,
-  getUserPendingTestimoniesPage,
-  rejectTestimony,
-} from "../../controllers/admin/testimony.js";
+    acceptTestimony,
+    getPendingTestimoniesPage,
+    getTestimonyRecordsPage,
+    getUserPendingTestimoniesPage,
+    rejectTestimony,
+} from '../../controllers/admin/testimony.js'
 
-const testmonyRouter = express.Router();
+const testmonyRouter = express.Router()
 
-testmonyRouter.get("/", getPendingTestimoniesPage);
-testmonyRouter.get("/records", getTestimonyRecordsPage);
-testmonyRouter.get("/:userId", getUserPendingTestimoniesPage);
-testmonyRouter.post("/:userId/reject/:id", rejectTestimony);
-testmonyRouter.post("/:userId/accept/:id", acceptTestimony);
+testmonyRouter.get('/', getPendingTestimoniesPage)
+testmonyRouter.get('/records', getTestimonyRecordsPage)
+testmonyRouter.get('/:userId', getUserPendingTestimoniesPage)
+testmonyRouter.post('/:userId/reject/:id', rejectTestimony)
+testmonyRouter.post('/:userId/accept/:id', acceptTestimony)
 
-export default testmonyRouter;
+export default testmonyRouter

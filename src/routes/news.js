@@ -1,8 +1,8 @@
-import express from 'express';
-import { getNews } from '../controllers/news.js';
+import express from 'express'
+import { getNews } from '../controllers/news.js'
 
-const newsRouter = express.Router();
+const newsRouter = express.Router()
 
-newsRouter.get('/', getNews);
+newsRouter.get('/', getNews)
 
-export default newsRouter;
+export default newsRouter

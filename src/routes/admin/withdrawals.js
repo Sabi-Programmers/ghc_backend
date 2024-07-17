@@ -1,16 +1,16 @@
-import express from "express";
+import express from 'express'
 import {
-  approveWithdrawalRequest,
-  getWithdrawalHistoryPage,
-  getWithdrawalRequestPage,
-  rejectWithdrawalRequest,
-} from "../../controllers/admin/withdrawal.js";
+    approveWithdrawalRequest,
+    getWithdrawalHistoryPage,
+    getWithdrawalRequestPage,
+    rejectWithdrawalRequest,
+} from '../../controllers/admin/withdrawal.js'
 
-const withdrawalRouter = express.Router();
+const withdrawalRouter = express.Router()
 
-withdrawalRouter.get("", getWithdrawalRequestPage);
-withdrawalRouter.get("/history", getWithdrawalHistoryPage);
-withdrawalRouter.post("/approve/:id", approveWithdrawalRequest);
-withdrawalRouter.post("/reject/:id", rejectWithdrawalRequest);
+withdrawalRouter.get('', getWithdrawalRequestPage)
+withdrawalRouter.get('/history', getWithdrawalHistoryPage)
+withdrawalRouter.post('/approve/:id', approveWithdrawalRequest)
+withdrawalRouter.post('/reject/:id', rejectWithdrawalRequest)
 
-export default withdrawalRouter;
+export default withdrawalRouter
