@@ -1,4 +1,0 @@
--- AlterTable
-ALTER TABLE "User" ADD COLUMN     "accountName" TEXT NOT NULL DEFAULT '',
-ALTER COLUMN "accountFName" DROP NOT NULL,
-ALTER COLUMN "accountLName" DROP NOT NULL;
