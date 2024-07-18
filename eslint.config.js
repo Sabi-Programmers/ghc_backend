@@ -13,7 +13,7 @@ export default [
         rules: {},
     },
     {
-        ignores: ['node_modules/', 'public/', 'upload/', '.env'],
+        ignores: ['node_modules/', 'public/', 'upload/', '/build', '.env'],
     },
     {
         rules: {

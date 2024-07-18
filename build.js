@@ -9,7 +9,7 @@ esbuild
         format: 'cjs', // Output format as CommonJS
         outfile: './dist/index.js', // Output file
         platform: 'node', // Platform target
-        target: ['node18'], // Target environment
+        target: ['node22'], // Target environment
         plugins: [
             copy({
                 resolveFrom: 'node_modules/.prisma/client',
