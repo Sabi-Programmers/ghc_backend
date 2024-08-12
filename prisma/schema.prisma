@@ -418,12 +418,12 @@ model Contants {
   bankName               String   @default("")
   accountNumber          String   @default("")
   accountName            String   @default("")
-  bronze                 Float
-  gold                   Float
-  diamond                Float
-  bronzeRefBonus         Float
-  goldRefBonus           Float
-  diamondRefBonus        Float
+  bronze                 Float@default(0.00)
+  gold                   Float@default(0.00)
+  diamond                Float @default(0.00)
+  bronzeRefBonus         Float @default(0.00)
+  goldRefBonus           Float@default(0.00)
+  diamondRefBonus        Float    @default(0.00)
   bronzeTestimonyBonus   Float    @default(0.00)
   goldTestimonyBonus     Float    @default(0.00)
   diamondTestimonyBonus  Float    @default(0.00)
@@ -433,12 +433,12 @@ model Contants {
   bronzeCompletionBonus  Float    @default(0.00)
   goldCompletionBonus    Float    @default(0.00)
   diamondCompletionBonus Float    @default(0.00)
-  bronzeThreshold        Float
-  goldThreshold          Float
-  diamondThreshold       Float
-  leaderCycleThreshold   Float
-  salesIncomeThreshold   Float
-  usdRate                Float
+  bronzeThreshold        Float@default(0.00)
+  goldThreshold          Float@default(0.00)
+  diamondThreshold       Float@default(0.00)
+  leaderCycleThreshold   Float@default(0.00)
+  salesIncomeThreshold   Float@default(0.00)
+  usdRate                Float@default(0.00)
   createdAt              DateTime @default(now())
   updatedAt              DateTime @updatedAt
 }

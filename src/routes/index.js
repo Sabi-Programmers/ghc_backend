@@ -21,6 +21,7 @@ import bankSystem from "../libs/bankSystem.js";
 import webhookRouter from "./webhook.js";
 import database from "../libs/prisma.js";
 import { generateProduct } from "../services/productServices.js";
+import { createContants } from "../services/contantsServices.js";
 
 const router = express.Router();
 
@@ -121,7 +122,9 @@ router.get("/seed", async (req, res) => {
   // }
 
   try {
+    // await createContants();
     await generateProduct();
+
     res.status(200).json({
       success: true,
     });
