@@ -21,7 +21,10 @@ import bankSystem from "../libs/bankSystem.js";
 import webhookRouter from "./webhook.js";
 import database from "../libs/prisma.js";
 import { generateProduct } from "../services/productServices.js";
-import { createContants } from "../services/contantsServices.js";
+import {
+  createContants,
+  updateContants,
+} from "../services/contantsServices.js";
 
 const router = express.Router();
 
@@ -121,9 +124,38 @@ router.get("/seed", async (req, res) => {
   //   });
   // }
 
+  const constantSeed = {
+    id: 1,
+    bankName: "REHOBOTH MICROFINANCE BANK",
+    accountNumber: "1100334301",
+    accountName: "GRAND HELPERS INTERNATIONAL ENTERPRISE",
+    bronze: 100.0,
+    gold: 200.0,
+    diamond: 300.0,
+    bronzeRefBonus: 10.0,
+    goldRefBonus: 20.0,
+    diamondRefBonus: 30.0,
+    bronzeTestimonyBonus: 5.0,
+    goldTestimonyBonus: 15.0,
+    diamondTestimonyBonus: 25.0,
+    bronzeWelcomeBonus: 50.0,
+    goldWelcomeBonus: 100.0,
+    diamondWelcomeBonus: 150.0,
+    bronzeCompletionBonus: 75.0,
+    goldCompletionBonus: 125.0,
+    diamondCompletionBonus: 175.0,
+    bronzeThreshold: 500.0,
+    goldThreshold: 1000.0,
+    diamondThreshold: 1500.0,
+    leaderCycleThreshold: 2000.0,
+    salesIncomeThreshold: 2500.0,
+    usdRate: 1000,
+  };
+
   try {
     // await createContants();
-    await generateProduct();
+    // await generateProduct();
+    // await updateContants(constantSeed);
 
     res.status(200).json({
       success: true,

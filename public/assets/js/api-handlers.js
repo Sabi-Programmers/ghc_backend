@@ -241,6 +241,7 @@ window.onload = function () {
       accountName.value = "";
 
       if (accountNumber && accountNumber.length === 10 && bankCode) {
+        handleLoader("show");
         const res = await fetch("/auth/get-account-name", {
           method: "POST",
           headers: {
@@ -261,11 +262,12 @@ window.onload = function () {
         if (!resData.success) {
           throw new Error(resData.message);
         }
-
+        handleLoader("hide");
         accountName.value = resData.data;
       }
     } catch (error) {
       toast.failed(error.message);
+      handleLoader("hide");
     }
   };
 
