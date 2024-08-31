@@ -180,7 +180,7 @@ const createUser = asyncWrapper(async (req, res) => {
 
     const bank = await bankSystem.init();
 
-    const names = splitName(fullName);
+    const names = splitName(accountName);
 
     const data = {
       FirstName: names.firstName,
@@ -208,7 +208,6 @@ const createUser = asyncWrapper(async (req, res) => {
       bank.Authorisation.accesscode,
       data
     );
-    console.log(flippedAcc);
     if (!flippedAcc || flippedAcc.error) {
       await database.user.delete({
         where: { id: user.id },
