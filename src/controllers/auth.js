@@ -13,6 +13,7 @@ import { generateOtpToken, verifyOtpToken } from "../services/otpServices.js";
 // import { getAllBanksInfo } from "../libs/paymentGateway.js";
 import countryNames from "../utils/countriesData.js";
 import bankSystem from "../libs/bankSystem.js";
+import { splitName } from "../utils/index.js";
 
 const getRegisterPage = asyncWrapper(async (req, res) => {
   const { sponsorId } = req.query;
@@ -179,10 +180,12 @@ const createUser = asyncWrapper(async (req, res) => {
 
     const bank = await bankSystem.init();
 
+    const names = splitName(fullName);
+
     const data = {
-      FirstName: "",
-      LastName: "",
-      OtherName: "",
+      FirstName: names.firstName,
+      LastName: names.lastName,
+      OtherName: names.middleName,
       PhoneNumber: phone,
       Gender: gender,
       Email: email,
