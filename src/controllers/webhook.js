@@ -21,7 +21,7 @@ const getTransactionNotification = asyncWrapper(async (req, res) => {
       SessionID,
       UniqueIdentifier,
     } = req.body;
-
+    console.log(req.body);
     // Check for existing records with the same SettlementReference, TransactionReference, or SessionID
     const existingTransaction = await database.transactions.findFirst({
       where: {
@@ -45,7 +45,7 @@ const getTransactionNotification = asyncWrapper(async (req, res) => {
     // Create the new transaction
     const trx = await database.transactions.create({
       data: {
-        collectionType: CollectionType,
+        collectionType: "flipped",
         amount: Amount,
         depositorAccountNumber: DepositorAccountNumber,
         depositorAccountName: DepositorAccountName,
