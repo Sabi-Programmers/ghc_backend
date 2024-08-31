@@ -203,9 +203,6 @@ const validateUpdateProfile = [
     .withMessage("Email is required")
     .isEmail()
     .withMessage("Please enter a valid email address"),
-  body("accountName").exists().withMessage("Account Name is required"),
-  body("accountNumber").exists().withMessage("Account Number is required"),
-  body("bankName").exists().withMessage("Bank Name is required"),
 ];
 
 const validateAuth = (req, res, next) => {
