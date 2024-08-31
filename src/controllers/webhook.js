@@ -46,7 +46,7 @@ const getTransactionNotification = asyncWrapper(async (req, res) => {
     const trx = await database.transactions.create({
       data: {
         collectionType: "flipped",
-        amount: Amount,
+        amount: parseFloat(Amount),
         depositorAccountNumber: DepositorAccountNumber,
         depositorAccountName: DepositorAccountName,
         narration: Narration,
