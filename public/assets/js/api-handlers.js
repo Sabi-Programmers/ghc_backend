@@ -343,7 +343,7 @@ window.onload = function () {
       const formData = new FormData(e.target);
       const jsonData = formDataToJson(formData);
 
-      jsonData.bankCode = bankCode;
+      jsonData.bankCode = selectedBank.getAttribute("data-code");
 
       handlerPostRequest(jsonData, "/auth/register", "/dashboard");
     });
