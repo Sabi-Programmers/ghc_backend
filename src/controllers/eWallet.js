@@ -1,6 +1,8 @@
 import database from "../libs/prisma.js";
 import asyncWrapper from "../middlewares/asyncWrapper.js";
 import { getContants } from "../services/contantsServices.js";
+import { getUserTransactions } from "../services/eWalletServices.js";
+import { calculatePagination } from "../utils/index.js";
 
 const getEWallet = asyncWrapper(async (req, res) => {
   const data = {
@@ -8,12 +10,26 @@ const getEWallet = asyncWrapper(async (req, res) => {
     eWallet: null,
     bank: null,
   };
+
+  const page = Number(req.query.page) || 1; // Current page
+  const perPage = Number(req.query.limit) || 10; // Number of records per page
+
   data.eWallet = await database.ewallet.findFirst({
     where: {
       userId: req.user.id,
     },
   });
+
   data.bank = await getContants();
+  const { transactions, totalItem } = await getUserTransactions(
+    req.user.id,
+    page,
+    perPage
+  );
+  data.transactions = transactions;
+  data.pagination = calculatePagination(totalItem, page, perPage);
+  data.page = page;
+  data.perPage = perPage;
 
   res.render("member/e-wallet", { title: "E-Wallet", data });
 });

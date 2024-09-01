@@ -27,9 +27,28 @@ const updateEwalletBalanceUSD = async (userId, balance) =>
     data: { balance },
   });
 
+const getUserTransactions = async (userId, page, perPage) => {
+  const user = await database.user.findUnique({
+    where: { id: userId },
+    select: { email: true },
+  });
+  const transactions = await database.transactions.findMany({
+    where: { uniqueIdentifier: user.email },
+    skip: (page - 1) * perPage,
+    take: perPage,
+    orderBy: { dateTime: "desc" },
+  });
+
+  const totalItem = await database.transactions.count({
+    where: { uniqueIdentifier: user.email },
+  });
+  return { transactions, totalItem };
+};
+
 export {
   getEwallet,
   getEwalletBalanceUSD,
   getEwalletBalanceNGN,
   updateEwalletBalanceUSD,
+  getUserTransactions,
 };

@@ -90,7 +90,9 @@
           <div class="card-body">
             <h3 class="card-title">Transtion History</h3>
             <ul class="list-group list-group-flush">
-              <!-- <li class="list-group-item">
+              <% for( let i = 0; i < data.transactions.length; i++ ) { %>
+
+              <li class="list-group-item px-0">
                 <div class="d-flex align-items-center gap-2">
                   <span
                     style="flex: none; height: 32px; width: 32px"
@@ -100,15 +102,69 @@
                   </span>
                   <div class="d-flex flex-column w-100">
                     <small class="text-success">success</small>
-                    <span>Wallet funded via Wema bank</span>
+                    <span> <%= (data.transactions[i].narration)%> </span>
                   </div>
-                  <h4 class="m-0 p-0 text-primary">
-                    &#8358;<span>100,000</span>
-                  </h4>
+                  <div class="d-flex flex-column flex-shrink-0 text-end">
+                    <small> <%= (data.transactions[i].dateTime).toLocaleString('en-US', {
+                                                                                  month: 'short',
+                                                                                  day: 'numeric',
+                                                                                  hour: '2-digit',
+                                                                                  minute: '2-digit',
+                                                                                  hour12: false, // Use 24-hour format
+                                                                                  timeZone: 'UTC' // Ensure it shows the correct time in UTC
+                                                                                })%> 
+                    </small>
+
+                    <p class="m-0 p-0 text-primary h6 d-md-none">
+                      &#8358;<span> <%= (data.transactions[i].amount).toLocaleString()%> </span>
+                    </p>
+                    <p class="m-0 p-0 text-primary h4 d-none d-md-block">
+                      &#8358;<span> <%= (data.transactions[i].amount).toLocaleString()%> </span>
+                    </p>
+                  </div>
                 </div>
-              </li> -->
+              </li> 
+
+              <% } %>
+            
             </ul>
           </div>
+             <div class="card-footer">
+                <nav aria-label="...">
+                  <ul class="pagination justify-content-center">
+                    <li
+                      class="page-item <%= !data.pagination.prevPage || data.pagination.currentPage === 1 ? 'disabled': '' %>"
+                    >
+                      <a
+                        class="page-link"
+                        href="?page=<%= data.pagination.prevPage || 1 %>"
+                        aria-label="Previous"
+                      >
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <% for (let i = 1; i < data.pagination.totalPages + 1; i++)
+                    {%>
+                    <li
+                      class="page-item <%= i === data.pagination.currentPage ? 'active' : '' %>"
+                      aria-current="page"
+                    >
+                      <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+
+                    <li class="page-item">
+                      <a
+                        class="page-link <%= !data.pagination.nextPage || data.pagination.currentPage === data.pagination.totalPages ? 'disabled': '' %>"
+                        href="?page=<%= data.pagination.nextPage || data.pagination.totalPages %>"
+                        aria-label="Next"
+                      >
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
         </div>
       </section>
     </main>
