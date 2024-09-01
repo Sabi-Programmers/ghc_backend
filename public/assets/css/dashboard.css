@@ -1901,3 +1901,12 @@ label[for="profile-photo-file"]:hover span {
 .close-message-item a:hover {
   text-decoration: underline;
 }
+
+.truncate-two-lines {
+  display: -webkit-box; /* Use a flexbox-based layout */
+  -webkit-box-orient: vertical; /* Orient the box vertically */
+  overflow: hidden; /* Hide the overflow */
+  text-overflow: ellipsis; /* Add ellipsis (...) for overflow text */
+  -webkit-line-clamp: 2; /* Clamp the text to two lines */
+  line-clamp: 2; /* Fallback for modern browsers */
+}

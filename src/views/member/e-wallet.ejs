@@ -92,20 +92,16 @@
             <ul class="list-group list-group-flush">
               <% for( let i = 0; i < data.transactions.length; i++ ) { %>
 
-              <li class="list-group-item px-0">
-                <div class="d-flex align-items-center gap-2">
-                  <span
-                    style="flex: none; height: 32px; width: 32px"
-                    class="bg-success-subtle text-success fs-4 rounded-1 d-flex align-items-center justify-content-center"
-                  >
+              <li class="list-group-item px-0">            
+                    <div class="d-flex align-items-center gap-2 mb-2">
+                         <span
+                            style="flex: none; height: 16px; width: 16px"
+                            class="bg-success-subtle text-success fs-4 rounded-1 d-flex align-items-center justify-content-center"
+                          >
                     <i class="bx bxs-time"></i>
                   </span>
-                  <div class="d-flex flex-column w-100">
-                    <small class="text-success">success</small>
-                    <span> <%= (data.transactions[i].narration)%> </span>
-                  </div>
-                  <div class="d-flex flex-column flex-shrink-0 text-end">
-                    <small> <%= (data.transactions[i].dateTime).toLocaleString('en-US', {
+                      <small class="text-success">success</small>
+                         <small class="ms-auto"> <%= (data.transactions[i].dateTime).toLocaleString('en-US', {
                                                                                   month: 'short',
                                                                                   day: 'numeric',
                                                                                   hour: '2-digit',
@@ -114,15 +110,20 @@
                                                                                   timeZone: 'UTC' // Ensure it shows the correct time in UTC
                                                                                 })%> 
                     </small>
-
-                    <p class="m-0 p-0 text-primary h6 d-md-none">
-                      &#8358;<span> <%= (data.transactions[i].amount).toLocaleString()%> </span>
-                    </p>
-                    <p class="m-0 p-0 text-primary h4 d-none d-md-block">
-                      &#8358;<span> <%= (data.transactions[i].amount).toLocaleString()%> </span>
-                    </p>
-                  </div>
-                </div>
+                    </div>
+                    <div class="d-flex gap-2">
+                      <span class="truncate-two-lines text-capitalize"> <%= (data.transactions[i].narration).toLowerCase()%> </span>
+                 
+                    <div class="d-flex flex-column flex-shrink-0 text-end">
+                      <p class="m-0 p-0 text-primary h6 d-md-none">
+                        &#8358;<span> <%= (data.transactions[i].amount).toLocaleString()%> </span>
+                      </p>
+                      <p class="m-0 p-0 text-primary h4 d-none d-md-block">
+                        &#8358;<span> <%= (data.transactions[i].amount).toLocaleString()%> </span>
+                      </p>
+                    </div>
+                    </div>
+              
               </li> 
 
               <% } %>
