@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <%- include('partials/head') %>
 
@@ -25,12 +25,7 @@
         <div class="container" data-aos="fade-up">
           <div class="section-title">
             <h2>Testimonials</h2>
-            <p>
-              Magnam dolores commodi suscipit. Necessitatibus eius consequatur
-              ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam
-              quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea.
-              Quia fugiat sit in iste officiis commodi quidem hic quas.
-            </p>
+            <p>Success Stories from Our Members</p>
           </div>
           <div
             class="testimonials-slider swiper"
@@ -38,127 +33,63 @@
             data-aos-delay="100"
           >
             <div class="row">
+            <% for( let i = 0; i < data.testimonies.length; i++ ) { %>
               <div class="col-lg-6">
-                <div class="testimonial-item">
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i> What a
-                    good way to make money online, all I want is to become a
-                    cycle leader in all the package, so I can make more money
-                    than am currently making.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                  <img
-                    src="/static/assets/img/testimonials/testimonials-4.jpg"
-                    class="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Adams chidi</h3>
-                  <h4>Freelancer</h4>
-                </div>
-              </div>
-              <!-- End testimonial item -->
-
-              <div class="col-lg-6">
-                <div class="testimonial-item">
+                <div class="testimonial-item mb-1">
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Grand health cycle has changed my life since I joined the
-                    program, am a cycle leader and I now make roughly 350k every
-                    month on the system.
+                     <%= data.testimonies[i].message %>
                     <i class="bx bxs-quote-alt-right quote-icon-right"></i>
                   </p>
                   <img
-                    src="/static/assets/img/testimonials/testimonials-1.jpg"
-                    class="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Grace obi</h3>
-                  <h4>Ceo &amp; Founder</h4>
+                  class="testimonial-img"
+                    src=<%- data && data.testimonies[i].user.displayPhoto ?
+                  "/uploads/images/" + data.testimonies[i].user.displayPhoto :
+                  "/static/assets/img/default.jpg" %> alt="<%=
+                  data.testimonies[i].user.fullName %> Photo"  />
+                  <h3>
+                     <%= data.testimonies[i].user.fullName %>
+                  </h3>
+                  <h4>Member</h4>
                 </div>
               </div>
-              <!-- End testimonial item -->
-
-              <div class="col-lg-6">
-                <div class="testimonial-item">
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    I thank my friend for introducing me to this opportunity, it
-                    has changed my life. This program has helped me to survive
-                    as a student in school, am making good money that is
-                    financing my education.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                  <img
-                    src="/static/assets/img/testimonials/testimonials-2.jpg"
-                    class="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Oladele John</h3>
-                  <h4>Designer</h4>
-                </div>
-              </div>
-              <!-- End testimonial item -->
-
-              <div class="col-lg-6">
-                <div class="testimonial-item">
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i> What I
-                    love about this opportunity is that it's here to stay, all
-                    the money you make are legitimate and not a become a
-                    millionaire overnight website. Am confident in the program.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                  <img
-                    src="/static/assets/img/testimonials/testimonials-3.jpg"
-                    class="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Ugur james</h3>
-                  <h4>Store Owner</h4>
-                </div>
-              </div>
-              <!-- End testimonial item -->
-
-              <div class="col-lg-6">
-                <div class="testimonial-item">
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i> What a
-                    good way to make money online, all I want is to become a
-                    cycle leader in all the package, so I can make more money
-                    than am currently making.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                  <img
-                    src="/static/assets/img/testimonials/testimonials-4.jpg"
-                    class="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Adams chidi</h3>
-                  <h4>Freelancer</h4>
-                </div>
-              </div>
-              <!-- End testimonial item -->
-
-              <div class="col-lg-6">
-                <div class="testimonial-item">
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    I love this, my three times a week seminar is paying off, am
-                    now a cycle leader of bronze and gold, diamond is next.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                  <img
-                    src="/static/assets/img/testimonials/testimonials-5.jpg"
-                    class="testimonial-img"
-                    alt=""
-                  />
-                  <h3>Umar Mohammed</h3>
-                  <h4>Entrepreneur</h4>
-                </div>
-              </div>
-              <!-- End testimonial item -->
+             <% } %>
             </div>
           </div>
+             <nav aria-label="...">
+                  <ul class="pagination justify-content-center">
+                    <li
+                      class="page-item <%= !data.pagination.prevPage || data.pagination.currentPage === 1 ? 'disabled': '' %>"
+                    >
+                      <a
+                        class="page-link"
+                        href="?page=<%= data.pagination.prevPage || 1 %>"
+                        aria-label="Previous"
+                      >
+                        <span aria-hidden="true">&laquo;</span>
+                      </a>
+                    </li>
+                    <% for (let i = 1; i < data.pagination.totalPages + 1; i++)
+                    {%>
+                    <li
+                      class="page-item <%= i === data.pagination.currentPage ? 'active' : '' %>"
+                      aria-current="page"
+                    >
+                      <a class="page-link" href="?page=<%= i %>"><%= i %></a>
+                    </li>
+                    <% } %>
+
+                    <li class="page-item">
+                      <a
+                        class="page-link <%= !data.pagination.nextPage || data.pagination.currentPage === data.pagination.totalPages ? 'disabled': '' %>"
+                        href="?page=<%= data.pagination.nextPage || data.pagination.totalPages %>"
+                        aria-label="Next"
+                      >
+                        <span aria-hidden="true">&raquo;</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
           <!-- start -->
           <div class="container why-to-join">
             <div>
@@ -200,19 +131,11 @@
               ></a>
             </div>
           </div>
-          <div class="swiper-pagination"></div>
-          <!-- end -->
+        
         </div>
       </section>
       <!-- End Testimonials Section -->
 
-      <!-- <section class="inner-page">
-          <div class="container">
-            <p>
-              Contents here
-            </p>
-          </div>
-        </section> -->
     </main>
     <!-- End #main -->
 

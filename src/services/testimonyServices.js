@@ -41,6 +41,20 @@ const getAllUserTestimony = async (userId, perPage, page) => {
 
   return { testimonies, totalItem };
 };
+const getAllPublichedTestimony = async (perPage, page) => {
+  const testimonies = await database.testimonyRecords.findMany({
+    where: { publish: true },
+    include: { user: { select: { displayPhoto: true, fullName: true } } },
+    skip: (page - 1) * perPage,
+    take: perPage,
+    orderBy: { createdAt: "desc" },
+  });
+  const totalItem = await database.testimonyRecords.count({
+    where: { publish: true },
+  });
+
+  return { testimonies, totalItem };
+};
 
 const getAllTestimony = async (page, perPage, searchQuery, status) => {
   const whereClause = { status };
@@ -171,4 +185,5 @@ export {
   getAllTestimony,
   rejectUserTestimony,
   acceptUserTestimony,
+  getAllPublichedTestimony,
 };
