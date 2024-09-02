@@ -15,6 +15,10 @@ staticPagesRouter.get("", async (req, res) => {
     path: req.path,
   };
 
+  const { testimonies } = await getAllPublichedTestimony(10, 1);
+
+  data.testimonies = testimonies;
+
   data.prices = await getContants();
 
   res.render("staticPages/home", { title: "Home", data });
