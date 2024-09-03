@@ -1,3 +1,5 @@
+const convertToUSD = (balance, usdRate) =>
+  Number((balance / usdRate).toFixed(2));
 const convertToNGN = (balance, usdRate) =>
   Number((balance * usdRate).toFixed(2));
 
@@ -128,6 +130,7 @@ function splitName(fullName) {
 
 export {
   convertToNGN,
+  convertToUSD,
   excludeData,
   calculatePagination,
   generateRandomString,

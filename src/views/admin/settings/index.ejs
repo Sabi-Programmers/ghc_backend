@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <%- include('../partials/head') %>
+
+  <body>
+    <%- include('../layout/navbar') %> <%- include('../partials/logout') %> <%-
+    include('../layout/sidebar') %>
+
+    <main id="main" class="main">
+      <%- include('../layout/breadcrumb') %>
+
+      <section class="section dashboard">
+        <div class="row" style="color: #012970">
+          <div class="col-md-10 offset-md-1 col-lg-8 offset-lg-2">
+            <div class="card">
+              <div class="card-body pt-5">
+                <form id="constants-form">
+                    <% for( let i = 0; i < data.constants.length; i++ ) { %>
+                        <div class="mb-3">
+                            <label for="<%= data.constants[i].name %>" class="form-label fw-bold">
+                                <%= data.constants[i].label %>
+                            </label>
+                            
+                            <input
+                            id="<%= data.constants[i].name %>"
+                            type="text"
+                            name="<%= data.constants[i].name %>"
+                            value="<%= data.constants[i].value %>"
+                            class="form-control constants-inputs"
+                            readonly
+                            />
+                          
+                        </div>
+                    <% } %>
+                    <div class="mt-5">
+                        <button class="btn btn-primary w-100" type="button">Edit </button>
+                        <button class="btn btn-success w-100 d-none" type="button">confirm </button>
+                    </div>
+
+
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <!-- End #main -->
+
+    <%- include('../layout/footer') %> <%- include('../partials/scripts') %>
+  </body>
+</html>
+g

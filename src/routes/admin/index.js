@@ -10,6 +10,7 @@ import productDeliveryRouter from "./product-delivery.js";
 import testmonyRouter from "./testimony.js";
 import messagesRouter from "./messages.js";
 import cyclePerformanceRouter from "./cycle-performance.js";
+import settingRouter from "./settings.js";
 
 const adminRouter = express.Router();
 
@@ -23,5 +24,6 @@ adminRouter.use("/product-delivery", isAdmin, productDeliveryRouter);
 adminRouter.use("/members", isAdmin, memberRouter);
 adminRouter.use("/withdrawals", isAdmin, withdrawalRouter);
 adminRouter.use("/cycle-performance", isAdmin, cyclePerformanceRouter);
+adminRouter.use("/settings", isAdmin, settingRouter);
 
 export default adminRouter;

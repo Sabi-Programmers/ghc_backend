@@ -9,9 +9,13 @@ import {
   validateAuth,
   validateLoginAuth,
 } from "../../validators/authValidators.js";
-import { isAuthenticated } from "../../middlewares/auth.js";
+import { isAdmin, isAuthenticated } from "../../middlewares/auth.js";
 
 const authRouter = express.Router();
+
+authRouter.get("", isAuthenticated, (req, res) => {
+  res.redirect("/admin/login");
+});
 
 authRouter.get("/login", isAuthenticated, getAdminLoginPage);
 
@@ -23,7 +27,7 @@ authRouter.post(
   loginAdmin
 );
 
-authRouter.post("/create-admin", isAuthenticated, createAdmin);
+authRouter.post("/create-admin", isAdmin, createAdmin);
 
 authRouter.post("/logout", logoutAdmin);
 

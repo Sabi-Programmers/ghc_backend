@@ -185,6 +185,18 @@ const getUserForRollBack = async (username) => {
     },
   });
 };
+const getUserForFunding = async (username) => {
+  return await database.user.findFirst({
+    where: {
+      username,
+    },
+    select: {
+      username: true,
+      fullName: true,
+      eWallet: true,
+    },
+  });
+};
 const getUserForBlocking = async (username) => {
   return await database.user.findFirst({
     where: {
@@ -315,5 +327,6 @@ const userServices = {
   getUplineDetails,
   getAllUsersByPackage,
   getSingleUser,
+  getUserForFunding,
 };
 export default userServices;
