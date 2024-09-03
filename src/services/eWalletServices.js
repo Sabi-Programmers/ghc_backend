@@ -1,5 +1,4 @@
 import database from "../libs/prisma.js";
-import { generateVitualBankDetails } from "./virtualBank.js";
 
 const getEwallet = async (userId) =>
   await database.ewallet.findFirst({
@@ -45,10 +44,16 @@ const getUserTransactions = async (userId, page, perPage) => {
   return { transactions, totalItem };
 };
 
+const getTotalIncome = async () => {
+  const trx = await database.transactions.aggregate({ _sum: { amount: true } });
+  return trx._sum.amount;
+};
+
 export {
   getEwallet,
   getEwalletBalanceUSD,
   getEwalletBalanceNGN,
   updateEwalletBalanceUSD,
   getUserTransactions,
+  getTotalIncome,
 };
