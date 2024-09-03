@@ -503,4 +503,23 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.reload();
     });
   });
+
+  const formMemberForm = document.getElementById("fund-member-form");
+  if (formMemberForm) {
+    formMemberForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const amount = document.getElementById("fund-member-amount").value;
+      if (amount.length < 1) {
+        toast.failed("Please enter a valid amount");
+        return;
+      }
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      await handlerPostRequest(jsonData, "/admin/settings/fund-member");
+
+      window.location.reload();
+    });
+  }
 });

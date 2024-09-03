@@ -43,7 +43,7 @@
                 <form id="fund-member-form">
                   <div class="mb-3 mt-3">
                     <label for="inputText" class="col-form-label fw-bold"
-                      >username</label
+                      >Username</label
                     >
                     <input
                     type="text"
@@ -52,18 +52,22 @@
                     class="form-control"
                     readonly
                     />
-                    
-                    <label for="inputText" class="col-form-label fw-bold"
-                      >Enter Amount</label
-                    >
-                    <div class="position-relative">
-                      <input
-                        type="number"
-                        name="amount"
-                        id="fund-member-amount"
-                        class="form-control"
-                      />
-                    </div>
+                  </div>
+                      <div class="mb-3">
+
+                        <label for="inputText" class="col-form-label fw-bold"
+                          >Enter Amount ($)</label
+                        >
+                        <div class="position-relative">
+                          <input
+                            type="number"
+                            name="amount"
+                            id="fund-member-amount"
+                            class="form-control"
+                            placeholder="Enter Amount in dollar ($)"
+                          />
+                        </div>
+                      </div>
                   </div>
                   <div class="mt-4 text-center">
                     <button class="btn btn-primary">Fund Member </button>

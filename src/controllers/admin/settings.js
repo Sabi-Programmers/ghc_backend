@@ -67,7 +67,10 @@ const fundMember = asyncWrapper(async (req, res) => {
       );
     }
     const prices = await getContants();
-    const transactionReference = `ADM-${generateRandomString(4)}-${Math.floor(Math.random() * 9999) + 1000}${generateRandomString(3)}`;
+    const transactionReference = `TRX-${generateRandomString(4)}-${Math.floor(Math.random() * 9999) + 1000}${generateRandomString(3)}`;
+    const settlementReference = `SRF-${generateRandomString(6)}-${Math.floor(Math.random() * 9999) + 1000}${generateRandomString(5)}`;
+    const sessionID = `SID-${generateRandomString(2)}-${Math.floor(Math.random() * 999999) + 100000}${generateRandomString(2)}`;
+
     const convertedAmount = convertToNGN(amount, prices.usdRate);
     // Create the new transaction
     const trx = await database.transactions.create({
@@ -84,8 +87,8 @@ const fundMember = asyncWrapper(async (req, res) => {
         transactionReference,
         originatorBank: "-",
         description: "-",
-        settlementReference: "-",
-        sessionID: "-",
+        settlementReference,
+        sessionID,
         uniqueIdentifier: member.email,
       },
     });
