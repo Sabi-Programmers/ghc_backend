@@ -12,7 +12,11 @@ import {
   getContants,
   updateContants,
 } from "../../services/contantsServices.js";
-import { name } from "ejs";
+import {
+  generateOtpToken,
+  verifyOtpToken,
+} from "../../services/otpServices.js";
+import { sendAdminOtpMail } from "../../libs/nodemailer.js";
 
 const getFundMemberPage = asyncWrapper(async (req, res) => {
   const data = {
@@ -164,12 +168,10 @@ const getSettingsPage = asyncWrapper(async (req, res) => {
       name: key,
       value,
     }))),
-    console.log(data.constants);
-
-  res.render("admin/settings/index", {
-    title: "Main Configurations",
-    data,
-  });
+    res.render("admin/settings/index", {
+      title: "Configurations",
+      data,
+    });
 });
 
 const updateSettings = asyncWrapper(async (req, res) => {
@@ -198,6 +200,7 @@ const updateSettings = asyncWrapper(async (req, res) => {
     leaderCycleThreshold,
     salesIncomeThreshold,
     usdRate,
+    otp,
   } = req.body;
 
   // List of all fields to check
@@ -242,6 +245,17 @@ const updateSettings = asyncWrapper(async (req, res) => {
     );
   }
 
+  // verify OTP
+  const verifyOtp = await verifyOtpToken(otp, req.user.id);
+  if (!verifyOtp.status) {
+    return response.json(
+      res,
+      StatusCodes.BAD_REQUEST,
+      false,
+      verifyOtp.message
+    );
+  }
+
   // List of fields to convert to float
   const fieldsToConvert = [
     "bronze",
@@ -281,4 +295,34 @@ const updateSettings = asyncWrapper(async (req, res) => {
   return response.json(res, StatusCodes.OK, true, "Configuration Updated");
 });
 
-export { getFundMemberPage, fundMember, updateSettings, getSettingsPage };
+const getOTPforSetting = asyncWrapper(async (req, res) => {
+  const user = req.user;
+
+  const otp = await generateOtpToken(user.id);
+
+  const sentMail = await sendAdminOtpMail(user.username, otp, user.email);
+
+  if (!sentMail) {
+    return response.json(
+      res,
+      StatusCodes.BAD_REQUEST,
+      false,
+      "OTP Mail Failed"
+    );
+  }
+
+  return response.json(
+    res,
+    StatusCodes.OK,
+    true,
+    "OTP sent to your email address"
+  );
+});
+
+export {
+  getFundMemberPage,
+  fundMember,
+  updateSettings,
+  getSettingsPage,
+  getOTPforSetting,
+};

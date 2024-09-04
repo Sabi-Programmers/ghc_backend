@@ -53,9 +53,38 @@ document.addEventListener("DOMContentLoaded", () => {
     return json;
   }
 
-  const handlerPostRequest = async (jsonData, endpoint, redirectUrl) => {
+  // const handlerPostRequest = async (jsonData, endpoint) => {
+  //   try {
+  //     handleLoader("show");
+  //     const res = await fetch(endpoint, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(jsonData),
+  //     });
+  //     const resData = await res.json();
+
+  //     if (resData.success === false) {
+  //       throw new Error(resData.message);
+  //     }
+  //     handleLoader("hide");
+  //     toast.success(resData.message);
+
+  //     return true;
+  //   } catch (error) {
+  //     handleLoader("hide");
+
+  //     toast.failed(error.message);
+
+  //     return false;
+  //   }
+  // };
+
+  const handlerPostRequest = async (jsonData, endpoint) => {
     try {
       handleLoader("show");
+
       const res = await fetch(endpoint, {
         method: "POST",
         headers: {
@@ -63,21 +92,26 @@ document.addEventListener("DOMContentLoaded", () => {
         },
         body: JSON.stringify(jsonData),
       });
+
+      // // Check if the response is OK
+      // if (!res.ok) {
+      //   const errorMessage = `Error: ${res.status} ${res.statusText}`;
+      //   throw new Error(errorMessage);
+      // }
+
       const resData = await res.json();
 
       if (resData.success === false) {
-        throw new Error(resData.message);
+        throw new Error(resData.message || "Unknown error occurred.");
       }
-      handleLoader("hide");
+
       toast.success(resData.message);
-
-      // if (redirectUrl !== null) {
-      //   redirect(redirectUrl);
-      // }
+      return true;
     } catch (error) {
+      toast.failed(error.message || "Something went wrong.");
+      return false;
+    } finally {
       handleLoader("hide");
-
-      toast.failed(error.message);
     }
   };
 
@@ -520,6 +554,37 @@ document.addEventListener("DOMContentLoaded", () => {
       await handlerPostRequest(jsonData, "/admin/settings/fund-member");
 
       window.location.reload();
+    });
+  }
+
+  const constantForm = document.getElementById("constants-form");
+  if (constantForm) {
+    const editButton = document.getElementById("edit-constants-btn");
+    const confirmButton = document.getElementById("confirm-constants-btn");
+    const constantInputs = document.querySelectorAll(".constants-inputs");
+
+    editButton.addEventListener("click", () => {
+      editButton.classList.toggle("d-none");
+      confirmButton.classList.toggle("d-none");
+
+      constantInputs.forEach((el) => {
+        el.removeAttribute("readonly");
+      });
+    });
+
+    confirmButton.addEventListener("click", async () => {
+      await handlerPostRequest({}, `/admin/settings/otp`);
+    });
+
+    constantForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      const stat = await handlerPostRequest(jsonData, `/admin/settings`);
+      if (stat) {
+        window.location.reload();
+      }
     });
   }
 });

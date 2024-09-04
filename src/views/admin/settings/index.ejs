@@ -33,8 +33,43 @@
                         </div>
                     <% } %>
                     <div class="mt-5">
-                        <button class="btn btn-primary w-100" type="button">Edit </button>
-                        <button class="btn btn-success w-100 d-none" type="button">confirm </button>
+                        <button class="btn btn-primary w-100" id="edit-constants-btn" type="button">Edit </button>
+                        <button class="btn btn-success w-100 d-none" id="confirm-constants-btn" data-bs-toggle="modal" data-bs-target="#enterOTPModal" type="button">confirm </button>
+                    </div>
+                    
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="enterOTPModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">
+                              Complete Action
+                            </h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                             <div class="mb-3 mt-3">
+                            <label for="otp" class="form-label fw-bold">
+                                Enter OTP
+                            </label>
+                            
+                            <input
+                            id="otp"
+                            type="text"
+                            name="otp"
+                            class="form-control"
+          
+                            />
+                          
+                        </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
 

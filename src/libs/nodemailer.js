@@ -32,6 +32,20 @@ export async function sendWithdrawalOtpMail(fullName, otp, email) {
     html: mailTemplates.withdrawal(fullName, otp),
   });
 }
+export async function sendAdminOtpMail(username, otp, email) {
+  try {
+    await transporter.sendMail({
+      from: `"Grand Health Cycle " <${process.env.EMAIL_AUTH_USER}>`,
+      to: email,
+      subject: "Your OTP Code for Admin Access",
+      html: mailTemplates.adminOTP(username, otp),
+    });
+    return true;
+  } catch (error) {
+    console.log(error.message);
+    return false;
+  }
+}
 
 export async function sendresetPasswordOtpMail(fullName, otp, email) {
   try {
