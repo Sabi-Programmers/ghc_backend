@@ -587,4 +587,66 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   }
+
+  const changePasswordForm = document.getElementById(
+    "admin-change-password-form"
+  );
+  if (changePasswordForm) {
+    pristine = new Pristine(changePasswordForm);
+
+    const passwordInput = document.getElementById("Password");
+    const confirmPasswordInput = document.getElementById("ConfirmPassword");
+
+    if (confirmPasswordInput) {
+      pristine.addValidator(
+        confirmPasswordInput,
+        function (value, el) {
+          const password = passwordInput.value;
+          if (password !== value) {
+            return false;
+          }
+          return true;
+        },
+        "Password does't match.",
+        3,
+        false
+      );
+    }
+
+    pristine.addValidator(
+      passwordInput,
+      function (value, el) {
+        const hasUppercase = /[A-Z]/.test(value);
+        const hasLowercase = /[a-z]/.test(value);
+
+        if (!hasUppercase || !hasLowercase) {
+          return false;
+        }
+        return true;
+      },
+      "Password must contain at least one uppercase and one lowercase letter.",
+      2,
+      false
+    );
+
+    changePasswordForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      let valid = pristine.validate();
+
+      if (!valid) {
+        return;
+      }
+
+      const formData = new FormData(e.target);
+      const jsonData = formDataToJson(formData);
+
+      const stat = await handlerPostRequest(
+        jsonData,
+        "/admin/dashboard/account-settings/change-password"
+      );
+      if (stat) {
+        window.location.reload();
+      }
+    });
+  }
 });
